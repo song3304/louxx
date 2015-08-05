@@ -26,7 +26,7 @@ class RouteServiceProvider extends ServiceProvider
 	{
 		//
 
-		$router->pattern('id', '[0-9]+'); //所有id都是数字
+		//$router->pattern('id', '[0-9]+'); //所有id都是数字
 		parent::boot($router);
 
 	}

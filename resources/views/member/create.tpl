@@ -13,11 +13,12 @@
 <body>
 <div class="container">
 	<h1 class="page-header">注册</h1>
+
 	<form action="<{'member'|url nofilter}>" method="POST">
 		<input type="hidden" name="_token" value="<{csrf_token()}>">
 		<div class="form-group">
 			<label for="username">用户名</label>
-			<input type="email" class="form-control" name="username" id="username" placeholder="请输入用户名...">
+			<input type="text" class="form-control" name="username" id="username" placeholder="请输入用户名..." value="<{old('username')}>">
 		</div>
 		<div class="form-group">
 			<label for="password">密码</label>
@@ -35,5 +36,14 @@
 		<button type="submit" class="btn btn-default">注册</button>
 	</form>
 </div>
+<script type="text/javascript">
+(function($){
+	var errors = <{$errors->toArray()|@json_encode nofilter}>;
+	for(var i in errors) {
+		$('[name="'+ i +'"]').after('<div class="help-block">'+ errors[i][0] +'</div>').closest('.form-group').addClass('has-error');
+	}
+})(jQuery);
+</script>
+
 </body>
 </html>

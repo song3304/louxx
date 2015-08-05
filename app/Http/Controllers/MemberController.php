@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Member;
+
 class MemberController extends Controller
 {
     /**
@@ -37,10 +39,14 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
+       $this->validate($request, [
+            'username' => 'required|unique:member|max:150',
+            'password' => 'required|min:6',
+        ]);
         Member::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'username' => $request->input('username'),
+            'password' => bcrypt($request->input('password')),
+            'rid' => 1,
         ]);
     }
 

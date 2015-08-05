@@ -16,6 +16,11 @@ class AuthController extends Controller
 	 */
 	public function index()
 	{
+		return $this->login();
+	}
+
+	public function login()
+	{
 		Auth::logout();
 		return $this->view('login');
 	}

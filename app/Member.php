@@ -14,5 +14,5 @@ class Member extends Model
     //主键名称
     protected $primaryKey = 'uid';
     //不能批量赋值
-    protected $guarded = ['uid', 'password'];
+    protected $guarded = ['uid'];
 }

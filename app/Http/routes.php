@@ -41,7 +41,7 @@ $hmvc_router = function ($ctrl = 'home', $action = 'index')
 Route::resources([
 	'member' => 'MemberController',
 ]);
-Route::group(['namespace' => 'Admin'], function($router) use($hmvc_router) {
-	Route::any('admin/{ctrl?}/{action?}', $hmvc_router);
+Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'], function($router) use($hmvc_router) {
+	Route::any('{ctrl?}/{action?}', $hmvc_router);
 });
 Route::any('{ctrl?}/{action?}', $hmvc_router);
