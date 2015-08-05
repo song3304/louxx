@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'model' => App\User::class,
+    'model' => App\Member::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'table' => 'users',
+    'table' => 'member',
 
     /*
     |--------------------------------------------------------------------------
@@ -59,8 +59,8 @@ return [
     */
 
     'password' => [
-        'email' => 'emails.password',
-        'table' => 'password_resets',
+        'uid' => 'uid',
+        'table' => 'member_reset',
         'expire' => 60,
     ],
 

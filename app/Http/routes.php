@@ -15,22 +15,33 @@ $hmvc_router = function ($ctrl = 'home', $action = 'index')
 {
 	$namespace = Route::getCurrentRoute()->getAction()['namespace'];
 	$className = $namespace.'\\'.ucfirst(strtolower($ctrl)).'Controller';
+	(!class_exists($className) || !method_exists($className, $action)) && abort(404);
 
 	$class = new ReflectionClass($className);
-	$function = $class->getMethod($action); //ReflectionMethod 
+	$function = $class->getMethod($action); //ReflectionMethod
 	$parameters = $function->getParameters(); //ReflectionParameter 
 	$_data = array();
 	$count = count($parameters);
-	for ($i=0; $i < $count; $i++) { 
-		$key = $parameters[$i]->getName();
-		$default = $parameters[$i]->isDefaultValueAvailable() ? $parameters[$i]->getDefaultValue() : NULL;
-		$_data[] = array_key_exists($key, $_GET) ? Request::input($key) : $default;
+	for ($i=0; $i < $count; $i++)
+	{ 
+		if ($parameters[$i]->getClass())
+		{
+			$_data[] = $this->app[$parameters[$i]->getClass()->name];
+		} else {
+			$key = $parameters[$i]->getName();
+			$default = $parameters[$i]->isDefaultValueAvailable() ? $parameters[$i]->getDefaultValue() : NULL;
+			$_data[] = array_key_exists($key, $_GET) ? Request::input($key) : $default;
+		}
 	}
 	$obj = new $className;
 	// Execute the action itself
-	return call_user_func_array(array($obj, $action), $_data);
+	return $obj->callAction($action, $_data);
 };
+
+Route::resources([
+	'member' => 'MemberController',
+]);
 Route::group(['namespace' => 'Admin'], function($router) use($hmvc_router) {
-	Route::any('admin/{ctrl?}/{action?}',$hmvc_router);
+	Route::any('admin/{ctrl?}/{action?}', $hmvc_router);
 });
 Route::any('{ctrl?}/{action?}', $hmvc_router);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
@@ -14,8 +14,9 @@ class HomeController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request, $id)
     {
-        return $this->view('index');
+    
+       return $this->view('admin.dashboard');
     }
 }
