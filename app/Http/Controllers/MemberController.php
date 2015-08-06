@@ -39,14 +39,15 @@ class MemberController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$data = $this->tipsValidate($request, 'member.store', 'username,password,password_confirmation,accept_license');
+		$keys = 'username,password,accept_license';
+		$data = $this->tipsValidate($request, 'member.store', $keys);
 
 		$record = Member::create([
 			'username' => $data['username'],
 			'password' => bcrypt($data['password']),
 			'rid' => 1,
 		]);
-		print_r($record);
+		return $this->success(NULL, 'member');
 	}
 
 	/**

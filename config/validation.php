@@ -5,7 +5,7 @@ return [
 		'store' => [
 			'username' => [
 				'name' => '用户名',
-				'rules' => 'ansi:2|required|unique:member|max:150|min:3',
+				'rules' => 'required|unique:member|max:150|min:3',
 				'message' => '用户名必须为汉字、英文、数字、下划线、减号',
 			],
 			'password' => [

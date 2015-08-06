@@ -14,7 +14,7 @@
 <div class="container">
 	<h1 class="page-header">注册</h1>
 
-	<form action="<{'member'|url nofilter}>" method="POST">
+	<form action="<{'member'|url nofilter}>" method="POST" autocomplete="off" id="form">
 		<input type="hidden" name="_token" value="<{csrf_token()}>">
 		<div class="form-group">
 			<label for="username">用户名</label>
@@ -42,6 +42,7 @@
 	for(var i in errors) {
 		$('[name="'+ i +'"]').after('<div class="help-block">'+ errors[i][0] +'</div>').closest('.form-group').addClass('has-error');
 	}
+	$('#form').query();
 })(jQuery);
 </script>
 
