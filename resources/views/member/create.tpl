@@ -25,12 +25,12 @@
 			<input type="password" class="form-control" name="password" id="password" placeholder="请输入密码...">
 		</div>
 		<div class="form-group">
-			<label for="retry_password">密码确认</label>
-			<input type="password" class="form-control" name="retry_password" id="retry_password" placeholder="请再次确认密码...">
+			<label for="password_confirmation">密码确认</label>
+			<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="请再次确认密码...">
 		</div>
 		<div class="checkbox">
 			<label>
-				<input type="checkbox" class="" id="readit"> 我已阅读
+				<input type="checkbox" class="" name="accept_license" id="accept_license" value="1"> 我已阅读
 			</label>
 		</div>
 		<button type="submit" class="btn btn-default">注册</button>

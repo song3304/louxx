@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Addons\Core\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use Addons\Core\Validation\ValidatesRequests;
 
 abstract class Controller extends BaseController
 {
