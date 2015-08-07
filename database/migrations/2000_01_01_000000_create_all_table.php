@@ -12,40 +12,32 @@ class CreateAllTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('role', function (Blueprint $table) {
-			$table->increments('rid');
-			$table->string('role_name', 150);
-			$table->string('description')->nullable();
-			$table->json('roles')->nullable();
-			$table->timestamps();
-			$table->softDeletes(); //软删除
-		});
 
-		Schema::create('member', function (Blueprint $table) {
-			$table->increments('uid');
+		Schema::create('users', function (Blueprint $table) {
+			$table->increments('id');
 			$table->string('username', 150)->unique(); //用户名
 			$table->string('password', 60); //密码
+			$table->string('nickname', 50)->nullable(); //昵称
+			$table->string('realname', 50)->nullable(); //真实姓名
+			$table->unsignedInteger('gender')->default(0); //性别
 			$table->string('email')->nullable(); //Email
 			$table->string('phone', 20); //电话
-			$table->unsignedInteger('gender')->default(0); //性别
 			$table->unsignedInteger('rid')->default(0); //组ID
 
 			$table->rememberToken(); //记住我的Token
 			$table->timestamps(); //创建/修改时间
 			$table->timestamp('lastlogin_at'); //最后登录时间
 			$table->softDeletes(); //软删除
-
-			$table->foreign('rid')->references('rid')->on('role')->onDelete('cascade');
 			
 		});
 
-		Schema::create('member_reset', function (Blueprint $table) {
-			$table->increments('mrid');
+		Schema::create('user_reset', function (Blueprint $table) {
+			$table->increments('id');
 			$table->unsignedInteger('uid'); //UID
 			$table->string('token', 150)->index(); //Token
 			$table->timestamps();
 
-			$table->foreign('uid')->references('uid')->on('member')->onDelete('cascade');
+			$table->foreign('uid')->references('id')->on('users')->onDelete('cascade');
 
 		});
 	}

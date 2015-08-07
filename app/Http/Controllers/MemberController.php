@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Member;
+use App\User;
+use App\Role;
 
 class MemberController extends Controller
 {
@@ -42,12 +43,11 @@ class MemberController extends Controller
 		$keys = 'username,password,accept_license';
 		$data = $this->tipsValidate($request, 'member.store', $keys);
 
-		$record = Member::create([
-			'username' => $data['username'],
-			'password' => bcrypt($data['password']),
-			'rid' => 1,
-		]);
-		return $this->success(NULL, 'member');
+		$data['password'] = bcrypt($data['password']);unset($data['accept_license']);
+		$user = User::create($data);
+		//加入view组
+		$user->attachRole($this->roles[Role::VIEWER]['id']);
+		return $this->success(NULL, 'member', $user->toArray());
 	}
 
 	/**
@@ -84,14 +84,4 @@ class MemberController extends Controller
 		//
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
 }

@@ -18,7 +18,7 @@
 		<input type="hidden" name="_token" value="<{csrf_token()}>">
 		<div class="form-group">
 			<label for="username">用户名</label>
-			<input type="email" class="form-control" name="username" id="username" placeholder="请输入用户名...">
+			<input type="text" class="form-control" name="username" id="username" placeholder="请输入用户名...">
 		</div>
 		<div class="form-group">
 			<label for="password">密码</label>
@@ -26,7 +26,7 @@
 		</div>
 		<div class="checkbox">
 			<label>
-				<input type="checkbox" class="remember"> 记住我
+				<input type="checkbox" name="remember" value="true"> 记住我
 			</label>
 		</div>
 		<button type="submit" class="btn btn-default">Submit</button>

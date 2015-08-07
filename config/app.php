@@ -145,9 +145,16 @@ return [
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
 		//Barryvdh\Debugbar\ServiceProvider::class,
+		
+		//验证码
+		Mews\Captcha\CaptchaServiceProvider::class,
+		//Smarty注入模块
 		Addons\Smarty\View\ServiceProvider::class,
+		//Core
 		Addons\Core\ServiceProvider::class,
-
+		//验证体系
+		Zizaco\Entrust\EntrustServiceProvider::class,
+		
 	],
 
 	/*
@@ -198,6 +205,8 @@ return [
 
 		//'Debugbar' => 'Barryvdh\Debugbar\Facade::class',
 		'Core'      => Addons\Core\Facades\Core::class,
+		'Captcha' => Mews\Captcha\Facades\Captcha::class,
+		'Entrust' => Zizaco\Entrust\EntrustFacade::class,
 	],
 
 ];

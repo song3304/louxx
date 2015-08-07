@@ -7,8 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+//trait
+use Addons\Core\Controller\ThrottlesLogins;
+
 class AuthController extends Controller
 {
+
+	use ThrottlesLogins;
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -32,17 +37,24 @@ class AuthController extends Controller
 	 */
 	public function authenticate_query(Request $request)
 	{
-		//$this->validate($request, [
-        //    $this->loginUsername() => 'required', 'password' => 'required',
-        //]);
-		$username = $request->input('username');
-		$password = $request->input('password');
-		$remember = $request->input('remember');
-		if (Auth::attempt(['username' => $username, 'password' => $password], $remember))
+		// If the class is using the ThrottlesLogins trait, we can automatically throttle
+		// the login attempts for this application. We'll key this by the username and
+		// the IP address of the client making these requests into this application.
+		$throttles = $this->isUsingThrottlesLoginsTrait();
+
+		if ($throttles && $this->hasTooManyLoginAttempts($request)) 
+			return $this->sendLockoutResponse($request);
+
+
+		$data = $this->tipsValidate($request, 'member.login', [$this->loginUsername(),'password']);
+		$remember = $request->has('remember');
+		if (Auth::attempt(['username' => $data['username'], 'password' => $data['password']], $remember))
 		{
-			return 'ok';
+			return $this->success_login('');
 		} else {
-			return $this->failure('');
+			//记录重试次数
+			$throttles && $this->incrementLoginAttempts($request);
+			return $this->failure_login();
 		}
 	}
 
@@ -51,4 +63,33 @@ class AuthController extends Controller
 		return redirect('member/create');
 	}
 
+	private function loginUsername()
+	{
+		return 'username';
+	}
+
+	/**
+	 * Redirect the user after determining they are locked out.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	protected function sendLockoutResponse(Request $request)
+	{
+		$seconds = (int) Cache::get($this->getLoginLockExpirationKey($request)) - time();
+
+		return $this->failure(['content' => $this->getLockoutErrorMessage($seconds)], FALSE, compact('seconds'));
+	}
+
+	/**
+	 * Determine if the class is using the ThrottlesLogins trait.
+	 *
+	 * @return bool
+	 */
+	protected function isUsingThrottlesLoginsTrait()
+	{
+		return in_array(
+			ThrottlesLogins::class, class_uses_recursive(get_class($this))
+		);
+	}
 }
