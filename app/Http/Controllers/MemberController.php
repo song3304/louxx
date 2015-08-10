@@ -29,6 +29,10 @@ class MemberController extends Controller
 	 */
 	public function create()
 	{
+		$keys = 'username,password,accept_license';
+		$validates = $this->getScriptValidate('member.store', $keys);
+		
+		$this->_validates = $validates;
 		return $this->view('member.create');
 	}
 
@@ -41,7 +45,7 @@ class MemberController extends Controller
 	public function store(Request $request)
 	{
 		$keys = 'username,password,accept_license';
-		$data = $this->tipsValidate($request, 'member.store', $keys);
+		$data = $this->autoValidate($request, 'member.store', $keys);
 
 		$data['password'] = bcrypt($data['password']);unset($data['accept_license']);
 		$user = User::create($data);

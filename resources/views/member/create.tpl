@@ -8,6 +8,7 @@
 	<meta name="Description" content="" />
 	
 	<{include file="common/script.inc.tpl"}>
+	<{include file="common/validate.inc.tpl"}>
 	<{include file="common/style.inc.tpl"}>
 </head>
 <body>
@@ -28,9 +29,9 @@
 			<label for="password_confirmation">密码确认</label>
 			<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="请再次确认密码...">
 		</div>
-		<div class="checkbox">
+		<div class="form-group checkbox">
 			<label>
-				<input type="checkbox" class="" name="accept_license" id="accept_license" value="1"> 我已阅读
+				<input type="checkbox" class="" name="accept_license" id="accept_license" value="1"> 我已阅读并同意协议
 			</label>
 		</div>
 		<button type="submit" class="btn btn-default">注册</button>
@@ -38,13 +39,8 @@
 </div>
 <script type="text/javascript">
 (function($){
-	var errors = <{$errors->toArray()|@json_encode nofilter}>;
-	for(var i in errors) {
-		$('[name="'+ i +'"]').after('<div class="help-block">'+ errors[i][0] +'</div>').closest('.form-group').addClass('has-error');
-	}
-	$('#form').query();
+	$('#form').validate_addons($.validates).query().trigger_error_bags($.error_bags);
 })(jQuery);
 </script>
-
 </body>
 </html>
