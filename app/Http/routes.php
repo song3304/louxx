@@ -15,6 +15,7 @@ $hmvc_router = function ($ctrl = 'home', $action = 'index')
 {
 	$namespace = Route::getCurrentRoute()->getAction()['namespace'];
 	$className = $namespace.'\\'.ucfirst(strtolower($ctrl)).'Controller';
+	!class_exists($className) && $className = 'Addons\\Core\\Controllers\\'.ucfirst(strtolower($ctrl)).'Controller';
 	(!class_exists($className) || !method_exists($className, $action)) && abort(404);
 
 	$class = new ReflectionClass($className);

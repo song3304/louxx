@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 //trait
-use Addons\Core\Controller\ThrottlesLogins;
+use Addons\Core\Controllers\ThrottlesLogins;
 
 class AuthController extends Controller
 {

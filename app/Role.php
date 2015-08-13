@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Addons\Core\Model\Role as BaseRole;
+use Addons\Core\Models\Role as BaseRole;
 
 class Role extends BaseRole
 {

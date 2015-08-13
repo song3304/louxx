@@ -28,6 +28,7 @@ return [
 	*/
 
 	'url' => 'http://127.0.0.1/project/test/',
+	'path' => '/project/test',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -154,7 +155,8 @@ return [
 		Addons\Core\ServiceProvider::class,
 		//验证体系
 		Zizaco\Entrust\EntrustServiceProvider::class,
-		
+		//判断客户端和操作系统
+		Jenssegers\Agent\AgentServiceProvider::class,
 	],
 
 	/*
@@ -207,6 +209,7 @@ return [
 		'Core'      => Addons\Core\Facades\Core::class,
 		'Captcha' => Mews\Captcha\Facades\Captcha::class,
 		'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+		'Agent' => Jenssegers\Agent\Facades\Agent::class,
 	],
 
 ];

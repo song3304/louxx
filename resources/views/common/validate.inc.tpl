@@ -1,6 +1,6 @@
-<script type="text/javascript" src="<{'static/js/jquery.validate.js'|url}>"></script>
-<script type="text/javascript" src="<{'static/js/jquery.validate.addons.js'|url}>"></script>
-<script type="text/javascript">
+<script src="<{'static/js/jquery.validate.min.js'|url}>"></script>
+<script src="<{'static/js/jquery.validate.addons.js'|url}>"></script>
+<script>
 (function($){
 	//给validator设置默认值
 	$.validator.setDefaults({

@@ -9,11 +9,13 @@
 	
 	<{include file="common/script.inc.tpl"}>
 	<{include file="common/validate.inc.tpl"}>
+	<{include file="common/uploader.inc.tpl"}>
 	<{include file="common/style.inc.tpl"}>
 </head>
 <body>
 <div class="container">
 	<h1 class="page-header">注册</h1>
+			<input type="password" class="form-control" name="password"  placeholder="请输入密码...">
 
 	<form action="<{'member'|url nofilter}>" method="POST" autocomplete="off" id="form">
 		<input type="hidden" name="_token" value="<{csrf_token()}>">
@@ -29,6 +31,11 @@
 			<label for="password_confirmation">密码确认</label>
 			<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="请再次确认密码...">
 		</div>
+		<div class="form-group">
+			<label for="password_confirmation">上传图片</label>
+			<input type="hidden" class="form-control" name="photo_aid" id="photo_aid" value="0">
+		</div>
+
 		<div class="form-group checkbox">
 			<label>
 				<input type="checkbox" class="" name="accept_license" id="accept_license" value="1"> 我已阅读并同意协议
@@ -39,6 +46,7 @@
 </div>
 <script type="text/javascript">
 (function($){
+	$('#photo_aid').uploader()
 	$('#form').validate_addons($.validates).query().trigger_error_bags($.error_bags);
 })(jQuery);
 </script>
