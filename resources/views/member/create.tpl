@@ -46,7 +46,7 @@
 </div>
 <script type="text/javascript">
 (function($){
-	$('#photo_aid').uploader()
+	$('#photo_aid').uploader();
 	$('#form').validate_addons($.validates).query().trigger_error_bags($.error_bags);
 })(jQuery);
 </script>

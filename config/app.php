@@ -157,6 +157,8 @@ return [
 		Zizaco\Entrust\EntrustServiceProvider::class,
 		//判断客户端和操作系统
 		Jenssegers\Agent\AgentServiceProvider::class,
+		//图片处理库
+		Intervention\Image\ImageServiceProvider::class,
 	],
 
 	/*
@@ -210,6 +212,7 @@ return [
 		'Captcha' => Mews\Captcha\Facades\Captcha::class,
 		'Entrust' => Zizaco\Entrust\EntrustFacade::class,
 		'Agent' => Jenssegers\Agent\Facades\Agent::class,
+		'Image' => Intervention\Image\Facades\Image::class,
 	],
 
 ];
