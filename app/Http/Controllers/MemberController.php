@@ -47,11 +47,9 @@ class MemberController extends Controller
 		$keys = 'username,password,accept_license';
 		$data = $this->autoValidate($request, 'member.store', $keys);
 
-		$data['password'] = bcrypt($data['password']);unset($data['accept_license']);
-		$user = User::create($data);
-		//加入view组
-		$user->attachRole($this->roles[Role::VIEWER]['id']);
-		return $this->success(NULL, 'member', $user->toArray());
+		unset($data['accept_license']);
+		$uid = User::add($data);
+		return $this->success(NULL, 'member', User::find($uid)->toArray());
 	}
 
 	/**
