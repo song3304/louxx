@@ -18,7 +18,7 @@
 		<input type="hidden" name="_token" value="<{csrf_token()}>">
 		<div class="form-group">
 			<label for="username">用户名</label>
-			<input type="text" class="form-control" name="username" id="username" placeholder="请输入用户名...">
+			<input type="text" class="form-control" name="username" id="username" placeholder="请输入用户名..." value="<{old('username')}>">
 		</div>
 		<div class="form-group">
 			<label for="password">密码</label>

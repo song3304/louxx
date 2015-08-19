@@ -15,8 +15,6 @@
 <body>
 <div class="container">
 	<h1 class="page-header">注册</h1>
-			<input type="password" class="form-control" name="password"  placeholder="请输入密码...">
-
 	<form action="<{'member'|url nofilter}>" method="POST" autocomplete="off" id="form">
 		<input type="hidden" name="_token" value="<{csrf_token()}>">
 		<div class="form-group">
@@ -30,6 +28,10 @@
 		<div class="form-group">
 			<label for="password_confirmation">密码确认</label>
 			<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="请再次确认密码...">
+		</div>
+		<div class="form-group radio">
+			<label><input type="radio" class="form-control" name="gender" value="1"> 男</label>
+			<label><input type="radio" class="form-control" name="gender" value="1"> 女</label>
 		</div>
 		<div class="form-group">
 			<label for="password_confirmation">上传图片</label>

@@ -30,6 +30,12 @@ class AuthController extends Controller
 		return $this->view('login');
 	}
 
+	public function logout()
+	{
+		Auth::logout();
+		return $this->success('default.success_logout', '');
+	}
+
 	/**
 	 * Handle an authentication attempt.
 	 *

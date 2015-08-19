@@ -16,6 +16,14 @@ return [
 				'name' => '确认密码',
 				'rules' => 'required',
 			],
+			'gender ' => [
+				'name' => '性别',
+				'rules' => 'required|not_zero|fields',
+			],
+			'avatar_aid' => [
+				'name' => '用户头像',
+				'rules' => 'required|not_zero',
+			],
 			'accept_license' => [
 				'name' => '阅读并同意协议',
 				'rules' => 'accepted',
