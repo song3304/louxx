@@ -30,7 +30,7 @@ class CreateAttachmentsTable extends Migration
 			$table->string('ext', 50)->index(); //显示的扩展名
 			$table->string('original_basename', 255); //原始名称
 			$table->text('description')->nullable(); //真实姓名
-			$table->unsignedInteger('uid')->nullable()->default(0) //用户id
+			$table->unsignedInteger('uid')->nullable()->default(0); //用户id
 
 			$table->timestamps(); //创建/修改时间
 			$table->foreign('afid')->references('id')->on('attachment_files')->onDelete('cascade');

@@ -7,7 +7,6 @@
 	<meta name="Keywords" content="" />
 	<meta name="Description" content="" />
 	<{include file="common/script.inc.tpl"}>
-	<{include file="common/validate.inc.tpl"}>
 	<{include file="common/uploader.inc.tpl"}>
 	<{include file="common/style.inc.tpl"}>
 </head>
@@ -49,7 +48,7 @@
 <script type="text/javascript">
 (function($){
 	$('#photo_aid').uploader();
-	$('#form')<{if}>.validate_addons($.validates).trigger_error_bags($.error_bags).query();
+	<{call validate selector='#form'}>
 })(jQuery);
 </script>
 </body>
