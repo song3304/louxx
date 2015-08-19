@@ -33,7 +33,7 @@ class AuthController extends Controller
 	public function logout()
 	{
 		Auth::logout();
-		return $this->success('default.success_logout', '');
+		return $this->success_logout(''); // redirect to homepage
 	}
 
 	/**
@@ -56,7 +56,7 @@ class AuthController extends Controller
 		$remember = $request->has('remember');
 		if (Auth::attempt(['username' => $data['username'], 'password' => $data['password']], $remember))
 		{
-			return $this->success_login('');
+			return $this->success_login(''); // redirect to homepage
 		} else {
 			//记录重试次数
 			$throttles && $this->incrementLoginAttempts($request);
