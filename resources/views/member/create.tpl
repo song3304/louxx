@@ -33,8 +33,8 @@
 		<{/foreach}>
 		</div>
 		<div class="form-group">
-			<label for="password_confirmation">上传图片</label>
-			<input type="hidden" class="form-control" name="photo_aid" id="photo_aid" value="0">
+			<label for="avatar_aid">上传图片</label>
+			<input type="hidden" class="form-control" name="avatar_aid" id="avatar_aid" value="0">
 		</div>
 
 		<div class="form-group checkbox">
@@ -47,7 +47,7 @@
 </div>
 <script type="text/javascript">
 (function($){
-	$('#photo_aid').uploader();
+	$('#avatar_aid').uploader();
 	<{call validate selector='#form'}>
 })(jQuery);
 </script>

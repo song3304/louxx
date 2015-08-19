@@ -34,6 +34,10 @@ class Seeds extends Migration
 			'name' => 'owner',
 			'display_name' => 'Owner Group'
 		])->create([
+			'id' => 96,
+			'name' => 'leader',
+			'display_name' => 'Leader Group'
+		])->create([
 			'id' => 1,
 			'name' => 'viewer',
 			'display_name' => 'Viewer Group'

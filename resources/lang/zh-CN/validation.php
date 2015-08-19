@@ -76,7 +76,7 @@ return [
 	"url"              => "[:attribute] 网址格式不正确。",
 	"phone"              => "[:attribute] 格式不正确。",
 	"id_card"              => "[:attribute] 格式不正确。",
-	"not_zero"              => "[:attribute] 不能为0。",
+	"not_zero"              => "[:attribute] 必须有值，或不能为0。",
 
 	/*
 	|--------------------------------------------------------------------------

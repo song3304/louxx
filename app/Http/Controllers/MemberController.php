@@ -48,8 +48,8 @@ class MemberController extends Controller
 		$data = $this->autoValidate($request, 'member.store', $keys);
 
 		unset($data['accept_license']);
-		$uid = User::add($data);
-		return $this->success(NULL, 'member', User::find($uid)->toArray());
+		$user = (new User)->add($data);
+		return $this->success(NULL, 'member', $user->toArray());
 	}
 
 	/**

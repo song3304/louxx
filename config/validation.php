@@ -18,7 +18,7 @@ return [
 			],
 			'gender' => [
 				'name' => '性别',
-				'rules' => 'required|not_zero|fields',
+				'rules' => 'required|not_zero|field',
 			],
 			'avatar_aid' => [
 				'name' => '用户头像',
