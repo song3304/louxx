@@ -14,8 +14,8 @@ class CreateCommonTables extends Migration
 	{
 		Schema::create('fields', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('name', 150); //名称
-			$table->string('extra', 255); //扩展
+			$table->string('text', 150); //名称
+			$table->json('extra', 255); //扩展
 			$table->unsignedInteger('order_index')->default(0)->index(); //排序
 			$table->string('field_class', 50)->index(); //类别
 			$table->timestamps();

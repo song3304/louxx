@@ -6,7 +6,6 @@
 	<meta name="renderer" content="webkit">
 	<meta name="Keywords" content="" />
 	<meta name="Description" content="" />
-	
 	<{include file="common/script.inc.tpl"}>
 	<{include file="common/validate.inc.tpl"}>
 	<{include file="common/uploader.inc.tpl"}>
@@ -30,8 +29,9 @@
 			<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="请再次确认密码...">
 		</div>
 		<div class="form-group radio">
-			<label><input type="radio" class="form-control" name="gender" value="1"> 男</label>
-			<label><input type="radio" class="form-control" name="gender" value="1"> 女</label>
+		<{foreach $_fields.gender as $v}>
+			<label><input type="radio" class="" name="gender" value="<{$v['id']}>"> <{$v['text']}></label>
+		<{/foreach}>
 		</div>
 		<div class="form-group">
 			<label for="password_confirmation">上传图片</label>
@@ -49,7 +49,7 @@
 <script type="text/javascript">
 (function($){
 	$('#photo_aid').uploader();
-	$('#form').validate_addons($.validates).query().trigger_error_bags($.error_bags);
+	$('#form')<{if}>.validate_addons($.validates).trigger_error_bags($.error_bags).query();
 })(jQuery);
 </script>
 </body>

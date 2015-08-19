@@ -16,7 +16,7 @@ return [
 				'name' => '确认密码',
 				'rules' => 'required',
 			],
-			'gender ' => [
+			'gender' => [
 				'name' => '性别',
 				'rules' => 'required|not_zero|fields',
 			],

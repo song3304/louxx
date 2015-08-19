@@ -29,7 +29,7 @@ class MemberController extends Controller
 	 */
 	public function create()
 	{
-		$keys = 'username,password,accept_license';
+		$keys = 'username,password,gender,avatar_aid,accept_license';
 		$validates = $this->getScriptValidate('member.store', $keys);
 		
 		$this->_validates = $validates;
@@ -44,7 +44,7 @@ class MemberController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$keys = 'username,password,accept_license';
+		$keys = 'username,password,gender,avatar_aid,accept_license';
 		$data = $this->autoValidate($request, 'member.store', $keys);
 
 		unset($data['accept_license']);
