@@ -27,6 +27,10 @@ class AuthController extends Controller
 	public function login()
 	{
 		Auth::logout();
+		$keys = [$this->loginUsername(),'password'];
+		$validates = $this->getScriptValidate('member.store', $keys);
+		
+		$this->_validates = $validates;
 		return $this->view('login');
 	}
 
@@ -51,8 +55,8 @@ class AuthController extends Controller
 		if ($throttles && $this->hasTooManyLoginAttempts($request)) 
 			return $this->sendLockoutResponse($request);
 
-
-		$data = $this->tipsValidate($request, 'member.login', [$this->loginUsername(),'password']);
+		$keys = [$this->loginUsername(),'password'];
+		$data = $this->autoValidate($request, 'member.login', $keys);
 		$remember = $request->has('remember');
 		if (Auth::attempt(['username' => $data['username'], 'password' => $data['password']], $remember))
 		{

@@ -14,7 +14,7 @@
 <body>
 <div class="container">
 	<h1 class="page-header">登录</h1>
-	<form action="<{'auth/authenticate_query'|url nofilter}>" method="POST">
+	<form action="<{'auth/authenticate_query'|url nofilter}>" id="form" method="POST">
 		<input type="hidden" name="_token" value="<{csrf_token()}>">
 		<div class="form-group">
 			<label for="username">用户名</label>
@@ -32,5 +32,10 @@
 		<button type="submit" class="btn btn-default">Submit</button>
 	</form>
 </div>
+<script type="text/javascript">
+(function($){
+	<{call validate}>
+})(jQuery);
+</script>
 </body>
 </html>

@@ -28,7 +28,7 @@
 							<div class="row">
 								<!-- Main Title (hidden on small devices for the statistics to fit) -->
 								<div class="col-md-4 col-lg-6 hidden-xs hidden-sm">
-									<h1>欢迎 <strong><{$_user.realname|escape}></strong> <{if $_user.gender==1}>先生<{else if $_user.gender==2}>女士<{/if}><br><small>后台其实也可以很美！</small></h1>
+									<h1>欢迎 <strong><{$_user.nickname}></strong> <{if $_user.gender==1}>先生<{else if $_user.gender==2}>女士<{/if}><br><small>后台其实也可以很美！</small></h1>
 								</div>
 								<!-- END Main Title -->
 
