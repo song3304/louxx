@@ -11,25 +11,34 @@
 |
 */
 
-$hmvc_router = function ($ctrl = 'home', $action = 'index')
+$hmvc_router = function ($ctrl = 'home', $action = 'index') use ($router)
 {
-	$namespace = Route::getCurrentRoute()->getAction()['namespace'];
+	$route = Route::getCurrentRoute();
+	$namespace = $route->getAction()['namespace'];
 	$className = $namespace.'\\'.ucfirst(strtolower($ctrl)).'Controller';
 	!class_exists($className) && $className = 'Addons\\Core\\Controllers\\'.ucfirst(strtolower($ctrl)).'Controller';
 	(!class_exists($className) || !method_exists($className, $action)) && abort(404);
 
 	$class = new ReflectionClass($className);
 	$function = $class->getMethod($action); //ReflectionMethod
+	$route_parameters = $route->resolveMethodDependencies(
+        $route->parametersWithoutNulls(), $function
+    );
 	$parameters = $function->getParameters(); //ReflectionParameter 
+	
 	$_data = array();
 	$count = count($parameters);
 	for ($i=0; $i < $count; $i++)
 	{ 
-		if ($parameters[$i]->getClass())
+		$key = $parameters[$i]->getName();
+		if ( array_key_exists($key, $route_parameters) )
+		{
+			$_data[] = $route_parameters[$key];
+		}
+		/*else if ($parameters[$i]->getClass()) //just in $route_parameters;
 		{
 			$_data[] = $this->app[$parameters[$i]->getClass()->name];
-		} else {
-			$key = $parameters[$i]->getName();
+		}*/ else { //from $_GET/$_POST
 			$default = $parameters[$i]->isDefaultValueAvailable() ? $parameters[$i]->getDefaultValue() : NULL;
 			$_data[] = array_key_exists($key, $_GET) ? Request::input($key) : $default;
 		}
@@ -42,6 +51,11 @@ $hmvc_router = function ($ctrl = 'home', $action = 'index')
 Route::resources([
 	'member' => 'MemberController',
 ]);
+
+Route::bind('user', function($value, $route){
+	return \App\User::find($value);
+});
+
 Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'], function($router) use($hmvc_router) {
 	Route::any('{ctrl?}/{action?}', $hmvc_router);
 });

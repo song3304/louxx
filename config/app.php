@@ -145,8 +145,8 @@ return [
 		App\Providers\AppServiceProvider::class,
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
-		//Barryvdh\Debugbar\ServiceProvider::class,
-		
+		//Debuger
+		Barryvdh\Debugbar\ServiceProvider::class,
 		//验证码
 		Mews\Captcha\CaptchaServiceProvider::class,
 		//Smarty注入模块
