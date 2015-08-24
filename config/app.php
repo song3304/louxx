@@ -41,7 +41,7 @@ return [
 	|
 	*/
 
-	'timezone' => 'UTC',
+	'timezone' => 'Etc/GMT-8',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -146,7 +146,7 @@ return [
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
 		//Debuger
-		Barryvdh\Debugbar\ServiceProvider::class,
+		//Barryvdh\Debugbar\ServiceProvider::class,
 		//验证码
 		Mews\Captcha\CaptchaServiceProvider::class,
 		//Smarty注入模块

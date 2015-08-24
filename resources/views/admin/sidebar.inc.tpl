@@ -72,7 +72,7 @@
 				<li>
 					<a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator"></i><i class="gi gi-user sidebar-nav-icon"></i>会员管理</a>
 					<ul>
-						<li><a href="">会员列表</a></li>
+						<li><a href="<{'admin/member'|url}>">会员列表</a></li>
 						<li><a href="">会员列表</a></li>
 						<li><a href=""><i class="gi gi-plus"></i> 新建会员</a></li>
 					</ul>

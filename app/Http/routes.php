@@ -35,10 +35,10 @@ $hmvc_router = function ($ctrl = 'home', $action = 'index') use ($router)
 		{
 			$_data[] = $route_parameters[$key];
 		}
-		/*else if ($parameters[$i]->getClass()) //just in $route_parameters;
+		else if ($parameters[$i]->getClass()) //just in $route_parameters;
 		{
 			$_data[] = $this->app[$parameters[$i]->getClass()->name];
-		}*/ else { //from $_GET/$_POST
+		} else { //from $_GET/$_POST
 			$default = $parameters[$i]->isDefaultValueAvailable() ? $parameters[$i]->getDefaultValue() : NULL;
 			$_data[] = array_key_exists($key, $_GET) ? Request::input($key) : $default;
 		}
@@ -57,6 +57,10 @@ Route::bind('user', function($value, $route){
 });
 
 Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'], function($router) use($hmvc_router) {
+	Route::resources([
+		'member' => 'MemberController',
+
+	]);
 	Route::any('{ctrl?}/{action?}', $hmvc_router);
 });
 Route::any('{ctrl?}/{action?}', $hmvc_router);

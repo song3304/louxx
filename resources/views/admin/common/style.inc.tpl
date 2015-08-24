@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="<{'static/css/font-glyphicons.min.css'|url}>">
 <!-- <link rel="stylesheet" href="<{'static/css/proui/plugins.css'|url}>"> -->
 
+<link rel="stylesheet" href="<{'static/css/animate.min.css'|url}>">
 <link rel="stylesheet" href="<{'static/css/proui/main.css'|url}>">
 <link rel="stylesheet" href="<{'static/css/proui/themes.css'|url}>">
 <!-- END Stylesheets -->
