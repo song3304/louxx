@@ -5,7 +5,7 @@
 		<!-- Sidebar Content -->
 		<div class="sidebar-content">
 			<!-- Brand -->
-			<a href="<{'shop'|url}>" class="sidebar-brand">
+			<a href="<{'admin'|url}>" class="sidebar-brand">
 				<i class="gi gi-flash"></i><{$_site.title}>
 			</a>
 			<!-- END Brand -->
@@ -13,16 +13,16 @@
 			<!-- User Info -->
 			<div class="sidebar-section sidebar-user clearfix">
 				<div class="sidebar-user-avatar">
-					<a href="<{'shop/member'|url}>">
+					<a href="<{'admin/member'|url}>">
 						<img src="<{'attachment'|url}>?aid=<{$_user.avatar_aid}>" alt="avatar">
 					</a>
 				</div>
 				<div class="sidebar-user-name"><{$_user.realname}></div>
 				<div class="sidebar-user-links">
-					<a href="<{'shop/member'|url}>" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
+					<a href="<{'admin/member'|url}>" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
 					<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Messages"><i class="gi gi-envelope"></i></a>
 					<!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.html in PHP version) -->
-					<a href="<{'shop/member/edit'|url}>" data-toggle="tooltip" data-placement="bottom" title="修改资料"><i class="gi gi-cogwheel"></i></a>
+					<a href="<{'admin/member/edit'|url}>" data-toggle="tooltip" data-placement="bottom" title="修改资料"><i class="gi gi-cogwheel"></i></a>
 					<a href="<{'auth/logout'|url}>" data-toggle="tooltip" data-placement="bottom" title="登出"><i class="gi gi-exit"></i></a>
 				</div>
 			</div>
@@ -69,12 +69,11 @@
 				<li class="sidebar-header">
 					<span class="sidebar-header-title">基本</span>
 				</li>
-				<li>
+				<li name="member">
 					<a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator"></i><i class="gi gi-user sidebar-nav-icon"></i>会员管理</a>
 					<ul>
-						<li><a href="<{'admin/member'|url}>">会员列表</a></li>
-						<li><a href="">会员列表</a></li>
-						<li><a href=""><i class="gi gi-plus"></i> 新建会员</a></li>
+						<li><a href="<{'admin/member'|url}>" name="member-list">会员列表</a></li>
+						<li><a href="<{'admin/member/create'|url}>" name="member-create"><i class="gi gi-plus"></i> 新建会员</a></li>
 					</ul>
 				</li>
 				<li>

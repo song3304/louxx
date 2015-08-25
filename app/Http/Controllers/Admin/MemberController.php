@@ -16,11 +16,56 @@ class MemberController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function index($pagesize = NULL)
+	public function index(Request $request)
 	{
-		is_null($pagesize) && $pagesize = config('site.pagesize.admin.member-list', 20);
-		$this->_user_data = User::paginate($pagesize);
+		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.member-list', $this->site['pagesize']['common']);
+		$this->_table_data = User::paginate($pagesize);
+
 		return $this->view('admin.member.list');
+	}
+
+	public function show($id)
+	{
+		return '';
+	}
+
+	public function create()
+	{
+		$keys = 'username,password,nickname,realname,gender,email,phone,avatar_aid';
+		$this->_data = [];
+		$this->_validates = $this->getScriptValidate('member.store', $keys);
+		return $this->view('admin.member.create');
+	}
+
+	public function edit($id)
+	{
+		$user = User::find($id);
+		if (empty($user))
+			return $this->failure_noexists();
+
+		$keys = 'username,nickname,realname,gender,email,phone,avatar_aid';
+		$this->_validates = $this->getScriptValidate('member.store', $keys);
+		$this->_data = $user;
+		return $this->view('admin.member.edit');
+	}
+
+	public function update(Request $request, $id)
+	{
+		$user = User::find($id);
+		if (empty($user))
+			return $this->failure_noexists();
+
+		//modify the password
+		if (!empty($request->input('password')))
+		{
+			$data = $this->autoValidate($request, 'member.store', 'password');
+			$data['password'] = bcrypt($data['password']);
+			$user->update($data);
+		}
+		$keys = 'nickname,realname,gender,email,phone,avatar_aid';
+		$data = $this->autoValidate($request, 'member.store', $keys);
+		$user->update($data);
+		return $this->success();
 	}
 
 	public function destroy(Request $request, $id)

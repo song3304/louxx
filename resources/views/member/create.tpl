@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<{include file="common/title.inc.tpl"}>
-	<meta name="renderer" content="webkit">
-	<meta name="Keywords" content="" />
-	<meta name="Description" content="" />
-	<{include file="common/script.inc.tpl"}>
+<{extends file="extends/main.block.tpl"}>
+
+<{block "head-scripts-plus"}>
 	<{include file="common/uploader.inc.tpl"}>
-	<{include file="common/style.inc.tpl"}>
-</head>
-<body>
+	<script type="text/javascript">
+	(function($){
+		$().ready(function(){
+			$('#avatar_aid').uploader();
+			<{call validate selector='#form'}>
+		});
+	})(jQuery);
+	</script>
+<{/block}>
+
+<{block "body-container"}>
 <div class="container">
 	<h1 class="page-header">注册</h1>
 	<form action="<{'member'|url nofilter}>" method="POST" autocomplete="off" id="form">
@@ -45,11 +47,4 @@
 		<button type="submit" class="btn btn-default">注册</button>
 	</form>
 </div>
-<script type="text/javascript">
-(function($){
-	$('#avatar_aid').uploader();
-	<{call validate selector='#form'}>
-})(jQuery);
-</script>
-</body>
-</html>
+<{/block}>

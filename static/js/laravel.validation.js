@@ -2,7 +2,7 @@
 	//给validator设置默认值
 	if ($.validator)
 	$.validator.setDefaults({
-		errorClass: "help-block validate",
+		errorClass: "help-block validate animated slideInDown",
 		errorElement: "span",
 		highlight:function(element, errorClass, validClass) {
 			$(element).closest('div').removeClass('has-success').addClass('has-error');

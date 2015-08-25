@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
+<{extends file="extends/main.block.tpl"}>
 
-	<{include file="common/title.inc.tpl"}>
-	<meta name="renderer" content="webkit">
-	<meta name="Keywords" content="" />
-	<meta name="Description" content="" />
-	
-	<{include file="common/script.inc.tpl"}>
-	<{include file="common/style.inc.tpl"}>
-</head>
-<body>
+<{block "head-scripts-plus"}>
+	<script type="text/javascript">
+	(function($){
+		$().ready(function(){
+			<{call validate selector='#form'}>
+		});
+	})(jQuery);
+	</script>
+<{/block}>
+
+<{block "body-container"}>
 <div class="container">
 	<h1 class="page-header">登录</h1>
 	<form action="<{'auth/authenticate_query'|url nofilter}>" id="form" method="POST">
@@ -29,13 +28,7 @@
 				<input type="checkbox" name="remember" value="true"> 记住我
 			</label>
 		</div>
-		<button type="submit" class="btn btn-default">Submit</button>
+		<button type="submit" class="btn btn-default">登录</button>
 	</form>
 </div>
-<script type="text/javascript">
-(function($){
-	<{call validate}>
-})(jQuery);
-</script>
-</body>
-</html>
+<{/block}>
