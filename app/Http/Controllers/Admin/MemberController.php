@@ -20,7 +20,8 @@ class MemberController extends Controller
 	{
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.member-list', $this->site['pagesize']['common']);
 		
-		$this->_table_data = User::paginate($pagesize);
+		$this->_pagesize = $pagesize;
+		//$this->_table_data = User::paginate($pagesize);
 		return $this->view('admin.member.datatable');
 	}
 
@@ -39,6 +40,10 @@ class MemberController extends Controller
 		foreach ($order as $v)
 			!empty($columns[$v['column']]['data']) && $builder->orderBy($columns[$v['column']]['data'], $v['dir']);
 		$data = $builder->paginate($pagesize, ['*'], 'page', $page)->toArray();
+
+		array_walk($data['data'], function(&$v){
+			$v['gender'] = model_autohook($v['gender'], 'field');
+		});
 		
 		$data['recordsTotal'] = User::count();
 		$data['recordsFiltered'] = $data['total'];

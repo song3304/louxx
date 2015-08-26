@@ -31,6 +31,8 @@
 
 <{block "table-tbody"}><{/block}>
 
+<{block "datatable-config-pageLength"}><{$_pagesize}><{/block}>
+
 <{block "datatable-columns-plus"}>
 var columns_plus = [
 	{'data': "avatar_aid", orderable: false, 'render': function(data, type, full){

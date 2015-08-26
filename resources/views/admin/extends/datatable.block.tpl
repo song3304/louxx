@@ -16,7 +16,8 @@
 			name: '<{block "name"}><{/block}>',
 			columns: [],
 			order: [],
-			searchDelay: <{block "datatable-config-searchDelay"}>500<{/block}>
+			searchDelay: <{block "datatable-config-searchDelay"}>800<{/block}>,
+			pageLength: <{block "datatable-config-pageLength"}>25<{/block}>
 		};
 		<{block "datatable-columns-id"}>
 		var columns_id = [
