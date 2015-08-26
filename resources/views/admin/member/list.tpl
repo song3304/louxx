@@ -1,4 +1,4 @@
-<{extends file="admin/extends/list.block.tpl"}>
+<{extends file="admin/extends/datatable.block.tpl"}>
 
 <{block "title"}>用户<{/block}>
 
@@ -23,9 +23,9 @@
 <td><{$item->username}></td>
 <td><{$item->nickname}></td>
 <td><{$item->realname}></td>
-<td><span class="label label-primary"><{$item->gender}></span></td>
+<td><span class="label label-primary"><{$item->gender|hook:field|og:text}></span></td>
 <td><{$item->phone}></td>
 <td></td>
 <{/block}>
 
-<{block "table-td-option-delete-confirm"}>您确定删除这个用户：<{$item->username}>吗？<{/block}>
+<{block "table-td-options-delete-confirm"}>您确定删除这个用户：<{$item->username}>吗？<{/block}>

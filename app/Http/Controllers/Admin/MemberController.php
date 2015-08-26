@@ -19,9 +19,36 @@ class MemberController extends Controller
 	public function index(Request $request)
 	{
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.member-list', $this->site['pagesize']['common']);
+		
 		$this->_table_data = User::paginate($pagesize);
+		return $this->view('admin.member.datatable');
+	}
 
-		return $this->view('admin.member.list');
+	public function data(Request $request)
+	{
+		$pagesize = $request->input('length') ?: config('site.pagesize.admin.member-list', $this->site['pagesize']['common']);
+		$page = ceil(($request->input('start') ?: 0) / $pagesize) + 1;
+
+		$columns = $request->input('columns') ?: [];
+		$order = $request->input('order') ?: [];
+		$search = $request->input('search') ?: [];
+
+		$builder = (new User)->newQuery();
+
+		!empty($search['value']) && $builder->where('nickname', 'LIKE', '%'+$search['value']+'%');
+		foreach ($order as $v)
+			!empty($columns[$v['column']]['data']) && $builder->orderBy($columns[$v['column']]['data'], $v['dir']);
+		$data = $builder->paginate($pagesize, ['*'], 'page', $page)->toArray();
+		
+		$data['recordsTotal'] = User::count();
+		$data['recordsFiltered'] = $data['total'];
+		return $this->success('', FALSE, $data);
+	}
+
+	public function export(Request $request)
+	{
+		$data = User::all()->toArray();
+		return $this->success('', FALSE, $data);
 	}
 
 	public function show($id)

@@ -12,3 +12,10 @@
 <script src="<{'static/js/magnific-popup/jquery.magnific-popup.min.js'|url}>"></script>
 <link rel="stylesheet" href="<{'static/js/magnific-popup/magnific-popup.css'|url}>">
 <script src="<{'static/js/proui/app.js'|url}>"></script>
+<script type="text/javascript">
+(function($){
+	//Theme auto
+	var cookie_theme = $.cookie('proui-theme');
+	if (cookie_theme)  $('<link id="theme-link" rel="stylesheet" href="' + cookie_theme + '">').appendTo('head');
+})(jQuery);
+</script>

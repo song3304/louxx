@@ -80,46 +80,51 @@
 		<thead>
 			<tr>
 			<{block "table-th"}>
-				<th class="text-left"><input type="checkbox" id="checkAll" > #</th>
+				<{block "table-th-id"}><th class="text-left"><input type="checkbox" id="checkAll" > #</th><{/block}>
 				<{block "table-th-plus"}><{/block}>
-				<{block "table-th-timestamp"}>
+				<{block "table-th-timestamps"}>
 				<th>添加时间</th>
 				<th>最后更新</th>
 				<{/block}>
-				<{block "table-th-option"}>
+				<{block "table-th-options"}>
 				<th class="text-center">操作</th>
 				<{/block}>
 			<{/block}>
 			</tr>
 		</thead>
 		<tbody>
+			<{block "table-tbody"}>
 			<{foreach $_table_data as $item}>
 			<tr id="line-<{$item->id}>">
 			<{block "table-td"}>
-				<td class="text-left"><input type="checkbox" name="id[]" value="<{$item->id}>">	<{$item->id}></td>
+				<{block "table-td-id"}><td class="text-left"><input type="checkbox" name="id[]" value="<{$item->id}>">	<{$item->id}></td><{/block}>
 				<{block "table-td-plus"}><{/block}>
-				<{block "table-td-timestamp"}>
+				<{block "table-td-timestamps"}>
 				<td><{$item->created_at->format('Y-m-d H:i')}></td>
 				<td><{$item->updated_at->format('Y-m-d H:i')}></td>
 				<{/block}>
-				<{block "table-td-option"}>
+				<{block "table-td-options"}>
 				<td class="text-center">
 					<div class="btn-group">
 						<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-						<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>" method="delete" confirm="<{block "table-td-option-delete-confirm"}>您确定删除这项：<{$item->id}>吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+						<{block "table-td-options-plus"}><{/block}>
+						<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：<{$item->id}>吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
 					</div>
 				</td>
 				<{/block}>
 			<{/block}>
 			</tr>
 			<{/foreach}>
+			<{/block}>
 		</tbody>
 	</table>
+	<{block "table-foot"}>
 	<div class="row">
 		<div class="col-sm-5 hidden-xs">
 			<span><{$_table_data->firstItem()}> - <{$_table_data->lastItem()}> / <{$_table_data->total()}></span>
 		</div>
 		<div class="col-sm-7 col-xs-12 clearfix"><{$_table_data->render() nofilter}></div>
 	</div>
+	<{/block}>
 </div>
 <{/block}>

@@ -57,6 +57,11 @@ Route::bind('user', function($value, $route){
 });
 
 Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'], function($router) use($hmvc_router) {
+	//admin/ctrl/data
+	Route::any('{ctrl}/{action}/{of}', function($ctrl, $action, $of) use($hmvc_router) {
+		app('request')->offsetSet('of', $of);
+		return $hmvc_router($ctrl, $action);
+	});
 	Route::resources([
 		'member' => 'MemberController',
 

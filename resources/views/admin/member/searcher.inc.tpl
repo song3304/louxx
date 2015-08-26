@@ -1,5 +1,5 @@
 <!-- Form Content -->
-<form action="" method="GET" class="form-bordered">
+<form action="<{'admin'|url}>/<{block "name"}><{/block}>/" method="GET" class="form-bordered">
 	<div class="form-group col-sm-6">
 		<label for="username">用户名</label>
 		<input type="email" id="username" name="username" class="form-control" placeholder="请输入关键词..">

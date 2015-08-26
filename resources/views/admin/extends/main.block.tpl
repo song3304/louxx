@@ -16,12 +16,17 @@
 		<{include file="common/icons.inc.tpl"}>
 	<{/block}>
 	<{block head-styles}>
+		<{block "head-styles-before"}><{/block}>
 		<{include file="admin/common/styles.inc.tpl"}>
+		<{block "head-styles-plus"}><{/block}>
+		<{block "head-styles-after"}><{/block}>
 	<{/block}>
 	<{block head-scripts}>
+		<{block "head-scripts-before"}><{/block}>
 		<{include file="admin/common/scripts.inc.tpl"}>
 		<{block "head-scripts-validate"}><{include file="common/validate.inc.tpl"}><{/block}>
 		<{block "head-scripts-plus"}><{/block}>
+		<{block "head-scripts-after"}><{/block}>
 	<{/block}>
 	<{block "head-plus"}><{/block}>
 <{/block}>
