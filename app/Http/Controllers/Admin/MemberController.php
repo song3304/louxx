@@ -35,7 +35,7 @@ class MemberController extends Controller
 
 		$builder = (new User)->newQuery();
 
-		!empty($search['value']) && $builder->where('nickname', 'LIKE', '%'+$search['value']+'%');
+		!empty($search['value']) && $builder->where('nickname', 'LIKE', '%'.$search['value'].'%');
 		foreach ($order as $v)
 			!empty($columns[$v['column']]['data']) && $builder->orderBy($columns[$v['column']]['data'], $v['dir']);
 		$data = $builder->paginate($pagesize, ['*'], 'page', $page)->toArray();

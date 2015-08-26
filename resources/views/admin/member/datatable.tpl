@@ -33,7 +33,7 @@
 
 <{block "datatable-columns-plus"}>
 var columns_plus = [
-	{'data': "avatar_aid", 'render': function(data, type, full){
+	{'data': "avatar_aid", orderable: false, 'render': function(data, type, full){
 		return '<img src="<{'attachment/resize'|url}>?id='+data+'&width=80&height=80" alt="avatar" class="img-circle">';
 	}},
 	{'data': 'username'},
