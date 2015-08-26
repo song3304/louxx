@@ -28,7 +28,7 @@ class MemberController extends Controller
 	public function data(Request $request)
 	{
 		$pagesize = $request->input('length') ?: config('site.pagesize.admin.member-list', $this->site['pagesize']['common']);
-		$page = ceil(($request->input('start') ?: 0) / $pagesize) + 1;
+		$page = $request->input('page') ?: ceil(($request->input('start') ?: 0) / $pagesize) + 1;
 
 		$columns = $request->input('columns') ?: [];
 		$order = $request->input('order') ?: [];

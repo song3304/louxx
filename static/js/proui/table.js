@@ -48,7 +48,7 @@ $().ready(function(){
 					var i = e.oLanguage.oPaginate,
 					r = function(t) {
 						t.preventDefault(),
-						e.oApi._fnPageChange(e, t.data.action) && n(e)
+						e.oApi._fnPageChange(e, t.data.action) && n(e);
 					};
 					jQuery(t).append('<ul class="pagination pagination-sm remove-margin"><li class="first disabled"><a href="javascript:void(0)"><i class="fa fa-step-backward"></i> ' + i.sFirst + '</a></li><li class="prev disabled"><a href="javascript:void(0)"><i class="fa fa-chevron-left"></i> ' + i.sPrevious + '</a></li>' + '<li class="next disabled"><a href="javascript:void(0)">' + i.sNext + ' <i class="fa fa-chevron-right"></i></a></li><li class="last disabled"><a href="javascript:void(0)">' + i.sLast + ' <i class="fa fa-step-forward"></i></a></li>' + "</ul>");
 					var o = jQuery('a', t);
@@ -138,6 +138,10 @@ $().ready(function(){
 			'createdRow': function( row, data, dataIndex ) {
 				//bind option's event
 				options_query.call(this, row);
+			},
+			'drawCallback': function( settings ) {
+				$.hash().set('datatable-length', settings._iDisplayLength ).location();
+				$.hash().set('datatable-start', settings._iDisplayStart).location();
 			},
 			'order': $.datatable_config.order,
 			'searchDelay': $.datatable_config.searchDelay
