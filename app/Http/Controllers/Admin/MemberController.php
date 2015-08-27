@@ -8,9 +8,11 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use Addons\Core\Controllers\AdminTrait;
 
 class MemberController extends Controller
 {
+	use AdminTrait;
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -18,41 +20,29 @@ class MemberController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.member-list', $this->site['pagesize']['common']);
+		$user = new User;
+		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		
 		$this->_pagesize = $pagesize;
-		//$this->_table_data = User::paginate($pagesize);
+		//$this->_table_data = $user->newQuery()->paginate($pagesize);
 		return $this->view('admin.member.datatable');
 	}
 
 	public function data(Request $request)
 	{
-		$pagesize = $request->input('length') ?: config('site.pagesize.admin.member-list', $this->site['pagesize']['common']);
-		$page = $request->input('page') ?: ceil(($request->input('start') ?: 0) / $pagesize) + 1;
-
-		$columns = $request->input('columns') ?: [];
-		$order = $request->input('order') ?: [];
-		$search = $request->input('search') ?: [];
-
-		$builder = (new User)->newQuery();
-
-		!empty($search['value']) && $builder->where('nickname', 'LIKE', '%'.$search['value'].'%');
-		foreach ($order as $v)
-			!empty($columns[$v['column']]['data']) && $builder->orderBy($columns[$v['column']]['data'], $v['dir']);
-		$data = $builder->paginate($pagesize, ['*'], 'page', $page)->toArray();
-
-		array_walk($data['data'], function(&$v){
+		$user = new User;
+		$data = $this->_getData($request, $user, function(&$v){
 			$v['gender'] = model_autohook($v['gender'], 'field');
-		});
-		
-		$data['recordsTotal'] = User::count();
-		$data['recordsFiltered'] = $data['total'];
+		});		
 		return $this->success('', FALSE, $data);
 	}
 
 	public function export(Request $request)
 	{
-		$data = User::all()->toArray();
+		$user = new User;
+		$data = $this->_getExport($request, $user, function(&$v){
+			$v['gender'] = model_autohook($v['gender'], 'field');
+		});	
 		return $this->success('', FALSE, $data);
 	}
 

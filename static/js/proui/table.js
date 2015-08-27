@@ -4,7 +4,7 @@ $().ready(function(){
 		$('a[method="delete"]', obj).query(function(json){
 			if (json.result == 'success' && json.data.id) {
 				if ($.datatable_config && $.datatable_config.datatable)
-					$.datatable_config.datatable.ajax.reload(null, true);
+					$.datatable_config.datatable.ajax.reload(null, false);
 				else
 					json.data.id.forEach(function(id){
 						$('#line-'+id).fadeOut(function(){
@@ -111,6 +111,33 @@ $().ready(function(){
 			'sLengthSelect': 'form-control'
 		});
 
+		$.datatable_config.encode = function(settings){
+			var json = {
+				displayStart: settings._iDisplayStart,
+				pageLength: settings._iDisplayLength,
+				order: []
+			};
+			settings.aLastSort.forEach(function(v){
+				json.order.push([v['col'], v['dir']]);
+			});
+			var hash = JSON.stringify(json);
+			$.hash().set('datatable', hash).location();
+			return true;
+		};
+
+		$.datatable_config.decode = function(){
+			var hash = $.hash().get('datatable');
+			if (hash)
+			{
+				var json = $.parseJSON(hash);
+				if (json) 
+					$.datatable_config = $.extend($.datatable_config, json);
+			}
+			return true;
+		};
+
+		$.datatable_config.decode();
+
 		$.datatable_config.datatable = $('#datatable').DataTable({
 			'ajax': {
 				url: $.baseuri+'admin/'+$.datatable_config.name+'/data/json',
@@ -133,18 +160,20 @@ $().ready(function(){
 			'processing': true,
 			'deferRender': true, //延时绘制
 			'serverSide': true, //服务器端
+			'displayStart': $.datatable_config.displayStart,
 			'pageLength': $.datatable_config.pageLength,
+			'order': $.datatable_config.order,
 			'columns': $.datatable_config.columns,
+			'searchDelay': $.datatable_config.searchDelay,
 			'createdRow': function( row, data, dataIndex ) {
 				//bind option's event
 				options_query.call(this, row);
 			},
 			'drawCallback': function( settings ) {
-				$.hash().set('datatable-length', settings._iDisplayLength ).location();
-				$.hash().set('datatable-start', settings._iDisplayStart).location();
+				$.datatable_config.encode(settings);
 			},
-			'order': $.datatable_config.order,
-			'searchDelay': $.datatable_config.searchDelay
+			'stateSave': true,
+			'stateDuration': -1
 		});
 		$('.dataTables_filter input').attr('placeholder', '检索ID');
 	}
