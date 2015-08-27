@@ -10,7 +10,6 @@
 (function($){
 	$().ready(function(){
 		$('[name="<{block "name"}><{/block}>-list"]').addClass('active').closest('li[name="<{block "name"}><{/block}>"]').addClass('active');
-		<{block "inline-script-plus"}><{/block}>
 		
 		$.datatable_config = {
 			name: '<{block "name"}><{/block}>',
@@ -61,8 +60,7 @@
 		if (order)
 			order.forEach(function(v){
 				$.datatable_config.order.push(v);
-			});
-		
+			});	
 	});
 })(jQuery);
 </script>
