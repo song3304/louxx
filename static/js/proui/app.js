@@ -66,16 +66,16 @@ var App = function($) {
 		$('[data-toggle="tabs"] a, .enable-tabs a').click(function(e){ e.preventDefault(); $(this).tab('show'); });
 
 		// Initialize Tooltips
-		$('[data-toggle="tooltip"], .enable-tooltip').tooltip({container: 'body', animation: false});
+		if ($.fn.tooltip) $('[data-toggle="tooltip"], .enable-tooltip').tooltip({container: 'body', animation: false});
 
 		// Initialize Popovers
-		$('[data-toggle="popover"], .enable-popover').popover({container: 'body', animation: true});
+		if ($.fn.popover) $('[data-toggle="popover"], .enable-popover').popover({container: 'body', animation: true});
 
 		// Initialize single image lightbox
-		$('[data-toggle="lightbox-image"]').magnificPopup({type: 'image', image: {titleSrc: 'title'}});
+		if ($.fn.magnificPopup) $('[data-toggle="lightbox-image"]').magnificPopup({type: 'image', image: {titleSrc: 'title'}});
 
 		// Initialize image gallery lightbox
-		$('[data-toggle="lightbox-gallery"]').magnificPopup({
+		if ($.fn.magnificPopup) $('[data-toggle="lightbox-gallery"]').magnificPopup({
 			delegate: 'a.gallery-link',
 			type: 'image',
 			gallery: {
@@ -88,32 +88,32 @@ var App = function($) {
 			},
 			image: {titleSrc: 'title'}
 		});
-/*
+
 		// Initialize Editor
-		$('.textarea-editor').wysihtml5();
+		if ($.fn.wysihtml5) $('.textarea-editor').wysihtml5();
 
 		// Initialize Chosen
-		$('.select-chosen').chosen({width: "100%"});
+		if ($.fn.chosen) $('.select-chosen').chosen({width: "100%"});
 
 		// Initialize Select2
-		$('.select-select2').select2();
+		if ($.fn.select2) $('.select-select2').select2();
 
 		// Initialize Slider for Bootstrap
-		$('.input-slider').slider();
+		if ($.fn.slider) $('.input-slider').slider();
 
 		// Initialize Tags Input
-		$('.input-tags').tagsInput({ width: 'auto', height: 'auto'});
+		if ($.fn.tagsInput) $('.input-tags').tagsInput({ width: 'auto', height: 'auto'});
 
 		// Initialize Datepicker
-		$('.input-datepicker, .input-daterange').datepicker({weekStart: 1});
-		$('.input-datepicker-close').datepicker({weekStart: 1}).on('changeDate', function(e){ $(this).datepicker('hide'); });
+		if ($.fn.datepicker) $('.input-datepicker, .input-daterange').datepicker({weekStart: 1});
+		if ($.fn.datepicker) $('.input-datepicker-close').datepicker({weekStart: 1}).on('changeDate', function(e){ $(this).datepicker('hide'); });
 
 		// Initialize Timepicker
-		$('.input-timepicker').timepicker({minuteStep: 1,showSeconds: true,showMeridian: true});
-		$('.input-timepicker24').timepicker({minuteStep: 1,showSeconds: true,showMeridian: false});
+		if ($.fn.timepicker) $('.input-timepicker').timepicker({minuteStep: 1,showSeconds: true,showMeridian: true});
+		if ($.fn.timepicker) $('.input-timepicker24').timepicker({minuteStep: 1,showSeconds: true,showMeridian: false});
 
 		// Easy Pie Chart
-		$('.pie-chart').easyPieChart({
+		if ($.fn.easyPieChart) $('.pie-chart').easyPieChart({
 			barColor: $(this).data('bar-color') ? $(this).data('bar-color') : '#777777',
 			trackColor: $(this).data('track-color') ? $(this).data('track-color') : '#eeeeee',
 			lineWidth: $(this).data('line-width') ? $(this).data('line-width') : 3,
@@ -123,7 +123,7 @@ var App = function($) {
 		});
 
 		// Initialize Placeholder
-		$('input, textarea').placeholder();*/
+		if ($.fn.placeholder) $('input, textarea').placeholder();
 	};
 
 	/* Page Loading functionality */

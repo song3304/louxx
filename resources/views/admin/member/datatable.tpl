@@ -4,7 +4,7 @@
 由于extends中无法使用if/include，所以需要将公共Block均写入list.tpl、datatable.tpl
 -->
 
-<{block "title"}>用户<{$_table_block}><{/block}>
+<{block "title"}>用户<{/block}>
 
 <{block "name"}>member<{/block}>
 
@@ -24,7 +24,7 @@
 
 <!-- DataTable的Block -->
 
-<{block "datatable-config-pageLength"}><{$_table_data->perPage()}><{/block}>
+<{block "datatable-config-pageLength"}><{$_pagesize}><{/block}>
 
 <{block "datatable-columns-plus"}>
 var columns_plus = [
@@ -35,7 +35,7 @@ var columns_plus = [
 	{'data': 'nickname'},
 	{'data': 'realname'},
 	{'data': 'gender', 'render': function(data, type, full){
-		return '<span class="label label-primary">'+data.text+'</span>';
+		return '<span class="label label-primary">'+data.title+'</span>';
 	}},
 	{'data': 'phone'},
 	{'data': null}

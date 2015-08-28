@@ -27,8 +27,9 @@ class MemberController extends Controller
 
 		//view's variant
 		$this->_base = $base;
+		$this->_pagesize = $pagesize;
 		$this->_filters = $this->_getFilters($request, $builder);
-		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['*'], ['base' => $base]) : $builder->paginate($pagesize);
+		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['*'], ['base' => $base]) : [];
 		return $this->view('admin.member.'. ($base ? 'list' : 'datatable'));
 	}
 
@@ -45,6 +46,19 @@ class MemberController extends Controller
 	public function export(Request $request)
 	{
 		$user = new User;
+		$page = $request->input('page') ?: 0;
+		$pagesize = $request->input('pagesize') ?: config('site.pagesize.export', 1000);
+		$total = $user::count();
+
+		if (empty($page)){
+			$this->_of = $request->input('of');
+			$this->_table = $user->getTable();
+			$this->_total = $total;
+			$this->_pagesize = $pagesize > $total ? $total : $pagesize;
+			return $this->view('admin/member/export');
+		}
+
+		$builder = $user->newQuery()->with('gender');
 		$data = $this->_getExport($request, $builder, function(&$v){
 			$v['gender'] = !empty($v['gender']) ? $v['gender']['title'] : NULL;
 		});

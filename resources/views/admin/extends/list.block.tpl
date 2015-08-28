@@ -2,9 +2,9 @@
 
 <{block "head-scripts-plus"}>
 <script src="<{'static/js/proui/table.js'|url}>"></script>
-<script language="javascript" src="<{'static/js/DatePicker/WdatePicker.js'|url}>"></script>
+<script src="<{'static/js/DatePicker/WdatePicker.js'|url}>"></script>
 
-<script type="text/javascript">
+<script>
 (function($){
 	$().ready(function(){
 		$('[name="<{block "name"}><{/block}>-list"]').addClass('active').closest('li[name="<{block "name"}><{/block}>"]').addClass('active');

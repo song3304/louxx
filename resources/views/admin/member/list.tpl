@@ -4,7 +4,7 @@
 由于extends中无法使用if/include，所以需要将公共Block均写入list.tpl、datatable.tpl
 -->
 
-<{block "title"}>用户<{$_table_block}><{/block}>
+<{block "title"}>用户<{/block}>
 
 <{block "name"}>member<{/block}>
 
@@ -29,7 +29,7 @@
 <td><{$item->username}></td>
 <td><{$item->nickname}></td>
 <td><{$item->realname}></td>
-<td><span class="label label-primary"><{$item->getRelation('gender')|model:'text'}></span></td>
+<td><span class="label label-primary"><{$item->getRelation('gender')|model:'title'}></span></td>
 <td><{$item->phone}></td>
 <td></td>
 <{/block}>

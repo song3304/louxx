@@ -1,7 +1,7 @@
 <{extends file="admin/extends/main.block.tpl"}>
 
 <{block "head-scripts-plus"}>
-<script type="text/javascript">
+<script>
 (function($){
 	$().ready(function(){
 		<{call validate selector='#form'}>

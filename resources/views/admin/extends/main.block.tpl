@@ -28,6 +28,11 @@
 		<{block "head-scripts-plus"}><{/block}>
 		<{block "head-scripts-after"}><{/block}>
 	<{/block}>
+
+	<{block "head-ui"}>
+	<{include file="admin/common/ui.inc.tpl"}>
+	<{/block}>
+	
 	<{block "head-plus"}><{/block}>
 <{/block}>
 </head>
@@ -52,7 +57,7 @@
 				</div>
 				<ul class="breadcrumb breadcrumb-top">
 					<li><a href="<{'admin'|url}>"><{$_site.title}></a></li>
-					<li class="active">后台首页</li>
+					<li class="active">后台</li>
 				</ul>
 				<!-- END Form Header -->
 				<{/block}>

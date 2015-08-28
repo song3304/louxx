@@ -5,9 +5,9 @@
 <{/block}>
 
 <{block "head-scripts-plus"}>
-<script language="javascript" src="<{'static/js/DatePicker/WdatePicker.js'|url}>"></script>
+<script src="<{'static/js/DatePicker/WdatePicker.js'|url}>"></script>
 <script src="<{'static/js/datatable/jquery.dataTables.min.js'|url}>"></script>
-<script type="text/javascript">
+<script>
 (function($){
 	$().ready(function(){
 		$('[name="<{block "name"}><{/block}>-list"]').addClass('active').closest('li[name="<{block "name"}><{/block}>"]').addClass('active');
