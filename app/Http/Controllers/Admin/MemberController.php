@@ -21,26 +21,32 @@ class MemberController extends Controller
 	public function index(Request $request)
 	{
 		$user = new User;
+		$builder = $user->newQuery();
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
-		
-		$this->_pagesize = $pagesize;
-		//$this->_table_data = $user->newQuery()->paginate($pagesize);
-		return $this->view('admin.member.datatable');
+		$base = boolval($request->input('base')) ?: false;
+
+		//view's variant
+		$this->_base = $base;
+		$this->_filters = $this->_getFilters($request, $builder);
+		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['*'], ['base' => $base]) : $builder->paginate($pagesize);
+		return $this->view('admin.member.'. ($base ? 'list' : 'datatable'));
 	}
 
 	public function data(Request $request)
 	{
 		$user = new User;
-		$data = $this->_getData($request, $user, function(&$v){
+		$data = $this->_getData($request, $user->newQuery(), function(&$v){
 			$v['gender'] = model_autohook($v['gender'], 'field');
-		});		
+		});
+		$data['recordsTotal'] = $user->newQuery()->count();
+		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
 	}
 
 	public function export(Request $request)
 	{
 		$user = new User;
-		$data = $this->_getExport($request, $user, function(&$v){
+		$data = $this->_getExport($request, $user->newQuery(), function(&$v){
 			$v['gender'] = model_autohook($v['gender'], 'field');
 		});	
 		return $this->success('', FALSE, $data);

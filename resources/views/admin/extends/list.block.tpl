@@ -2,6 +2,8 @@
 
 <{block "head-scripts-plus"}>
 <script src="<{'static/js/proui/table.js'|url}>"></script>
+<script language="javascript" src="<{'static/js/DatePicker/WdatePicker.js'|url}>"></script>
+
 <script type="text/javascript">
 (function($){
 	$().ready(function(){
@@ -34,6 +36,11 @@
 <div class="block-title">
 	<h2 class="pull-left"><strong><{block "title"}><{/block}>列表</strong> 检索</h2>
 	<div class="block-options pull-right">
+		<{if $_base}>
+		<a href="<{'admin'|url}>/<{block "name"}><{/block}>?base=0" class="btn btn-alt btn-sm btn-warning enable-tooltip" title="点击切换到「功能视图」，可排序、选择行数等" data-original-title="点击切换到「功能视图」，可排序、选择行数等">功能视图</a>
+		<{else}>
+		<a href="<{'admin'|url}>/<{block "name"}><{/block}>?base=1" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="数据读取失败时，请点击切换到「基本视图」" data-original-title="数据读取失败时，请点击切换到「基本视图」">基本视图</a>
+		<{/if}>
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示" data-original-title="折叠/展示"><i class="fa fa-arrows-v"></i></a>
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换" data-original-title="全屏切换"><i class="fa fa-desktop"></i></a>
 		<!-- <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary" data-toggle="block-hide"><i class="fa fa-times"></i></a> -->
@@ -72,7 +79,7 @@
 <{block "block-content"}>
 <div class="block-content">
 <!-- DataTable Content -->
-<{block "searcher"}><{/block}>
+<{block "filter"}><{/block}>
 <!-- END DataTable Content -->
 </div>
 <div class="table-responsive">

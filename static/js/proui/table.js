@@ -85,7 +85,7 @@ $().ready(function(){
 			}
 		});
 		$.extend(true, $.fn.dataTable.defaults, {
-			'dom': "<'row'<'col-sm-6 col-xs-5'l><'col-sm-6 col-xs-7'f><'clearfix'>r>t<'row'<'col-sm-5 hidden-xs'i><'col-sm-7 col-xs-12 clearfix'p>>",
+			'dom': "<'row'<'col-sm-6 col-xs-5'l><'col-sm-6 col-xs-7 search-filter'f><'clearfix'>r>t<'row'<'col-sm-5 hidden-xs'i><'col-sm-7 col-xs-12 clearfix'p>>",
 			'pagingType': 'bootstrap',
 			'language': {
 				'lengthMenu': '_MENU_',
@@ -143,20 +143,25 @@ $().ready(function(){
 				url: $.baseuri+'admin/'+$.datatable_config.name+'/data/json',
 				timeout: 20 * 1000,
 				type: 'POST',
+				data: function(d){
+					return $.extend({}, d, {
+						filter: $.deparam(window.location.search.toString().replace(/^\?/,''))
+					});
+				},
 				dataSrc: function(json){
-					if (json.result == 'success')
-					{
+					if (json.result == 'success') {
 						json.recordsTotal = json.data.recordsTotal;
 						json.recordsFiltered = json.data.recordsFiltered;
 						json.data.data.forEach(function(v, k){v['DT_RowId'] = 'line-' + (v['id'] ? v['id'] : k);});
 						return json.data.data;
 					}
-						
 					 else 
 						$.showtips(json);
 					return [];
 				}
 			},
+			'autoWidth': false,
+			'searching': false,
 			'processing': true,
 			'deferRender': true, //延时绘制
 			'serverSide': true, //服务器端
@@ -171,9 +176,9 @@ $().ready(function(){
 			},
 			'drawCallback': function( settings ) {
 				$.datatable_config.encode(settings);
-			},
+			}/*,
 			'stateSave': true,
-			'stateDuration': -1
+			'stateDuration': -1*/
 		});
 		$('.dataTables_filter input').attr('placeholder', '检索ID');
 	}

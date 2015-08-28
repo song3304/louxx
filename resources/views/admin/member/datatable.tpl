@@ -1,22 +1,15 @@
 <{extends file="admin/extends/datatable.block.tpl"}>
+<!-- 
+公共Block 
+由于extends中无法使用if/include，所以需要将公共Block均写入list.tpl、datatable.tpl
+-->
 
-<{block "title"}>用户<{/block}>
+<{block "title"}>用户<{$_table_block}><{/block}>
 
 <{block "name"}>member<{/block}>
 
-<{block "head-scripts-after"}>
-<script type="text/javascript">
-(function($){
-	$().ready(function(){
-		$('.dataTables_filter input').attr('placeholder', '检索用户昵称');
-	});
-})(jQuery);
-</script>
-<{/block}>
-
-
-<{block "searcher"}>
-<{include file="admin/member/searcher.inc.tpl"}>
+<{block "filter"}>
+<{include file="admin/member/filters.inc.tpl"}>
 <{/block}>
 
 <{block "table-th-plus"}>
@@ -29,9 +22,9 @@
 <th>用户组</th>
 <{/block}>
 
-<{block "table-tbody"}><{/block}>
+<!-- DataTable的Block -->
 
-<{block "datatable-config-pageLength"}><{$_pagesize}><{/block}>
+<{block "datatable-config-pageLength"}><{$_table_data->perPage()}><{/block}>
 
 <{block "datatable-columns-plus"}>
 var columns_plus = [
