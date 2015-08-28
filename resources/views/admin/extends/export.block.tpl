@@ -12,7 +12,7 @@
 			var $links = $('#links').empty();
 			$('#pagesize').text(pagesize);
 			for (var i = 1; i <= pages; i++) {
-				$links.append('<div class="col-md-3"><a href="<{'admin'|url}>/<{block name="name"}><{/block}>/export/<{$_of}>?page='+i+'&pagesize='+pagesize+'" class="btn btn-link" target="_blank">第'+i+'个</a> ('+ (i == pages ? 0 : total - pagesize * i) + '-' + (total - pagesize * (i - 1)) +')</div>');
+				$links.append('<div class="col-md-3 col-xs-4"><a href="<{'admin'|url}>/<{block name="name"}><{/block}>/export/<{$_of}>?page='+i+'&pagesize='+pagesize+'" class="btn btn-link" target="_blank">第'+i+'个</a> ('+ (i == pages ? 0 : total - pagesize * i) + '-' + (total - pagesize * (i - 1)) +')</div>');
 			};
 		}
 		$('#pagesize-slider').on('slideStop', function(e){
