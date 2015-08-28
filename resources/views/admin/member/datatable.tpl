@@ -35,7 +35,7 @@ var columns_plus = [
 	{'data': 'nickname'},
 	{'data': 'realname'},
 	{'data': 'gender', 'render': function(data, type, full){
-		return '<span class="label label-primary">'+data+'</span>';
+		return '<span class="label label-primary">'+data.text+'</span>';
 	}},
 	{'data': 'phone'},
 	{'data': null}

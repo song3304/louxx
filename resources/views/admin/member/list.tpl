@@ -29,7 +29,7 @@
 <td><{$item->username}></td>
 <td><{$item->nickname}></td>
 <td><{$item->realname}></td>
-<td><span class="label label-primary"><{$item->gender|autohook:field}></span></td>
+<td><span class="label label-primary"><{$item->getRelation('gender')|model:'text'}></span></td>
 <td><{$item->phone}></td>
 <td></td>
 <{/block}>

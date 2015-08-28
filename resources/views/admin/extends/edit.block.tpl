@@ -48,8 +48,8 @@
 	<{block "form"}>
 	<!-- Form Elements Content -->
 	<form action="<{'admin'|url}>/<{block "name"}><{/block}>/<{block "id"}><{/block}>" method="POST" class="form-horizontal form-bordered" id="form">
-		<input type="hidden" name="_token" value="<{csrf_token()}>">
-		<input type="hidden" name="_method" value="PUT">
+		<{csrf_field() nofilter}>
+		<{method_field('PUT') nofilter}>
 		<{block "fields"}><{/block}>
 	</form>
 	<!-- END Form Elements Content -->

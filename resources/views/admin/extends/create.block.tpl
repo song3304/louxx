@@ -47,7 +47,7 @@
 	<{block "form"}>
 	<!-- Form Elements Content -->
 	<form action="<{'admin'|url}>/<{block "name"}><{/block}>" method="POST" class="form-horizontal form-bordered" id="form">
-		<input type="hidden" name="_token" value="<{csrf_token()}>">
+		<{csrf_field() nofilter}>
 		<{block "fields"}><{/block}>
 	</form>
 	<!-- END Form Elements Content -->

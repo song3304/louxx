@@ -1,7 +1,7 @@
 <?php namespace App;
 
-use Zizaco\Entrust\EntrustPermission;
+use Addons\Core\Models\Permission as BasePermission;
 
-class Permission extends EntrustPermission
+class Permission extends BasePermission
 {
 }

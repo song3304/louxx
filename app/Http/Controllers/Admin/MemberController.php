@@ -21,7 +21,7 @@ class MemberController extends Controller
 	public function index(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery();
+		$builder = $user->newQuery()->with('gender');
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
@@ -35,9 +35,8 @@ class MemberController extends Controller
 	public function data(Request $request)
 	{
 		$user = new User;
-		$data = $this->_getData($request, $user->newQuery(), function(&$v){
-			$v['gender'] = model_autohook($v['gender'], 'field');
-		});
+		$builder = $user->newQuery()->with('gender');
+		$data = $this->_getData($request, $builder);
 		$data['recordsTotal'] = $user->newQuery()->count();
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
@@ -46,9 +45,9 @@ class MemberController extends Controller
 	public function export(Request $request)
 	{
 		$user = new User;
-		$data = $this->_getExport($request, $user->newQuery(), function(&$v){
-			$v['gender'] = model_autohook($v['gender'], 'field');
-		});	
+		$data = $this->_getExport($request, $builder, function(&$v){
+			$v['gender'] = !empty($v['gender']) ? $v['gender']['title'] : NULL;
+		});
 		return $this->success('', FALSE, $data);
 	}
 
