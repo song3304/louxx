@@ -73,6 +73,7 @@
 	</div>
 	<div class="clearfix"></div>
 </div>
+<div class="clearfix"></div>
 <!-- END DataTable Title -->
 <{/block}>
 
@@ -82,6 +83,7 @@
 <{block "filter"}><{/block}>
 <!-- END DataTable Content -->
 </div>
+<div class="clearfix"></div>
 <div class="table-responsive">
 	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover">
 		<thead>
@@ -134,4 +136,5 @@
 	</div>
 	<{/block}>
 </div>
+<div class="clearfix"></div>
 <{/block}>

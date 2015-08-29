@@ -30,7 +30,6 @@
 			</div>
 		</div>
 	</div>
-	
 	<div class="form-group col-sm-4">
 		<label class="col-md-3 control-label">性别</label>
 		<div class="col-md-9">
@@ -43,7 +42,7 @@
 			</label>
 		<{/foreach}>
 		</div>
-</div>
+	</div>
 	<div class="form-group col-sm-4">
 		<label class="col-md-3 control-label" for="created_at-min">加入时间</label>
 		<div class="col-md-9">
