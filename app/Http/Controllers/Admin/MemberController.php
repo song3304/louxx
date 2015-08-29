@@ -78,6 +78,15 @@ class MemberController extends Controller
 		return $this->view('admin.member.create');
 	}
 
+	public function store(Request $request)
+	{
+		$keys = 'username,password,nickname,realname,gender,email,phone,avatar_aid';
+		$data = $this->autoValidate($request, 'member.store', $keys);
+
+		(new User)->add($data);
+		return $this->success('', url('admin/member'));
+	}
+
 	public function edit($id)
 	{
 		$user = User::find($id);

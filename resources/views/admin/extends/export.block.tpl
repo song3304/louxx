@@ -4,7 +4,7 @@
 <script>
 (function($){
 	$().ready(function(){
-		$('[name="<{block "name"}><{/block}>-export"]').addClass('active').closest('li[name="<{block "name"}><{/block}>"]').addClass('active');
+		$('[name="<{block "name"}><{/block}>-list"]').addClass('active').closest('li[name="<{block "name"}><{/block}>"]').addClass('active');
 		var makeLinks = function(pagesize) {
 			if (isNaN(pagesize) || pagesize <= 0) return;
 			var total = <{$_total}>;
