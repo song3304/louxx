@@ -33,6 +33,7 @@
 		<{foreach $_fields.gender as $v}>
 			<label><input type="radio" class="" name="gender" value="<{$v['id']}>"> <{$v['title']}></label>
 		<{/foreach}>
+			<div class="clearfix"></div>
 		</div>
 		<div class="form-group">
 			<label for="avatar_aid">上传图片</label>

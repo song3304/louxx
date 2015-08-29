@@ -44,8 +44,8 @@
 			<input type="radio" name="gender" value="<{$v.id}>" <{if $_data.gender == $v.id}>checked="checked"<{/if}> > <{$v.title}>
 		</label>
 		<{/foreach}>
+		<div class="clearfix"></div>
 	</div>
-	<div class="clearfix"></div>
 </div>
 <div class="form-group">
 	<label class="col-md-3 control-label" for="phone">手机</label>
