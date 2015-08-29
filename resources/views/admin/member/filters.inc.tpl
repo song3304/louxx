@@ -38,7 +38,7 @@
 			</label>
 		<{foreach $_fields.gender as $v}>
 			<label class="radio-inline">
-				<input type="radio" name="gender" value="<{$v.id}>" <{if $_filters.gender.equal == $v.id}>checked="checked"<{/if}> > <{$v.text}>
+				<input type="radio" name="gender" value="<{$v.id}>" <{if $_filters.gender.equal == $v.id}>checked="checked"<{/if}> > <{$v.title}>
 			</label>
 		<{/foreach}>
 		</div>
