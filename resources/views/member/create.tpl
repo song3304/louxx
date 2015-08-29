@@ -31,7 +31,7 @@
 		</div>
 		<div class="form-group radio">
 		<{foreach $_fields.gender as $v}>
-			<label><input type="radio" class="" name="gender" value="<{$v['id']}>"> <{$v['text']}></label>
+			<label><input type="radio" class="" name="gender" value="<{$v['id']}>"> <{$v['title']}></label>
 		<{/foreach}>
 		</div>
 		<div class="form-group">
