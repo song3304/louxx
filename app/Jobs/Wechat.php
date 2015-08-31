@@ -30,6 +30,6 @@ class Wechat extends Job implements SelfHandling, ShouldQueue
     public function handle()
     {
         
-        file_put_contents(APPPATH, date('H:i:s'));
+        
     }
 }

@@ -17,8 +17,6 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-		$this->dispatch((new \App\Jobs\Wechat())->delay(60));
-
 		return $this->view('index');
 	}
 
