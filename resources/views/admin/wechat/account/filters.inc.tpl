@@ -2,47 +2,25 @@
 <form action="<{'admin'|url}>/<{block "name"}><{/block}>/" method="GET" class="form-bordered form-horizontal">
 	<input type="hidden" name="base" value="<{$_base}>">
 	<div class="form-group col-sm-4">
-		<label class="col-md-3 control-label" for="username">用户名</label>
+		<label class="col-md-3 control-label" for="name">名称</label>
 		<div class="col-md-9">
 			<div class="input-group">
-				<input type="text" id="username" name="username[like]" class="form-control" placeholder="请输入关键词..." value="<{$_filters.username.like}>">
+				<input type="text" id="name" name="name[like]" class="form-control" placeholder="请输入关键词..." value="<{$_filters.name.like}>">
 				<span class="input-group-addon"><i class="gi gi-user"></i></span>
 			</div>
 		</div>
 	</div>
 
 	<div class="form-group col-sm-4">
-		<label class="col-md-3 control-label" for="nickname">昵称</label>
+		<label class="col-md-3 control-label" for="appid">APP ID</label>
 		<div class="col-md-9">
 			<div class="input-group">
-				<input type="text" id="nickname" name="nickname[like]" class="form-control" placeholder="请输入关键词..." value="<{$_filters.nickname.like}>">
+				<input type="text" id="appid" name="appid[like]" class="form-control" placeholder="请输入关键词..." value="<{$_filters.appid.like}>">
 				<span class="input-group-addon"><i class="gi gi-user"></i></span>
 			</div>
 		</div>
 	</div>
 
-	<div class="form-group col-sm-4">
-		<label class="col-md-3 control-label" for="realname">姓名</label>
-		<div class="col-md-9">
-			<div class="input-group">
-				<input type="text" id="realname" name="realname[like]" class="form-control" placeholder="请输入关键词..." value="<{$_filters.realname.like}>">
-				<span class="input-group-addon"><i class="gi gi-user"></i></span>
-			</div>
-		</div>
-	</div>
-	<div class="form-group col-sm-4">
-		<label class="col-md-3 control-label">性别</label>
-		<div class="col-md-9">
-			<label class="radio-inline">
-				<input type="radio" name="gender" value="0" checked="checked"> 不限
-			</label>
-		<{foreach $_fields.gender as $v}>
-			<label class="radio-inline">
-				<input type="radio" name="gender" value="<{$v.id}>" <{if $_filters.gender.equal == $v.id}>checked="checked"<{/if}> > <{$v.title}>
-			</label>
-		<{/foreach}>
-		</div>
-	</div>
 	<div class="form-group col-sm-4">
 		<label class="col-md-3 control-label" for="created_at-min">加入时间</label>
 		<div class="col-md-9">

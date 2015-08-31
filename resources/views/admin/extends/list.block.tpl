@@ -7,7 +7,7 @@
 <script>
 (function($){
 	$().ready(function(){
-		$('[name="<{block "name"}><{/block}>-list"]').addClass('active').closest('li[name="<{block "name"}><{/block}>"]').addClass('active');
+		$('[name="<{block "name"}><{/block}>-list"]').addClass('active').parents('li').addClass('active');
 		<{block "inline-script-plus"}><{/block}>
 	});
 })(jQuery);
@@ -37,7 +37,7 @@
 	<h2 class="pull-left"><strong><{block "title"}><{/block}>列表</strong> 检索</h2>
 	<div class="block-options pull-right">
 		<{if $_base}>
-		<a href="<{'admin'|url}>/<{block "name"}><{/block}>?base=0" class="btn btn-alt btn-sm btn-warning enable-tooltip" title="点击切换到「功能视图」，可排序、选择行数等" data-original-title="点击切换到「功能视图」，可排序、选择行数等">功能视图</a>
+		<a href="<{'admin'|url}>/<{block "name"}><{/block}>" class="btn btn-alt btn-sm btn-warning enable-tooltip" title="点击切换到「功能视图」，可排序、选择行数等" data-original-title="点击切换到「功能视图」，可排序、选择行数等">功能视图</a>
 		<{else}>
 		<a href="<{'admin'|url}>/<{block "name"}><{/block}>?base=1" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="数据读取失败时，请点击切换到「基本视图」" data-original-title="数据读取失败时，请点击切换到「基本视图」">基本视图</a>
 		<{/if}>

@@ -57,5 +57,37 @@ return [
 			],
 		]
 	],
+	'wechat-account' => [
+		'store' => [
+			'name' => [
+				'name' => '微信名称',
+				'rules' => 'required',
+			],
+			'description' => [
+				'name' => '简介',
+				'rules' => [],
+			],
+			'appid' => [
+				'name' => 'APP ID',
+				'rules' => 'required|min:10',
+			],
+			'appsecret' => [
+				'name' => 'APP Secrect',
+				'rules' => 'required|min:10',
+			],
+			'token' => [
+				'name' => 'Token',
+				'rules' => 'required|min:1',
+			],
+			'avatar_aid' => [
+				'name' => '二维码',
+				'rules' => 'numeric',
+			],
+			'encodingaeskey' => [
+				'name' => '加密KEY',
+				'rules' => 'min:10',
+			],
+		],
+	],
 
 ];

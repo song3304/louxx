@@ -1,7 +1,7 @@
 <div class="form-group">
 	<label class="col-md-3 control-label">用户名</label>
 	<div class="col-md-9">
-		<input type="username" id="username" name="username" class="form-control" placeholder="请输入用户名" value="<{$_data.username}>">
+		<input type="text" id="username" name="username" class="form-control" placeholder="请输入用户名" value="<{$_data.username}>">
 	</div>
 </div>
 <div class="form-group">

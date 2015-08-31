@@ -55,7 +55,7 @@ class MemberController extends Controller
 			$this->_table = $user->getTable();
 			$this->_total = $total;
 			$this->_pagesize = $pagesize > $total ? $total : $pagesize;
-			return $this->view('admin/member/export');
+			return $this->view('admin.member.export');
 		}
 
 		$builder = $user->newQuery()->with('gender');

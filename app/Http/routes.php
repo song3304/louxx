@@ -10,13 +10,14 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+use Illuminate\Support\Str;
 
 $hmvc_router = function ($ctrl = 'home', $action = 'index') use ($router)
 {
 	$route = Route::getCurrentRoute();
 	$namespace = $route->getAction()['namespace'];
-	$className = $namespace.'\\'.ucfirst(strtolower($ctrl)).'Controller';
-	!class_exists($className) && $className = 'Addons\\Core\\Controllers\\'.ucfirst(strtolower($ctrl)).'Controller';
+	$className = $namespace.'\\'.Str::studly($ctrl).'Controller';
+	!class_exists($className) && $className = 'Addons\\Core\\Controllers\\'.Str::studly($ctrl).'Controller';
 	(!class_exists($className) || !method_exists($className, $action)) && abort(404);
 
 	$class = new ReflectionClass($className);
@@ -60,6 +61,7 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'
 	
 	Route::resources([
 		'member' => 'MemberController',
+		'wechat-account' => 'WechatAccountController',
 
 	]);
 	//admin/ctrl/data,print,export

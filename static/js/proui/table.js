@@ -85,7 +85,7 @@ $().ready(function(){
 			}
 		});
 		$.extend(true, $.fn.dataTable.defaults, {
-			'dom': "<'row'<'col-sm-6 col-xs-5'l><'col-sm-6 col-xs-7 search-filter'f><'clearfix'>r>t<'row'<'col-sm-5 hidden-xs'i><'col-sm-7 col-xs-12 clearfix'p>>",
+			'dom': "<'row'<'col-sm-6 col-xs-5'l><'col-sm-6 col-xs-7 search-filter text-right'f><'clearfix'>r>t<'row'<'col-sm-5 hidden-xs'i><'col-sm-7 col-xs-12 clearfix'p>>",
 			'pagingType': 'bootstrap',
 			'language': {
 				'lengthMenu': '_MENU_',
@@ -176,11 +176,15 @@ $().ready(function(){
 			},
 			'drawCallback': function( settings ) {
 				$.datatable_config.encode(settings);
+			
 			}/*,
 			'stateSave': true,
 			'stateDuration': -1*/
 		});
-		$('.dataTables_filter input').attr('placeholder', '检索ID');
+		$('.dataTables_filter input', $.datatable_config.datatable).attr('placeholder', '检索ID');
+		$('<a href="javascript:void(0);" class="btn btn-link"><i class="glyphicon glyphicon-refresh"></i> 重新加载</a>').appendTo('.search-filter').on('click', function(){
+			$.datatable_config.datatable.ajax.reload(null, false);
+		});
 	}
 });
 	
