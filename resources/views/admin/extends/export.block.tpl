@@ -58,6 +58,7 @@
 
 <{block "block-content"}>
 <div class="block-content">
+	<{block "filter"}><{/block}>
 	<p>导出格式：<label for="" class="label label-info"><{$_of}></label></p>
 	<p>总：<{$_total}>条数据，</p>
 	<p>
