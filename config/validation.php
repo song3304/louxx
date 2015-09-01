@@ -69,7 +69,7 @@ return [
 			],
 			'appid' => [
 				'name' => 'APP ID',
-				'rules' => 'required|min:10',
+				'rules' => 'required|min:10|unique:wechat_accounts',
 			],
 			'appsecret' => [
 				'name' => 'APP Secrect',

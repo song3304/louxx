@@ -9,21 +9,19 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
 use Addons\Core\Models\Wechat\Wechat;
-use Addons\Core\Models\Wechat\User as WechatUser;
+use Addons\Core\Models\Wechat\User as WechatUserModel;
 
-use App\User;
-use App\Role;
 
 class WechatController extends Controller {
 	use DispatchesJobs;
 
+	public $wechatUser;
 	public $user;
 	/**
 	 * 
 	 */
 	public function __construct()
 	{
-
 
 	}
 
@@ -34,12 +32,10 @@ class WechatController extends Controller {
 	 */
 	public function push($id = 0)
 	{
-		if (empty($id)) return NULL;
-		$account = WechatAccount::find($id);
-		if (empty($account)) return NULL;
+		$account = WechatAccount::findOrFail($id);
 
-		$wechat = new Wechat($account->toArray());
-		$wechatUser = new Wechat($wechat);
+		$wechat = new Wechat($account->toArray(), $account->id);
+		$wechatUserModel = new WechatUserModel($wechat);
 
 		$wechat->valid();
 		$rev = $wechat->getRev();
@@ -47,9 +43,9 @@ class WechatController extends Controller {
 		$from = $rev->getRevFrom();
 		$to = $rev->getRevTo();
 
-		$uid = $wechatUser->updateUser($from);
-		$this->user = User::find($uid);
-
+		$this->wechatUser = $wechatUserModel->updateWechatUser($from);
+		//如果不希望加入到用户表，请注释下行
+		$user = $wechatUserModel->bindToUser($this->wechatUser);
 		switch($type) {
 			case Model_Wechat::MSGTYPE_TEXT: //文字消息
 				return $this->text($wechat, $from, $to, $rev->getRevContent(), $rev->getRevID());

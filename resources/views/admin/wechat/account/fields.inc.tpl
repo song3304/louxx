@@ -1,39 +1,45 @@
 <div class="form-group">
-	<label class="col-md-3 control-label">名称</label>
+	<label class="col-md-3 control-label" for="name">名称</label>
 	<div class="col-md-9">
 		<input type="text" id="name" name="name" class="form-control" placeholder="请输入名称" value="<{$_data.name}>">
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label">简介</label>
+	<label class="col-md-3 control-label" for="description">简介</label>
 	<div class="col-md-9">
 		<textarea id="description" name="description" rows="9" class="form-control" placeholder="简介.."></textarea>
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label">APP ID</label>
+	<label class="col-md-3 control-label" for="appid">APP ID</label>
 	<div class="col-md-9">
 		<input type="text" id="appid" name="appid" class="form-control" placeholder="请输入APP ID" value="<{$_data.appid}>">
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label">APP Secrect</label>
+	<label class="col-md-3 control-label" for="appsecret">APP Secrect</label>
 	<div class="col-md-9">
 		<input type="text" id="appsecret" name="appsecret" class="form-control" placeholder="请输入APP Secrect" value="<{$_data.appsecret}>">
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label">Token</label>
+	<label class="col-md-3 control-label" for="token">Token</label>
 	<div class="col-md-9">
 		<input type="text" id="token" name="token" class="form-control" placeholder="请输入Token" value="<{$_data.token}>">
 		<span class="help-block">(*) 为开发者模式设定的token</span>
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label">Encodingaes KEY</label>
+	<label class="col-md-3 control-label" for="encodingaeskey">Encodingaes KEY</label>
 	<div class="col-md-9">
 		<input type="text" id="encodingaeskey" name="encodingaeskey" class="form-control" placeholder="请输入Encodingaes KEY" value="<{$_data.encodingaeskey}>">
 		<span class="help-block">(*) 如果不加密消息，可不用填写</span>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-md-3 control-label" for="qr_aid">二维码</label>
+	<div class="col-md-9">
+		<input type="text" id="qr_aid" name="qr_aid" class="form-control" value="<{$_data.qr_aid}>">
 	</div>
 </div>
 

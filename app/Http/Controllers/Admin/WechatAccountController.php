@@ -70,7 +70,7 @@ class WechatAccountController extends Controller
 
 	public function create()
 	{
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey';
+		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
 		$this->_data = [];
 		$this->_validates = $this->getScriptValidate('wechat-account.store', $keys);
 		return $this->view('admin.wechat.account.create');
@@ -78,7 +78,7 @@ class WechatAccountController extends Controller
 
 	public function store(Request $request)
 	{
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey';
+		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
 		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
 
 		WechatAccount::create($data);
@@ -91,7 +91,7 @@ class WechatAccountController extends Controller
 		if (empty($account))
 			return $this->failure_noexists();
 
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey';
+		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
 		$this->_validates = $this->getScriptValidate('wechat-account.store', $keys);
 		$this->_data = $account;
 		return $this->view('admin.wechat.account.edit');
@@ -103,7 +103,7 @@ class WechatAccountController extends Controller
 		if (empty($account))
 			return $this->failure_noexists();
 
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey';
+		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
 		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
 		$account->update($data);
 		return $this->success();
