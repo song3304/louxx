@@ -139,6 +139,11 @@ return [
 		Illuminate\Validation\ValidationServiceProvider::class,
 		Illuminate\View\ViewServiceProvider::class,
 
+		//Smarty注入模块
+		Addons\Smarty\View\ServiceProvider::class,
+		//Core before RouteServiceProvider
+		Addons\Core\ServiceProvider::class,
+
 		/*
 		 * Application Service Providers...
 		 */
@@ -149,10 +154,6 @@ return [
 		//Barryvdh\Debugbar\ServiceProvider::class,
 		//验证码
 		Mews\Captcha\CaptchaServiceProvider::class,
-		//Smarty注入模块
-		Addons\Smarty\View\ServiceProvider::class,
-		//Core
-		Addons\Core\ServiceProvider::class,
 		//验证体系
 		Zizaco\Entrust\EntrustServiceProvider::class,
 		//判断客户端和操作系统

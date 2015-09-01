@@ -1,5 +1,5 @@
 <!-- Form Content -->
-<form action="<{'admin'|url}>/<{block "name"}><{/block}>/" method="GET" class="form-bordered form-horizontal">
+<form action="<{'admin'|url nofilter}>/<{block "name"}><{/block}>/" method="GET" class="form-bordered form-horizontal">
 	<input type="hidden" name="base" value="<{$_base}>">
 	<div class="form-group col-sm-4">
 		<label class="col-md-3 control-label" for="username">用户名</label>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Queue;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -17,6 +18,7 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
+
 		return $this->view('index');
 	}
 

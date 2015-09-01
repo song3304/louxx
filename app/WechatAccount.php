@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Addons\Core\Models\Wechat\WechatAccount as BaseWechatAccount;
+use Addons\Core\Models\WechatAccount as BaseWechatAccount;
 
 class WechatAccount extends BaseWechatAccount 
 {
