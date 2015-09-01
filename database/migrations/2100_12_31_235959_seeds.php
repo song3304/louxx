@@ -11,7 +11,7 @@ class Seeds extends Migration
 	 */
 	public function up()
 	{
-		\Addons\Core\Models\Field::create([
+		\App\Field::create([
 			'text' => '男',
 			'field_class' => 'gender',
 		])->create([
@@ -21,7 +21,7 @@ class Seeds extends Migration
 			'text' => '无',
 		])->update(['id' => 0]);
 
-		\Addons\Core\Models\Role::create([
+		\App\Role::create([
 			'id' => 99,
 			'name' => 'admin',
 			'display_name' => 'Adminsitrator Group'
@@ -47,11 +47,11 @@ class Seeds extends Migration
 			'display_name' => 'Guest Group'
 		])->update(['id' => 0]);
 
-		(new \Addons\Core\Models\User)->add([
+		(new \App\User)->add([
 			'username' => 'admin',
 			'password' => '123456',
 			'nickname' => 'Administrator',
-		], \Addons\Core\Models\Role::ADMIN);
+		], \App\Role::ADMIN);
 	}
 
 	/**

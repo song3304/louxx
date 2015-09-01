@@ -14,9 +14,12 @@ class CreateManualsTable extends Migration
 	{
 		Schema::create('manuals', function (Blueprint $table) {
 			$table->bigIncrements('id');
-			$table->unsignedInteger('pid')->default(0);
+			$table->unsignedInteger('pid')->default(0)->index();
 			$table->string('title', '250');
 			$table->text('content')->nullable();
+			$table->integer('order')->default(0)->index();
+			$table->unsignedInteger('level')->default(0)->index();
+			$table->string('path', 250)->index();
 			$table->timestamps();
 		});
 		Schema::create('manual_histories', function (Blueprint $table) {
