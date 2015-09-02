@@ -3,8 +3,6 @@ Options -MultiViews
 RewriteEngine On
 RewriteBase /project/test/
 
-XSendFile on
-#e.g. Add "XSendFilePath /path/to/webroot" to apache/http.conf
 
 # Redirect Trailing Slashes If Not A Folder...
 RewriteCond %{REQUEST_FILENAME} !-d
