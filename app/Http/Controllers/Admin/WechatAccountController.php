@@ -87,7 +87,7 @@ class WechatAccountController extends Controller
 
 	public function edit($id)
 	{
-		$account = User::find($id);
+		$account = WechatAccount::find($id);
 		if (empty($account))
 			return $this->failure_noexists();
 
@@ -99,7 +99,7 @@ class WechatAccountController extends Controller
 
 	public function update(Request $request, $id)
 	{
-		$account = User::find($id);
+		$account = WechatAccount::find($id);
 		if (empty($account))
 			return $this->failure_noexists();
 
@@ -115,7 +115,7 @@ class WechatAccountController extends Controller
 		$id = (array) $id;
 		
 		foreach ($id as $v)
-			$account = User::destroy($v);
+			$account = WechatAccount::destroy($v);
 		return $this->success('', count($id) > 5, compact('id'));
 	}
 }

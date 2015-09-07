@@ -39,7 +39,7 @@
 <div class="form-group">
 	<label class="col-md-3 control-label" for="qr_aid">二维码</label>
 	<div class="col-md-9">
-		<input type="text" id="qr_aid" name="qr_aid" class="form-control" value="<{$_data.qr_aid}>">
+		<input type="hidden" id="qr_aid" name="qr_aid" class="form-control" value="<{$_data.qr_aid}>">
 	</div>
 </div>
 
