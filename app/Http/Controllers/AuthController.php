@@ -27,7 +27,7 @@ class AuthController extends Controller
 	public function login()
 	{
 		Auth::logout();
-		$keys = [$this->loginUsername(),'password'];
+		$keys = [$this->loginUsername(), 'password'];
 		$validates = $this->getScriptValidate('member.store', $keys);
 		
 		$this->_validates = $validates;
@@ -60,7 +60,7 @@ class AuthController extends Controller
 		$remember = $request->has('remember');
 		if (Auth::attempt(['username' => $data['username'], 'password' => $data['password']], $remember))
 		{
-			return $this->success_login(''); // redirect to homepage
+			return $this->success_login($request->session()->pull('url.intended', '')); // redirect to the prevpage or homepage
 		} else {
 			//记录重试次数
 			$throttles && $this->incrementLoginAttempts($request);
