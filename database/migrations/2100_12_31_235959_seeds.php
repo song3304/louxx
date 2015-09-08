@@ -12,13 +12,13 @@ class Seeds extends Migration
 	public function up()
 	{
 		\App\Field::create([
-			'text' => '男',
+			'title' => '男',
 			'field_class' => 'gender',
 		])->create([
-			'text' => '女',
+			'title' => '女',
 			'field_class' => 'gender',
 		])->create([
-			'text' => '无',
+			'title' => '无',
 		])->update(['id' => 0]);
 
 		\App\Role::create([
