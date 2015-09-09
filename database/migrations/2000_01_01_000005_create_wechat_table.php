@@ -53,7 +53,7 @@ class CreateWechatTable extends Migration
 		Schema::create('wechat_depots', function (Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('waid'); //account_id
-			$table->enum('type', ['text','news','music','voice','image','video']); //素材类型
+			$table->enum('type', ['text','news','music','voice','image','video','callback']); //素材类型
 			$table->unsignedInteger('uid')->default(0); //用户ID
 			$table->timestamps();
 
@@ -135,6 +135,16 @@ class CreateWechatTable extends Migration
 			$table->foreign('id')->references('id')->on('wechat_depots')
 				->onUpdate('cascade')->onDelete('cascade');
 		});
+		//微信素材-回调函数
+		Schema::create('wechat_depot_callbacks', function (Blueprint $table) {
+			$table->unsignedInteger('id')->unique();
+			$table->text('callback'); //回调函数
+			$table->text('paramters'); //回调参数
+			$table->timestamps();
+
+			$table->foreign('id')->references('id')->on('wechat_depots')
+				->onUpdate('cascade')->onDelete('cascade');
+		});
 
 		//微信菜单
 		Schema::create('wechat_menus', function (Blueprint $table) {
@@ -147,7 +157,6 @@ class CreateWechatTable extends Migration
 			$table->string('event_key', 150)->nullable(); //事件参数
 			$table->string('url', 250)->nullable(); //网址
 			$table->unsignedInteger('wdid')->default(0); //网址
-			$table->string('callback', 250)->nullable(); //函数回调名称
 			
 			//tree
 			$table->unsignedInteger('order')->default(0)->index();
@@ -239,7 +248,7 @@ class CreateWechatTable extends Migration
 			$table->unsignedInteger('waid')->index(); //account id
 			$table->enum('match_type', ['subscribe', 'whole', 'part']);
 			$table->string('keywords', 100)->nullable()->index();
-			$table->enum('reply_type', ['all', 'random'])->index();
+			$table->unsignedInteger('reply_count')->default(0); //随机返回几条
 
 			$table->timestamps();
 
@@ -247,8 +256,8 @@ class CreateWechatTable extends Migration
 				->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		//微信自定义回复
-		Schema::create('wechat_reply_contents', function (Blueprint $table) {
+		//微信自定义回复-素材库-关联表
+		Schema::create('wechat_reply_depot', function (Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('wrid')->index(); //reply id
 			$table->unsignedInteger('wdid')->index(); //素材ID

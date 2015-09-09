@@ -72,6 +72,10 @@ class Seeds extends Migration
 			'title' => '地址',
 			'field_class' => 'wechat_message_type',
 		])->create([
+			'name' => 'callback',
+			'title' => '回调',
+			'field_class' => 'wechat_message_type',
+		])->create([
 			'name' => 'event',
 			'title' => '事件',
 			'field_class' => 'wechat_message_type',
