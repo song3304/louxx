@@ -47,19 +47,19 @@ class WechatController extends Controller {
 		//如果不希望加入到用户表，请注释下行
 		$this->user = $wechatUserModel->bindToUser($this->wechatUser);
 		switch($type) {
-			case Model_Wechat::MSGTYPE_TEXT: //文字消息
+			case API::MSGTYPE_TEXT: //文字消息
 				return $this->text($api, $from, $to, $rev->getRevContent(), $rev->getRevID());
-			case Model_Wechat::MSGTYPE_IMAGE: //图片消息
+			case API::MSGTYPE_IMAGE: //图片消息
 				return $this->image($api, $from, $to, $rev->getRevPic(), $rev->getRevID());
-			case Model_Wechat::MSGTYPE_VOICE: //音频消息
+			case API::MSGTYPE_VOICE: //音频消息
 				return $this->voice($api, $from, $to, $rev->getRevVoice(), $rev->getRevID());
-			case Model_Wechat::MSGTYPE_VIDEO: //视频消息
+			case API::MSGTYPE_VIDEO: //视频消息
 				return $this->video($api, $from, $to, $rev->getRevVideo(), $rev->getRevID());
-			case Model_Wechat::MSGTYPE_LOCATION: //地址消息
+			case API::MSGTYPE_LOCATION: //地址消息
 				return $this->location($api, $from, $to, $rev->getRevGeo(), $rev->getRevID());
-			case Model_Wechat::MSGTYPE_LINK: //链接消息
+			case API::MSGTYPE_LINK: //链接消息
 				return $this->link($api, $from, $to, $rev->getRevLink(), $rev->getRevID());
-			case Model_Wechat::MSGTYPE_EVENT: //事件
+			case API::MSGTYPE_EVENT: //事件
 				$event = $rev->getRevEvent();
 				switch ($event['event']) { 
 					case 'subscribe':
@@ -87,7 +87,7 @@ class WechatController extends Controller {
 						return $this->pic_photo_or_album($api, $from, $to, $event['key'], $rev->getRevSendPicsInfo());
 					case 'pic_weixin': //弹出微信相册发图器的事件推送
 						return $this->pic_weixin($api, $from, $to, $event['key'], $rev->getRevSendPicsInfo());
-					case 'location_select': //弹出微信相册发图器的事件推送
+					case 'location_select': //弹出微信地址选择的事件推送
 						return $this->location_select($api, $from, $to, $event['key'], $rev->getRevSendGeoInfo());
 					
 				}
@@ -104,7 +104,7 @@ class WechatController extends Controller {
 	 * @param  string $msg_id  消息ID
 	 * @return boolean
 	 */
-	private function text($api, $from, $to, $content, $msg_id)
+	protected function text($api, $from, $to, $content, $msg_id)
 	{
 
 	}
@@ -118,7 +118,7 @@ class WechatController extends Controller {
 	 * @param  string $msg_id  消息ID
 	 * @return boolean
 	 */
-	private function image($api, $from, $to, $data, $msg_id)
+	protected function image($api, $from, $to, $data, $msg_id)
 	{
 		
 	}
@@ -132,7 +132,7 @@ class WechatController extends Controller {
 	 * @param  string $msg_id  消息ID
 	 * @return boolean
 	 */
-	private function voice($api, $from, $to, $data, $msg_id)
+	protected function voice($api, $from, $to, $data, $msg_id)
 	{
 		
 	}
@@ -146,7 +146,7 @@ class WechatController extends Controller {
 	 * @param  string $msg_id  消息ID
 	 * @return boolean
 	 */
-	private function video($api, $from, $to, $data, $msg_id)
+	protected function video($api, $from, $to, $data, $msg_id)
 	{
 		
 	}
@@ -160,7 +160,7 @@ class WechatController extends Controller {
 	 * @param  string $msg_id  消息ID
 	 * @return boolean
 	 */
-	private function location($api, $from, $to, $data, $msg_id)
+	protected function location($api, $from, $to, $data, $msg_id)
 	{
 		
 	}
@@ -174,7 +174,7 @@ class WechatController extends Controller {
 	 * @param  string $msg_id  消息ID
 	 * @return boolean
 	 */
-	private function link($api, $from, $to, $data, $msg_id)
+	protected function link($api, $from, $to, $data, $msg_id)
 	{
 		
 	}
@@ -186,7 +186,7 @@ class WechatController extends Controller {
 	 * @param  string $to      接收者OPENID
 	 * @return boolean
 	 */
-	private function subscribe($api, $from, $to)
+	protected function subscribe($api, $from, $to)
 	{
 		$api->news(array( 0 =>
 		 array(
@@ -205,7 +205,7 @@ class WechatController extends Controller {
 	 * @param  string $to      接收者OPENID
 	 * @return boolean
 	 */
-	private function unsubscribe($api, $from, $to)
+	protected function unsubscribe($api, $from, $to)
 	{
 		
 	}
@@ -219,7 +219,7 @@ class WechatController extends Controller {
 	 * @param  string $ticket   二维码的ticket，可用来换取二维码图片
 	 * @return boolean
 	 */
-	private function scan_subscribe($api, $from, $to, $scene_id, $ticket)
+	protected function scan_subscribe($api, $from, $to, $scene_id, $ticket)
 	{
 		
 	}
@@ -233,7 +233,7 @@ class WechatController extends Controller {
 	 * @param  string $ticket   二维码的ticket，可用来换取二维码图片
 	 * @return boolean
 	 */
-	private function scan($api, $from, $to, $scene_id, $ticket)
+	protected function scan($api, $from, $to, $scene_id, $ticket)
 	{
 		
 	}
@@ -246,7 +246,7 @@ class WechatController extends Controller {
 	 * @param  array $data     地理信息 ['x' => '', 'y' => '', 'precision' => '']
 	 * @return boolean
 	 */
-	private function location_event($api, $from, $to, $data)
+	protected function location_event($api, $from, $to, $data)
 	{
 		
 	}
@@ -259,7 +259,7 @@ class WechatController extends Controller {
 	 * @param  string $key     与自定义菜单接口中KEY值对应
 	 * @return boolean
 	 */
-	private function click($api, $from, $to, $key)
+	protected function click($api, $from, $to, $key)
 	{
 		
 	}
@@ -272,7 +272,7 @@ class WechatController extends Controller {
 	 * @param  string $url     设置的跳转URL
 	 * @return boolean
 	 */
-	private function view($api, $from, $to, $url)
+	protected function view($api, $from, $to, $url)
 	{
 		
 	}
@@ -286,7 +286,7 @@ class WechatController extends Controller {
 	 * @param  array $scan_info 扫描信息 [ 'ScanType'=>'qrcode', 'ScanResult'=>'']
 	 * @return boolean
 	 */
-	private function scancode_push($api, $from, $to, $key, $scan_info)
+	protected function scancode_push($api, $from, $to, $key, $scan_info)
 	{
 		
 	}
@@ -300,7 +300,7 @@ class WechatController extends Controller {
 	 * @param  array $scan_info 扫描信息 [ 'ScanType'=>'qrcode', 'ScanResult'=>'']
 	 * @return boolean
 	 */
-	private function scancode_waitmsg($api, $from, $to, $key, $scan_info)
+	protected function scancode_waitmsg($api, $from, $to, $key, $scan_info)
 	{
 
 	}
@@ -314,7 +314,7 @@ class WechatController extends Controller {
 	 * @param  array $send_pics_info 发送的图片信息 ['Count' => '2', 'PicList' =>['item' => [ ['PicMd5Sum' => 'aaae42617cf2a14342d96005af53624c'], ['PicMd5Sum' => '149bd39e296860a2adc2f1bb81616ff8'] ] ] ]
 	 * @return boolean
 	 */
-	private function pic_sysphoto($api, $from, $to, $key, $send_pics_info)
+	protected function pic_sysphoto($api, $from, $to, $key, $send_pics_info)
 	{
 
 	}
@@ -328,7 +328,7 @@ class WechatController extends Controller {
 	 * @param  array $send_pics_info 发送的图片信息 ['Count' => '2', 'PicList' =>['item' => [ ['PicMd5Sum' => 'aaae42617cf2a14342d96005af53624c'], ['PicMd5Sum' => '149bd39e296860a2adc2f1bb81616ff8'] ] ] ]
 	 * @return boolean
 	 */
-	private function pic_photo_or_album($api, $from, $to, $key, $send_pics_info)
+	protected function pic_photo_or_album($api, $from, $to, $key, $send_pics_info)
 	{
 
 	}
@@ -342,7 +342,7 @@ class WechatController extends Controller {
 	 * @param  array $send_pics_info 发送的图片信息 ['Count' => '2', 'PicList' =>['item' => [ ['PicMd5Sum' => 'aaae42617cf2a14342d96005af53624c'], ['PicMd5Sum' => '149bd39e296860a2adc2f1bb81616ff8'] ] ] ]
 	 * @return boolean
 	 */
-	private function pic_weixin($api, $from, $to, $key, $send_pics_info)
+	protected function pic_weixin($api, $from, $to, $key, $send_pics_info)
 	{
 
 	}
@@ -356,7 +356,7 @@ class WechatController extends Controller {
 	 * @param  array $send_geo_info 发送的位置信息 ['Location_X' => '', 'Location_Y' => '', 'Scale' => '', 'Label' => '', 'Poiname' => '']
 	 * @return boolean
 	 */
-	private function location_select($api, $from, $to, $key, $send_geo_info)
+	protected function location_select($api, $from, $to, $key, $send_geo_info)
 	{
 
 	}
