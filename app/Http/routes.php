@@ -69,6 +69,11 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'
 		app('request')->offsetSet('of', $of);
 		return $hmvc_router($ctrl, $action);
 	});
+
+	//admin目录下的其它路由需放置在本条前
 	Route::any('{ctrl?}/{action?}', $hmvc_router);
 });
+
+
+//根目录的其它路由需放置在本条前
 Route::any('{ctrl?}/{action?}', $hmvc_router);

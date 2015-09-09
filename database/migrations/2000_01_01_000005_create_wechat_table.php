@@ -18,6 +18,7 @@ class CreateWechatTable extends Migration
 			$table->string('name', 150); //名称
 			$table->string('description', 255); //简介
 			$table->unsignedInteger('wechat_type')->default(0); //微信类型
+			$table->string('account', 100)->unique(); //原始ID
 			$table->string('appid', 50)->unique(); //appid
 			$table->string('token', 150); //token
 			$table->string('appsecret', 100); //appsecret
@@ -79,7 +80,7 @@ class CreateWechatTable extends Migration
 
 			$table->foreign('wdid')->references('id')->on('wechat_depots')
 				->onUpdate('cascade')->onDelete('cascade');
-			$table->foreign('wdnid')->references('id')->on('wechat_news')
+			$table->foreign('wdnid')->references('id')->on('wechat_depot_news')
 				->onUpdate('cascade')->onDelete('cascade');
 			$table->unique(['wdid', 'wdnid']);
 		});
@@ -149,9 +150,9 @@ class CreateWechatTable extends Migration
 			$table->string('callback', 250)->nullable(); //函数回调名称
 			
 			//tree
-			$this->unsignedInteger('order')->default(0)->index();
-			$this->unsignedInteger('level')->default(0)->index();
-			$this->string('path', '250')->index();
+			$table->unsignedInteger('order')->default(0)->index();
+			$table->unsignedInteger('level')->default(0)->index();
+			$table->string('path', '250')->index();
 
 			$table->timestamps();
 
@@ -164,41 +165,17 @@ class CreateWechatTable extends Migration
 			$table->increments('id');
 			$table->unsignedInteger('waid')->index(); //account id
 			$table->unsignedInteger('wuid')->index(); //user id
-			$table->enum('transport_type', ['send', 'receive'])->index(); //是发送还是接受
-			$table->enum('type', ['depot', 'text', 'image', 'video', 'voice', 'link', 'location']); //类型
-			$table->tinyInteger('status'); //状态
+			$table->enum('transport_type', ['send', 'receive'])->default('receive')->index(); //是发送还是接受
+			$table->enum('type', ['depots', 'text', 'image', 'video', 'voice', 'link', 'location'])->index(); //类型
+			$table->string('message_id', 100); //消息ID
+			$table->unsignedInteger('wdid')->default(0); //素材ID
+			$table->tinyInteger('status')->default(0); //状态
 			$table->timestamps();
 			$table->softDeletes(); //软删除
 
 			$table->foreign('waid')->references('id')->on('wechat_accounts')
 				->onUpdate('cascade')->onDelete('cascade');
 			$table->foreign('wuid')->references('id')->on('wechat_users')
-				->onUpdate('cascade')->onDelete('cascade');
-		});
-
-		//微信消息-素材-关联表
-		Schema::create('wechat_message_depots', function (Blueprint $table) {
-			$table->unsignedInteger('id')->unique(); 
-			$table->unsignedInteger('wdid')->index(); //素材ID
-
-			$table->timestamps();
-
-			$table->foreign('id')->references('id')->on('wechat_messages')
-				->onUpdate('cascade')->onDelete('cascade');
-			$table->foreign('wdid')->references('id')->on('wechat_depots')
-				->onUpdate('cascade')->onDelete('cascade');
-		});
-
-		//微信消息-图片
-		Schema::create('wechat_message_pictures', function (Blueprint $table) {
-			$table->unsignedInteger('id')->unique();
-			$table->string('url', 250); // 原始图片网址
-			$table->unsignedInteger('aid'); //附件ID
-			$table->string('media_id', 250); //微信Media ID
-
-			$table->timestamps();
-
-			$table->foreign('id')->references('id')->on('wechat_messages')
 				->onUpdate('cascade')->onDelete('cascade');
 		});
 
@@ -231,12 +208,12 @@ class CreateWechatTable extends Migration
 		//微信消息-图片/视频/音频
 		Schema::create('wechat_message_media', function (Blueprint $table) {
 			$table->unsignedInteger('id')->unique();
-			$table->string('format', 50); //文件格式
+			$table->string('format', 50)->nullable(); //文件格式
 			$table->string('media_id', 250); //微信Media ID
-			$table->string('thumb_media_id', 250); //缩略图Media ID
+			$table->string('thumb_media_id', 250)->nullable(); //缩略图Media ID
 
-			$table->unsignedInteger('aid');
-			$table->unsignedInteger('thumb_aid');
+			$table->unsignedInteger('aid')->default(0);
+			$table->unsignedInteger('thumb_aid')->default(0);
 
 			$table->timestamps();
 
@@ -266,36 +243,24 @@ class CreateWechatTable extends Migration
 
 			$table->timestamps();
 
-			$table->foreign('wdid')->references('id')->on('wechat_depots')
+			$table->foreign('waid')->references('id')->on('wechat_accounts')
 				->onUpdate('cascade')->onDelete('cascade');
 		});
 
 		//微信自定义回复
 		Schema::create('wechat_reply_contents', function (Blueprint $table) {
 			$table->increments('id');
-			$table->unsignedInteger('waid')->index(); //account id
+			$table->unsignedInteger('wrid')->index(); //reply id
 			$table->unsignedInteger('wdid')->index(); //素材ID
-			$table->timestamps();
-
-			$table->foreign('wdid')->references('id')->on('wechat_depots')
-				->onUpdate('cascade')->onDelete('cascade');
-		});
-
-		//微信自定义回复触发条件-回复内容关联表
-		Schema::create('wechat_reply_relation', function (Blueprint $table) {
-			$table->increments('id');
-			$table->unsignedInteger('wrid')->index(); //
-			$table->unsignedInteger('wrcid')->index(); //account id
-
 			$table->timestamps();
 
 			$table->foreign('wrid')->references('id')->on('wechat_replies')
 				->onUpdate('cascade')->onDelete('cascade');
-			$table->foreign('wrcid')->references('id')->on('wechat_reply_contents')
+			$table->foreign('wdid')->references('id')->on('wechat_depots')
 				->onUpdate('cascade')->onDelete('cascade');
-			$table->unique(['wrid', 'wrcid']);
-		});
 
+			$table->unique(['wrid', 'wdid']);
+		});
 
 	}
 
