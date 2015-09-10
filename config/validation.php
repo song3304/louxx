@@ -5,7 +5,7 @@ return [
 		'store' => [
 			'username' => [
 				'name' => '用户名',
-				'rules' => 'required|ansi|unique:users|regex:/^[a-z0-9\x{4e00}-\x{9fa5}\x{f900}-\x{fa2d}]*$/iu|max:150|min:3',
+				'rules' => 'required|ansi:2|unique:users|regex:/^[a-z0-9\x{4e00}-\x{9fa5}\x{f900}-\x{fa2d}]*$/iu|max:150|min:3',
 				'message' => ['regex' => '用户名必须为汉字、英文、数字'],
 			],
 			'nickname' => [
@@ -14,7 +14,7 @@ return [
 			],
 			'realname' => [
 				'name' => '真实姓名',
-				'rules' => 'ansi|regex:/^[a-z\x{4e00}-\x{9fa5}\x{f900}-\x{fa2d}\s]*$/iu|max:50|min:3',
+				'rules' => 'ansi:2|regex:/^[a-z\x{4e00}-\x{9fa5}\x{f900}-\x{fa2d}\s]*$/iu|max:50|min:3',
 				'message' => ['regex' => '姓名必须为汉字、英文'],
 			],
 			'password' => [
