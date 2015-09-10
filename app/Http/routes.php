@@ -62,6 +62,7 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'
 	Route::resources([
 		'member' => 'MemberController',
 		'wechat-account' => 'WechatAccountController',
+		'wechat-user' => 'WechatDepotController',
 
 	]);
 	//admin/ctrl/data,print,export

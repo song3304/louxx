@@ -5,7 +5,7 @@ return [
 		'store' => [
 			'username' => [
 				'name' => '用户名',
-				'rules' => 'required|ansi:2|unique:users|regex:/^[a-z0-9\x{4e00}-\x{9fa5}\x{f900}-\x{fa2d}]*$/iu|max:150|min:3',
+				'rules' => 'required|ansi:2|unique:users,{{ATTRIBUTE}},{{ID}}|regex:/^[a-z0-9\x{4e00}-\x{9fa5}\x{f900}-\x{fa2d}]*$/iu|max:150|min:3',
 				'message' => ['regex' => '用户名必须为汉字、英文、数字'],
 			],
 			'nickname' => [
@@ -67,9 +67,17 @@ return [
 				'name' => '简介',
 				'rules' => [],
 			],
+			'wechat_type' => [
+				'name' => '类型',
+				'rules' => 'required|not_zero|field',
+			],
 			'appid' => [
 				'name' => 'APP ID',
-				'rules' => 'required|min:10|unique:wechat_accounts',
+				'rules' => 'required|min:10|unique:wechat_accounts,{{ATTRIBUTE}},{{ID}}',
+			],
+			'account' => [
+				'name' => '原始 ID',
+				'rules' => 'required|min:10|unique:wechat_accounts,{{ATTRIBUTE}},{{ID}}',
 			],
 			'appsecret' => [
 				'name' => 'APP Secrect',

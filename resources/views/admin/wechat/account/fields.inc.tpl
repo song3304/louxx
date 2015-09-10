@@ -11,6 +11,24 @@
 	</div>
 </div>
 <div class="form-group">
+	<label class="col-md-3 control-label">类型</label>
+	<div class="col-md-9">
+		<{foreach $_fields.wechat_type as $v}>
+		<label class="radio-inline">
+			<input type="radio" name="wechat_type" value="<{$v.id}>" <{if $_data.wechat_type == $v.id}>checked="checked"<{/if}> > <{$v.title}>
+		</label>
+		<{/foreach}>
+		<div class="clearfix"></div>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-md-3 control-label" for="account">原始ID</label>
+	<div class="col-md-9">
+		<input type="text" id="account" name="account" class="form-control" placeholder="请输入" value="<{$_data.account}>">
+		<span class="help-block">此账号由微信自动生成（公众号设置 - 原始ID），类似：gh_xxxxxxxxxxxxx</span>
+	</div>
+</div>
+<div class="form-group">
 	<label class="col-md-3 control-label" for="appid">APP ID</label>
 	<div class="col-md-9">
 		<input type="text" id="appid" name="appid" class="form-control" placeholder="请输入APP ID" value="<{$_data.appid}>">
