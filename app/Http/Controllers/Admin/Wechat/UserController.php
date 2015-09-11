@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Wechat;
 
 use Illuminate\Http\Request;
 
@@ -11,7 +11,7 @@ use Addons\Core\Models\WechatAccount;
 use Addons\Core\Models\WechatUser;
 use Addons\Core\Controllers\AdminTrait;
 
-class WechatUserController extends Controller
+class UserController extends Controller
 {
 	use AdminTrait;
 	/**

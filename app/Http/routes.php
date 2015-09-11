@@ -61,13 +61,30 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'
 	
 	Route::resources([
 		'member' => 'MemberController',
-		'wechat-account' => 'WechatAccountController',
-		'wechat-user' => 'WechatDepotController',
-
+		'wechat/account' => 'Wechat\\AccountController',
 	]);
-	//admin/ctrl/data,print,export
-	Route::any('{ctrl}/{action}/{of}', function($ctrl, $action, $of) use($hmvc_router) {
+
+	Route::group(['namespace' => 'Wechat', 'prefix' => 'wechat', 'middleware' => 'wechat.account'], function($router) use($hmvc_router) {
+		Route::resources([
+			'user' => 'UserController',
+			'depot' => 'DepotController',
+			'menu' => 'MenuController',
+			'message' => 'MessageController',
+			'reply' => 'ReplyController',
+		]);
+		//admin/wechat/ctrl/data,print,export/json
+		Route::any('{ctrl}/{action}/{of}/{jsonp?}', function($ctrl, $action, $of, $jsonp = NULL) use($hmvc_router) {
+			app('request')->offsetSet('of', $of);
+			app('request')->offsetSet('jsonp', $jsonp);
+			return $hmvc_router($ctrl, $action);
+		});
+	});
+
+
+	//admin/ctrl/data,print,export/json
+	Route::any('{ctrl}/{action}/{of}/{jsonp?}', function($ctrl, $action, $of, $jsonp = NULL) use($hmvc_router) {
 		app('request')->offsetSet('of', $of);
+		app('request')->offsetSet('jsonp', $jsonp);
 		return $hmvc_router($ctrl, $action);
 	});
 

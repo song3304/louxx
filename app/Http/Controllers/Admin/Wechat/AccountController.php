@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Wechat;
 
 use Illuminate\Http\Request;
 
@@ -8,10 +8,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Addons\Core\Models\WechatAccount;
-use Addons\Core\Models\WechatMenu;
 use Addons\Core\Controllers\AdminTrait;
 
-class WechatMenuController extends Controller
+class AccountController extends Controller
 {
 	use AdminTrait;
 	/**
@@ -38,7 +37,11 @@ class WechatMenuController extends Controller
 	{
 		$account = new WechatAccount;
 		$builder = $account->newQuery();
-		$data = $this->_getData($request, $builder);
+		$data = $this->_getData($request, $builder, function(&$v, $k){
+			$v['users-count'] = $v->users()->count();
+			$v['depots-count'] = $v->depots()->count();
+			$v['messages-count'] = $v->messages()->count();
+		});
 		$data['recordsTotal'] = $account->newQuery()->count();
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
@@ -71,7 +74,7 @@ class WechatMenuController extends Controller
 
 	public function create()
 	{
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
+		$keys = 'name,description,wechat_type,account,appid,appsecret,token,encodingaeskey,qr_aid';
 		$this->_data = [];
 		$this->_validates = $this->getScriptValidate('wechat-account.store', $keys);
 		return $this->view('admin.wechat.account.create');
@@ -79,7 +82,7 @@ class WechatMenuController extends Controller
 
 	public function store(Request $request)
 	{
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
+		$keys = 'name,description,wechat_type,account,appid,appsecret,token,encodingaeskey,qr_aid';
 		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
 
 		WechatAccount::create($data);
@@ -92,7 +95,7 @@ class WechatMenuController extends Controller
 		if (empty($account))
 			return $this->failure_noexists();
 
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
+		$keys = 'name,description,wechat_type,account,appid,appsecret,token,encodingaeskey,qr_aid';
 		$this->_validates = $this->getScriptValidate('wechat-account.store', $keys);
 		$this->_data = $account;
 		return $this->view('admin.wechat.account.edit');
@@ -104,8 +107,12 @@ class WechatMenuController extends Controller
 		if (empty($account))
 			return $this->failure_noexists();
 
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
+		$keys = 'name,description,wechat_type,account,appid,appsecret,token,encodingaeskey,qr_aid';
+		$data = $this->autoValidate($request, 'wechat-account.store', $keys, function($k, &$v) use ($account){
+			array_walk($v['rules'], function(&$vv) use ($account) {
+				$vv = strtr($vv, [',{{ID}}' => ','.$account->getKey()]);
+			});
+		});
 		$account->update($data);
 		return $this->success();
 	}

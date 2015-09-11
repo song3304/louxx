@@ -13,4 +13,5 @@ class WechatController extends BaseWechatController {
 		//如果不希望加入到系统的用户表，请注释下行
 		(new WechatUserModel($api))->bindToUser($wechatUser);
 	}
+
 }

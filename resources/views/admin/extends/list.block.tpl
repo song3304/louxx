@@ -7,7 +7,7 @@
 <script>
 (function($){
 	$().ready(function(){
-		$('[name="<{block "name"}><{/block}>-list"]').addClass('active').parents('li').addClass('active');
+		$('[name="<{block "name"}><{/block}>/list"]').addClass('active').parents('li').addClass('active');
 		<{block "inline-script-plus"}><{/block}>
 	});
 })(jQuery);

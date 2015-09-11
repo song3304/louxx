@@ -9,6 +9,8 @@ return [
    		'export' => 500,
    		'admin' => [
    			'users' => 25,
+   			'wechat_depots' => 5,
+   			'wechat-users' => 50,
    		], 
    	],
 ];

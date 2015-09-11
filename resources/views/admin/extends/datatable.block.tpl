@@ -10,7 +10,7 @@
 <script>
 (function($){
 	$().ready(function(){
-		$('[name="<{block "name"}><{/block}>-list"]').addClass('active').parents('li').addClass('active');
+		$('[name="<{block "name"}><{/block}>/list"]').addClass('active').parents('li').addClass('active');
 		
 		$.datatable_config = {
 			name: '<{block "name"}><{/block}>',

@@ -5,7 +5,7 @@
 (function($){
 	$().ready(function(){
 		<{call validate selector='#form'}>
-		$('[name="<{block "name"}><{/block}>-create"]').addClass('active').parents('li').addClass('active');
+		$('[name="<{block "name"}><{/block}>/create"]').addClass('active').parents('li').addClass('active');
 		<{block "inline-script-plus"}><{/block}>
 	});
 })(jQuery);

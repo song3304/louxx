@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Wechat;
 
 use Illuminate\Http\Request;
 
@@ -8,10 +8,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Addons\Core\Models\WechatAccount;
-use Addons\Core\Models\WechatDepot;
+use Addons\Core\Models\WechatMenu;
 use Addons\Core\Controllers\AdminTrait;
 
-class WechatDepotController extends Controller
+class MenuController extends Controller
 {
 	use AdminTrait;
 	/**

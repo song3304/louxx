@@ -42,7 +42,7 @@ class CreateWechatTable extends Migration
 			$table->string('unionid', 150)->nullable(); //唯一ID
 			$table->string('remark', 50)->nullable(); //备注
 			$table->unsignedInteger('groupid')->nullable()->default(0); //组ID
-			$table->unsignedInteger('subscribe_time')->nullable()->default(0); //关注时间
+			$table->timestamp('subscribe_at')->nullable(); //关注时间
 			$table->unsignedInteger('uid')->nullable()->default(0); //绑定的用户ID
 			$table->timestamps();
 

@@ -29,5 +29,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'wechat.account' => \App\Http\Middleware\WechatAccount::class,
+        'wechat.oauth2' => \App\Http\Middleware\WechatOAuth::class,
     ];
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Wechat;
 
 use Illuminate\Http\Request;
 
@@ -8,10 +8,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Addons\Core\Models\WechatAccount;
-use Addons\Core\Models\WechatMessage;
+use Addons\Core\Models\WechatReply;
 use Addons\Core\Controllers\AdminTrait;
 
-class WechatMessageController extends Controller
+class ReplyController extends Controller
 {
 	use AdminTrait;
 	/**

@@ -4,12 +4,12 @@
 由于extends中无法使用if/include，所以需要将公共Block均写入list.tpl、datatable.tpl
 -->
 
-<{block "title"}>微信账号<{/block}>
+<{block "title"}>微信用户<{/block}>
 
-<{block "name"}>wechat/account<{/block}>
+<{block "name"}>wechat/user<{/block}>
 
 <{block "filter"}>
-<{include file="admin/wechat/account/filters.inc.tpl"}>
+<{include file="admin/wechat/user/filters.inc.tpl"}>
 <{/block}>
 
 <{block "table-th-plus"}>
