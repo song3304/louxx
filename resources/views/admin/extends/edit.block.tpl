@@ -47,7 +47,7 @@
 <div class="block-content">
 	<{block "form"}>
 	<!-- Form Elements Content -->
-	<form action="<{'admin'|url}>/<{block "name"}><{/block}>/<{block "id"}><{/block}>" method="POST" class="form-horizontal form-bordered" id="form">
+	<form action="<{'admin'|url}>/<{block "name"}><{/block}>/<{block "id"}><{$_data->getKey()}><{/block}>" method="POST" class="form-horizontal form-bordered" id="form">
 		<{csrf_field() nofilter}>
 		<{method_field('PUT') nofilter}>
 		<{block "fields"}><{/block}>

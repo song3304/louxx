@@ -16,8 +16,6 @@ $('#password,#password_confirmation').attr('placeholder', '(无需修改则不�
 
 <{block "name"}>member<{/block}>
 
-<{block "id"}><{$_data->id}><{/block}>
-
 <{block "fields"}>
 <{include file="admin/member/fields.inc.tpl"}>
 <{/block}>

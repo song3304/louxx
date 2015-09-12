@@ -13,8 +13,6 @@ $('#qr_aid').uploader();
 
 <{block "name"}>wechat/account<{/block}>
 
-<{block "id"}><{$_data->id}><{/block}>
-
 <{block "fields"}>
 <{include file="admin/wechat/account/fields.inc.tpl"}>
 <{/block}>
