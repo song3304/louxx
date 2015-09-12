@@ -120,19 +120,14 @@ $().ready(function(){
 			settings.aLastSort.forEach(function(v){
 				json.order.push([v['col'], v['dir']]);
 			});
-			var hash = JSON.stringify(json);
-			$.hash().set('datatable', hash).location();
+			$.bbq.pushState(json);
 			return true;
 		};
 
 		$.datatable_config.decode = function(){
-			var hash = $.hash().get('datatable');
-			if (hash)
-			{
-				var json = $.parseJSON(hash);
-				if (json) 
-					$.datatable_config = $.extend($.datatable_config, json);
-			}
+			var json = $.bbq.getState();
+			if (json)			
+				$.datatable_config = $.extend($.datatable_config, json);
 			return true;
 		};
 
@@ -145,7 +140,7 @@ $().ready(function(){
 				type: 'POST',
 				data: function(d){
 					return $.extend({}, d, {
-						filter: $.deparam(window.location.search.toString().replace(/^\?/,''))
+						filters: window.location.query('filters')
 					});
 				},
 				dataSrc: function(json){

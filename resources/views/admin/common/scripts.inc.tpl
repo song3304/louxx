@@ -13,9 +13,6 @@
 <script src="<{'static/js/noty/jquery.noty.packaged.min.js'|url}>"></script>
 <script src="<{'static/js/noty/themes/default.js'|url}>"></script>
 <{/block}>
-<{block "head-scripts-hash"}>
-<script src="<{'static/js/jquery.hash.js'|url}>"></script>
-<{/block}>
 <{block "head-scripts-common"}>
 <script src="<{'static/js/common.js'|url}>"></script>
 <{/block}>

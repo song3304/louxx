@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Addons\Core\Models\WechatAccount;
 use Addons\Core\Models\WechatUser;
 use Addons\Core\Controllers\AdminTrait;
 
@@ -21,9 +20,9 @@ class UserController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$account = new WechatAccount;
-		$builder = $account->newQuery();
-		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$account->getTable(), $this->site['pagesize']['common']);
+		$user = new WechatUser;
+		$builder = $user->newQuery();
+		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
 		//view's variant
@@ -31,35 +30,35 @@ class UserController extends Controller
 		$this->_pagesize = $pagesize;
 		$this->_filters = $this->_getFilters($request, $builder);
 		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['*'], ['base' => $base]) : [];
-		return $this->view('admin.wechat.account.'. ($base ? 'list' : 'datatable'));
+		return $this->view('admin.wechat.user.'. ($base ? 'list' : 'datatable'));
 	}
 
 	public function data(Request $request)
 	{
-		$account = new WechatAccount;
-		$builder = $account->newQuery();
+		$user = new WechatUser;
+		$builder = $user->newQuery();
 		$data = $this->_getData($request, $builder);
-		$data['recordsTotal'] = $account->newQuery()->count();
+		$data['recordsTotal'] = $user->newQuery()->count();
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
 	}
 
 	public function export(Request $request)
 	{
-		$account = new WechatAccount;
+		$user = new WechatUser;
 		$page = $request->input('page') ?: 0;
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.export', 1000);
-		$total = $account::count();
+		$total = $user::count();
 
 		if (empty($page)){
 			$this->_of = $request->input('of');
-			$this->_table = $account->getTable();
+			$this->_table = $user->getTable();
 			$this->_total = $total;
 			$this->_pagesize = $pagesize > $total ? $total : $pagesize;
-			return $this->view('admin.wechat.account.export');
+			return $this->view('admin.wechat.user.export');
 		}
 
-		$builder = $account->newQuery();
+		$builder = $user->newQuery();
 		$data = $this->_getExport($request, $builder);
 		return $this->success('', FALSE, $data);
 	}
@@ -73,40 +72,40 @@ class UserController extends Controller
 	{
 		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
 		$this->_data = [];
-		$this->_validates = $this->getScriptValidate('wechat-account.store', $keys);
-		return $this->view('admin.wechat.account.create');
+		$this->_validates = $this->getScriptValidate('wechat-user.store', $keys);
+		return $this->view('admin.wechat.user.create');
 	}
 
 	public function store(Request $request)
 	{
 		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
+		$data = $this->autoValidate($request, 'wechat-user.store', $keys);
 
-		WechatAccount::create($data);
-		return $this->success('', url('admin/wechat-account'));
+		WechatUser::create($data);
+		return $this->success('', url('admin/wechat/user'));
 	}
 
 	public function edit($id)
 	{
-		$account = WechatAccount::find($id);
-		if (empty($account))
+		$user = WechatUser::find($id);
+		if (empty($user))
 			return $this->failure_noexists();
 
 		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$this->_validates = $this->getScriptValidate('wechat-account.store', $keys);
-		$this->_data = $account;
-		return $this->view('admin.wechat.account.edit');
+		$this->_validates = $this->getScriptValidate('wechat-user.store', $keys);
+		$this->_data = $user;
+		return $this->view('admin.wechat.user.edit');
 	}
 
 	public function update(Request $request, $id)
 	{
-		$account = WechatAccount::find($id);
-		if (empty($account))
+		$user = WechatUser::find($id);
+		if (empty($user))
 			return $this->failure_noexists();
 
 		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
-		$account->update($data);
+		$data = $this->autoValidate($request, 'wechat-user.store', $keys);
+		$user->update($data);
 		return $this->success();
 	}
 
@@ -116,7 +115,7 @@ class UserController extends Controller
 		$id = (array) $id;
 		
 		foreach ($id as $v)
-			$account = WechatAccount::destroy($v);
+			$user = WechatUser::destroy($v);
 		return $this->success('', count($id) > 5, compact('id'));
 	}
 }

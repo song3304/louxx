@@ -34,10 +34,10 @@
 <td><{$item->nickname}></td>
 <td><{$item->remark}></td>
 <td><{$item->getRelation('gender')|model:'title'}></td>
-<td><{$item->remark}></td>
 <td><{if !empty($item->is_subscribe)}><{$item->subscribe_at}><{else}><span class="label label-info">未关注</span><{/if}></td>
 <td><{$item->country}></td>
 <td><{$item->province}></td>
+<td><{$item->city}></td>
 <{/block}>
 
 <{block "table-td-options-delete-confirm"}>您确定删除这个微信账号：<{$item->openid}>吗？<{/block}>

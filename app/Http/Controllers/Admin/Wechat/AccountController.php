@@ -86,7 +86,7 @@ class AccountController extends Controller
 		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
 
 		WechatAccount::create($data);
-		return $this->success('', url('admin/wechat-account'));
+		return $this->success('', url('admin/wechat/account'));
 	}
 
 	public function edit($id)
