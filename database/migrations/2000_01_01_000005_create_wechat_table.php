@@ -59,7 +59,7 @@ class CreateWechatTable extends Migration
 
 			$table->foreign('waid')->references('id')->on('wechat_accounts');
 		});
-		//微信素材-文章
+		//微信素材-文章 多图文
 		Schema::create('wechat_depot_news', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('title', 250); //标题
@@ -71,7 +71,7 @@ class CreateWechatTable extends Migration
 			$table->string('link', 250); //内容
 			$table->timestamps();
 		});
-		//微信素材库关联表
+		//微信素材库 多图文关联表
 		Schema::create('wechat_depot_news_relation', function (Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('wdid'); //素材库
@@ -200,7 +200,7 @@ class CreateWechatTable extends Migration
 				->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		//微信消息-Link
+		//微信消息-地理位置
 		Schema::create('wechat_message_locations', function (Blueprint $table) {
 			$table->unsignedInteger('id')->unique();
 			$table->decimal('x', 20, 6)->default(0);
@@ -230,7 +230,7 @@ class CreateWechatTable extends Migration
 				->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		//微信消息-Link
+		//微信消息-文字
 		Schema::create('wechat_message_texts', function (Blueprint $table) {
 			$table->unsignedInteger('id')->unique();
 			$table->text('content'); //内容
