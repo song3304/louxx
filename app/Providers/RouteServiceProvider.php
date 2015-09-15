@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Routing\Router;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Addons\Core\Http\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -24,9 +24,6 @@ class RouteServiceProvider extends ServiceProvider
 	 */
 	public function boot(Router $router)
 	{
-		//
-
-		//$router->pattern('id', '[0-9]+'); //所有id都是数字
 		parent::boot($router);
 
 	}
