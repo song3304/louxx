@@ -23,13 +23,13 @@ Route::bind('user', function($value, $route){
 
 Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'], function($router) {
 	
-	$this->setAdminRoute([
+	$this->setAdminRoutes([
 		'member' => 'MemberController',
 		'wechat/account' => 'Wechat\\AccountController',
 	]);
 
 	Route::group(['namespace' => 'Wechat', 'prefix' => 'wechat', 'middleware' => 'wechat.account'], function($router) {
-		$this->setAdminRoute([
+		$this->setAdminRoutes([
 			'user' => 'UserController',
 			'depot' => 'DepotController',
 			'menu' => 'MenuController',
@@ -40,9 +40,9 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'
 
 
 	//admin目录下的其它路由需放置在本条前
-	$this->setUndefinedRoute();
+	$this->setUndefinedRoutes();
 });
 
 
 //根目录的其它路由需放置在本条前
-$this->setUndefinedRoute();
+$this->setUndefinedRoutes();
