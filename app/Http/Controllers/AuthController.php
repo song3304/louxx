@@ -45,7 +45,7 @@ class AuthController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function authenticate_query(Request $request)
+	public function authenticateQuery(Request $request)
 	{
 		// If the class is using the ThrottlesLogins trait, we can automatically throttle
 		// the login attempts for this application. We'll key this by the username and
