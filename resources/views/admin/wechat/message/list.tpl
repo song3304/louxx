@@ -12,41 +12,55 @@
 <{include file="admin/wechat/message/filters.inc.tpl"}>
 <{/block}>
 
-<{block "table-th-plus"}>
-<th>公众号</th>
-<th>用户</th>
-<th>传送</th>
-<th>类型</th>
+<{block "head-styles-plus"}>
+<style>
+	.media {border: 1px #ccc solid;padding: 10px;}
+	.media .media-body .media-heading {font-weight: bold;}
+	.media .media-body .media-heading small {font-weight: normal; font-size: 0.5}
+	.media .media-body p {padding: 10px;}
+</style>
 <{/block}>
 
-<!-- 基本视图的Block -->
 
-<{block "table-td-plus"}>
-<td><{$item->account->name}>(<{$item->account->account}>)</td>
-<td><{$item->user->nickname}>(<{$item->user->openid}>)</td>
-<td><{if $item->transport_type == 'send'}> 发送 <i class="fa fa-send text-danger"></i> <{else}> <i class="fa fa-share text-success"></i> 接收 <{/if}></td>
-<td> <span class="label label-info"><{$item->type}></span></td>
-<{/block}>
-
-<{block "table-tbody-plus"}>
-<tr>
-	<td colspan="8" style="padding:20px 80px;">
-		<{if $item->type == 'text'}> <b>内容：</b> <{$item->text->content}>
-		<{else if $item->type == 'image'}> <b>图片：</b> <a href="<{'attachment'|url}>?id=<{$item->image->aid}>" target="_blank"><img src="<{'attachment'|url}>?id=<{$item->image->aid}>" alt="" onload="resizeImg(this, 320,200);"></a>
-		<{else if $item->type == 'voice'}> <b>音频：</b> <audio src="<{'attachment'|url}>?id=<{$item->voice->aid}>" controls="controls"></audio>
-		<{else if $item->type == 'voice'}> <b>视频：</b> <video src="<{'attachment'|url}>?id=<{$item->video->aid}>" controls="controls"></video>
-		<{else if $item->type == 'location'}> <b>坐标：</b> <{$item->location->x}>, <{$item->location->y}> <br /><{$item->location->label}>
-		<{else if $item->type == 'link'}> <b>链接：</b> <a href="<{$item->link->url}>" target="_blank"><{$item->link->title}></a> <br /><{$item->link->description}> 
+<{block "block-content-table"}>
+<{foreach $_table_data as $item}>
+<div class="media alert">
+	<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>" method="delete" confirm="您确定删除此条消息？此操作并不会在微信中删除！" data-toggle="tooltip" title="删除" class="text-danger close"><span aria-hidden="true">&times;</span></a>
+	<div class="media-left">
+		<a href="<{'admin/wechat/user'|url}>/<{$item->user->getKey()}>" target="_blank">
+			<img class="media-object" src="<{'attachment'|url}>?id=<{$item.user.avatar_aid}>" alt="" style="width:120px; height:120px;">
+		</a>
+	</div>
+	<div class="media-body">
+		<h4 class="media-heading"><small><{if $item->transport_type == 'receive'}> <i class="fa fa-send text-info"></i> <{else}> <i class="fa fa-share text-success"></i> <{/if}></small> <{$item->user->nickname}> <small><{$item->user->openid}></small> </h4>
+		<p>
+		<{if $item->type == 'text'}> 
+		<{else if $item->type == 'image'}> <a href="<{'attachment'|url}>?id=<{$item->image->aid}>" target="_blank"><img src="<{'attachment'|url}>?id=<{$item->image->aid}>" alt="" onload="resizeImg(this, 320, 200);"></a>
+		<{else if $item->type == 'voice'}> <audio src="<{'attachment'|url}>?id=<{$item->voice->aid}>" controls="controls"></audio>
+		<{else if $item->type == 'voice'}> <video src="<{'attachment'|url}>?id=<{$item->video->aid}>" controls="controls"></video>
+		<{else if $item->type == 'location'}> <{$item->location->x}>, <{$item->location->y}> <br /><{$item->location->label}>
+		<{else if $item->type == 'link'}> <a href="<{$item->link->url}>" target="_blank"><{$item->link->title}></a> <br /><{$item->link->description}> 
 		<{/if}>
-	</td>
-</tr>
+		</p>
+		<span class="pull-right"><a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->user->getKey()}>/reply" data-toggle="tooltip" title="回复" class="btn btn-xs btn-success"><i class="fa fa-reply"></i> 回复</a></span>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<{/foreach}>
+<div class="row">
+	<div class="col-sm-5 hidden-xs">
+		<span><{$_table_data->firstItem()}> - <{$_table_data->lastItem()}> / <{$_table_data->total()}></span>
+	</div>
+	<div class="col-sm-7 col-xs-12 clearfix"><{$_table_data->render() nofilter}></div>
+</div>
 <{/block}>
+
 
 <{block "table-td-options"}>
 <td class="text-center">
 	<div class="btn-group">
-		<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->user->getKey()}>/reply" data-toggle="tooltip" title="回复" class="btn btn-xs btn-success"><i class="fa fa-reply"></i> 回复</a>
-		<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>" method="delete" confirm="您确定删除此条消息？此操作并不会在微信中删除！" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+		
+		
 	</div>
 </td>
 <{/block}>

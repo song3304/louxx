@@ -84,6 +84,7 @@
 <!-- END DataTable Content -->
 </div>
 <div class="clearfix"></div>
+<{block "block-content-table"}>
 <div class="table-responsive">
 	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover">
 		<thead>
@@ -139,4 +140,5 @@
 	<{/block}>
 </div>
 <div class="clearfix"></div>
+<{/block}>
 <{/block}>

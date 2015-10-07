@@ -27,11 +27,10 @@ class MessageController extends Controller
 		$base = boolval($request->input('base')) ?: false;
 
 		//view's variant
-		$this->_base = $base;
 		$this->_pagesize = $pagesize;
 		$this->_filters = $this->_getFilters($request, $builder);
-		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['*'], ['base' => $base]) : [];
-		return $this->view('admin.wechat.message.'. ($base ? 'list' : 'datatable'));
+		$this->_table_data = $this->_getPaginate($request, $builder, ['*']);
+		return $this->view('admin.wechat.message.list');
 	}
 
 	public function data(Request $request)
