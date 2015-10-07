@@ -16,7 +16,8 @@
 <style>
 	.media {border: 1px #ccc solid;padding: 10px;}
 	.media .media-body .media-heading {font-weight: bold;}
-	.media .media-body .media-heading small {font-weight: normal; font-size: 0.5}
+	.media .media-body .media-heading small {font-weight: normal; font-size: 0.6em}
+	.media .media-body .media-heading i {font-weight: normal; font-size: 0.5em;color: gray;}
 	.media .media-body p {padding: 10px;}
 </style>
 <{/block}>
@@ -32,9 +33,9 @@
 		</a>
 	</div>
 	<div class="media-body">
-		<h4 class="media-heading"><small><{if $item->transport_type == 'receive'}> <i class="fa fa-send text-info"></i> <{else}> <i class="fa fa-share text-success"></i> <{/if}></small> <{$item->user->nickname}> <small><{$item->user->openid}></small> </h4>
+		<h4 class="media-heading"><small><{if $item->transport_type == 'receive'}> <i class="fa fa-send text-info"></i> <{else}> <i class="fa fa-share text-success"></i> <{/if}></small> <{$item->user->nickname}> <small>(<{$item->user->openid}>)</small>&nbsp;&nbsp;&nbsp; <i><{$item->created_at}></i></h4>
 		<p>
-		<{if $item->type == 'text'}> 
+		<{if $item->type == 'text'}> <{$item->text->content}>
 		<{else if $item->type == 'image'}> <a href="<{'attachment'|url}>?id=<{$item->image->aid}>" target="_blank"><img src="<{'attachment'|url}>?id=<{$item->image->aid}>" alt="" onload="resizeImg(this, 320, 200);"></a>
 		<{else if $item->type == 'voice'}> <audio src="<{'attachment'|url}>?id=<{$item->voice->aid}>" controls="controls"></audio>
 		<{else if $item->type == 'voice'}> <video src="<{'attachment'|url}>?id=<{$item->video->aid}>" controls="controls"></video>
