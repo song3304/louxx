@@ -18,7 +18,7 @@
 	.media .media-body .media-heading {font-weight: bold;}
 	.media .media-body .media-heading small {font-weight: normal; font-size: 0.6em}
 	.media .media-body .media-heading .time {font-weight: normal; font-size: 0.5em;color: gray;margin-left:30px;}
-	.media .media-body p {padding: 10px;}
+	.media .media-body p {padding: 10px; word-break: break-all; word-wrap: break-word; }
 </style>
 <{/block}>
 
@@ -39,7 +39,7 @@
 		<i class="time"><{$item->created_at}></i>
 		</h4>
 		<p>
-		<{if $item->type == 'text'}> <{$item->text->content}>
+		<{if $item->type == 'text'}> <{$item->text->content|escape|nl2br nofilter}>
 		<{else if $item->type == 'image'}> <a href="<{'attachment'|url}>?id=<{$item->image->aid}>" target="_blank"><img src="<{'attachment'|url}>?id=<{$item->image->aid}>" alt="" onload="resizeImg(this, 320, 200);"></a>
 		<{else if $item->type == 'voice'}> <audio src="<{'attachment'|url}>?id=<{$item->voice->aid}>" controls="controls"></audio>
 		<{else if $item->type == 'voice'}> <video src="<{'attachment'|url}>?id=<{$item->video->aid}>" controls="controls"></video>
