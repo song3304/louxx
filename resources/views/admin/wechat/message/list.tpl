@@ -32,7 +32,7 @@
 <tr>
 	<td colspan="8" style="padding:20px 80px;">
 		<{if $item->type == 'text'}> <b>内容：</b> <{$item->text->content}>
-		<{else if $item->type == 'image'}> <b>图片：</b> <img src="<{'attachment'|url}>?id=<{$item->image->aid}>" alt="">
+		<{else if $item->type == 'image'}> <b>图片：</b> <a href="<{'attachment'|url}>?id=<{$item->image->aid}>" target="_blank"><img src="<{'attachment'|url}>?id=<{$item->image->aid}>" alt="" onload="resizeImg(this, 320,200);"></a>
 		<{else if $item->type == 'voice'}> <b>音频：</b> <audio src="<{'attachment'|url}>?id=<{$item->voice->aid}>" controls="controls"></audio>
 		<{else if $item->type == 'voice'}> <b>视频：</b> <video src="<{'attachment'|url}>?id=<{$item->video->aid}>" controls="controls"></video>
 		<{else if $item->type == 'location'}> <b>坐标：</b> <{$item->location->x}>, <{$item->location->y}> <br /><{$item->location->label}>

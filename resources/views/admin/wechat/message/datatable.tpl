@@ -58,7 +58,7 @@ var onCreateRow = function(row, data, dataIndex){
 			html = data.text ? '<b>文本：</b>' + data.text.content : '';
 			break;
 		case 'image':
-			html = data.image ? '<b>图片：</b> <img src="<{'attachment'|url}>?id='+data.image.aid+'" />' : '';
+			html = data.image ? '<b>图片：</b> <a href="<{'attachment'|url}>?id='+data.image.aid+'" target="_blank"><img src="<{'attachment'|url}>?id='+data.image.aid+'" onload="resizeImg(this, 320,200);" /></a>' : '';
 			break;
 		case 'voice':
 			html = data.voice ? '<b>音频：</b> <audio src="<{'attachment'|url}>?id='+data.voice.aid+'" controls="controls"></audio>' : '';
