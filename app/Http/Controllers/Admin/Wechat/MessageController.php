@@ -21,9 +21,9 @@ class MessageController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$account = new WechatAccount;
-		$builder = $account->newQuery();
-		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$account->getTable(), $this->site['pagesize']['common']);
+		$message = new WechatMessage;
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'video', 'voice', 'image', 'text']);
+		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$message->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
 		//view's variant
@@ -31,35 +31,35 @@ class MessageController extends Controller
 		$this->_pagesize = $pagesize;
 		$this->_filters = $this->_getFilters($request, $builder);
 		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['*'], ['base' => $base]) : [];
-		return $this->view('admin.wechat.account.'. ($base ? 'list' : 'datatable'));
+		return $this->view('admin.wechat.message.'. ($base ? 'list' : 'datatable'));
 	}
 
 	public function data(Request $request)
 	{
-		$account = new WechatAccount;
-		$builder = $account->newQuery();
+		$message = new WechatMessage;
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'video', 'voice', 'image', 'text']);
 		$data = $this->_getData($request, $builder);
-		$data['recordsTotal'] = $account->newQuery()->count();
+		$data['recordsTotal'] = $message->newQuery()->count();
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
 	}
 
 	public function export(Request $request)
 	{
-		$account = new WechatAccount;
+		$message = new WechatMessage;
 		$page = $request->input('page') ?: 0;
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.export', 1000);
-		$total = $account::count();
+		$total = $message::count();
 
 		if (empty($page)){
 			$this->_of = $request->input('of');
-			$this->_table = $account->getTable();
+			$this->_table = $message->getTable();
 			$this->_total = $total;
 			$this->_pagesize = $pagesize > $total ? $total : $pagesize;
-			return $this->view('admin.wechat.account.export');
+			return $this->view('admin.wechat.message.export');
 		}
 
-		$builder = $account->newQuery();
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'video', 'voice', 'image', 'text']);
 		$data = $this->_getExport($request, $builder);
 		return $this->success('', FALSE, $data);
 	}
@@ -74,7 +74,7 @@ class MessageController extends Controller
 		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
 		$this->_data = [];
 		$this->_validates = $this->getScriptValidate('wechat-account.store', $keys);
-		return $this->view('admin.wechat.account.create');
+		return $this->view('admin.wechat.message.create');
 	}
 
 	public function store(Request $request)
@@ -82,31 +82,31 @@ class MessageController extends Controller
 		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
 		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
 
-		WechatAccount::create($data);
+		WechatMessage::create($data);
 		return $this->success('', url('admin/wechat-account'));
 	}
 
 	public function edit($id)
 	{
-		$account = WechatAccount::find($id);
-		if (empty($account))
+		$message = WechatMessage::find($id);
+		if (empty($message))
 			return $this->failure_noexists();
 
 		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
 		$this->_validates = $this->getScriptValidate('wechat-account.store', $keys);
-		$this->_data = $account;
-		return $this->view('admin.wechat.account.edit');
+		$this->_data = $message;
+		return $this->view('admin.wechat.message.edit');
 	}
 
 	public function update(Request $request, $id)
 	{
-		$account = WechatAccount::find($id);
-		if (empty($account))
+		$message = WechatMessage::find($id);
+		if (empty($message))
 			return $this->failure_noexists();
 
 		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
 		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
-		$account->update($data);
+		$message->update($data);
 		return $this->success();
 	}
 
@@ -116,7 +116,7 @@ class MessageController extends Controller
 		$id = (array) $id;
 		
 		foreach ($id as $v)
-			$account = WechatAccount::destroy($v);
+			$message = WechatMessage::destroy($v);
 		return $this->success('', count($id) > 5, compact('id'));
 	}
 }

@@ -153,6 +153,10 @@ class Seeds extends Migration
 			'name' => 'viewer',
 			'display_name' => 'Viewer Group'
 		])->create([
+			'id' => 2,
+			'name' => 'wechater',
+			'display_name' => 'Wechater Group'
+		])->create([
 			'id' => 0,
 			'name' => 'guest',
 			'display_name' => 'Guest Group'

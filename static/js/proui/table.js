@@ -168,10 +168,11 @@ $().ready(function(){
 			'createdRow': function( row, data, dataIndex ) {
 				//bind option's event
 				options_query.call(this, row);
+				if ($.datatable_config.onCreateRow) $.datatable_config.onCreateRow.call(this, row, data, dataIndex);
 			},
 			'drawCallback': function( settings ) {
 				$.datatable_config.encode(settings);
-			
+				if ($.datatable_config.onDrawCallback) $.datatable_config.onDrawCallback.call(this, settings);
 			}/*,
 			'stateSave': true,
 			'stateDuration': -1*/

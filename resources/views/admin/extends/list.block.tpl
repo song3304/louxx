@@ -100,6 +100,7 @@
 				<{/block}>
 			<{/block}>
 			</tr>
+			<{block "table-thead-plus"}><{/block}>
 		</thead>
 		<tbody>
 			<{block "table-tbody"}>
@@ -123,6 +124,7 @@
 				<{/block}>
 			<{/block}>
 			</tr>
+			<{block "table-tbody-plus"}><{/block}>
 			<{/foreach}>
 			<{/block}>
 		</tbody>

@@ -271,6 +271,20 @@ class CreateWechatTable extends Migration
 			$table->unique(['wrid', 'wdid']);
 		});
 
+
+		//微信账号库
+		Schema::create('wechat_logs', function (Blueprint $table) {
+			$table->increments('id');
+			$table->text('url')->nullable(); //来源网址
+			$table->text('log')->nullable(); //log日志内容
+			$table->unsignedInteger('waid')->index(); //素材ID
+		
+			$table->timestamps();
+
+			$table->foreign('waid')->references('id')->on('wechat_accounts')
+				->onUpdate('cascade')->onDelete('cascade');
+		});
+
 	}
 
 	/**

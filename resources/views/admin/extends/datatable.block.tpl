@@ -61,7 +61,16 @@
 		if (order)
 			order.forEach(function(v){
 				$.datatable_config.order.push(v);
-			});	
+			});
+
+		//event
+		<{block "datatable-onCreateRow"}>var onCreateRow = null;<{/block}>
+		<{block "datatable-onDrawCallback"}>var onDrawCallback = null;<{/block}>
+		if (onCreateRow)
+			$.datatable_config.onCreateRow = onCreateRow;
+		if (onDrawCallback)
+			$.datatable_config.onDrawCallback = onDrawCallback;
+
 	});
 })(jQuery);
 </script>
