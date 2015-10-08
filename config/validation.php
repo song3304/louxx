@@ -97,5 +97,17 @@ return [
 			],
 		],
 	],
+	'wechat-message' => [
+		'store' => [
+			'content' => [
+				'name' => '内容',
+				'rules' => 'required',
+			],
+			'type' => [
+				'name' => '类型',
+				'rules' => 'required|not_zero|field_name:wechat_message_type',
+			],
+		],
+	],
 
 ];

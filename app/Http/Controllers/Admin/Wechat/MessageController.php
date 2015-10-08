@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use Addons\Core\Models\WechatAccount;
 use Addons\Core\Models\WechatMessage;
+use Addons\Core\Tools\Wechat\Send;
 use Addons\Core\Controllers\AdminTrait;
 
 class MessageController extends Controller
@@ -68,44 +69,19 @@ class MessageController extends Controller
 		return '';
 	}
 
-	public function create()
-	{
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$this->_data = [];
-		$this->_validates = $this->getScriptValidate('wechat-account.store', $keys);
-		return $this->view('admin.wechat.message.create');
-	}
-
-	public function store(Request $request)
-	{
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
-
-		WechatMessage::create($data);
-		return $this->success('', url('admin/wechat-account'));
-	}
-
-	public function edit($id)
-	{
-		$message = WechatMessage::find($id);
-		if (empty($message))
-			return $this->failure_noexists();
-
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$this->_validates = $this->getScriptValidate('wechat-account.store', $keys);
-		$this->_data = $message;
-		return $this->view('admin.wechat.message.edit');
-	}
-
 	public function update(Request $request, $id)
 	{
 		$message = WechatMessage::find($id);
 		if (empty($message))
 			return $this->failure_noexists();
 
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
-		$message->update($data);
+		$keys = 'type,content';
+		$data = $this->autoValidate($request, 'wechat-message.store', $keys);
+		
+		$message = WechatMessage::create(['waid' => $api->waid, 'wuid' => $wechatUser->getKey(), 'message_id' => $rev->getRevID(), 'type' => $type, 'transport_type' => 'receive']);
+
+		//发送消息
+		(new Send($message->account, $message->user))->add($data['content'])->send();
 		return $this->success();
 	}
 

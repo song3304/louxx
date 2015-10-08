@@ -22,12 +22,16 @@
 </style>
 <{/block}>
 
+<{block "head-scripts-plus"}>
+
+<{/block}>
+
 
 <{block "block-content-table"}>
 <{foreach $_table_data as $item}>
 <div class="media alert">
 	<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>" method="delete" confirm="您确定删除此条消息？此操作并不会在微信中删除！" data-toggle="tooltip" title="删除" class="text-danger close"><span aria-hidden="true">&times;</span></a>
-	<div class="media-left">
+	<div class="<{if $item->transport_type == 'receive'}>media-left<{else}>media-right<{/if}>">
 		<a href="<{'admin/wechat/user'|url}>/<{$item->user->getKey()}>" target="_blank">
 			<img class="media-object" src="<{'attachment'|url}>?id=<{$item.user.avatar_aid}>" alt="" style="width:120px; height:120px;">
 		</a>
@@ -42,12 +46,12 @@
 		<{if $item->type == 'text'}> <{$item->text->content|escape|nl2br nofilter}>
 		<{else if $item->type == 'image'}> <a href="<{'attachment'|url}>?id=<{$item->image->aid}>" target="_blank"><img src="<{'attachment'|url}>?id=<{$item->image->aid}>" alt="" onload="resizeImg(this, 320, 200);"></a>
 		<{else if $item->type == 'voice'}> <audio src="<{'attachment'|url}>?id=<{$item->voice->aid}>" controls="controls"></audio>
-		<{else if $item->type == 'video' || $item->type == 'shortvideo'}> <video src="<{'attachment'|url}>?id=<{$item->video->aid}>" controls="controls"></video>
+		<{else if $item->type == 'video' || $item->type == 'shortvideo'}> <video src="<{'attachment'|url}>?id=<{$item->video->aid}>" controls="controls" style="max-width:320px;max-height:240px;"></video>
 		<{else if $item->type == 'location'}> <{$item->location->x}>, <{$item->location->y}> <br /><{$item->location->label}>
 		<{else if $item->type == 'link'}> <a href="<{$item->link->url}>" target="_blank"><{$item->link->title}></a> <br /><{$item->link->description}> 
 		<{/if}>
 		</p>
-		<span class="pull-right"><a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->user->getKey()}>/reply" data-toggle="tooltip" title="回复" class="btn btn-xs btn-success"><i class="fa fa-reply"></i> 回复</a></span>
+		<span class="pull-right"><a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->wuid}>/edit" data-nickname="<{$item->user->nickname}> (<{$item->user->openid}>)" name="reply" data-toggle="tooltip" title="回复" class="btn btn-xs btn-success"><i class="fa fa-reply"></i> 回复</a></span>
 	</div>
 	<div class="clearfix"></div>
 </div>
@@ -58,4 +62,6 @@
 	</div>
 	<div class="col-sm-7 col-xs-12 clearfix"><{$_table_data->render() nofilter}></div>
 </div>
+
+<{include file="admin/wechat/message/reply.inc.tpl"}>
 <{/block}>
