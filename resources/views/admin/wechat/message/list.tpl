@@ -42,7 +42,7 @@
 		<{if $item->type == 'text'}> <{$item->text->content|escape|nl2br nofilter}>
 		<{else if $item->type == 'image'}> <a href="<{'attachment'|url}>?id=<{$item->image->aid}>" target="_blank"><img src="<{'attachment'|url}>?id=<{$item->image->aid}>" alt="" onload="resizeImg(this, 320, 200);"></a>
 		<{else if $item->type == 'voice'}> <audio src="<{'attachment'|url}>?id=<{$item->voice->aid}>" controls="controls"></audio>
-		<{else if $item->type == 'voice'}> <video src="<{'attachment'|url}>?id=<{$item->video->aid}>" controls="controls"></video>
+		<{else if $item->type == 'video' || $item->type == 'shortvideo'}> <video src="<{'attachment'|url}>?id=<{$item->video->aid}>" controls="controls"></video>
 		<{else if $item->type == 'location'}> <{$item->location->x}>, <{$item->location->y}> <br /><{$item->location->label}>
 		<{else if $item->type == 'link'}> <a href="<{$item->link->url}>" target="_blank"><{$item->link->title}></a> <br /><{$item->link->description}> 
 		<{/if}>
@@ -58,14 +58,4 @@
 	</div>
 	<div class="col-sm-7 col-xs-12 clearfix"><{$_table_data->render() nofilter}></div>
 </div>
-<{/block}>
-
-
-<{block "table-td-options"}>
-<td class="text-center">
-	<div class="btn-group">
-		
-		
-	</div>
-</td>
 <{/block}>

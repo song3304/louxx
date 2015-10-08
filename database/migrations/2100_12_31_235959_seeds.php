@@ -52,6 +52,10 @@ class Seeds extends Migration
 			'title' => '视频',
 			'field_class' => 'wechat_message_type',
 		])->create([
+			'name' => 'shortvideo',
+			'title' => '小视频',
+			'field_class' => 'wechat_message_type',
+		])->create([
 			'name' => 'voice',
 			'title' => '音频',
 			'field_class' => 'wechat_message_type',

@@ -53,7 +53,7 @@ class CreateWechatTable extends Migration
 		Schema::create('wechat_depots', function (Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('waid'); //account_id
-			$table->enum('type', ['text','news','music','voice','image','video','callback']); //素材类型
+			$table->enum('type', ['text','news','music','voice','image','video','shortvideo','callback']); //素材类型
 			$table->unsignedInteger('uid')->default(0); //用户ID
 			$table->timestamps();
 
