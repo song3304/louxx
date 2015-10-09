@@ -175,7 +175,7 @@ class CreateWechatTable extends Migration
 			$table->unsignedInteger('waid')->index(); //account id
 			$table->unsignedInteger('wuid')->index(); //user id
 			$table->enum('transport_type', ['send', 'receive'])->default('receive')->index(); //是发送还是接受
-			$table->enum('type', ['depots', 'text', 'image', 'video', 'voice', 'link', 'location'])->index(); //类型
+			$table->enum('type', ['depot', 'text', 'image', 'video', 'shortvideo', 'voice', 'link', 'location'])->index(); //类型
 			$table->string('message_id', 100); //消息ID
 			$table->unsignedInteger('wdid')->default(0); //素材ID
 			$table->tinyInteger('status')->default(0); //状态
