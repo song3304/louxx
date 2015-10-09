@@ -8,7 +8,9 @@
 			<!-- END Modal Header -->
 			<!-- Modal Body -->
 			<div class="modal-body">
-				<form action="index.html" id="form" method="post" class="form-horizontal" onsubmit="return false;">
+				<form action="index.html" id="form" method="post" class="form-horizontal">
+				<{csrf_field() nofilter}>
+				<{method_field('PUT') nofilter}>
 				<input type="hidden" name="type" value="text">
 					<div class="form-group">
 						<div class="col-md-10 col-md-offset-1">
