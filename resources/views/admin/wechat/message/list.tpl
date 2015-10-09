@@ -23,15 +23,19 @@
 <{/block}>
 
 <{block "head-scripts-plus"}>
-
+<script>
+(function($){
+	$('a[method]').query();
+})(jQuery);
+</script>
 <{/block}>
 
 
 <{block "block-content-table"}>
 <{foreach $_table_data as $item}>
 <div class="media alert">
-	<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>" method="delete" confirm="您确定删除此条消息？此操作并不会在微信中删除！" data-toggle="tooltip" title="删除" class="text-danger close"><span aria-hidden="true">&times;</span></a>
 	<{if $item->transport_type == 'receive'}>
+	<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>" method="delete" confirm="您确定删除此条消息？此操作并不会在微信中删除！" data-toggle="tooltip" title="删除" class="text-danger close"><span aria-hidden="true">&times;</span></a>
 	<div class="media-left">
 		<a href="<{'admin/wechat/user'|url}>/<{$item->user->getKey()}>" target="_blank">
 			<img class="media-object" src="<{'attachment'|url}>?id=<{$item.user.avatar_aid}>" alt="" style="width:120px; height:120px;">
