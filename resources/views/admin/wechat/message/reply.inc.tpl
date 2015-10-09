@@ -35,7 +35,7 @@
 									</button>
 								</div>
 							</div>
-							<textarea id="content1" name="content" class="form-control" maxlength="600" placeholder="请输入需要回复的内容"></textarea>
+							<textarea id="content1" name="content" rows="10" class="form-control" maxlength="600" placeholder="请输入需要回复的内容"></textarea>
 						</div>
 					</div>
 		
