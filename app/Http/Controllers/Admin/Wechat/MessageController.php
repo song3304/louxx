@@ -77,9 +77,7 @@ class MessageController extends Controller
 
 		$keys = 'type,content';
 		$data = $this->autoValidate($request, 'wechat-message.store', $keys);
-		
-		$message = WechatMessage::create(['waid' => $api->waid, 'wuid' => $wechatUser->getKey(), 'message_id' => $rev->getRevID(), 'type' => $type, 'transport_type' => 'receive']);
-
+	
 		//发送消息
 		(new Send($message->account, $message->user))->add($data['content'])->send();
 		return $this->success();
