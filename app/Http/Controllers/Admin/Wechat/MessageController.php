@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Addons\Core\Models\Attachment;
 use Addons\Core\Models\WechatAccount;
 use Addons\Core\Models\WechatMessage;
 use Addons\Core\Tools\Wechat\Send;
@@ -23,7 +24,7 @@ class MessageController extends Controller
 	public function index(Request $request)
 	{
 		$message = new WechatMessage;
-		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'video', 'voice', 'image', 'text']);
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media']);
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$message->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
@@ -37,7 +38,7 @@ class MessageController extends Controller
 	public function data(Request $request)
 	{
 		$message = new WechatMessage;
-		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'video', 'voice', 'image', 'text']);
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media']);
 		$data = $this->_getData($request, $builder);
 		$data['recordsTotal'] = $message->newQuery()->count();
 		$data['recordsFiltered'] = $data['total'];
@@ -59,7 +60,7 @@ class MessageController extends Controller
 			return $this->view('admin.wechat.message.export');
 		}
 
-		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'video', 'voice', 'image', 'text']);
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media']);
 		$data = $this->_getExport($request, $builder);
 		return $this->success('', FALSE, $data);
 	}
@@ -79,7 +80,7 @@ class MessageController extends Controller
 		$data = $this->autoValidate($request, 'wechat-message.store', $keys);
 	
 		//发送消息
-		(new Send($message->account, $message->user))->add($data['content'])->send();
+		(new Send($message->account, $message->user))->add($data['type'] == 'text' ? $data['content'] : (new Attachment)->get($data['content']))->send();
 		return $this->success();
 	}
 

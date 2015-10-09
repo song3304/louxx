@@ -23,9 +23,12 @@
 <{/block}>
 
 <{block "head-scripts-plus"}>
+<{include file="common/uploader.inc.tpl"}>
 <script>
 (function($){
+$().ready(function(){
 	$('a[method]').query();
+});
 })(jQuery);
 </script>
 <{/block}>
@@ -50,14 +53,14 @@
 		</h4>
 		<p>
 		<{if $item->type == 'text'}> <{$item->text->content|escape|nl2br nofilter}>
-		<{else if $item->type == 'image'}> <a href="<{'attachment'|url}>?id=<{$item->image->aid}>" target="_blank"><img src="<{'attachment'|url}>?id=<{$item->image->aid}>" alt="" onload="resizeImg(this, 320, 200);"></a>
-		<{else if $item->type == 'voice'}> <audio src="<{'attachment'|url}>?id=<{$item->voice->aid}>" controls="controls"></audio>
-		<{else if $item->type == 'video' || $item->type == 'shortvideo'}> <video src="<{'attachment'|url}>?id=<{$item->video->aid}>" controls="controls" style="max-width:320px;max-height:240px;"></video>
-		<{else if $item->type == 'location'}> <{$item->location->x}>, <{$item->location->y}> <br /><{$item->location->label}>
+		<{else if $item->type == 'image'}> <a href="<{'attachment'|url}>?id=<{$item->media->aid}>" target="_blank"><img src="<{'attachment'|url}>?id=<{$item->media->aid}>" alt="" onload="resizeImg(this, 320, 200);"></a>
+		<{else if $item->type == 'voice'}> <audio src="<{'attachment'|url}>?id=<{$item->media->aid}>" controls="controls"></audio> <a href="<{'attachment/download'|url}>?id=<{$item->media->aid}>" target="_blank">下载</a>
+		<{else if $item->type == 'video' || $item->type == 'shortvideo'}> <video src="<{'attachment'|url}>?id=<{$item->media->aid}>" controls="controls" style="max-width:320px;max-height:240px;"></video> <a href="<{'attachment/download'|url}>?id=<{$item->media->aid}>" target="_blank">下载</a>
+		<{else if $item->type == 'location'}> <{$item->location->x}>, <{$item->location->y}> <a href="">查看地图</a><br /><{$item->location->label}>
 		<{else if $item->type == 'link'}> <a href="<{$item->link->url}>" target="_blank"><{$item->link->title}></a> <br /><{$item->link->description}> 
 		<{/if}>
 		</p>
-		<span class="pull-right"><a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->getKey()}>" data-nickname="<{$item->user->nickname}> (<{$item->user->openid}>)" name="reply" data-toggle="tooltip" title="回复" class="btn btn-xs btn-success"><i class="fa fa-reply"></i> 回复</a></span>
+		<{if $item->transport_type == 'receive'}><span class="pull-right"><a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->getKey()}>" data-nickname="<{$item->user->nickname}> (<{$item->user->openid}>)" name="reply" data-toggle="tooltip" title="回复" class="btn btn-xs btn-success"><i class="fa fa-reply"></i> 回复</a></span><{/if}>
 	</div>
 	<{if $item->transport_type == 'send'}>
 	<div class="media-right">
