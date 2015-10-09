@@ -31,11 +31,13 @@
 <{foreach $_table_data as $item}>
 <div class="media alert">
 	<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>" method="delete" confirm="您确定删除此条消息？此操作并不会在微信中删除！" data-toggle="tooltip" title="删除" class="text-danger close"><span aria-hidden="true">&times;</span></a>
-	<div class="<{if $item->transport_type == 'receive'}>media-left<{else}>media-right<{/if}>">
+	<{if $item->transport_type == 'receive'}>
+	<div class="media-left">
 		<a href="<{'admin/wechat/user'|url}>/<{$item->user->getKey()}>" target="_blank">
 			<img class="media-object" src="<{'attachment'|url}>?id=<{$item.user.avatar_aid}>" alt="" style="width:120px; height:120px;">
 		</a>
 	</div>
+	<{/if}>
 	<div class="media-body">
 		<h4 class="media-heading page-header">
 		<{if $item->transport_type == 'receive'}> <i class="fa fa-send text-info"></i> <{else}> <i class="fa fa-share text-success"></i> <{/if}>
@@ -53,6 +55,13 @@
 		</p>
 		<span class="pull-right"><a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->getKey()}>" data-nickname="<{$item->user->nickname}> (<{$item->user->openid}>)" name="reply" data-toggle="tooltip" title="回复" class="btn btn-xs btn-success"><i class="fa fa-reply"></i> 回复</a></span>
 	</div>
+	<{if $item->transport_type == 'send'}>
+	<div class="media-right">
+		<a href="<{'admin/wechat/user'|url}>/<{$item->user->getKey()}>" target="_blank">
+			<img class="media-object" src="<{'attachment'|url}>?id=<{$item.user.avatar_aid}>" alt="" style="width:120px; height:120px;">
+		</a>
+	</div>
+	<{/if}>
 	<div class="clearfix"></div>
 </div>
 <{/foreach}>
