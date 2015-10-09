@@ -80,7 +80,7 @@ class MessageController extends Controller
 		$data = $this->autoValidate($request, 'wechat-message.store', $keys);
 	
 		//发送消息
-		(new Send($message->account, $message->user))->add($data['type'] == 'text' ? $data['content'] : (new Attachment)->get($data['content']))->send();
+		(new Send($message->account, $message->user))->add($data['type'] == 'text' ? $data['content'] : Attachment::find($data['content']))->send();
 		return $this->success();
 	}
 
