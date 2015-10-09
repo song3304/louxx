@@ -51,7 +51,7 @@
 		<{else if $item->type == 'link'}> <a href="<{$item->link->url}>" target="_blank"><{$item->link->title}></a> <br /><{$item->link->description}> 
 		<{/if}>
 		</p>
-		<span class="pull-right"><a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->wuid}>/edit" data-nickname="<{$item->user->nickname}> (<{$item->user->openid}>)" name="reply" data-toggle="tooltip" title="回复" class="btn btn-xs btn-success"><i class="fa fa-reply"></i> 回复</a></span>
+		<span class="pull-right"><a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->wuid}>" data-nickname="<{$item->user->nickname}> (<{$item->user->openid}>)" name="reply" data-toggle="tooltip" title="回复" class="btn btn-xs btn-success"><i class="fa fa-reply"></i> 回复</a></span>
 	</div>
 	<div class="clearfix"></div>
 </div>
