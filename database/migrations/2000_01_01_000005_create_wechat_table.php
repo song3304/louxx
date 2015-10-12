@@ -76,7 +76,6 @@ class CreateWechatTable extends Migration
 			$table->increments('id');
 			$table->unsignedInteger('wdid'); //素材库
 			$table->unsignedInteger('wdnid'); //文章ID
-			$table->timestamps();
 
 			$table->foreign('wdid')->references('id')->on('wechat_depots')
 				->onUpdate('cascade')->onDelete('cascade');
@@ -261,7 +260,6 @@ class CreateWechatTable extends Migration
 			$table->increments('id');
 			$table->unsignedInteger('wrid')->index(); //reply id
 			$table->unsignedInteger('wdid')->index(); //素材ID
-			$table->timestamps();
 
 			$table->foreign('wrid')->references('id')->on('wechat_replies')
 				->onUpdate('cascade')->onDelete('cascade');

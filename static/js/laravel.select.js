@@ -19,7 +19,7 @@ $().ready(function(){
 					data.push({'id': id ? replaceData(items[i], id) : items[i].id, 'text': text ? replaceData(items[i], text) : items[i].text});
 				
 			} 
-			$this.select2({allowClear: true, language: "zh-CN", data: data}).val(value ? value.split(',') : null).trigger("change");
+			$this.select2({language: "zh-CN", data: data}).val(value ? value.split(',') : null).trigger("change");
 		}, false);
 	});
 	$('.suggest-model').each(function(){
