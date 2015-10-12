@@ -34,7 +34,7 @@ class CreateWechatTable extends Migration
 			$table->string('nickname', 50)->nullable(); //昵称
 			$table->unsignedInteger('gender')->nullable()->default(0); //性别
 			$table->unsignedInteger('avatar_aid')->nullable()->default(0); //头像
-			$table->tinyInteger('is_subscribe')->default(0); //是否关注
+			$table->tinyInteger('is_subscribed')->default(0); //是否关注
 			$table->string('country',50)->nullable(); //国家
 			$table->string('province',50)->nullable(); //省
 			$table->string('city',50)->nullable(); //市
@@ -42,7 +42,7 @@ class CreateWechatTable extends Migration
 			$table->string('unionid', 150)->nullable(); //唯一ID
 			$table->string('remark', 50)->nullable(); //备注
 			$table->unsignedInteger('groupid')->nullable()->default(0); //组ID
-			$table->timestamp('subscribe_at')->nullable(); //关注时间
+			$table->timestamp('subscribed_at')->nullable(); //关注时间
 			$table->unsignedInteger('uid')->nullable()->default(0); //绑定的用户ID
 			$table->timestamps();
 

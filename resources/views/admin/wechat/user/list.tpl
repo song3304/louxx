@@ -29,12 +29,12 @@
 
 <{block "table-td-plus"}>
 <td class="text-center"><img src="<{'attachment/resize'|url}>?id=<{$item->avatar_aid}>&width=80&height=80" alt="avatar" class="img-responsive"></td>
-<td><{$item->openid}></td>
+<td><a href="<{'admin/wechat/user'|url}>/<{$item->getKey()}>"><{$item->openid}></a></td>
 <td><{$item->unionid}></td>
 <td><{$item->nickname}></td>
 <td><{$item->remark}></td>
 <td><{$item->getRelation('gender')|model:'title'}></td>
-<td><{if !empty($item->is_subscribe)}><{$item->subscribe_at}><{else}><span class="label label-info">未关注</span><{/if}></td>
+<td><{if !empty($item->is_subscribed)}><{$item->subscribed_at}><{else}><span class="label label-info">未关注</span><{/if}></td>
 <td><{$item->country}></td>
 <td><{$item->province}></td>
 <td><{$item->city}></td>

@@ -62,12 +62,14 @@
 				<!-- END Form Header -->
 				<{/block}>
 
+				<{block "block-container"}>
 				<!-- Form Elements Content -->
 				<div class="block full">
 					<{block "block-title"}><{/block}>
 					<{block "block-content"}><{/block}>
 				</div>
 				<!-- END Form Elements Content -->
+				<{/block}>
 			</div>
 			<!-- END Page Content -->
 

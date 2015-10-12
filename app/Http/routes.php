@@ -17,10 +17,6 @@ Route::resources([
 	'member' => 'MemberController',
 ]);
 
-Route::bind('user', function($value, $route){
-	return \App\User::find($value);
-});
-
 Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'], function($router) {
 	
 	$this->setAdminRoutes([

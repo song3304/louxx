@@ -34,15 +34,17 @@ var columns_plus = [
 	{'data': "avatar_aid", orderable: false, 'render': function(data, type, full){
 		return '<img src="<{'attachment/resize'|url}>?id='+data+'&width=80&height=80" alt="avatar" class="img-responsive">';
 	}},
-	{'data': 'openid'},
+	{'data': 'openid', orderable: false, 'render': function(data, type, full){
+		return '<a href="<{'admin/wechat/user'|url}>/'+full['id']+'">' + data + '</a>';
+	}},
 	{'data': 'unionid'},
 	{'data': 'nickname'},
 	{'data': 'remark'},
 	{'data': 'gender', 'render': function(data, type, full){
 		return '<span class="label label-primary">'+data.title+'</span>';
 	}},
-	{'data': 'subscribe_at', 'render': function(data, type, full){
-		return full['is_subscribe'] ? data : '<span class="label label-info">未关注</span>';
+	{'data': 'subscribed_at', 'render': function(data, type, full){
+		return full['is_subscribed'] ? data : '<span class="label label-info">未关注</span>';
 	}},
 	{'data': 'country', orderable: false},
 	{'data': 'province', orderable: false},

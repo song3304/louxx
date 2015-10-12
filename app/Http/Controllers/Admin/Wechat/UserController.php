@@ -21,7 +21,7 @@ class UserController extends Controller
 	public function index(Request $request)
 	{
 		$user = new WechatUser;
-		$builder = $user->newQuery();
+		$builder = $user->newQuery()->with('gender')->where('transport_type','receive');
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
@@ -36,7 +36,7 @@ class UserController extends Controller
 	public function data(Request $request)
 	{
 		$user = new WechatUser;
-		$builder = $user->newQuery();
+		$builder = $user->newQuery()->with('gender');
 		$data = $this->_getData($request, $builder);
 		$data['recordsTotal'] = $user->newQuery()->count();
 		$data['recordsFiltered'] = $data['total'];
@@ -58,19 +58,24 @@ class UserController extends Controller
 			return $this->view('admin.wechat.user.export');
 		}
 
-		$builder = $user->newQuery();
+		$builder = $user->newQuery()->with('gender');
 		$data = $this->_getExport($request, $builder);
 		return $this->success('', FALSE, $data);
 	}
 
 	public function show($id)
 	{
-		return '';
+		$user = WechatUser::find($id);
+		if (empty($user))
+			return $this->failure_noexists();
+
+		$this->_data = $user;
+		return $this->view('admin.wechat.user.show');
 	}
 
 	public function create()
 	{
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
+		$keys = 'openid,nickname,gender,avatar_aid,country,province,city,language,unionid,remark,is_subscribed,subscribed_at,uid';
 		$this->_data = [];
 		$this->_validates = $this->getScriptValidate('wechat-user.store', $keys);
 		return $this->view('admin.wechat.user.create');
@@ -78,7 +83,7 @@ class UserController extends Controller
 
 	public function store(Request $request)
 	{
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
+		$keys = 'openid,nickname,gender,avatar_aid,country,province,city,language,unionid,remark,is_subscribed,subscribed_at,uid';
 		$data = $this->autoValidate($request, 'wechat-user.store', $keys);
 
 		WechatUser::create($data);
@@ -91,7 +96,7 @@ class UserController extends Controller
 		if (empty($user))
 			return $this->failure_noexists();
 
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
+		$keys = 'openid,nickname,gender,avatar_aid,country,province,city,language,unionid,remark,is_subscribed,subscribed_at,uid';
 		$this->_validates = $this->getScriptValidate('wechat-user.store', $keys);
 		$this->_data = $user;
 		return $this->view('admin.wechat.user.edit');
@@ -103,7 +108,7 @@ class UserController extends Controller
 		if (empty($user))
 			return $this->failure_noexists();
 
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
+		$keys = 'openid,nickname,gender,avatar_aid,country,province,city,language,unionid,remark,is_subscribed,subscribed_at,uid';
 		$data = $this->autoValidate($request, 'wechat-user.store', $keys);
 		$user->update($data);
 		return $this->success();

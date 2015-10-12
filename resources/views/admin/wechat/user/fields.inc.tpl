@@ -1,63 +1,78 @@
 <div class="form-group">
-	<label class="col-md-3 control-label" for="name">名称</label>
+	<label class="col-md-3 control-label" for="openid">OPEN ID</label>
 	<div class="col-md-9">
-		<input type="text" id="name" name="name" class="form-control" placeholder="请输入名称" value="<{$_data.name}>">
+		<input type="text" id="openid" name="openid" class="form-control" placeholder="请输入..." value="<{$_data.openid}>">
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" for="description">简介</label>
+	<label class="col-md-3 control-label" for="unionid">Union ID</label>
 	<div class="col-md-9">
-		<textarea id="description" name="description" rows="9" class="form-control" placeholder="简介.."></textarea>
+		<input type="text" id="unionid" name="unionid" class="form-control" placeholder="请输入..." value="<{$_data.unionid}>">
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label">类型</label>
+	<label class="col-md-3 control-label" for="nickname">昵称</label>
 	<div class="col-md-9">
-		<{foreach $_fields.wechat_type as $v}>
+		<input type="text" id="nickname" name="nickname" class="form-control" placeholder="请输入..." value="<{$_data.nickname}>">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-md-3 control-label" for="remark">备注</label>
+	<div class="col-md-9">
+		<input type="text" id="remark" name="remark" class="form-control" placeholder="请输入" value="<{$_data.remark}>">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-md-3 control-label">性别</label>
+	<div class="col-md-9">
+		<{foreach $_fields.gender as $v}>
 		<label class="radio-inline">
-			<input type="radio" name="wechat_type" value="<{$v.id}>" <{if $_data.wechat_type == $v.id}>checked="checked"<{/if}> > <{$v.title}>
+			<input type="radio" name="gender" value="<{$v.id}>" <{if $_data.gender == $v.id}>checked="checked"<{/if}> > <{$v.title}>
 		</label>
 		<{/foreach}>
 		<div class="clearfix"></div>
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" for="account">原始ID</label>
+	<label class="col-md-3 control-label" for="avatar_aid">头像</label>
 	<div class="col-md-9">
-		<input type="text" id="account" name="account" class="form-control" placeholder="请输入" value="<{$_data.account}>">
-		<span class="help-block">此账号由微信自动生成（公众号设置 - 原始ID），类似：gh_xxxxxxxxxxxxx</span>
+		<input type="hidden" id="avatar_aid" name="avatar_aid" class="form-control" value="<{$_data.avatar_aid}>">
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" for="appid">APP ID</label>
+	<label class="col-md-3 control-label" for="country">国家</label>
 	<div class="col-md-9">
-		<input type="text" id="appid" name="appid" class="form-control" placeholder="请输入APP ID" value="<{$_data.appid}>">
+		<input type="text" id="country" name="country" class="form-control" placeholder="请输入..." value="<{$_data.country}>">
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" for="appsecret">APP Secrect</label>
+	<label class="col-md-3 control-label" for="province">省份</label>
 	<div class="col-md-9">
-		<input type="text" id="appsecret" name="appsecret" class="form-control" placeholder="请输入APP Secrect" value="<{$_data.appsecret}>">
+		<input type="text" id="province" name="province" class="form-control" placeholder="请输入..." value="<{$_data.province}>">
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" for="token">Token</label>
+	<label class="col-md-3 control-label" for="city">城市</label>
 	<div class="col-md-9">
-		<input type="text" id="token" name="token" class="form-control" placeholder="请输入Token" value="<{$_data.token}>">
-		<span class="help-block">(*) 为开发者模式设定的token</span>
+		<input type="text" id="city" name="city" class="form-control" placeholder="请输入..." value="<{$_data.city}>">
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" for="encodingaeskey">Encodingaes KEY</label>
+	<label class="col-md-3 control-label">关注</label>
 	<div class="col-md-9">
-		<input type="text" id="encodingaeskey" name="encodingaeskey" class="form-control" placeholder="请输入Encodingaes KEY" value="<{$_data.encodingaeskey}>">
-		<span class="help-block">(*) 如果不加密消息，可不用填写</span>
+		<label class="radio-inline">
+			<input type="radio" name="is_subscribed" value="1" <{if !empty($_data.is_subscribed)}>checked="checked"<{/if}> > 已关注
+		</label>
+		<label class="radio-inline">
+			<input type="radio" name="is_subscribed" value="0" <{if empty($_data.is_subscribed)}>checked="checked"<{/if}> > 未关注
+		</label>
+		<div class="clearfix"></div>
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" for="qr_aid">二维码</label>
+	<label class="col-md-3 control-label" for="subscribed_at">关注时间</label>
 	<div class="col-md-9">
-		<input type="hidden" id="qr_aid" name="qr_aid" class="form-control" value="<{$_data.qr_aid}>">
+		<input type="text" id="subscribed_at" name="subscribed_at" class="form-control" placeholder="请输入..." value="<{$_data.subscribed_at}>">
 	</div>
 </div>
 
@@ -67,3 +82,19 @@
 		<button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> 重设</button>
 	</div>
 </div>
+
+<script>
+(function($){
+	$().ready(function(){
+		$('#subscribed_at').on('focus',function(){
+			WdatePicker({
+				skin: 'twoer',
+				isShowClear:true,
+				readOnly:true,
+				dateFmt:'yyyy-MM-dd HH:mm:ss',
+				isShowOthers:false
+			});
+		});
+	});
+})(jQuery);
+</script>

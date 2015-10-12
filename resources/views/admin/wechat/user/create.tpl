@@ -1,11 +1,12 @@
 <{extends file="admin/extends/create.block.tpl"}>
 
 <{block "head-plus"}>
+<script src="<{'static/js/DatePicker/WdatePicker.js'|url}>"></script>
 <{include file="common/uploader.inc.tpl"}>
 <{/block}>
 
 <{block "inline-script-plus"}>
-$('#qr_aid').uploader();
+$('#avatar_aid').uploader();
 <{/block}>
 
 <{block "title"}>微信用户<{/block}>
