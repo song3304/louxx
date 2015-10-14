@@ -17,9 +17,11 @@ Route::resources([
 	'member' => 'MemberController',
 ]);
 
-Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => 'auth'], function($router) {
+Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'ability:admin,view_admin,true']], function($router) {
 	
 	$this->setAdminRoutes([
+		'role' => 'RoleController',
+		'permission' => 'PermissionController',
 		'member' => 'MemberController',
 		'wechat/account' => 'Wechat\\AccountController',
 	]);

@@ -139,37 +139,61 @@ class Seeds extends Migration
 		\App\Role::create([
 			'id' => 99,
 			'name' => 'admin',
-			'display_name' => 'Adminsitrator Group'
+			'display_name' => '超级管理员'
 		])->create([
 			'id' => 98,
 			'name' => 'manger',
-			'display_name' => 'Manager Group'
+			'display_name' => '项目总监'
 		])->create([
 			'id' => 97,
 			'name' => 'owner',
-			'display_name' => 'Owner Group'
+			'display_name' => '经理'
 		])->create([
 			'id' => 96,
 			'name' => 'leader',
-			'display_name' => 'Leader Group'
+			'display_name' => '负责人'
 		])->create([
 			'id' => 1,
 			'name' => 'viewer',
-			'display_name' => 'Viewer Group'
+			'display_name' => '普通用户'
 		])->create([
 			'id' => 2,
 			'name' => 'wechater',
-			'display_name' => 'Wechater Group'
+			'display_name' => '微信用户'
 		])->create([
 			'id' => 0,
 			'name' => 'guest',
-			'display_name' => 'Guest Group'
+			'display_name' => '访客'
 		])->update(['id' => 0]);
+
+		\App\Permission::create([
+			'name' => 'view_admin',
+			'display_name' => '允许查看后台页面',
+		])->create([
+			'name' => 'view_role',
+			'display_name' => '允许查看用户组、权限',
+		])->create([
+			'name' => 'edit_role',
+			'display_name' => '允许编辑用户组、权限',
+		])->create([
+			'name' => 'delete_role',
+			'display_name' => '允许删除用户组、权限',
+		])->create([
+			'name' => 'view_member',
+			'display_name' => '允许查看用户页面',
+		])->create([
+			'name' => 'edit_member',
+			'display_name' => '允许创建、编辑用户',
+		])->create([
+			'name' => 'delete_member',
+			'display_name' => '允许删除用户',
+		]);
+		\App\Role::find(99)->attachPermissions([1, 2, 3, 4, 5, 6, 7]);
 
 		(new \App\User)->add([
 			'username' => 'admin',
 			'password' => '123456',
-			'nickname' => 'Administrator',
+			'nickname' => '超级管理员',
 		], \App\Role::ADMIN);
 	}
 

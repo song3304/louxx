@@ -31,5 +31,9 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'wechat.account' => \App\Http\Middleware\WechatAccount::class,
         'wechat.oauth2' => \App\Http\Middleware\WechatOAuth::class,
+
+        'role' => \Addons\Core\Middleware\Role::class,
+        'permission' => \Addons\Core\Middleware\Permission::class,
+        'ability' =>\Addons\Core\Middleware\Ability::class,
     ];
 }

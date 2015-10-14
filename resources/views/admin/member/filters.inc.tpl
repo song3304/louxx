@@ -30,11 +30,19 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="form-group col-sm-4">
+		<label class="col-md-3 control-label" for="realname">用户组</label>
+		<div class="col-md-9">
+			<select type="text" id="realname" name="filters[role_id][in][]" class="form-control select-model" data-model="role" data-id="{id}" data-text="{display_name}({name})" data-placeholder="请输入关键词..." value="<{$_filters.role_id.in|default:[]|implode:','}>" multiple="multiple"></select>
+		</div>
+	</div>
+
 	<div class="form-group col-sm-4">
 		<label class="col-md-3 control-label">性别</label>
 		<div class="col-md-9">
 			<label class="radio-inline">
-				<input type="radio" name="filters[gender]" value="0" checked="checked"> 不限
+				<input type="radio" name="filters[gender]" value="" checked="checked"> 不限
 			</label>
 		<{foreach $_fields.gender as $v}>
 			<label class="radio-inline">

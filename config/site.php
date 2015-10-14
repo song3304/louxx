@@ -8,6 +8,7 @@ return [
    		'common' => 25,
    		'export' => 500,
    		'admin' => [
+            'permission' => 50,
    			'users' => 25,
    			'wechat_depots' => 5,
    			'wechat-users' => 50,
