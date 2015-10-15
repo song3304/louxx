@@ -73,7 +73,7 @@ class MemberController extends Controller
 
 	public function create()
 	{
-		$keys = 'username,password,nickname,realname,gender,email,phone,avatar_aid';
+		$keys = 'username,password,nickname,realname,gender,email,phone,avatar_aid,role_ids';
 		$this->_data = [];
 		$this->_validates = $this->getScriptValidate('member.store', $keys);
 		return $this->view('admin.member.create');
@@ -81,10 +81,12 @@ class MemberController extends Controller
 
 	public function store(Request $request)
 	{
-		$keys = 'username,password,nickname,realname,gender,email,phone,avatar_aid';
+		$keys = 'username,password,nickname,realname,gender,email,phone,avatar_aid,role_ids';
 		$data = $this->autoValidate($request, 'member.store', $keys);
 
-		(new User)->add($data);
+		$role_ids = array_pull($data, 'role_ids');
+		$user = (new User)->add($data);
+		$user->roles()->sync($role_ids);
 		return $this->success('', url('admin/member'));
 	}
 
@@ -94,7 +96,7 @@ class MemberController extends Controller
 		if (empty($user))
 			return $this->failure_noexists();
 
-		$keys = 'username,nickname,realname,gender,email,phone,avatar_aid';
+		$keys = 'username,nickname,realname,gender,email,phone,avatar_aid,role_ids';
 		$this->_validates = $this->getScriptValidate('member.store', $keys);
 		$this->_data = $user;
 		return $this->view('admin.member.edit');
@@ -113,9 +115,11 @@ class MemberController extends Controller
 			$data['password'] = bcrypt($data['password']);
 			$user->update($data);
 		}
-		$keys = 'nickname,realname,gender,email,phone,avatar_aid';
-		$data = $this->autoValidate($request, 'member.store', $keys);
+		$keys = 'nickname,realname,gender,email,phone,avatar_aid,role_ids';
+		$data = $this->autoValidate($request, 'member.store', $keys, $user);
+		$role_ids = array_pull($data, 'role_ids');
 		$user->update($data);
+		$user->roles()->sync($role_ids);
 		return $this->success();
 	}
 

@@ -5,7 +5,7 @@ return [
 		'store' => [
 			'name' => [
 				'name' => '组名',
-				'rules' => 'required|regexp:/[\w\d_\-]/|min:1|unique:roles,{{ATTRIBUTE}},{{ID}}',
+				'rules' => 'required|regexp:/[\w\d_\-]/|min:1|unique:roles,{{attribute}},{{id}}',
 			],
 			'display_name' => [
 				'name' => '显示名称',
@@ -35,7 +35,7 @@ return [
 		'store' => [
 			'name' => [
 				'name' => '组名',
-				'rules' => 'required|regexp:/[\w\d_\-\.]/|min:1|unique:permissions,{{ATTRIBUTE}},{{ID}}',
+				'rules' => 'required|regexp:/[\w\d_\-\.]/|min:1|unique:permissions,{{attribute}},{{id}}',
 			],
 			'display_name' => [
 				'name' => '显示名称',
@@ -51,7 +51,7 @@ return [
 		'store' => [
 			'username' => [
 				'name' => '用户名',
-				'rules' => 'required|ansi:2|unique:users,{{ATTRIBUTE}},{{ID}}|regex:/^[a-z0-9\x{4e00}-\x{9fa5}\x{f900}-\x{fa2d}]*$/iu|max:150|min:3',
+				'rules' => 'required|ansi:2|unique:users,{{attribute}},{{id}}|regex:/^[a-z0-9\x{4e00}-\x{9fa5}\x{f900}-\x{fa2d}]*$/iu|max:150|min:3',
 				'message' => ['regex' => '用户名必须为汉字、英文、数字'],
 			],
 			'nickname' => [
@@ -77,15 +77,19 @@ return [
 			],
 			'phone' => [
 				'name' => '手机',
-				'rules' => 'phone',
+				'rules' => 'phone|unique:users,{{attribute}},{{id}}',
 			],
 			'email' => [
-				'name' => '手机',
-				'rules' => 'email',
+				'name' => 'E-Mail',
+				'rules' => 'email|unique:users,{{attribute}},{{id}}',
 			],
 			'avatar_aid' => [
 				'name' => '用户头像',
 				'rules' => 'numeric',
+			],
+			'role_ids' => [
+				'name' => '用户组',
+				'rules' => 'required|array',
 			],
 			'accept_license' => [
 				'name' => '阅读并同意协议',
@@ -119,11 +123,11 @@ return [
 			],
 			'appid' => [
 				'name' => 'APP ID',
-				'rules' => 'required|min:10|unique:wechat_accounts,{{ATTRIBUTE}},{{ID}}',
+				'rules' => 'required|min:10|unique:wechat_accounts,{{attribute}},{{id}}',
 			],
 			'account' => [
 				'name' => '原始 ID',
-				'rules' => 'required|min:10|unique:wechat_accounts,{{ATTRIBUTE}},{{ID}}',
+				'rules' => 'required|min:10|unique:wechat_accounts,{{attribute}},{{id}}',
 			],
 			'appsecret' => [
 				'name' => 'APP Secrect',

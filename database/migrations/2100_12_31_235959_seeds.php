@@ -185,11 +185,11 @@ class Seeds extends Migration
 			] as $k1 => $v1) {
 				\App\Permission::create([
 					'name' => $k.'.'.$k1,
-					'value' => '允许'.$v1.$v;
+					'display_name' => '允许'.$v1.$v,
 				]);
 			}
 		}
-		\App\Role::find(99)->attach(\App\Permission::all());
+		\App\Role::find(99)->perms()->sync(\App\Permission::all());
 
 		(new \App\User)->add([
 			'username' => 'admin',

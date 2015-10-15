@@ -57,7 +57,13 @@
 <div class="form-group">
 	<label class="col-md-3 control-label" for="email">Email</label>
 	<div class="col-md-9">
-		<input type="email" id="email" name="email" class="form-control" placeholder="请输入Email">
+		<input type="email" id="email" name="email" class="form-control" placeholder="请输入Email" value="<{$_data.email}>">
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-md-3 control-label" for="role_ids">用户组</label>
+	<div class="col-md-9">
+		<select id="role_ids" name="role_ids[]" class="form-control select-model" value="<{if !empty($_data)}><{$_data->roles->modelKeys()|implode:','}><{/if}>" data-model="role" data-id="{id}" data-text="{display_name}({name})" data-placeholder="请输入用户组" multiple="multiple"></select>
 	</div>
 </div>
 <div class="form-group form-actions">
