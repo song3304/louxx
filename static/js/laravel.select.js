@@ -41,8 +41,8 @@ $().ready(function(){
 				type: 'post',
 				delay: 250,
 				data: function (params) {
-					var v = {page: params.page, _token: $.crsf};
-					v['filters'][term]['like'] = params.term;
+					var v = {page: params.page, _token: $.crsf, filters: {}};
+					v['filters'][term] = {'like': params.term};
 					v['filters'] = _extends({}, v['filters'], filters);
 					return v;
 				},
