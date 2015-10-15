@@ -19,19 +19,17 @@ class CreateUsersTable extends Migration
 			$table->string('password', 60); //密码
 			$table->string('nickname', 50)->nullable(); //昵称
 			$table->string('realname', 50)->nullable(); //真实姓名
-			$table->unsignedInteger('avatar_aid')->nullable()->default(0); //头像
-			$table->unsignedInteger('gender')->nullable()->default(0); //性别
+			$table->unsignedInteger('avatar_aid')->default(0); //头像
+			$table->unsignedInteger('gender')->default(0); //性别
 			$table->string('email')->nullable(); //Email
-			$table->string('phone', 20); //电话
-			$table->string('idcard', 50)->unique(); //身份证
+			$table->string('phone', 20)->index(); //电话
+			$table->string('idcard', 50)->index(); //身份证
 
 			$table->rememberToken(); //记住我的Token
 			$table->timestamps(); //创建/修改时间
 			$table->timestamp('lastlogin_at'); //最后登录时间
 			$table->softDeletes(); //软删除
 
-			//$table->foreign('avatar_aid')->references('id')->on('attachments');
-			//$table->foreign('gender')->references('id')->on('fields');
 		});
 
 		Schema::create('reset_password', function (Blueprint $table) {
