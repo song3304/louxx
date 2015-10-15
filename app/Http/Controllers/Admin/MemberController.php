@@ -73,7 +73,7 @@ class MemberController extends Controller
 
 	public function create()
 	{
-		$keys = 'username,password,nickname,realname,gender,email,phone,avatar_aid,role_ids';
+		$keys = 'username,password,nickname,realname,gender,email,phone,idcard,avatar_aid,role_ids';
 		$this->_data = [];
 		$this->_validates = $this->getScriptValidate('member.store', $keys);
 		return $this->view('admin.member.create');
@@ -81,7 +81,7 @@ class MemberController extends Controller
 
 	public function store(Request $request)
 	{
-		$keys = 'username,password,nickname,realname,gender,email,phone,avatar_aid,role_ids';
+		$keys = 'username,password,nickname,realname,gender,email,phone,idcard,avatar_aid,role_ids';
 		$data = $this->autoValidate($request, 'member.store', $keys);
 
 		$role_ids = array_pull($data, 'role_ids');
@@ -96,7 +96,7 @@ class MemberController extends Controller
 		if (empty($user))
 			return $this->failure_noexists();
 
-		$keys = 'username,nickname,realname,gender,email,phone,avatar_aid,role_ids';
+		$keys = 'username,nickname,realname,gender,email,phone,idcard,avatar_aid,role_ids';
 		$this->_validates = $this->getScriptValidate('member.store', $keys);
 		$this->_data = $user;
 		return $this->view('admin.member.edit');
@@ -115,7 +115,7 @@ class MemberController extends Controller
 			$data['password'] = bcrypt($data['password']);
 			$user->update($data);
 		}
-		$keys = 'nickname,realname,gender,email,phone,avatar_aid,role_ids';
+		$keys = 'nickname,realname,gender,email,phone,idcard,avatar_aid,role_ids';
 		$data = $this->autoValidate($request, 'member.store', $keys, $user);
 		$role_ids = array_pull($data, 'role_ids');
 		$user->update($data);
