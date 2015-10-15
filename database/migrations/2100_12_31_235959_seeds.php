@@ -166,29 +166,30 @@ class Seeds extends Migration
 			'display_name' => '访客'
 		])->update(['id' => 0]);
 
-		\App\Permission::create([
-			'name' => 'view_admin',
-			'display_name' => '允许查看后台页面',
-		])->create([
-			'name' => 'view_role',
-			'display_name' => '允许查看用户组、权限',
-		])->create([
-			'name' => 'edit_role',
-			'display_name' => '允许编辑用户组、权限',
-		])->create([
-			'name' => 'delete_role',
-			'display_name' => '允许删除用户组、权限',
-		])->create([
-			'name' => 'view_member',
-			'display_name' => '允许查看用户页面',
-		])->create([
-			'name' => 'edit_member',
-			'display_name' => '允许创建、编辑用户',
-		])->create([
-			'name' => 'delete_member',
-			'display_name' => '允许删除用户',
-		]);
-		\App\Role::find(99)->attachPermissions([1, 2, 3, 4, 5, 6, 7]);
+		foreach([
+			'role' => '用户组、权限',
+			'member' => '用户',
+			'wechat-account' => '微信公众号',
+			'wechat-depot' => '微信素材',
+			'wechat-menu' => '微信菜单',
+			'wechat-message' => '微信消息',
+			'wechat-reply' => '微信自定义回复',
+			'wechat-user' => '微信用户',
+		] as $k => $v) {
+			foreach([
+				'view' => '查看',
+				'create' => '新建',
+				'edit' => '编辑',
+				'destory' => '删除',
+				'export' => '导出'
+			] as $k1 => $v1) {
+				\App\Permission::create([
+					'name' => $k.'.'.$k1,
+					'value' => '允许'.$v1.$v;
+				]);
+			}
+		}
+		\App\Role::find(99)->attach(\App\Permission::all());
 
 		(new \App\User)->add([
 			'username' => 'admin',

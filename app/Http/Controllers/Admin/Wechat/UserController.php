@@ -13,6 +13,7 @@ use Addons\Core\Controllers\AdminTrait;
 class UserController extends Controller
 {
 	use AdminTrait;
+	public $RESTful_permission = 'wechat-user';
 	/**
 	 * Display a listing of the resource.
 	 *

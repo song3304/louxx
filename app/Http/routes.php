@@ -17,7 +17,7 @@ Route::resources([
 	'member' => 'MemberController',
 ]);
 
-Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function($router) {
+Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'role:admin|manager|owner|leader']], function($router) {
 	
 	$this->setAdminRoutes([
 		'role' => 'RoleController',

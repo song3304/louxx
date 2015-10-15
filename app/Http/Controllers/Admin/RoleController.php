@@ -14,6 +14,7 @@ use Addons\Core\Controllers\AdminTrait;
 class RoleController extends Controller
 {
 	use AdminTrait;
+	public $RESTful_permission = 'role';
 	/**
 	 * Display a listing of the resource.
 	 *

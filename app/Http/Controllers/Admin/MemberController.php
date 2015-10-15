@@ -13,9 +13,7 @@ use Addons\Core\Controllers\AdminTrait;
 class MemberController extends Controller
 {
 	use AdminTrait;
-
-	public $permissions = ['index' => 'view_member', 'edit,update,create,store' => 'edit_member', 'destroy' => 'delete_member'];
-
+	public $RESTful_permission = 'member';
 	/**
 	 * Display a listing of the resource.
 	 *
