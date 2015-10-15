@@ -38,7 +38,15 @@ var columns_plus = [
 		return '<span class="label label-primary">'+(data ? data.title : '未知')+'</span>';
 	}},
 	{'data': 'phone'},
-	{'data': null}
+	{'data': 'roles', orderable: false, 'render': function(data, type, full){
+		var html = '';
+		if (data instanceof Array) {
+			data.forEach(function(i){
+				html += '<span class="label label-info">' + i.display_name + '</span>&nbsp;';
+			});
+		}
+		return html;
+	}}
 ];
 <{/block}>
 <{block "datatable-columns-options-delete-confirm"}>var columns_options_delete_confirm = '您确定删除这个用户：'+full['username']+'吗？';<{/block}>

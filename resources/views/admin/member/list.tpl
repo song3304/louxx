@@ -31,7 +31,7 @@
 <td><{$item->realname}></td>
 <td><span class="label label-primary"><{$item->getRelation('gender')|model:'title'}></span></td>
 <td><{$item->phone}></td>
-<td></td>
+<td><{foreach $item->roles as $role}><span class="label label-info"><{$role->display_name}></span>&nbsp;<{/foreach}></td>
 <{/block}>
 
 <{block "table-td-options-delete-confirm"}>您确定删除这个用户：<{$item->username}>吗？<{/block}>
