@@ -60,10 +60,7 @@ class RoleController extends Controller
 			$data = $this->autoValidate($request, 'role.store', $keys);
 
 			foreach(Role::all() as $role)
-			{
-				$role->perms()->detach();
-				$role->attachPermissions(isset($data['perms'][$role->getKey()]) ? $data['perms'][$role->getKey()] : []);
-			}
+				$role->perms()->sync(isset($data['perms'][$role->getKey()]) ? $data['perms'][$role->getKey()] : [] );
 		}
 		else
 		{
