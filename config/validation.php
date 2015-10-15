@@ -79,6 +79,10 @@ return [
 				'name' => '手机',
 				'rules' => 'phone|unique:users,{{attribute}},{{id}}',
 			],
+			'idcard' => [
+				'name' => '身份证',
+				'rules' => 'phone|unique:users,{{attribute}},{{id}}',
+			],
 			'email' => [
 				'name' => 'E-Mail',
 				'rules' => 'email|unique:users,{{attribute}},{{id}}',

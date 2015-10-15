@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
 			$table->unsignedInteger('gender')->nullable()->default(0); //性别
 			$table->string('email')->nullable(); //Email
 			$table->string('phone', 20); //电话
-			$table->unsignedInteger('rid')->default(0); //组ID
+			$table->string('idcard', 50)->unique(); //身份证
 
 			$table->rememberToken(); //记住我的Token
 			$table->timestamps(); //创建/修改时间
@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
 			//$table->foreign('gender')->references('id')->on('fields');
 		});
 
-		Schema::create('user_reset', function (Blueprint $table) {
+		Schema::create('reset_password', function (Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('uid'); //UID
 			$table->string('token', 150)->index(); //Token

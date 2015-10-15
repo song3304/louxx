@@ -10,9 +10,8 @@ $().ready(function(){
 		var $this = $(this);
 		var id = $this.data('id');
 		var text = $this.data('text');
-		var namespace = $this.data('namespace') ? $this.data('namespace') : 'admin';
 		var value = $this.attr('value');
-		$.POST($.baseuri + namespace + '/'+$this.data('model')+'/data/json', {all: 'true'}, function(json){
+		$.POST($.baseuri + $this.data('model')+'/data/json', {all: 'true'}, function(json){
 			var data = [];
 			if (json.result == 'success') {
 				var items = json.data.data;
@@ -36,7 +35,7 @@ $().ready(function(){
 		var _config = {
 			language: "zh-CN",
 			ajax: {
-				url: $.baseuri + namespace + '/'+$this.data('model')+'/data/json',
+				url: $.baseuri + $this.data('model')+'/data/json',
 				dataType: 'json',
 				type: 'post',
 				delay: 250,

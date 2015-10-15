@@ -12,10 +12,10 @@
 	</div>
 
 	<div class="form-group col-sm-4">
-		<label class="col-md-3 control-label" for="appid">APP ID</label>
+		<label class="col-md-3 control-label" for="display_name">显示名称</label>
 		<div class="col-md-9">
 			<div class="input-group">
-				<input type="text" id="appid" name="filters[appid][like]" class="form-control" placeholder="请输入关键词..." value="<{$_filters.appid.like}>">
+				<input type="text" id="display_name" name="filters[display_name][like]" class="form-control" placeholder="请输入关键词..." value="<{$_filters.display_name.like}>">
 				<span class="input-group-addon"><i class="gi gi-user"></i></span>
 			</div>
 		</div>
