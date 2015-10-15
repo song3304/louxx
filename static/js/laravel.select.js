@@ -29,7 +29,8 @@ $().ready(function(){
 		var text = $this.data('text');
 		var selection = $this.data('selection') ? $this.data('selection') : text;
 
-		var filter = $this.data('filter');
+		var term = $this.data('term');
+		var filters = $this.data('filters');
 		var value = $this.attr('value');
 
 		var _config = {
@@ -41,7 +42,8 @@ $().ready(function(){
 				delay: 250,
 				data: function (params) {
 					var v = {page: params.page, _token: $.crsf};
-					v['filters['+filter+'][like]'] = params.term;
+					v['filters'][term]['like'] = params.term;
+					v['filters'] = _extends({}, v['filters'], filters);
 					return v;
 				},
 				processResults: function (json, page) {
