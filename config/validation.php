@@ -81,7 +81,7 @@ return [
 			],
 			'idcard' => [
 				'name' => '身份证',
-				'rules' => 'phone|unique:users,{{attribute}},{{id}}',
+				'rules' => 'idcard|unique:users,{{attribute}},{{id}}',
 			],
 			'email' => [
 				'name' => 'E-Mail',
