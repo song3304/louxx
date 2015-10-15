@@ -43,7 +43,7 @@ $().ready(function(){
 				data: function (params) {
 					var v = {page: params.page, _token: $.crsf, filters: {}};
 					v['filters'][term] = {'like': params.term};
-					v['filters'] = _extends({}, v['filters'], filters);
+					v['filters'] = $.extends({}, v['filters'], filters);
 					return v;
 				},
 				processResults: function (json, page) {
