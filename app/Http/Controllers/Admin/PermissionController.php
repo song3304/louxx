@@ -104,11 +104,7 @@ class PermissionController extends Controller
 			return $this->failure_noexists();
 
 		$keys = 'display_name,description';
-		$data = $this->autoValidate($request, 'permission.store', $keys, function($k, &$v) use ($permission){
-			array_walk($v['rules'], function(&$vv) use ($permission) {
-				$vv = strtr($vv, [',{{ID}}' => ','.$permission->getKey()]);
-			});
-		});
+		$data = $this->autoValidate($request, 'permission.store', $keys, $permission);
 		$permission->update($data);
 		return $this->success();
 	}

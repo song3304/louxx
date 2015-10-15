@@ -111,7 +111,7 @@ return [
 		'store' => [
 			'name' => [
 				'name' => '微信名称',
-				'rules' => 'required',
+				'rules' => 'required|unique:wechat_accounts,{{attribute}},{{id}}',
 			],
 			'description' => [
 				'name' => '简介',

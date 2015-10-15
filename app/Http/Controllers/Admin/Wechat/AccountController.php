@@ -109,11 +109,7 @@ class AccountController extends Controller
 			return $this->failure_noexists();
 
 		$keys = 'name,description,wechat_type,account,appid,appsecret,token,encodingaeskey,qr_aid';
-		$data = $this->autoValidate($request, 'wechat-account.store', $keys, function($k, &$v) use ($account){
-			array_walk($v['rules'], function(&$vv) use ($account) {
-				$vv = strtr($vv, [',{{ID}}' => ','.$account->getKey()]);
-			});
-		});
+		$data = $this->autoValidate($request, 'wechat-account.store', $keys, $account);
 		$account->update($data);
 		return $this->success();
 	}
