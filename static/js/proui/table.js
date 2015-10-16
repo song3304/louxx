@@ -16,6 +16,7 @@ $().ready(function(){
 			layout: 'topCenter',
 			modal: false
 		});
+		$('a[method]:not([method="delete"])').query();
 	};
 	options_query.call(this, document.body);
 	

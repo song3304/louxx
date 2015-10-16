@@ -17,6 +17,9 @@ class MessageController extends Controller
 {
 	use AdminTrait;
 	public $RESTful_permission = 'wechat-message';
+	protected  $casts = [
+		'is_subscribed' => 'boolean',
+	];
 	/**
 	 * Display a listing of the resource.
 	 *
