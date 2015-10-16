@@ -8,6 +8,20 @@
 
 <{block "name"}>member<{/block}>
 
+<{block "head-scripts-after"}>
+<script src="<{'static/js/emojione.js'|url}>"></script>
+<script>
+(function($){
+$().ready(function(){
+	$('.enable-emoji').each(function(){
+		var html = $(this).html();
+		$(this).html(html.emojione());
+	});
+});
+})(jQuery);
+</script>
+<{/block}>
+
 <{block "filter"}>
 <{include file="admin/member/filters.inc.tpl"}>
 <{/block}>
@@ -27,7 +41,7 @@
 <{block "table-td-plus"}>
 <td class="text-center"><img src="<{'attachment/resize'|url}>?id=<{$item->avatar_aid}>&width=80&height=80" alt="avatar" class="img-circle"></td>
 <td><{$item->username}></td>
-<td><{$item->nickname}></td>
+<td><span class="enable-emoji"><{$item->nickname}></span></td>
 <td><{$item->realname}></td>
 <td><span class="label label-primary"><{$item->getRelation('gender')|model:'title'}></span></td>
 <td><{$item->phone}></td>

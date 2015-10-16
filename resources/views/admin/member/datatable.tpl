@@ -8,6 +8,10 @@
 
 <{block "name"}>member<{/block}>
 
+<{block "head-scripts-after"}>
+<script src="<{'static/js/emojione.js'|url}>"></script>
+<{/block}>
+
 <{block "filter"}>
 <{include file="admin/member/filters.inc.tpl"}>
 <{/block}>
@@ -32,7 +36,9 @@ var columns_plus = [
 		return '<img src="<{'attachment/resize'|url}>?id='+data+'&width=80&height=80" alt="avatar" class="img-circle">';
 	}},
 	{'data': 'username'},
-	{'data': 'nickname'},
+	{'data': 'nickname', 'render': function(data, type, full){
+		return '<span class="enable-emoji">'+ data.emojione() +'</span>';
+	}},
 	{'data': 'realname'},
 	{'data': 'gender', 'render': function(data, type, full){
 		return '<span class="label label-primary">'+(data ? data.title : '未知')+'</span>';
