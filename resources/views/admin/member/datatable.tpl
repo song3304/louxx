@@ -37,7 +37,7 @@ var columns_plus = [
 	}},
 	{'data': 'username'},
 	{'data': 'nickname', 'render': function(data, type, full){
-		return '<span class="enable-emoji">'+ data.emojione() +'</span>';
+		return data ? '<span class="enable-emoji">'+ data.emojione() +'</span>' : '';
 	}},
 	{'data': 'realname'},
 	{'data': 'gender', 'render': function(data, type, full){
