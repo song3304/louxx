@@ -60,7 +60,7 @@ $().ready(function(){
 			templateSelection: function(data){return data.selection || data.text;}
 		};
 		if (value) {
-			$.POST($.baseuri + namespace + '/'+$this.data('model')+'/data/json', {'filters[id][in]': value.split(',')}, function(json){
+			$.POST($.baseuri + $this.data('model')+'/data/json', {'filters[id][in]': value.split(',')}, function(json){
 				if (json.result == 'success') {
 					var items = json.data.data;
 					for(var i = 0; i < items.length; ++i)
