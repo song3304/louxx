@@ -106,9 +106,9 @@
 		<tbody>
 			<{block "table-tbody"}>
 			<{foreach $_table_data as $item}>
-			<tr id="line-<{$item->id}>">
+			<tr id="line-<{$item->getKey()}>">
 			<{block "table-td"}>
-				<{block "table-td-id"}><td class="text-left"><input type="checkbox" name="id[]" value="<{$item->id}>">	<{$item->id}></td><{/block}>
+				<{block "table-td-id"}><td class="text-left"><input type="checkbox" name="id[]" value="<{$item->getKey()}>">	<{$item->getKey()}></td><{/block}>
 				<{block "table-td-plus"}><{/block}>
 				<{block "table-td-timestamps"}>
 				<td><{$item->created_at->format('Y-m-d H:i')}></td>
@@ -117,9 +117,9 @@
 				<{block "table-td-options"}>
 				<td class="text-center">
 					<div class="btn-group">
-						<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+						<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->getKey()}>/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
 						<{block "table-td-options-plus"}><{/block}>
-						<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->id}>" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：<{$item->id}>吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+						<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->getKey()}>" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：<{$item->getKey()}>吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
 					</div>
 				</td>
 				<{/block}>
