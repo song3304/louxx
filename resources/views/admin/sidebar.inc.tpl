@@ -4,63 +4,10 @@
 	<div class="sidebar-scroll">
 		<!-- Sidebar Content -->
 		<div class="sidebar-content">
-			<!-- Brand -->
-			<a href="<{'admin'|url}>" class="sidebar-brand">
-				<i class="gi gi-flash"></i><{$_site.title}>
-			</a>
-			<!-- END Brand -->
-
-			<!-- User Info -->
-			<div class="sidebar-section sidebar-user clearfix">
-				<div class="sidebar-user-avatar">
-					<a href="<{'admin/member'|url}>">
-						<img src="<{'attachment'|url}>?aid=<{$_user.avatar_aid}>" alt="avatar">
-					</a>
-				</div>
-				<div class="sidebar-user-name"><{$_user.realname}></div>
-				<div class="sidebar-user-links">
-					<a href="<{'admin/member'|url}>" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
-					<a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Messages"><i class="gi gi-envelope"></i></a>
-					<!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.html in PHP version) -->
-					<a href="<{'admin/member/edit'|url}>" data-toggle="tooltip" data-placement="bottom" title="修改资料"><i class="gi gi-cogwheel"></i></a>
-					<a href="<{'auth/logout'|url}>" data-toggle="tooltip" data-placement="bottom" title="登出"><i class="gi gi-exit"></i></a>
-				</div>
-			</div>
-			<!-- END User Info -->
-
-			<!-- Theme Colors -->
-			<!-- Change Color Theme functionality can be found in js/app.js - templateOptions() -->
-			<ul class="sidebar-section sidebar-themes clearfix">
-				<li class="active">
-					<a href="javascript:void(0)" class="themed-background-dark-default themed-border-default" data-theme="default" data-toggle="tooltip" title="Default Blue"></a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="themed-background-dark-night themed-border-night" data-theme="<{'static/css/proui/themes/night.css'|url}>" data-toggle="tooltip" title="Night"></a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="themed-background-dark-amethyst themed-border-amethyst" data-theme="<{'static/css/proui/themes/amethyst.css'|url}>" data-toggle="tooltip" title="Amethyst"></a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="themed-background-dark-modern themed-border-modern" data-theme="<{'static/css/proui/themes/modern.css'|url}>" data-toggle="tooltip" title="Modern"></a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="themed-background-dark-autumn themed-border-autumn" data-theme="<{'static/css/proui/themes/autumn.css'|url}>" data-toggle="tooltip" title="Autumn"></a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="themed-background-dark-flatie themed-border-flatie" data-theme="<{'static/css/proui/themes/flatie.css'|url}>" data-toggle="tooltip" title="Flatie"></a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="themed-background-dark-spring themed-border-spring" data-theme="<{'static/css/proui/themes/spring.css'|url}>" data-toggle="tooltip" title="Spring"></a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="themed-background-dark-fancy themed-border-fancy" data-theme="<{'static/css/proui/themes/fancy.css'|url}>" data-toggle="tooltip" title="Fancy"></a>
-				</li>
-				<li>
-					<a href="javascript:void(0)" class="themed-background-dark-fire themed-border-fire" data-theme="<{'static/css/proui/themes/fire.css'|url}>" data-toggle="tooltip" title="Fire"></a>
-				</li>
-			</ul>
-			<!-- END Theme Colors -->
-
+			<{block "sidebar-brand"}><{include file="admin/sidebar.brand.inc.tpl"}><{/block}>
+			<{block "sidebar-user"}><{include file="admin/sidebar.user.inc.tpl"}><{/block}>
+			<{block "sidebar-theme"}><{include file="admin/sidebar.theme.inc.tpl"}><{/block}>
+			<{block "sidebar-navigation"}>
 			<!-- Sidebar Navigation -->
 			<ul class="sidebar-nav">
 				<li>
@@ -105,7 +52,7 @@
 				</li>
 			</ul>
 			<!-- END Sidebar Navigation -->
-
+			<{/block}>
 		</div>
 		<!-- END Sidebar Content -->
 	</div>
