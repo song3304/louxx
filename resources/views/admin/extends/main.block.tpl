@@ -38,15 +38,16 @@
 </head>
 <body class="page-loading">
 <{block "body-container"}>
-	<{include file="admin/common/loading.inc.tpl"}>
+	<{block "loading"}><{include file="admin/common/loading.inc.tpl"}><{/block}>
 	<div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
-		<{include file="admin/sidebar.inc.tpl"}>
+		<{block "siderbar"}><{include file="admin/sidebar.inc.tpl"}><{/block}>
 		<!-- Main Container -->
 		<div id="main-container">
-			<{include file="admin/menubar.inc.tpl"}>
+			<{block "menubar"}><{include file="admin/menubar.inc.tpl"}><{/block}>
 			 <!-- Page content -->
 			<div id="page-content">
 				<{block "header"}>
+				<{block "banner"}>
 				<!-- Form Header -->
 				<div class="content-header">
 					<div class="header-section">
@@ -55,10 +56,13 @@
 						</h1>
 					</div>
 				</div>
+				<{/block}>
+				<{block "breadcrumb"}>
 				<ul class="breadcrumb breadcrumb-top">
 					<li><a href="<{'admin'|url}>"><{$_site.title}></a></li>
 					<li class="active">后台</li>
 				</ul>
+				<{/block}>
 				<!-- END Form Header -->
 				<{/block}>
 
