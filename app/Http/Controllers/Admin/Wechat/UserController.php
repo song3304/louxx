@@ -38,8 +38,9 @@ class UserController extends Controller
 	{
 		$user = new WechatUser;
 		$builder = $user->newQuery()->with('gender');
+		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
-		$data['recordsTotal'] = $user->newQuery()->count();
+		$data['recordsTotal'] = $total;
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
 	}

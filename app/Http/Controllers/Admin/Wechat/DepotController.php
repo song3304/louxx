@@ -39,8 +39,9 @@ class DepotController extends Controller
 	{
 		$account = new WechatAccount;
 		$builder = $account->newQuery();
+		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
-		$data['recordsTotal'] = $account->newQuery()->count();
+		$data['recordsTotal'] = $total;
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
 	}

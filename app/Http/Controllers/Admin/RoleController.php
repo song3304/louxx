@@ -38,8 +38,9 @@ class RoleController extends Controller
 	{
 		$role = new Role;
 		$builder = $role->newQuery()->with('perms');
+		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
-		$data['recordsTotal'] = $role->newQuery()->count();
+		$data['recordsTotal'] = $total;
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
 	}

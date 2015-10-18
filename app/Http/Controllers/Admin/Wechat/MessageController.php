@@ -43,8 +43,9 @@ class MessageController extends Controller
 	{
 		$message = new WechatMessage;
 		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media']);
+		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
-		$data['recordsTotal'] = $message->newQuery()->count();
+		$data['recordsTotal'] = $total;
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
 	}

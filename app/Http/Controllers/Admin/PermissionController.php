@@ -38,8 +38,9 @@ class PermissionController extends Controller
 	{
 		$permission = new Permission;
 		$builder = $permission->newQuery();
+		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
-		$data['recordsTotal'] = $permission->newQuery()->count();
+		$data['recordsTotal'] = $total;
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
 	}
