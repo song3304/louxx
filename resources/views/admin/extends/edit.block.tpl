@@ -22,8 +22,8 @@
 	</div>
 </div>
 <ul class="breadcrumb breadcrumb-top">
-	<li><a href="<{'admin'|url}>"><{$_site.title}></a></li>
-	<li><a href="<{'admin'|url}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>
+	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
+	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>
 	<li>编辑<{block "title"}><{/block}></li>
 	<li class="active"><{block "subtitle"}><{/block}></li>
 </ul>
@@ -47,7 +47,7 @@
 <div class="block-content">
 	<{block "form"}>
 	<!-- Form Elements Content -->
-	<form action="<{'admin'|url}>/<{block "name"}><{/block}>/<{block "id"}><{$_data->getKey()}><{/block}>" method="POST" class="form-horizontal form-bordered" id="form">
+	<form action="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/<{block "id"}><{$_data->getKey()}><{/block}>" method="POST" class="form-horizontal form-bordered" id="form">
 		<{csrf_field() nofilter}>
 		<{method_field('PUT') nofilter}>
 		<{block "fields"}><{/block}>

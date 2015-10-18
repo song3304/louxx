@@ -12,7 +12,7 @@
 			var $links = $('#links').empty();
 			$('#pagesize').text(pagesize);
 			for (var i = 1; i <= pages; i++) {
-				$links.append('<div class="col-md-3 col-xs-4"><a href="<{'admin'|url}>/<{block name="name"}><{/block}>/export/<{$_of}>?page='+i+'&pagesize='+pagesize+'" class="btn btn-link" target="_blank">第'+i+'个</a> ('+ (i == pages ? 0 : total - pagesize * i) + '-' + (total - pagesize * (i - 1)) +')</div>');
+				$links.append('<div class="col-md-3 col-xs-4"><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block name="name"}><{/block}>/export/<{$_of}>?page='+i+'&pagesize='+pagesize+'" class="btn btn-link" target="_blank">第'+i+'个</a> ('+ (i == pages ? 0 : total - pagesize * i) + '-' + (total - pagesize * (i - 1)) +')</div>');
 			};
 		}
 		$('#pagesize-slider').on('slideStop', function(e){
@@ -36,8 +36,8 @@
 	</div>
 </div>
 <ul class="breadcrumb breadcrumb-top">
-	<li><a href="<{'admin'|url}>"><{$_site.title}></a></li>
-	<li><a href="<{'admin'|url}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>
+	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
+	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>
 	<li class="active">导出</li>
 </ul>
 <!-- END Form Header -->

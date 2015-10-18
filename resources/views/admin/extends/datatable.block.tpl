@@ -14,6 +14,7 @@
 		
 		$.datatable_config = {
 			name: '<{block "name"}><{/block}>',
+			namespace: '<{block "namespace"}>admin<{/block}>',
 			columns: [],
 			order: [],
 			searchDelay: <{block "datatable-config-searchDelay"}>800<{/block}>,
@@ -33,9 +34,9 @@
 			<{block "datatable-columns-options-plus"}>var columns_options_plus = [];<{/block}>
 			<{block "datatable-columns-options-delete-confirm"}>var columns_options_delete_confirm = '您确定删除这项：'+full['id']+'吗？';<{/block}>
 			return '<div class="btn-group">\
-				<a href="<{'admin'|url}>/<{block "name"}><{/block}>/'+full['id']+'/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>'
+				<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/'+full['id']+'/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>'
 				+columns_options_plus.join()
-				+'<a href="<{'admin'|url}>/<{block "name"}><{/block}>/'+full['id']+'" method="delete" confirm="'+(columns_options_delete_confirm ? columns_options_delete_confirm : '')+'" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></div>';
+				+'<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/'+full['id']+'" method="delete" confirm="'+(columns_options_delete_confirm ? columns_options_delete_confirm : '')+'" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a></div>';
 			}
 		}];
 		<{/block}>

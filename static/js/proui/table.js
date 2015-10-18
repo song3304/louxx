@@ -136,7 +136,7 @@ $().ready(function(){
 
 		$.datatable_config.datatable = $('#datatable').DataTable({
 			'ajax': {
-				url: $.baseuri+'admin/'+$.datatable_config.name+'/data/json',
+				url: $.baseuri + $.datatable_config.namespace+'/'+$.datatable_config.name+'/data/json',
 				timeout: 20 * 1000,
 				type: 'POST',
 				data: function(d){

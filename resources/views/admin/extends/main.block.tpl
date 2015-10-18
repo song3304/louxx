@@ -15,13 +15,13 @@
 	<{block "head-icons"}>
 		<{include file="common/icons.inc.tpl"}>
 	<{/block}>
-	<{block head-styles}>
+	<{block "head-styles"}>
 		<{block "head-styles-before"}><{/block}>
 		<{include file="admin/common/styles.inc.tpl"}>
 		<{block "head-styles-plus"}><{/block}>
 		<{block "head-styles-after"}><{/block}>
 	<{/block}>
-	<{block head-scripts}>
+	<{block "head-scripts"}>
 		<{block "head-scripts-before"}><{/block}>
 		<{include file="admin/common/scripts.inc.tpl"}>
 		<{block "head-scripts-validate"}><{include file="common/validate.inc.tpl"}><{/block}>
@@ -59,7 +59,7 @@
 				<{/block}>
 				<{block "breadcrumb"}>
 				<ul class="breadcrumb breadcrumb-top">
-					<li><a href="<{'admin'|url}>"><{$_site.title}></a></li>
+					<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
 					<li class="active">后台</li>
 				</ul>
 				<{/block}>
@@ -77,7 +77,7 @@
 			</div>
 			<!-- END Page Content -->
 
-			<{include file="admin/copyright.inc.tpl"}>
+			<{block "copyright"}><{include file="admin/copyright.inc.tpl"}><{/block}>
 		</div>
 		<!-- END Main Container -->
 	</div>
