@@ -38,7 +38,7 @@ class AccountController extends Controller
 	{
 		$account = new WechatAccount;
 		$builder = $account->newQuery();
-		$total = (clone $builder)->count();
+		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder, function(&$v, $k){
 			$v['users-count'] = $v->users()->count();
 			$v['depots-count'] = $v->depots()->count();
