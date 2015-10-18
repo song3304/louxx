@@ -38,12 +38,13 @@ class AccountController extends Controller
 	{
 		$account = new WechatAccount;
 		$builder = $account->newQuery();
+		$total = (clone $builder)->count();
 		$data = $this->_getData($request, $builder, function(&$v, $k){
 			$v['users-count'] = $v->users()->count();
 			$v['depots-count'] = $v->depots()->count();
 			$v['messages-count'] = $v->messages()->count();
 		});
-		$data['recordsTotal'] = $account->newQuery()->count();
+		$data['recordsTotal'] = $total;
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
 	}

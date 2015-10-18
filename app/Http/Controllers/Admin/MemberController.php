@@ -22,7 +22,7 @@ class MemberController extends Controller
 	public function index(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
+		$builder = $user->newQuery()->with(['gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
@@ -30,16 +30,17 @@ class MemberController extends Controller
 		$this->_base = $base;
 		$this->_pagesize = $pagesize;
 		$this->_filters = $this->_getFilters($request, $builder);
-		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['*'], ['base' => $base]) : [];
+		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['users.*'], ['base' => $base]) : [];
 		return $this->view('admin.member.'. ($base ? 'list' : 'datatable'));
 	}
 
 	public function data(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
-		$data = $this->_getData($request, $builder);
-		$data['recordsTotal'] = $user->newQuery()->count();
+		$builder = $user->newQuery()->with(['gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
+		$total = (clone $builder)->count();
+		$data = $this->_getData($request, $builder, null, ['users.*']);
+		$data['recordsTotal'] = $total;
 		$data['recordsFiltered'] = $data['total'];
 		return $this->success('', FALSE, $data);
 	}
@@ -59,10 +60,10 @@ class MemberController extends Controller
 			return $this->view('admin.member.export');
 		}
 
-		$builder = $user->newQuery()->with(['gender', 'roles']);
+		$builder = $user->newQuery()->with(['gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
 		$data = $this->_getExport($request, $builder, function(&$v){
 			$v['gender'] = !empty($v['gender']) ? $v['gender']['title'] : NULL;
-		});
+		}, ['users.*']);
 		return $this->success('', FALSE, $data);
 	}
 

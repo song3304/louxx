@@ -44,7 +44,7 @@
 				<li>
 					<a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator"></i><i class="gi gi-settings sidebar-nav-icon"></i>系统设置</a>
 					<ul>
-						<li><a href="admin/home/password">修改密码</a></li>
+						<li><a href="<{'admin/home/password'|url}>">修改密码</a></li>
 						<li><a href="<{'admin/field'|url}>">通用字段</a></li>
 						<li><a href="<{'auth/logout'|url}>">退出系统</a></li>
 					</ul>
