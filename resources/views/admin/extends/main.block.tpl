@@ -37,6 +37,7 @@
 <{/block}>
 </head>
 <body class="page-loading">
+<{block "body-before"}><{/block}>
 <{block "body-container"}>
 	<{block "loading"}><{include file="admin/common/loading.inc.tpl"}><{/block}>
 	<div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
@@ -87,5 +88,7 @@
 	<a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
 <{/block}>
 <{block "body-scripts"}><{/block}>
+<{block "body-plus"}><{/block}>
+<{block "body-after"}><{/block}>
 </body>
 </html>
