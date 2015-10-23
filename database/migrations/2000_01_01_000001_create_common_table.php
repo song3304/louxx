@@ -14,11 +14,11 @@ class CreateCommonTable extends Migration
 	{
 		Schema::create('fields', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('name', 150)->index(); //英文名称
-			$table->string('title', 150); //名称
-			$table->json('extra'); //扩展
-			$table->unsignedInteger('order_index')->default(0)->index(); //排序
-			$table->string('field_class', 50)->index(); //类别
+			$table->string('name', 150)->index()->comment = '英文名称'; //英文名称
+			$table->string('title', 150)->comment = '名称'; //名称
+			$table->json('extra')->comment = '扩展数据'; //扩展
+			$table->unsignedInteger('order_index')->default(0)->index()->comment = '排序序号'; //排序
+			$table->string('field_class', 50)->index()->comment = '类别'; //类别
 			$table->timestamps();
 //			$table->softDeletes(); //软删除
 
