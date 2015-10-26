@@ -149,6 +149,19 @@ return [
 				'name' => '加密KEY',
 				'rules' => 'min:10',
 			],
+			'mchid' => [
+				'name' => '商戶ID',
+				'rules' => 'min:1',
+			],
+			'mchkey' => [
+				'name' => '商户支付密钥',
+				'rules' => 'min:1',
+			],
+			'sub_mch_id' => [
+				'name' => '子商户号',
+				'rules' => 'min:1',
+			],
+
 		],
 	],
 	'wechat-message' => [

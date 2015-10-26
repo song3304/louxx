@@ -24,6 +24,9 @@ class CreateWechatTable extends Migration
 			$table->string('appsecret', 100)->comment = 'APP Secret'; //appsecret
 			$table->string('encodingaeskey', 100)->nullable()->comment = '加密KEY'; //encodingaeskey
 			$table->unsignedInteger('qr_aid')->nullable()->comment = '二维码AID'; //二维码
+			$table->string('mchid', 150)->nullable()->comment = '商户ID'; //商户ID
+			$table->string('mchkey', 150)->nullable()->comment = '商户支付密钥'; //商户支付密钥
+			$table->string('sub_mch_id', 150)->nullable()->comment = '子商户號'; //子商户號
 			$table->timestamps();
 		});
 		//微信用户库
