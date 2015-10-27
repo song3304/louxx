@@ -17,7 +17,7 @@ Route::resources([
 	'member' => 'MemberController',
 ]);
 
-Routes::any('wechat/feedback/{id}', 'WechatController@feedback');
+Route::any('wechat/feedback/{id}', 'WechatController@feedback');
 
 Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'role:admin|manager|owner|leader']], function($router) {
 	
