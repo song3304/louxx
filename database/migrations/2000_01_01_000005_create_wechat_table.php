@@ -24,9 +24,9 @@ class CreateWechatTable extends Migration
 			$table->string('appsecret', 100)->comment = 'APP Secret'; //appsecret
 			$table->string('encodingaeskey', 100)->nullable()->comment = '加密KEY'; //encodingaeskey
 			$table->unsignedInteger('qr_aid')->nullable()->comment = '二维码AID'; //二维码
-			$table->string('mchid', 150)->nullable()->comment = '商户ID'; //商户ID
-			$table->string('mchkey', 150)->nullable()->comment = '商户支付密钥'; //商户支付密钥
-			$table->string('sub_mch_id', 150)->nullable()->comment = '子商户號'; //子商户號
+			$table->string('mchid', 50)->nullable()->comment = '商户ID'; //商户ID
+			$table->string('mchkey', 50)->nullable()->comment = '商户支付密钥'; //商户支付密钥
+			$table->string('sub_mch_id', 50)->nullable()->comment = '子商户號'; //子商户號
 			$table->timestamps();
 		});
 		//微信用户库
@@ -272,10 +272,10 @@ class CreateWechatTable extends Migration
 			$table->unique(['wrid', 'wdid']);
 		});
 
-
 		//微信账号库
 		Schema::create('wechat_logs', function (Blueprint $table) {
 			$table->increments('id');
+			$table->unsignedInteger('waid')->index()->comment = '公众号AccountID'; //account id
 			$table->text('url')->nullable()->comment = '来源网址'; //来源网址
 			$table->text('log')->nullable()->comment = 'log日志内容'; //log日志内容
 			$table->unsignedInteger('waid')->index()->comment = '素材库DepotID'; //素材ID
@@ -283,6 +283,38 @@ class CreateWechatTable extends Migration
 			$table->timestamps();
 
 			$table->foreign('waid')->references('id')->on('wechat_accounts')
+				->onUpdate('cascade')->onDelete('cascade');
+		});
+
+		//微信账号库
+		Schema::create('wechat_bills', function (Blueprint $table) {
+			$table->increments('id');
+			$table->unsignedInteger('waid')->index()->comment = '素材库DepotID'; //素材ID
+			$table->unsignedInteger('wuid')->index()->comment = '微信UID'; //user id
+			$table->string('mch_id', 50)->comment = '商户号';
+			$table->string('device_info', 50)->nullable()->comment = '终端设备号';
+			$table->string('trade_type', 50)->comment = 'JSAPI、NATIVE、APP';
+			$table->string('return_code', 50)->comment = '返回状态码';
+			$table->string('return_msg', 150)->nullable()->comment = '返回信息';
+			$table->string('result_code', 50)->comment = '业务结果';
+			$table->string('err_code', 50)->nullable()->comment = '错误代码';
+			$table->string('err_code_des', 150)->nullable()->comment = '错误代码描述';
+			$table->string('bank_type', 50)->comment = '银行类型';
+			$table->unsignedInteger('total_fee')->comment = '订单总金额';
+			$table->string('fee_type', 50)->nullable()->comment = '货币类型，符合ISO4217标准的三位字母代码';
+			$table->unsignedInteger('cash_fee')->nullable()->comment = '现金支付金额订单现金支付金额';
+			$table->string('cash_fee_type', 50)->nullable()->comment = '货币类型，符合ISO4217标准的三位字母代码';
+			$table->unsignedInteger('coupon_fee')->nullable()->comment = '代金券或立减优惠金额';
+			$table->unsignedInteger('coupon_count')->nullable()->comment = '代金券或立减优惠使用数量';
+			$table->string('transaction_id', 50)->comment = '微信支付订单号';
+			$table->string('out_trade_no', 50)->comment = '商户订单号';
+			$table->string('attach', 150)->nullable()->comment = '商家数据包';
+			$table->string('time_end', 50)->comment = '支付完成时间';
+			$table->timestamps();
+
+			$table->foreign('waid')->references('id')->on('wechat_accounts')
+				->onUpdate('cascade')->onDelete('cascade');
+			$table->foreign('wuid')->references('id')->on('wechat_users')
 				->onUpdate('cascade')->onDelete('cascade');
 		});
 
