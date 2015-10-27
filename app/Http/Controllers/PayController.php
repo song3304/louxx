@@ -25,12 +25,12 @@ class PayController extends WechatOAuth2Controller
 	 */
 	public function index()
 	{
-		dd($this->getWechatUser());
+		$wechatUser = $this->getWechatUser();
 		$account = WechatAccount::find(1);
 		$api = new API($account->toArray(), $account->getKey());
 
 		$pay = new Pay($api);
-		$order = (new UnifiedOrder('JSAPI', date('YmdHis'), '买单', 1))->SetAttach('说点什么好?')->SetNotify_url(url('pay/feedback'))->SetOpenid('omwYBuJ-FCQRuh2CdpLGWCuAIHNo');
+		$order = (new UnifiedOrder('JSAPI', date('YmdHis'), '买单', 1))->SetAttach('说点什么好?')->SetNotify_url(url('pay/feedback'))->SetOpenid($wechatUser->openid);
 		$UnifiedOrderResult = $pay->unifiedOrder($order);
 		
 		$js = new Js($api);
