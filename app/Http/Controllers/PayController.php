@@ -26,7 +26,7 @@ class PayController extends WechatOAuth2Controller
 	public function index()
 	{
 		$wechatUser = $this->getWechatUser();
-		$account = WechatAccount::find(1);
+		$account = WechatAccount::find($this->wechat_oauth2_account);
 		$api = new API($account->toArray(), $account->getKey());
 
 		$pay = new Pay($api);
