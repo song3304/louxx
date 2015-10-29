@@ -33,23 +33,4 @@ class PayController extends WechatOAuth2Controller
 		return $this->view('pay.index');
 	}
 
-	private function getPayJsParameter( Order $order, $title, $attach = '')
-	{
-		$wechatUser = $this->getWechatUser();
-		$account = WechatAccount::findOrFail($this->wechat_oauth2_account);
-		$api = new API($account->toArray(), $account->getKey());
-
-		$pay = new Pay($api);
-		$order = (new UnifiedOrder('JSAPI', date('Ymd').str_pad($order->getKey(), 10, '0', STR_PAD_LEFT), $title, $order->pay_money * 100))
-		->SetNotify_url(url('wechat/feedback/'.$account->getKey().'/'.$order->getKey()))->SetOpenid($wechatUser->openid)->setDetail($order->title)->SetAttach($attach);
-		$UnifiedOrderResult = $pay->unifiedOrder($order);
-		if ( $UnifiedOrderResult['return_code'] != 'SUCCESS' || empty($UnifiedOrderResult['prepay_id']))
-			return $this->failure(['content' => $UnifiedOrderResult['return_msg']]);
-		$js = new Js($api);
-		$result =  $js->getPayParameters($UnifiedOrderResult);
-		if ( $result['return_code'] != 'SUCCESS' )
-			return $this->failure(['content' => $result['return_msg']]);
-		return $result;
-	}
-
 }
