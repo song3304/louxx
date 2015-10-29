@@ -30,7 +30,7 @@ class PayController extends WechatOAuth2Controller
 		$UnifiedOrderResult = $pay->unifiedOrder($order);
 		$js = new Js($api);
 		$this->_parameters = $js->getPayParameters($UnifiedOrderResult);
-		return $this->view('pay.index');
+		return $this->view('pay.test');
 	}
 
 }
