@@ -18,25 +18,38 @@ class PayController extends WechatOAuth2Controller
 	public $wechat_oauth2_account = 1;
 	public $wechat_oauth2_type = 'snsapi_base'; // snsapi_base  snsapi_userinfo  hybrid
 	public $wechat_oauth2_bindUser = TRUE; // 是否将微信用户绑定到系统用户users
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
+
+	public function test()
 	{
 		$wechatUser = $this->getWechatUser();
-		$account = WechatAccount::find($this->wechat_oauth2_account);
+		$account = WechatAccount::findOrFail($this->wechat_oauth2_account);
 		$api = new API($account->toArray(), $account->getKey());
 
 		$pay = new Pay($api);
-		$order = (new UnifiedOrder('JSAPI', date('YmdHis'), '买单', 1))->SetAttach('说点什么好?')->SetNotify_url(url('wechat/feedback/'.$account->getKey()))->SetOpenid($wechatUser->openid);
+		$order = (new UnifiedOrder('JSAPI', date('YmdHis'), '买1分钱的单', 1))->SetNotify_url(url('wechat/feedback/'.$account->getKey()))->SetOpenid($wechatUser->openid);
 		$UnifiedOrderResult = $pay->unifiedOrder($order);
 		$js = new Js($api);
 		$this->_parameters = $js->getPayParameters($UnifiedOrderResult);
 		return $this->view('pay.index');
 	}
 
+	private function getPayJsParameter( Order $order, $title, $attach = '')
+	{
+		$wechatUser = $this->getWechatUser();
+		$account = WechatAccount::findOrFail($this->wechat_oauth2_account);
+		$api = new API($account->toArray(), $account->getKey());
 
+		$pay = new Pay($api);
+		$order = (new UnifiedOrder('JSAPI', date('Ymd').str_pad($order->getKey(), 10, '0', STR_PAD_LEFT), $title, $order->pay_money * 100))
+		->SetNotify_url(url('wechat/feedback/'.$account->getKey().'/'.$order->getKey()))->SetOpenid($wechatUser->openid)->setDetail($order->title)->SetAttach($attach);
+		$UnifiedOrderResult = $pay->unifiedOrder($order);
+		if ( $UnifiedOrderResult['return_code'] != 'SUCCESS' || empty($UnifiedOrderResult['prepay_id']))
+			return $this->failure(['content' => $UnifiedOrderResult['return_msg']]);
+		$js = new Js($api);
+		$result =  $js->getPayParameters($UnifiedOrderResult);
+		if ( $result['return_code'] != 'SUCCESS' )
+			return $this->failure(['content' => $result['return_msg']]);
+		return $result;
+	}
 
 }
