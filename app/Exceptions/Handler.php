@@ -6,6 +6,8 @@ use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Session\TokenMismatchException;
+use Addons\Core\Controllers\Controller;
 class Handler extends ExceptionHandler
 {
 	/**
@@ -39,16 +41,16 @@ class Handler extends ExceptionHandler
 	 */
 	public function render($request, Exception $e)
 	{
-		// 当findOrFail等情况下出现的报错
-		// if($e instanceOf ModelNotFoundException)
-		// {
-		//	abort(500);
-		// }
-		
-		// 500 errors
-		//if (app()->environment() == 'production') {
-		//     return response()->view('errors.500', [], 500);
-		//}
+		if (/*!config('app.debug', false) &&*/ app()->environment() == 'production')
+		{
+			// 当findOrFail等情况下出现的报错
+			if($e instanceOf ModelNotFoundException)
+				return (new Controller)->failure('document.failure_model_noexist', FALSE, ['model' => $e->getModel(), 'file' => $e->getFile() ,'line' => $e->getLine()]);
+			else if ($e instanceOf TokenMismatchException)
+				return (new Controller)->failure('validation.failure_csrf');
+
+			// other 500 errors
+		}
 
 		return parent::render($request, $e);
 	}
