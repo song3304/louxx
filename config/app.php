@@ -27,9 +27,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://127.0.0.1/project/test/',
-	'path' => '/project/test',
-
+	'url' => 'http://127.0.0.1'.env('APP_PATH'),
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
