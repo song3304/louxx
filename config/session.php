@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'cookie' => 'laravel_session',
+    'cookie' => md5(config('app.path')).'_session',
 
     /*
     |--------------------------------------------------------------------------
