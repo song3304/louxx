@@ -61,6 +61,10 @@ return [
             'connection' => 'default',
         ],
 
+        'xcache' => [
+            'driver' => 'xcache',
+        ],
+
     ],
 
     /*
@@ -74,6 +78,6 @@ return [
     |
     */
 
-    'prefix' => 'laravel',
+    'prefix' => env('APP_PATH'),
 
 ];
