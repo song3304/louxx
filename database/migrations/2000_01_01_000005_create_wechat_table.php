@@ -278,7 +278,6 @@ class CreateWechatTable extends Migration
 			$table->unsignedInteger('waid')->index()->comment = '公众号AccountID'; //account id
 			$table->text('url')->nullable()->comment = '来源网址'; //来源网址
 			$table->text('log')->nullable()->comment = 'log日志内容'; //log日志内容
-			$table->unsignedInteger('waid')->index()->comment = '素材库DepotID'; //素材ID
 		
 			$table->timestamps();
 
@@ -327,6 +326,26 @@ class CreateWechatTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('');
+		Schema::drop('wechat_bills');
+		Schema::drop('wechat_logs');
+		Schema::drop('wechat_reply_depot');
+		Schema::drop('wechat_replies');
+		Schema::drop('wechat_message_texts');
+		Schema::drop('wechat_message_media');
+		Schema::drop('wechat_message_locations');
+		Schema::drop('wechat_message_links');
+		Schema::drop('wechat_messages');
+		Schema::drop('wechat_menus');
+		Schema::drop('wechat_depot_news_relation');
+		Schema::drop('wechat_depot_news');
+		Schema::drop('wechat_depot_images');
+		Schema::drop('wechat_depot_voices');
+		Schema::drop('wechat_depot_videos');
+		Schema::drop('wechat_depot_musics');
+		Schema::drop('wechat_depot_texts');
+		Schema::drop('wechat_depot_callbacks');
+		Schema::drop('wechat_depots');
+		Schema::drop('wechat_users');
+		Schema::drop('wechat_accounts');
 	}
 }
