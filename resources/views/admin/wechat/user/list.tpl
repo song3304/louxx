@@ -8,6 +8,20 @@
 
 <{block "name"}>wechat/user<{/block}>
 
+<{block "head-scripts-after"}>
+<script src="<{'static/js/emojione.js'|url}>"></script>
+<script>
+(function($){
+$().ready(function(){
+	$('.enable-emoji').each(function(){
+		var html = $(this).html();
+		$(this).html(html.emojione());
+	});
+});
+})(jQuery);
+</script>
+<{/block}>
+
 <{block "filter"}>
 <{include file="admin/wechat/user/filters.inc.tpl"}>
 <{/block}>
@@ -31,7 +45,7 @@
 <td class="text-center"><img src="<{'attachment/resize'|url}>?id=<{$item->avatar_aid}>&width=80&height=80" alt="avatar" class="img-responsive"></td>
 <td><a href="<{'admin/wechat/user'|url}>/<{$item->getKey()}>"><{$item->openid}></a></td>
 <td><{$item->unionid}></td>
-<td><{$item->nickname}></td>
+<td><span class="enable-emoji"><{$item->nickname}></span></td>
 <td><{$item->remark}></td>
 <td><{$item->getRelation('gender')|model:'title'}></td>
 <td><{if !empty($item->is_subscribed)}><{$item->subscribed_at}><{else}><span class="label label-info">未关注</span><{/if}></td>

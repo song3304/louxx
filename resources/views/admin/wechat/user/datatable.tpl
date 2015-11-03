@@ -8,6 +8,10 @@
 
 <{block "name"}>wechat/user<{/block}>
 
+<{block "head-scripts-after"}>
+<script src="<{'static/js/emojione.js'|url}>"></script>
+<{/block}>
+
 <{block "filter"}>
 <{include file="admin/wechat/user/filters.inc.tpl"}>
 <{/block}>
@@ -38,7 +42,9 @@ var columns_plus = [
 		return '<a href="<{'admin/wechat/user'|url}>/'+full['id']+'">' + data + '</a>';
 	}},
 	{'data': 'unionid'},
-	{'data': 'nickname'},
+	{'data': 'nickname', 'render': function(data, type, full){
+		return data ? '<span class="enable-emoji">'+ data.emojione() +'</span>' : '';
+	}},
 	{'data': 'remark'},
 	{'data': 'gender', 'render': function(data, type, full){
 		return '<span class="label label-primary">'+(data ? data.title : '未知')+'</span>';
