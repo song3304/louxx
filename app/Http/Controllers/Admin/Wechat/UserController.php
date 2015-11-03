@@ -22,7 +22,7 @@ class UserController extends Controller
 	public function index(Request $request)
 	{
 		$user = new WechatUser;
-		$builder = $user->newQuery()->with('gender')->where('transport_type','receive');
+		$builder = $user->newQuery()->with('gender');
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 

@@ -41,7 +41,7 @@ var columns_plus = [
 	{'data': 'nickname'},
 	{'data': 'remark'},
 	{'data': 'gender', 'render': function(data, type, full){
-		return '<span class="label label-primary">'+data.title+'</span>';
+		return '<span class="label label-primary">'+(data ? data.title : '未知')+'</span>';
 	}},
 	{'data': 'subscribed_at', 'render': function(data, type, full){
 		return full['is_subscribed'] ? data : '<span class="label label-info">未关注</span>';
