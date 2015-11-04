@@ -32,6 +32,22 @@ class CreateUsersTable extends Migration
 
 		});
 
+		Schema::create('user_finances', function (Blueprint $table) {
+			$table->unsignedInteger('id')->unique();
+			$table->decimal('money', 16, 2)->index()->default(0)->comment = '余额';
+			$table->decimal('used_money', 16, 2)->index()->default(0)->comment = '已消费金额';
+			$table->decimal('bonus', 16, 2)->index()->default(0)->comment = '红包余额';
+			$table->decimal('used_bonus', 16, 2)->index()->default(0)->comment = '已使用红包';
+			$table->decimal('score', 16, 2)->index()->default(0)->comment = '积分余额';
+			$table->decimal('used_score', 16, 2)->index()->default(0)->comment = '已使用积分';
+			
+			$table->timestamps(); //创建/修改时间
+			$table->softDeletes(); //软删除
+
+			$table->foreign('id')->references('id')->on('users')->onDelete('cascade');
+
+		});
+
 		Schema::create('reset_password', function (Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('uid')->comment = '用户ID'; //UID

@@ -46,7 +46,7 @@ var columns_plus = [
 		return data ? '<span class="enable-emoji">'+ data.emojione() +'</span>' : '';
 	}},
 	{'data': 'remark'},
-	{'data': 'gender', 'render': function(data, type, full){
+	{'data': '_gender', orderable: false, 'render': function(data, type, full){
 		return '<span class="label label-primary">'+(data ? data.title : '未知')+'</span>';
 	}},
 	{'data': 'subscribed_at', 'render': function(data, type, full){

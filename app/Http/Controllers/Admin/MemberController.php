@@ -22,7 +22,7 @@ class MemberController extends Controller
 	public function index(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
+		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
@@ -37,7 +37,7 @@ class MemberController extends Controller
 	public function data(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
+		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
 		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder, null, ['users.*']);
 		$data['recordsTotal'] = $total;
@@ -60,9 +60,9 @@ class MemberController extends Controller
 			return $this->view('admin.member.export');
 		}
 
-		$builder = $user->newQuery()->with(['gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
+		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
 		$data = $this->_getExport($request, $builder, function(&$v){
-			$v['gender'] = !empty($v['gender']) ? $v['gender']['title'] : NULL;
+			$v['_gender'] = !empty($v['_gender']) ? $v['_gender']['title'] : NULL;
 		}, ['users.*']);
 		return $this->success('', FALSE, $data);
 	}

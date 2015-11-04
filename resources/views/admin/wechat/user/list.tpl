@@ -47,7 +47,7 @@ $().ready(function(){
 <td><{$item->unionid}></td>
 <td><span class="enable-emoji"><{$item->nickname}></span></td>
 <td><{$item->remark}></td>
-<td><{$item->getRelation('gender')|model:'title'}></td>
+<td><{$item->_gender|model:'title'}></td>
 <td><{if !empty($item->is_subscribed)}><{$item->subscribed_at}><{else}><span class="label label-info">未关注</span><{/if}></td>
 <td><{$item->country}></td>
 <td><{$item->province}></td>

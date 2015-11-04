@@ -40,7 +40,7 @@ var columns_plus = [
 		return data ? '<span class="enable-emoji">'+ data.emojione() +'</span>' : '';
 	}},
 	{'data': 'realname'},
-	{'data': 'gender', 'render': function(data, type, full){
+	{'data': '_gender', orderable: false, 'render': function(data, type, full){
 		return '<span class="label label-primary">'+(data ? data.title : '未知')+'</span>';
 	}},
 	{'data': 'phone'},

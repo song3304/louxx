@@ -22,7 +22,7 @@ class UserController extends Controller
 	public function index(Request $request)
 	{
 		$user = new WechatUser;
-		$builder = $user->newQuery()->with('gender');
+		$builder = $user->newQuery()->with('_gender');
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
@@ -37,7 +37,7 @@ class UserController extends Controller
 	public function data(Request $request)
 	{
 		$user = new WechatUser;
-		$builder = $user->newQuery()->with('gender');
+		$builder = $user->newQuery()->with('_gender');
 		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
 		$data['recordsTotal'] = $total;
@@ -60,8 +60,10 @@ class UserController extends Controller
 			return $this->view('admin.wechat.user.export');
 		}
 
-		$builder = $user->newQuery()->with('gender');
-		$data = $this->_getExport($request, $builder);
+		$builder = $user->newQuery()->with('_gender');
+		$data = $this->_getExport($request, $builder, function(&$v){
+			$v['_gender'] = !empty($v['_gender']) ? $v['_gender']['title'] : NULL;
+		});
 		return $this->success('', FALSE, $data);
 	}
 
