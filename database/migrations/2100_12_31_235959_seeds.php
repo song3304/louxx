@@ -139,31 +139,38 @@ class Seeds extends Migration
 		\App\Role::create([
 			'id' => 99,
 			'name' => 'admin',
-			'display_name' => '超级管理员'
+			'display_name' => '超级管理员',
+			'url' => 'admin',
 		])->create([
 			'id' => 98,
-			'name' => 'manger',
-			'display_name' => '项目总监'
+			'name' => 'manager',
+			'display_name' => '项目总监',
+			'url' => 'admin',
 		])->create([
 			'id' => 97,
 			'name' => 'owner',
-			'display_name' => '经理'
+			'display_name' => '经理',
+			'url' => 'admin',
 		])->create([
 			'id' => 96,
 			'name' => 'leader',
-			'display_name' => '负责人'
+			'display_name' => '负责人',
+			'url' => 'admin',
 		])->create([
 			'id' => 1,
 			'name' => 'viewer',
-			'display_name' => '普通用户'
+			'display_name' => '普通用户',
+			'url' => '',
 		])->create([
 			'id' => 2,
 			'name' => 'wechater',
-			'display_name' => '微信用户'
+			'display_name' => '微信用户',
+			'url' => '',
 		])->create([
 			'id' => 0,
 			'name' => 'guest',
-			'display_name' => '访客'
+			'display_name' => '访客',
+			'url' => '',
 		])->update(['id' => 0]);
 
 		foreach([
@@ -180,7 +187,7 @@ class Seeds extends Migration
 				'view' => '查看',
 				'create' => '新建',
 				'edit' => '编辑',
-				'destory' => '删除',
+				'destroy' => '删除',
 				'export' => '导出'
 			] as $k1 => $v1) {
 				\App\Permission::create([

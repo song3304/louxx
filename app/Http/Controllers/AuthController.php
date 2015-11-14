@@ -40,6 +40,13 @@ class AuthController extends Controller
 		return $this->success_logout(''); // redirect to homepage
 	}
 
+	public function choose()
+	{
+		$user = Auth::user();
+		$this->_roles = $user->roles()->whereIn('roles.name',['admin','manager','owner','leader'])->get();
+		return $this->_roles->count() == 1 ? redirect($this->_roles[0]->url) : $this->view('auth.choose');
+	}
+
 	/**
 	 * Handle an authentication attempt.
 	 *
@@ -60,7 +67,9 @@ class AuthController extends Controller
 		$remember = $request->has('remember');
 		if (Auth::attempt(['username' => $data['username'], 'password' => $data['password']], $remember))
 		{
-			return $this->success_login($request->session()->pull('url.intended', '')); // redirect to the prevpage or homepage
+			$user = Auth::user();
+			$roles = $user->roles()->whereIn('roles.name',['admin','manager','owner','leader'])->get();
+			return $this->success_login($roles->count() >= 1 ? 'auth/choose' :$request->session()->pull('url.intended', '')); // redirect to the prevpage or homepage
 		} else {
 			//记录重试次数
 			$throttles && $this->incrementLoginAttempts($request);

@@ -47,7 +47,7 @@ class RoleController extends Controller
 
 	public function store(Request $request)
 	{
-		$keys = 'name,display_name,description';
+		$keys = 'name,display_name,description,url';
 		$data = $this->autoValidate($request, 'role.store', $keys);
 
 		Role::create($data);
@@ -70,7 +70,7 @@ class RoleController extends Controller
 			if (empty($role))
 				return $this->failure_noexists();
 
-			$keys = 'display_name,description';
+			$keys = 'display_name,description,url';
 			$data = $this->autoValidate($request, 'role.store', $keys);
 			$role->update($data);
 		}

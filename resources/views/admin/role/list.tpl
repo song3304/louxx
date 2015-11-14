@@ -84,7 +84,7 @@ $().ready(function(){
 		$('#edit-modal').modal({backdrop: 'static'});
 
 		var $container = $(this).closest('.tab-pane');
-		['name', 'display_name', 'description'].forEach(function(i){
+		['name', 'display_name', 'description', 'url'].forEach(function(i){
 			$('#' + i).val($('[name="'+i+'"]', $container).val());
 		})
 		$('#name').prop('disabled', true);
@@ -95,7 +95,7 @@ $().ready(function(){
 
 	$('[name="create-modal"]').on('click', function(){
 		$('#edit-modal').modal({backdrop: 'static'});
-		$('#name,#display_name,#description').prop('disabled', false).val('');
+		$('#name,#display_name,#description,#url').prop('disabled', false).val('');
 		$('#edit-form').attr('action', this.href).find('[name="_method"]').val('POST');
 
 		return false;

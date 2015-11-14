@@ -15,6 +15,10 @@ return [
 				'name' => '简介',
 				'rules' => [],
 			],
+			'url' => [
+				'name' => '后台路由',
+				'rules' => [],
+			],
 			'perms' => [
 				'name' => '权限',
 				'rules' => 'array',

@@ -21,17 +21,23 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label" for="display_name">显示名</label>
 						<div class="col-md-9">
-							<input type="text" id="display_name" name="display_name" class="form-control" value="admin@example.com">
+							<input type="text" id="display_name" name="display_name" class="form-control" value="">
 							<span class="help-block">(*) 组名称，用于显示，比如：管理员、普通用户</span>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-md-3 control-label" for="name">介绍</label>
+						<label class="col-md-3 control-label" for="description">介绍</label>
 						<div class="col-md-9">
 							<textarea name="description" id="description" class="form-control" rows="10" placeholder="请输入简介"></textarea>
 						</div>
 					</div>
-		
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="url">后台路由名</label>
+						<div class="col-md-9">
+							<input type="text" id="url" name="url" class="form-control" value="">
+							<span class="help-block">(*) 也就是文件名，比如：admin。留空表示首页</span>
+						</div>
+					</div>
 					<div class="form-group form-actions">
 						<div class="col-xs-12 text-right">
 							<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">关闭</button>
