@@ -324,10 +324,11 @@ class CreateWechatTable extends Migration
 			$table->enum('type', ['QR_SCENE','QR_LIMIT_SCENE','QR_LIMIT_STR_SCENE'])->comment = '类型'; //类型
 			$table->string('scene_id', '100')->index()->comment = '内容';
 			$table->string('scene_str', '100')->index()->comment = '内容';
-			$table->string('ticket', '250')->comment = '二维码ticket';
+			$table->string('ticket', '190')->index()->comment = '二维码ticket';
 			$table->string('url', '250')->comment = '网址';
-			$table->unsignedInteger('expire_seconds')->nullable()->comment = '二维码有效时间';
-			$table->unsignedInteger('wdid')->index()->default(0)->comment = '素材库DepotID'; //素材ID
+			$table->unsignedInteger('expire_seconds')->nullable()->default(0)->comment = '二维码有效时间';
+			$table->unsignedInteger('subscribe_wdid')->index()->default(0)->comment = '关注素材库DepotID'; //素材ID
+			$table->unsignedInteger('wdid')->index()->default(0)->comment = '扫描素材库DepotID'; //素材ID
 			$table->unsignedInteger('aid')->default(0)->comment = '附件AID'; //素材ID
 			$table->timestamps();
 
