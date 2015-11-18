@@ -272,7 +272,7 @@ class CreateWechatTable extends Migration
 			$table->unique(['wrid', 'wdid']);
 		});
 
-		//微信账号库
+		//微信日志
 		Schema::create('wechat_logs', function (Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('waid')->index()->comment = '公众号AccountID'; //account id
@@ -285,10 +285,10 @@ class CreateWechatTable extends Migration
 				->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		//微信账号库
+		//微信账单
 		Schema::create('wechat_bills', function (Blueprint $table) {
 			$table->increments('id');
-			$table->unsignedInteger('waid')->index()->comment = '素材库DepotID'; //素材ID
+			$table->unsignedInteger('waid')->index()->comment = '公众号AccountID'; //account id
 			$table->unsignedInteger('wuid')->index()->comment = '微信UID'; //user id
 			$table->string('mch_id', 50)->comment = '商户号';
 			$table->string('device_info', 50)->nullable()->comment = '终端设备号';
@@ -317,6 +317,24 @@ class CreateWechatTable extends Migration
 				->onUpdate('cascade')->onDelete('cascade');
 		});
 
+		//微信二维码
+		Schema::create('wechat_qrcodes', function (Blueprint $table) {
+			$table->increments('id');
+			$table->unsignedInteger('waid')->index()->comment = '公众号AccountID'; //account id
+			$table->enum('type', ['QR_SCENE','QR_LIMIT_SCENE','QR_LIMIT_STR_SCENE'])->comment = '类型'; //类型
+			$table->string('scene_id', '100')->index()->comment = '内容';
+			$table->string('scene_str', '100')->index()->comment = '内容';
+			$table->string('ticket', '250')->comment = '二维码ticket';
+			$table->string('url', '250')->comment = '网址';
+			$table->unsignedInteger('expire_seconds')->nullable()->comment = '二维码有效时间';
+			$table->unsignedInteger('wdid')->index()->default(0)->comment = '素材库DepotID'; //素材ID
+			$table->unsignedInteger('aid')->default(0)->comment = '附件AID'; //素材ID
+			$table->timestamps();
+
+			$table->foreign('waid')->references('id')->on('wechat_accounts')
+				->onUpdate('cascade')->onDelete('cascade');
+		});
+
 	}
 
 	/**
@@ -326,6 +344,7 @@ class CreateWechatTable extends Migration
 	 */
 	public function down()
 	{
+		Schema::drop('wechat_qrcodes');
 		Schema::drop('wechat_bills');
 		Schema::drop('wechat_logs');
 		Schema::drop('wechat_reply_depot');
