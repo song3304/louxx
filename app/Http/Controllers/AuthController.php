@@ -31,7 +31,7 @@ class AuthController extends Controller
 		$validates = $this->getScriptValidate('member.store', $keys);
 		
 		$this->_validates = $validates;
-		return $this->view('login');
+		return $this->view('admin/login');
 	}
 
 	public function logout()

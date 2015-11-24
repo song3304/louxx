@@ -149,5 +149,8 @@ return [
     */
 
     'secure' => false,
-
+    
+    //http://stackoverflow.com/questions/31295126/laravel-5-losing-sessions-and-env-configuration-values-in-ajax-intensive-applic
+    //fixed Laravel 5 losing sessions and .env configuration values in AJAX-intensive applications
+    'metadata_update_threshold' => 1,
 ];

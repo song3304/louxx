@@ -5,13 +5,18 @@
 		errorClass: "help-block validate animated slideInDown",
 		errorElement: "span",
 		highlight:function(element, errorClass, validClass) {
-			$(element).closest('div').removeClass('has-success').addClass('has-error');
+			var $parent = $(element).closest('div');
+			if ($parent.hasClass('input-group')) $parent = $parent.closest('div');
+			$parent.removeClass('has-success').addClass('has-error');
 		},
 		unhighlight: function(element, errorClass, validClass) {
-			$(element).closest('div').removeClass('has-error').addClass('has-success');
+			var $parent = $(element).closest('div');
+			if ($parent.hasClass('input-group')) $parent = $parent.closest('div');
+			$parent.removeClass('has-error').addClass('has-success');
 		},
 		errorPlacement: function(error, element) {
-			var $parent = element.closest('div');
+			var $parent = $(element).closest('div');
+			if ($parent.hasClass('input-group')) $parent = $parent.closest('div');
 			$('.help-block.validate', $parent).remove();
 			error.appendTo($parent);
 		},
