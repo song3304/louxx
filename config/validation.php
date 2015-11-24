@@ -5,7 +5,7 @@ return [
 		'store' => [
 			'name' => [
 				'name' => '组名',
-				'rules' => 'required|regex:/[\w\d_\-]/|min:1|unique:roles,{{attribute}},{{id}}',
+				'rules' => 'required|regex:/[\w\d_\-]*/|min:1|unique:roles,{{attribute}},{{id}}',
 			],
 			'display_name' => [
 				'name' => '显示名称',
@@ -39,7 +39,7 @@ return [
 		'store' => [
 			'name' => [
 				'name' => '组名',
-				'rules' => 'required|regex:/[\w\d_\-\.]/|min:1|unique:permissions,{{attribute}},{{id}}',
+				'rules' => 'required|regex:/[\w\d_\-\.]*/|min:1|unique:permissions,{{attribute}},{{id}}',
 			],
 			'display_name' => [
 				'name' => '显示名称',
