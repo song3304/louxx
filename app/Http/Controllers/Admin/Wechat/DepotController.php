@@ -14,31 +14,24 @@ use Addons\Core\Controllers\AdminTrait;
 class DepotController extends Controller
 {
 	use AdminTrait;
-	public $RESTful_permission = 'wechat-depot';
+	//public $RESTful_permission = 'wechat-depot';
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
+	private $types = ['news','text','image','callback','video','voice','music'];
+
 	public function index(Request $request)
 	{
-		$account = new WechatAccount;
-		$builder = $account->newQuery();
-		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$account->getTable(), $this->site['pagesize']['common']);
-		$base = boolval($request->input('base')) ?: false;
-
-		//view's variant
-		$this->_base = $base;
-		$this->_pagesize = $pagesize;
-		$this->_filters = $this->_getFilters($request, $builder);
-		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['*'], ['base' => $base]) : [];
-		return $this->view('admin.wechat.account.'. ($base ? 'list' : 'datatable'));
+		return $this->view('admin.wechat.depot.list');
 	}
 
 	public function data(Request $request)
 	{
-		$account = new WechatAccount;
-		$builder = $account->newQuery();
+		$type = $request->input('type') ?: 'news';
+		$account = new WechatDepot;
+		$builder = $account->newQuery()->with($type);
 		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
 		$data['recordsTotal'] = $total;
@@ -117,8 +110,8 @@ class DepotController extends Controller
 		empty($id) && !empty($request->input('id')) && $id = $request->input('id');
 		$id = (array) $id;
 		
-		foreach ($id as $v)
-			$account = WechatAccount::destroy($v);
-		return $this->success('', count($id) > 5, compact('id'));
+		//foreach ($id as $v)
+		//	$account = WechatDepot::destroy($v);
+		return $this->success('', FALSE);
 	}
 }

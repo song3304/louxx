@@ -14,7 +14,7 @@
 <div class="container">
 	<h1 class="page-header">登录</h1>
 	<form action="<{'auth/authenticate_query'|url nofilter}>" id="form" method="POST">
-		<input type="hidden" name="_token" value="<{csrf_token()}>">
+		<{csrf_field() nofilter}>
 		<div class="form-group">
 			<label for="username">用户名</label>
 			<input type="text" class="form-control" name="username" id="username" placeholder="请输入用户名..." value="<{old('username')}>">

@@ -90,7 +90,6 @@
 									<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> <span id="submit-text">登录</span></button>
 								</div>
 							</div>
-						   
 						</form>
 						<!-- END Login Form -->
 					</div>
