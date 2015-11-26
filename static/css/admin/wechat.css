@@ -1,20 +1,25 @@
-.depot-news-list {font-size: 14px;}
-.depot-news-list a {color: #000;}
-.depot-news-list .depot-col {margin-bottom: 15px;}
-.depot-news-list .depot-col .items{border:1px #e7e7eb solid;border-radius: 4px;}
-.depot-news-list .depot-col .item {border-top: 1px solid #e7e7eb;padding: 0 10px;position: relative;}
+.depot-none {text-align: center; height: 50px;line-height: 50px;display: block}
+.depot-list {font-size: 14px;}
+.depot-list a {color: #000;}
+.depot-list .depot-col {margin-bottom: 15px;}
+.depot-list .depot-col .items{border:1px #e7e7eb solid;border-radius: 4px;}
+.depot-list .depot-col .item {border-top: 1px solid #e7e7eb;padding: 0 10px;position: relative;}
+.depot-list .depot-col .item:first-child {border-top: 0 none;}
+.depot-list .depot-col .options {border-top: 1px solid #e7e7eb;height:50px; line-height:50px;background-color:#f4f4f4;}
+.depot-list .depot-col .options .tool{border-right: 1px solid #e7e7eb;}
+.depot-list .depot-col .options .tool a{width:90%;margin: 0 auto;display: block;}
+.depot-list .depot-col .options .tool:last-child{border-right: 0 none;}
+
+.depot-news-list {}
 .depot-news-list .depot-col .item.active {border: 3px dotted orange !important;}
 .depot-news-list .depot-col .item .title {overflow:hidden;font-size:1em;height:78px;line-height:78px;white-space:nowrap;width:70%;float:left;}
 .depot-news-list .depot-col .item .cover {height: auto;width:30%;float:right;overflow: hidden;text-align:right;}
 .depot-news-list .depot-col .item .cover img{width:78px;height:78px;}
 .depot-news-list .depot-col .item .description{display:none;font-size:0.8em;word-wrap:break-word;word-break:break-all;color:#888;}
-
-.depot-news-list .depot-col .item:first-child {border-top: 0 none;}
 .depot-news-list .depot-col .item:first-child .title {float:none;font-size:16px;height:20px;line-height:20px;width:100%;}
 .depot-news-list .depot-col .item:first-child .description {display:block;padding:10px 0;}
 .depot-news-list .depot-col .item:first-child .cover {float:none;height:160px;width:100%;overflow: hidden;}
 .depot-news-list .depot-col .item:first-child .cover img{width:100%;height: auto;}
-
 .depot-news-list .depot-col.multi .item:first-child .title {
 	position: absolute;bottom: 0px;left: 0px;right: 0px;height: 30px;width: auto;line-height:30px;padding: 0 10px;margin: 0;
 	background: rgba(0, 0, 0, 0.6) !important;
@@ -22,7 +27,17 @@
 }
 .depot-news-list .depot-col.multi .item:first-child .title a {color: #fff;}
 .depot-news-list .depot-col.multi .item:first-child .description {display: none;}
-.depot-news-list .depot-col .options {border-top: 1px solid #e7e7eb;height:50px; line-height:50px;background-color:#f4f4f4;}
-.depot-news-list .depot-col .options .tool{border-right: 1px solid #e7e7eb;}
-.depot-news-list .depot-col .options .tool a{width:90%;margin: 0 auto;display: block;}
-.depot-news-list .depot-col .options .tool:last-child{border-right: 0 none;}
+
+.depot-text-list .depot-col .content {font-size:0.8em;word-wrap:break-word;word-break:break-all;color:#888;padding: 8px;}
+
+.depot-callback-list .depot-col .title {font-size:14px;height:30px;line-height:30px;padding: 0 8px;border-bottom: 1px solid #e7e7eb;background: #f4f4f4;margin: 0;}
+.depot-callback-list .depot-col .content {overflow:hidden;font-size:0.8em;max-height:200px;word-wrap:break-word;word-break:break-all;color:#888;padding: 8px;}
+
+.depot-image-list .depot-col .title,.depot-video-list .depot-col .title,.depot-voice-list .depot-col .title,.depot-music-list .depot-col .title {font-size:12px;height:30px;line-height:30px;padding: 0 8px;margin: 0;}
+.depot-image-list .depot-col .size,.depot-video-list .depot-col .size,.depot-voice-list .depot-col .size  {}
+.depot-image-list .depot-col .image,.depot-video-list .depot-col .video,.depot-voice-list .depot-col .voice {height:auto;padding:2%;overflow: hidden;text-align: center}
+
+.depot-image-list .depot-col .image img{height:auto;width:100%;}
+.depot-video-list .depot-col .video video{height:200px;width:100%;}
+.depot-voice-list .depot-col .voice audio{width:100%;}
+.depot-music-list .depot-col .music audio{width:100%;}

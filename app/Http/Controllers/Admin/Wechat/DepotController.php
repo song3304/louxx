@@ -29,7 +29,7 @@ class DepotController extends Controller
 
 	public function data(Request $request)
 	{
-		$type = $request->input('type') ?: 'news';
+		$type = $request->input('filters.type') ?: ['news','text','image','callback','video','voice','music'];
 		$account = new WechatDepot;
 		$builder = $account->newQuery()->with($type);
 		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
@@ -110,8 +110,8 @@ class DepotController extends Controller
 		empty($id) && !empty($request->input('id')) && $id = $request->input('id');
 		$id = (array) $id;
 		
-		//foreach ($id as $v)
-		//	$account = WechatDepot::destroy($v);
+		foreach ($id as $v)
+			$account = WechatDepot::destroy($v);
 		return $this->success('', FALSE);
 	}
 }

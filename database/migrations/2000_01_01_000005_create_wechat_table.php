@@ -56,7 +56,7 @@ class CreateWechatTable extends Migration
 		Schema::create('wechat_depots', function (Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('waid')->comment = '公众号AccountID'; //account_id
-			$table->enum('type', ['text','news','music','voice','image','video','shortvideo','callback'])->comment = '素材类型'; //素材类型
+			$table->enum('type', ['text','news','music','voice','image','video','callback'])->comment = '素材类型'; //素材类型
 			$table->unsignedInteger('uid')->default(0)->comment = '用户ID'; //用户ID
 			$table->timestamps();
 
@@ -89,6 +89,8 @@ class CreateWechatTable extends Migration
 		//微信素材-图片
 		Schema::create('wechat_depot_images', function (Blueprint $table) {
 			$table->unsignedInteger('id')->unique();
+			$table->string('title', 250)->comment = '标题'; //标题
+			$table->unsignedInteger('size')->comment = '文件大小'; //文件大小
 			$table->unsignedInteger('aid')->comment = '图片AID'; //附件ID
 			$table->timestamps();
 
@@ -98,6 +100,8 @@ class CreateWechatTable extends Migration
 		//微信素材-音频
 		Schema::create('wechat_depot_voices', function (Blueprint $table) {
 			$table->unsignedInteger('id')->unique();
+			$table->string('title', 250)->comment = '标题'; //标题
+			$table->unsignedInteger('size')->comment = '文件大小'; //文件大小
 			$table->unsignedInteger('aid')->comment = '音频AID'; //附件ID
 			$table->string('format', 20)->comment = '音频格式'; //附件格式
 			$table->timestamps();
@@ -110,6 +114,7 @@ class CreateWechatTable extends Migration
 			$table->unsignedInteger('id')->unique();
 			$table->string('title', 250)->comment = '标题'; //标题
 			$table->string('description', 250)->comment = '简介'; //摘要
+			$table->unsignedInteger('size')->comment = '文件大小'; //文件大小
 			$table->unsignedInteger('aid')->comment = '视频AID'; //附件ID
 			$table->unsignedInteger('thunm_aid')->comment = '缩略图ID'; //缩略图附件ID
 			$table->string('format', 20)->comment = '视频格式'; //附件格式
@@ -121,6 +126,8 @@ class CreateWechatTable extends Migration
 		//微信素材-音乐
 		Schema::create('wechat_depot_musics', function (Blueprint $table) {
 			$table->unsignedInteger('id')->unique();
+			$table->string('title', 250)->comment = '标题'; //标题
+			$table->unsignedInteger('size')->comment = '文件大小'; //文件大小
 			$table->unsignedInteger('aid')->comment = '音乐AID'; //附件ID
 			$table->string('format', 20)->comment = '音乐格式'; //附件ID
 			$table->timestamps();
@@ -140,6 +147,7 @@ class CreateWechatTable extends Migration
 		//微信素材-回调函数
 		Schema::create('wechat_depot_callbacks', function (Blueprint $table) {
 			$table->unsignedInteger('id')->unique();
+			$table->string('title', 250)->comment = '标题'; //标题
 			$table->longText('callback')->comment = '回调函数'; //回调函数
 			$table->longText('paramters')->comment = '回调参数'; //回调参数
 			$table->timestamps();
