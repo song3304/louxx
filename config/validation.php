@@ -240,5 +240,84 @@ return [
 			],
 		],
 	],
-
+	'wechat-news' => [
+		'store' => [
+			'title' => [
+				'name' => '标题',
+				'rules' => 'required|min:1|max:62',
+			],
+			'author' => [
+				'name' => '作者',
+				'rules' => 'max:50',
+			],
+			'description' => [
+				'name' => '摘要',
+				'rules' => 'max:250',
+			],
+			'cover_aid' => [
+				'name' => '封面AID',
+				'rules' => 'required|numeric|not_zero',
+			],
+			'cover_in_content' => [
+				'name' => '封面显示在正文中',
+				'rules' => 'boolean',
+			],
+			'content' => [
+				'name' => '正文',
+				'rules' => [],
+			],
+			'url' => [
+				'name' => '原文网址',
+				'rules' => 'required_if:redirect,1|url|max:250',
+			],
+			'redirect' => [
+				'name' => '直接跳转',
+				'rules' => 'boolean',
+			],
+		],
+	],
+	'wechat-depot' => [
+		'store' => [
+			'type' => [
+				'name' => '类型',
+				'rules' => 'required|field_name:wechat_message_type',
+			],
+			'wdnid' => [
+				'name' => '文章ID',
+				'rules' => 'required|array|min:1',
+			],
+			'title' => [ // 音乐/视频/图片/录音
+				'name' => '内容',
+				'rules' => 'required|max:250',
+			],
+			'size' => [
+				'name' => '文件大小',
+				'rules' => 'required|numeric|not_zero',
+			],
+			'aid' => [
+				'name' => '媒体文件AID',
+				'rules' => 'required|numeric|not_zero',
+			],
+			'thumb_aid' => [
+				'name' => '缩略图文件AID',
+				'rules' => 'required|numeric',
+			],
+			'content' => [ // 文本
+				'name' => '内容',
+				'rules' => 'required|min:1',
+			],
+			'callback' => [ // 回调
+				'name' => '编程内容',
+				'rules' => 'required|min:1',
+			],
+			'description' => [
+				'name' => '简介',
+				'rules' => [],
+			],
+			'format' => [
+				'name' => '格式',
+				'rules' => 'required',
+			],
+		],
+	],
 ];

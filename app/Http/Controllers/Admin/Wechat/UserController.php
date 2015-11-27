@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use Addons\Core\Models\WechatUser;
 use Addons\Core\Controllers\AdminTrait;
+use Addons\Core\Tools\Wechat\Account;
 
 class UserController extends Controller
 {
@@ -19,10 +20,10 @@ class UserController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function index(Request $request)
+	public function index(Request $request, Account $account)
 	{
 		$user = new WechatUser;
-		$builder = $user->newQuery()->with('_gender');
+		$builder = $user->newQuery()->with('_gender')->where('waid', $account->getAccountID());
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
@@ -34,10 +35,10 @@ class UserController extends Controller
 		return $this->view('admin.wechat.user.'. ($base ? 'list' : 'datatable'));
 	}
 
-	public function data(Request $request)
+	public function data(Request $request, Account $account)
 	{
 		$user = new WechatUser;
-		$builder = $user->newQuery()->with('_gender');
+		$builder = $user->newQuery()->with('_gender')->where('waid', $account->getAccountID());
 		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
 		$data['recordsTotal'] = $total;
@@ -45,7 +46,7 @@ class UserController extends Controller
 		return $this->success('', FALSE, $data);
 	}
 
-	public function export(Request $request)
+	public function export(Request $request, Account $account)
 	{
 		$user = new WechatUser;
 		$page = $request->input('page') ?: 0;
@@ -60,14 +61,14 @@ class UserController extends Controller
 			return $this->view('admin.wechat.user.export');
 		}
 
-		$builder = $user->newQuery()->with('_gender');
+		$builder = $user->newQuery()->with('_gender')->where('waid', $account->getAccountID());
 		$data = $this->_getExport($request, $builder, function(&$v){
 			$v['_gender'] = !empty($v['_gender']) ? $v['_gender']['title'] : NULL;
 		});
 		return $this->success('', FALSE, $data);
 	}
 
-	public function show($id)
+	public function show($id, Account $account)
 	{
 		$user = WechatUser::find($id);
 		if (empty($user))
@@ -85,12 +86,12 @@ class UserController extends Controller
 		return $this->view('admin.wechat.user.create');
 	}
 
-	public function store(Request $request)
+	public function store(Request $request, Account $account)
 	{
 		$keys = 'openid,nickname,gender,avatar_aid,country,province,city,language,unionid,remark,is_subscribed,subscribed_at,uid';
 		$data = $this->autoValidate($request, 'wechat-user.store', $keys);
 
-		WechatUser::create($data);
+		WechatUser::create($data + ['waid' => $account->getAccountID()]);
 		return $this->success('', url('admin/wechat/user'));
 	}
 

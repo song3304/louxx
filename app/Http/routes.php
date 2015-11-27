@@ -32,6 +32,7 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth
 		$this->setAdminRoutes([
 			'user' => 'UserController',
 			'depot' => 'DepotController',
+			'depot-news' => 'DepotNewsController',
 			'menu' => 'MenuController',
 			'message' => 'MessageController',
 			'reply' => 'ReplyController',

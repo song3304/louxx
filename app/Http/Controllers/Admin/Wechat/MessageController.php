@@ -12,23 +12,21 @@ use Addons\Core\Models\WechatAccount;
 use Addons\Core\Models\WechatMessage;
 use Addons\Core\Tools\Wechat\Send;
 use Addons\Core\Controllers\AdminTrait;
+use Addons\Core\Tools\Wechat\Account;
 
 class MessageController extends Controller
 {
 	use AdminTrait;
 	public $RESTful_permission = 'wechat-message';
-	protected  $casts = [
-		'is_subscribed' => 'boolean',
-	];
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index(Request $request)
+	public function index(Request $request, Account $account)
 	{
 		$message = new WechatMessage;
-		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media']);
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media'])->where('waid', $account->getAccountID());
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$message->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
@@ -39,10 +37,10 @@ class MessageController extends Controller
 		return $this->view('admin.wechat.message.list');
 	}
 
-	public function data(Request $request)
+	public function data(Request $request, Account $account)
 	{
 		$message = new WechatMessage;
-		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media']);
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media'])->where('waid', $account->getAccountID());
 		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
 		$data['recordsTotal'] = $total;
@@ -50,7 +48,7 @@ class MessageController extends Controller
 		return $this->success('', FALSE, $data);
 	}
 
-	public function export(Request $request)
+	public function export(Request $request, Account $account)
 	{
 		$message = new WechatMessage;
 		$page = $request->input('page') ?: 0;
@@ -65,7 +63,7 @@ class MessageController extends Controller
 			return $this->view('admin.wechat.message.export');
 		}
 
-		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media']);
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media'])->where('waid', $account->getAccountID());
 		$data = $this->_getExport($request, $builder);
 		return $this->success('', FALSE, $data);
 	}

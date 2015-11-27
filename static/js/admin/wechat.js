@@ -14,18 +14,18 @@ angular.module("template/tabs/tabset.html", []).run(["$templateCache", function(
     "");
 }]);
 
-$app.controller('depotController',  function($rootScope, $scope, $ajax, $uibModal, $log) {
+$app.controller('depotController',  function($rootScope, $scope, $query, $uibModal, $log, $element) {
 	$scope.dataList = {};
 	$scope.load = function(type, page, filters, orders)
 	{
 		if (!filters) filters = {};
 		filters['type'] = type;
 		$scope['type'] = type;
-		$ajax.post(jQuery.baseuri + 'admin/wechat/depot/data/json',{'page': page, 'pagesize': 2,'filters': filters, 'orders': orders}, function(json){
+		$query.post(jQuery.baseuri + 'admin/wechat/depot/data/json',{'page': page, 'pagesize': 2,'filters': filters, 'orders': orders}, function(json){
 			if (json.result == 'success')
 				$scope.dataList[type] = json.data;
 			else
-				$.showtips(json);
+				jQuery.showtips(json);
 		}, false);
 	};
 	$scope.reload = function(type){
@@ -54,6 +54,11 @@ $app.controller('depotController',  function($rootScope, $scope, $ajax, $uibModa
 			size: 'lg',
 			backdrop: 'static',
 			scope: $newScope,
+			resolve: {
+				$element: function(){
+					return $element;
+				}
+			}
 		});
 		modalInstance.result.then(function (){
 			
@@ -74,7 +79,7 @@ $app.controller('depotController',  function($rootScope, $scope, $ajax, $uibModa
 	});
 	
 	//init
-	$scope.show($scope.type);
+
 }).directive('depotController',function() {
 	return {
 		restrict: 'A',
@@ -132,7 +137,7 @@ $app.controller('depotController',  function($rootScope, $scope, $ajax, $uibModa
 		}
 	};
 })
-.controller('depotEditController', function($scope, $uibModalInstance, $ajax){
+.controller('depotEditController', function($scope, $uibModalInstance, $query, $element ){
 	// $uibModalInstance.close();
 	// $uibModalInstance.dismiss('cancel');
 	$scope.forms = {}; //form 变量
@@ -147,11 +152,11 @@ $app.controller('depotController',  function($rootScope, $scope, $ajax, $uibModa
 	}
 	$scope.load = function(type, depotId){
 		
-		return $ajax.post(jQuery.baseuri + 'admin/wechat/depot/data/json',{'pagesize': 2,'filters[type]': $scope.type, 'filters[id]': $scope.depotId}, function(json){
+		return $query.post(jQuery.baseuri + 'admin/wechat/depot/data/json',{'pagesize': 2,'filters[type]': $scope.type, 'filters[id]': $scope.depotId}, function(json){
 			if (json.result == 'success')
 				if (json.data && json.data.data && json.data.data[0]) $scope.depot = json.data.data[0];	else $scope.init();
 			else
-				$.showtips(json);
+				jQuery.showtips(json);
 		}, false);
 
 	}
@@ -184,9 +189,30 @@ $app.controller('depotController',  function($rootScope, $scope, $ajax, $uibModa
 		$scope.depot.news[index].active = true;
 	}
 
-	$scope.saveNews = function(index)
+	$scope.saveNews = function()
 	{
-		//jQuery.de
+		if (!$scope.forms.news) 
+			return false;
+
+		var querys = [];
+		angular.forEach($scope.forms.news, function(form, index){
+			var $form = jQuery('[name="'+form.$name+'"]');
+
+			querys.push($query.form($form, function(json){
+				if (json.data) {
+					$scope.depot.news[index].id = json.data.id; //如果是新建，则改变文章的id
+					form.$setPristine();
+					$scope.$apply();
+				}
+			}, false).fail(function(json){
+				$scope.editNews(index);
+				jQuery.showtips(json);
+			}).done(function(json){
+				
+			}));
+		});
+
+		return jQuery.when.apply(this,querys);
 	}
 
 	$scope.destroyNews = function(index)
@@ -237,7 +263,25 @@ $app.controller('depotController',  function($rootScope, $scope, $ajax, $uibModa
 	$scope.save = function()
 	{
 		$scope.submiting = true;
-		console.log($scope.forms.depot);
+		var submit = function(){
+			//$scope.$apply();
+			$query.form(jQuery('[name="forms.depot"]')).done(function(json){
+				$scope.depot = json.data;
+				$uibModalInstance.close();
+				$scope.$emit('reload', json.data.type);
+			}).always(function(){
+				$scope.submiting = false;
+			});
+		}
+		if ($scope.type == 'news')
+		{
+			$scope.saveNews().done(submit).fail(function(){
+				$scope.submiting = false;
+			});
+		} else {
+			submit();
+		}
+		
 	}
 
 	if (!isNaN($scope.depotId) && $scope.depotId > 0)

@@ -7,15 +7,14 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Addons\Core\Models\WechatAccount;
-use Addons\Core\Models\WechatReply;
+use Addons\Core\Models\WechatDepotNews;
 use Addons\Core\Controllers\AdminTrait;
 use Addons\Core\Tools\Wechat\Account;
 
-class ReplyController extends Controller
+class DepotNewsController extends Controller
 {
 	use AdminTrait;
-	public $RESTful_permission = 'wechat-reply';
+	public $RESTful_permission = 'wechat-depot';
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -23,9 +22,9 @@ class ReplyController extends Controller
 	 */
 	public function index(Request $request, Account $account)
 	{
-		$reply = new WechatReply;
-		$builder = $reply->newQuery()->where('waid', $account->getAccountID());
-		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$reply->getTable(), $this->site['pagesize']['common']);
+		$news = new WechatDepotNews;
+		$builder = $news->newQuery()->where('waid', $account->getAccountID());
+		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$news->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
 		//view's variant
@@ -33,13 +32,13 @@ class ReplyController extends Controller
 		$this->_pagesize = $pagesize;
 		$this->_filters = $this->_getFilters($request, $builder);
 		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['*'], ['base' => $base]) : [];
-		return $this->view('admin.wechat.reply.'. ($base ? 'list' : 'datatable'));
+		return $this->view('admin.wechat.news.'. ($base ? 'list' : 'datatable'));
 	}
 
 	public function data(Request $request, Account $account)
 	{
-		$reply = new WechatReply;
-		$builder = $reply->newQuery()->where('waid', $account->getAccountID());
+		$news = new WechatDepotNews;
+		$builder = $news->newQuery()->where('waid', $account->getAccountID());
 		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
 		$data['recordsTotal'] = $total;
@@ -49,20 +48,20 @@ class ReplyController extends Controller
 
 	public function export(Request $request, Account $account)
 	{
-		$reply = new WechatReply;
+		$news = new WechatDepotNews;
 		$page = $request->input('page') ?: 0;
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.export', 1000);
-		$total = $reply::count();
+		$total = $news::count();
 
 		if (empty($page)){
 			$this->_of = $request->input('of');
-			$this->_table = $reply->getTable();
+			$this->_table = $news->getTable();
 			$this->_total = $total;
 			$this->_pagesize = $pagesize > $total ? $total : $pagesize;
-			return $this->view('admin.wechat.reply.export');
+			return $this->view('admin.wechat.news.export');
 		}
 
-		$builder = $reply->newQuery();
+		$builder = $news->newQuery();
 		$data = $this->_getExport($request, $builder)->where('waid', $account->getAccountID());
 		return $this->success('', FALSE, $data);
 	}
@@ -74,43 +73,43 @@ class ReplyController extends Controller
 
 	public function create()
 	{
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
+		$keys = 'title,author,description,content,cover_aid,cover_in_content,redirect,url';
 		$this->_data = [];
-		$this->_validates = $this->getScriptValidate('wechat-replay.store', $keys);
-		return $this->view('admin.wechat.reply.create');
+		$this->_validates = $this->getScriptValidate('wechat-news.store', $keys);
+		return $this->view('admin.wechat.news.create');
 	}
 
 	public function store(Request $request, Account $account)
 	{
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$data = $this->autoValidate($request, 'wechat-replay.store', $keys);
+		$keys = 'title,author,description,content,cover_aid,cover_in_content,redirect,url';
+		$data = $this->autoValidate($request, 'wechat-news.store', $keys);
 
-		WechatReply::create($data + ['waid' => $account->getAccountID()]);
-		return $this->success('', url('admin/wechat/replay'));
+		$news = WechatDepotNews::create($data + ['waid' => $account->getAccountID()]);
+		return $this->success('', url('admin/wechat/depot-news'), $news->toArray());
 	}
 
 	public function edit($id)
 	{
-		$reply = WechatReply::find($id);
-		if (empty($reply))
+		$news = WechatDepotNews::find($id);
+		if (empty($news))
 			return $this->failure_noexists();
 
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$this->_validates = $this->getScriptValidate('wechat-replay.store', $keys);
-		$this->_data = $reply;
-		return $this->view('admin.wechat.reply.edit');
+		$keys = 'title,author,description,content,cover_aid,cover_in_content,redirect,url';
+		$this->_validates = $this->getScriptValidate('wechat-news.store', $keys);
+		$this->_data = $news;
+		return $this->view('admin.wechat.news.edit');
 	}
 
 	public function update(Request $request, $id)
 	{
-		$reply = WechatReply::find($id);
-		if (empty($reply))
+		$news = WechatDepotNews::find($id);
+		if (empty($news))
 			return $this->failure_noexists();
 
-		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
-		$data = $this->autoValidate($request, 'wechat-replay.store', $keys);
-		$reply->update($data);
-		return $this->success();
+		$keys = 'title,author,description,content,cover_aid,cover_in_content,redirect,url';
+		$data = $this->autoValidate($request, 'wechat-news.store', $keys);
+		$news->update($data);
+		return $this->success('', FALSE, $news->toArray());
 	}
 
 	public function destroy(Request $request, $id)
@@ -119,7 +118,7 @@ class ReplyController extends Controller
 		$id = (array) $id;
 		
 		foreach ($id as $v)
-			$reply = WechatReply::destroy($v);
+			$news = WechatDepotNews::destroy($v);
 		return $this->success('', count($id) > 5, compact('id'));
 	}
 }

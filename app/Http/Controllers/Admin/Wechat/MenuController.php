@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Addons\Core\Models\WechatAccount;
 use Addons\Core\Models\WechatMenu;
 use Addons\Core\Controllers\AdminTrait;
+use Addons\Core\Tools\Wechat\Account;
 
 class MenuController extends Controller
 {
@@ -20,10 +21,10 @@ class MenuController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function index(Request $request)
+	public function index(Request $request, Account $account)
 	{
 		$account = new WechatAccount;
-		$builder = $account->newQuery();
+		$builder = $account->newQuery()->where('waid', $account->getAccountID());
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$account->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
@@ -35,10 +36,10 @@ class MenuController extends Controller
 		return $this->view('admin.wechat.account.'. ($base ? 'list' : 'datatable'));
 	}
 
-	public function data(Request $request)
+	public function data(Request $request, Account $account)
 	{
 		$account = new WechatAccount;
-		$builder = $account->newQuery();
+		$builder = $account->newQuery()->where('waid', $account->getAccountID());
 		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
 		$data['recordsTotal'] = $total;
@@ -46,7 +47,7 @@ class MenuController extends Controller
 		return $this->success('', FALSE, $data);
 	}
 
-	public function export(Request $request)
+	public function export(Request $request, Account $account)
 	{
 		$account = new WechatAccount;
 		$page = $request->input('page') ?: 0;
@@ -61,7 +62,7 @@ class MenuController extends Controller
 			return $this->view('admin.wechat.account.export');
 		}
 
-		$builder = $account->newQuery();
+		$builder = $account->newQuery()->where('waid', $account->getAccountID());
 		$data = $this->_getExport($request, $builder);
 		return $this->success('', FALSE, $data);
 	}
@@ -79,12 +80,12 @@ class MenuController extends Controller
 		return $this->view('admin.wechat.account.create');
 	}
 
-	public function store(Request $request)
+	public function store(Request $request, Account $account)
 	{
 		$keys = 'name,description,appid,appsecret,token,encodingaeskey,qr_aid';
 		$data = $this->autoValidate($request, 'wechat-account.store', $keys);
 
-		WechatAccount::create($data);
+		WechatAccount::create($data + ['waid' => $account->getAccountID()]);
 		return $this->success('', url('admin/wechat-account'));
 	}
 

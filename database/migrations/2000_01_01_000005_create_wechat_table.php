@@ -65,14 +65,17 @@ class CreateWechatTable extends Migration
 		//微信素材-文章 多图文
 		Schema::create('wechat_depot_news', function (Blueprint $table) {
 			$table->increments('id');
+			$table->unsignedInteger('waid')->comment = '公众号AccountID'; //account_id
 			$table->string('title', 250)->comment = '标题'; //标题
 			$table->string('author', 100)->comment = '作者'; //作者
 			$table->string('description', 250)->comment = '简介'; //简介
 			$table->unsignedInteger('cover_aid')->default(0)->comment = '封面图片AID'; //封面图片
 			$table->tinyInteger('cover_in_content')->default(0)->comment = '是否将封面插入正文中'; //是否将封面插入正文中
 			$table->text('content')->comment = '内容'; //内容
-			$table->string('link', 250)->comment = 'URL链接'; //URL链接
+			$table->tinyInteger('redirect')->default(0)->comment = '是否直接跳转'; //是否将封面插入正文中
+			$table->string('url', 250)->comment = 'URL链接'; //URL链接
 			$table->timestamps();
+			$table->foreign('waid')->references('id')->on('wechat_accounts');
 		});
 		//微信素材库 多图文关联表
 		Schema::create('wechat_depot_news_relation', function (Blueprint $table) {
@@ -116,7 +119,7 @@ class CreateWechatTable extends Migration
 			$table->string('description', 250)->comment = '简介'; //摘要
 			$table->unsignedInteger('size')->comment = '文件大小'; //文件大小
 			$table->unsignedInteger('aid')->comment = '视频AID'; //附件ID
-			$table->unsignedInteger('thunm_aid')->comment = '缩略图ID'; //缩略图附件ID
+			$table->unsignedInteger('thumb_aid')->comment = '缩略图ID'; //缩略图附件ID
 			$table->string('format', 20)->comment = '视频格式'; //附件格式
 			$table->timestamps();
 

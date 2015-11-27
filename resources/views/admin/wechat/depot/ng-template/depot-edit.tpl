@@ -39,7 +39,7 @@
 	<div class="inner">
 		<div class="panel panel-default">
 			<div class="panel-body">
-			<form action="{{'<{'wechat/depot-news'|url}>/' + item.id | trustUrl}}" query="" action="POST" name="forms.news[{{$index}}]" bs-modifiable="true" class="form-horizontal form-bordered">
+			<form action="{{'<{'admin/wechat/depot-news'|url}>' + (item.id ? '/' + item.id : '')| trustUrl}}" method="POST" name="forms.news[{{$index}}]" bs-modifiable="true" class="form-horizontal form-bordered">
 				<{csrf_field() nofilter}>
 				<input type="hidden" value="{{item.id > 0 ? 'PUT' : 'POST'}}" name="_method" />
 				<div class="tips" ng-show="forms.news[$index].modified">
@@ -62,7 +62,7 @@
 				<div class="form-group">
 					<label class="col-xs-12 col-sm-3 col-md-2 control-label">封面</label>
 					<div class="col-sm-9 col-xs-12">
-						<input type="hidden" uploader="1" class="form-control" name="cover_aid" ng-model="item.cover_aid">
+						<input type="text" uploader="1" class="form-control hidden" name="cover_aid" ng-model="item.cover_aid">
 						<span class="help-block">（大图片建议尺寸：360像素 * 200像素）</span>
 					</div>
 				</div>
@@ -106,11 +106,11 @@
 		</div>
 	</div>
 </div>
-<form name="forms.depot" action="{{'<{'wechat/depot'|url}>/' + depot.id | trustUrl}}" method="POST" query="" ng-submit="saveNews()">
+<form name="forms.depot" action="{{'<{'admin/wechat/depot'|url}>' + (depot.id ? '/' + depot.id : '') | trustUrl}}" method="POST" class="hidden">
 <{csrf_field() nofilter}>
 <input type="hidden" value="{{depot.id > 0 ? 'PUT' : 'POST'}}" name="_method" />
-<input type="hidden" ng-model="depot.type" name="type" />
-<input type="hidden" name="items[]" ng-model="item.id" ng-repeat="item in depot.news" />
+<input type="text" ng-model="depot.type" name="type" />
+<div ng-repeat="item in depot.news"><input type="text" name="wdnid[]" ng-model="item.id"  /></div>
 </form>
 </script>
 
