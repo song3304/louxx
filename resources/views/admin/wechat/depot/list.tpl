@@ -9,7 +9,7 @@
 <{/block}>
 <{block "head-scripts-plus"}>
 <{include file="common/uploader.inc.tpl"}>
-<script src="<{'static/js/angular/angular-1.4.8.min.js'|url}>"></script>
+<script src="<{'static/js/angular/angular-1.4.8.js'|url}>"></script>
 <script src="<{'static/js/angular/ui-bootstrap-tpls-0.14.3.min.js'|url}>"></script>
 <script src="<{'static/js/angular/angular-input-modified.min.js'|url}>"></script>
 <script src="<{'static/js/angular/common.js'|url}>"></script>

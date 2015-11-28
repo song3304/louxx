@@ -1,18 +1,4 @@
 //depot controllers
-angular.module("template/tabs/tabset.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("template/tabs/tabset.html",
-    "<div>\n" +
-    "  <div class=\"block-title\"><ul class=\"nav nav-{{type || 'tabs'}}\" ng-class=\"{'nav-stacked': vertical, 'nav-justified': justified}\" ng-transclude></ul></div>\n" +
-    "  <div class=\"tab-content\">\n" +
-    "    <div class=\"tab-pane\" \n" +
-    "         ng-repeat=\"tab in tabs\" \n" +
-    "         ng-class=\"{active: tab.active}\"\n" +
-    "         uib-tab-content-transclude=\"tab\">\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "");
-}]);
 
 $app.controller('depotController',  function($rootScope, $scope, $query, $uibModal, $log, $element) {
 	$scope.dataList = {};
@@ -21,7 +7,7 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 		if (!filters) filters = {};
 		filters['type'] = type;
 		$scope['type'] = type;
-		$query.post(jQuery.baseuri + 'admin/wechat/depot/data/json',{'page': page, 'pagesize': 2,'filters': filters, 'orders': orders}, function(json){
+		$query.post(jQuery.baseuri + 'admin/wechat/depot/data/json',{'page': page, 'filters': filters, 'orders': orders}, function(json){
 			if (json.result == 'success')
 				$scope.dataList[type] = json.data;
 			else
@@ -31,19 +17,12 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 	$scope.reload = function(type){
 		$scope.load(type, $scope.dataList[type].current_page, $scope.dataList[type]['filters'], $scope.dataList[type]['orders']);
 	};
-	$scope.show = function(type){
-		if (!$scope[type])
+	$scope.show = function(type, reload){
+		$scope.type = type;
+		if (!$scope[type] || reload)
 			$scope.load(type, 1);
 	};
-	//删除
-	$scope.$on('destroy', function(e, type){
-		$scope.reload(type);
-	});
-	$scope.$on('create', function(e, type){
-
-	});
-	//编辑
-	$scope.$on('edit', function(e, type, depotId){
+	$scope.edit = function(type, depotId){
 		$newScope = $rootScope.$new(true, $scope);
 		$newScope.type = type;
 		$newScope.depotId = depotId;
@@ -55,18 +34,44 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 			backdrop: 'static',
 			scope: $newScope,
 			resolve: {
-				$element: function(){
-					return $element;
-				}
+				
 			}
 		});
 		modalInstance.result.then(function (){
 			
 		}, function () {
-			$log.info('Modal dismissed at: ' + new Date());
+			//$log.info('Modal dismissed at: ' + new Date());
 		});
-    });
+	};
+	$scope.destroy = function(type, depotId)
+	{
+		$scope.reload(type);
+	}
+	
+	//读取
+	$scope.$on('show', function(e, type, reload){
+		$scope.show(type, reload)
+	});
+	$scope.$on('load', function(e, type, page, filters, orders){
+		$scope.load(type, page, filters, orders);
+	});
+	$scope.$on('reload', function(e, type){
+		$scope.reload(type)
+	});
+	//编辑
+	$scope.$on('create', function(e, type){
+		$scope.edit(type)
+	});
+	$scope.$on('edit', function(e, type, depotId){
+		$scope.edit(type, depotId);
+	});
+	//删除
+	$scope.$on('destroy', function(e, type, depotId) {
+		$scope.destroy(type, depotId);
+	});
 
+
+	//builder date
 	$scope.types = {'news': '图文','text': '文本','image': '图片','callback': '编程','video': '视频','voice': '录音','music': '音乐'};
 
 	//monitor page change
@@ -116,6 +121,27 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 		}
 	};
 })
+.directive('depotItem',function($compile, $templateRequest, $sce) {
+	return {
+		restrict: 'A',
+		scope: {
+			depot: '=depot',
+			type: '=depotItem'
+		},
+		transclude: true,
+		require: ['^depotList'],
+		replace: true,
+		link: function(scope, element, attrs) {	
+			var templateUrl = $sce.getTrustedResourceUrl('wechat/depot/' + scope.type);
+			$templateRequest(templateUrl).then(function(template) {
+				element.html(template);
+				$compile(element.contents())(scope);
+			}, function() {
+				// An error has occurred
+			});
+		}
+	}
+})
 .controller('depotListOptionsController',  function($scope){
 
 }).directive('depotListOptions',function() {
@@ -137,12 +163,11 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 		}
 	};
 })
-.controller('depotEditController', function($scope, $uibModalInstance, $query, $element ){
+.controller('depotEditController', function($scope, $uibModalInstance, $query){
 	// $uibModalInstance.close();
 	// $uibModalInstance.dismiss('cancel');
 	$scope.forms = {}; //form 变量
 	$scope.submiting = false; //正在提交
-
 	$scope.init = function(){
 		$scope.depot = {
 			id: 0,
@@ -234,15 +259,23 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 	$scope.prevNews = function(index)
 	{
 		if (index <= 0) return false;
-		$scope.depot.news[index] = $scope.depot.news.splice(index-1, 1, $scope.depot.news[index])[0];
+		//$scope.depot.news[index] = $scope.depot.news.splice(index-1, 1, $scope.depot.news[index])[0];
+		var a = angular.copy($scope.depot.news[index]);var b = angular.copy($scope.depot.news[index - 1]);
+		$scope.depot.news[index] = b; $scope.depot.news[index - 1] = a;
 		$scope.editNews(index - 1);
 	}
 
 	$scope.nextNews = function(index)
 	{
 		if (index >= $scope.depot.news.length - 1) return false;
-		$scope.depot.news[index] = $scope.depot.news.splice(index+1, 1, $scope.depot.news[index])[0];
+		//$scope.depot.news[index] = $scope.depot.news.splice(index+1, 1, $scope.depot.news[index])[0];
+		var a = angular.copy($scope.depot.news[index]);var b = angular.copy($scope.depot.news[index + 1]);$scope.depot.news[index] = b; $scope.depot.news[index + 1] = a;
 		$scope.editNews(index + 1);
+	}
+
+	$scope.updateAttachment = function(form) {
+		console.log(this);
+		console.log(form);
 	}
 
 	$scope.cancel = function()
@@ -264,11 +297,10 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 	{
 		$scope.submiting = true;
 		var submit = function(){
-			//$scope.$apply();
 			$query.form(jQuery('[name="forms.depot"]')).done(function(json){
 				$scope.depot = json.data;
 				$uibModalInstance.close();
-				$scope.$emit('reload', json.data.type);
+				$scope.$emit(json.data.isCreated ? 'show' : 'reload', json.data.type);
 			}).always(function(){
 				$scope.submiting = false;
 			});
@@ -281,8 +313,24 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 		} else {
 			submit();
 		}
-		
 	}
+	//附件上传或者移除时
+	$scope.$on('uploader.uploaded', function(e, scope, elem, file, json, ids){
+		if ($scope.type != 'news' && elem.is('[name="aid"]')){
+			$scope.depot[$scope.type].title = json.data.filename;
+			$scope.depot[$scope.type].size = json.data.size;
+			$scope.depot[$scope.type].format = json.data.ext;
+			$scope.$apply();
+		}
+	});
+	$scope.$on('uploader.removed', function(e, scope, elem, file, removeId, ids){
+		if ($scope.type != 'news' && elem.is('[name="aid"]')){
+			$scope.depot[$scope.type].title = '';
+			$scope.depot[$scope.type].size = 0;
+			$scope.depot[$scope.type].format = '';
+			$scope.$apply();
+		}
+	});
 
 	if (!isNaN($scope.depotId) && $scope.depotId > 0)
 		$scope.load().done(function(){
@@ -296,4 +344,4 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 			$scope.createNews();
 	}
 
-})
+});

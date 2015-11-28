@@ -57,7 +57,7 @@ class DepotController extends Controller
 			$this->storeNews($request, $depot, $data['type']);
 		else
 			$this->storeOther($request, $depot, $data['type'], true);
-		return $this->success('', FALSE);
+		return $this->success('', FALSE, ['isCreated' => true, 'type' => $depot->type]);
 	}
 
 	public function update(Request $request, $id)
@@ -67,16 +67,17 @@ class DepotController extends Controller
 			return $this->failure_noexists();
 
 		if ($depot->type == 'news')
-			$this->storeNews($request, $depot, $depot->type);
+			$this->storeNews($request, $depot, $depot->type, false);
 		else
-			$this->storeOther($request, $depot, $depot->type);
-		return $this->success('', FALSE);
+			$this->storeOther($request, $depot, $depot->type, false);
+		return $this->success('', FALSE, ['isCreated' => false, 'type' => $depot->type]);
 	}
 
 	private function storeNews(Request $request, WechatDepot &$depot, $type)
 	{
 		$keys = 'wdnid';
 		$data = $this->autoValidate($request, 'wechat-depot.store', $keys);
+		$depot->news()->detach();
 		$depot->news()->sync($data['wdnid']);
 		//$depot->news; //read relation
 	}

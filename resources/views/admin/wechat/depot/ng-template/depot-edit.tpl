@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="wechat/depot/edit/news/controller">
-<div class="depot-list depot-news-list row">
-	<div class="col-md-12 col-xs-12 depot-col" ng-if="depot.news" ng-class="{'multi': depot.news && depot.news.length > 1}">
+<div class="depot-list row">
+	<div class="col-md-12 col-xs-12 depot-col depot-col-news" ng-if="depot.news" ng-class="{'multi': depot.news && depot.news.length > 1}">
 		<div class="items">
 			<div class="item" ng-repeat="item in depot.news" ng-click="editNews($index)" ng-class="{active: item.active}">
 				<h4 class="title">
@@ -115,23 +115,182 @@
 </script>
 
 <script type="text/ng-template" id="wechat/depot/edit/news">
-<div class="modal-header">
-	<h3 class="modal-title">新建/修改素材</h3>
+<div class="row">
+	<div class="col-xs-4">
+		<div ng-include src="'wechat/depot/edit/news/controller'"></div>
+	</div>
+	<div class="col-xs-8">
+		<div ng-include src="'wechat/depot/edit/news/form'"></div>
+	</div>
 </div>
-<div class="modal-body">
-	<div class="row">
-		<div class="col-xs-4">
-			<div ng-include src="'wechat/depot/edit/news/controller'"></div>
+</script>
+
+<script type="text/ng-template" id="wechat/depot/edit/text">
+<div class="row">
+	<div class="col-xs-12">
+		<form name="forms.depot" action="{{'<{'admin/wechat/depot'|url}>' + (depot.id ? '/' + depot.id : '') | trustUrl}}" class="form-horizontal form-bordered" method="POST">
+		<{csrf_field() nofilter}>
+		<input type="hidden" value="{{depot.id > 0 ? 'PUT' : 'POST'}}" name="_method" />
+		<input type="text" ng-model="depot.type" name="type" class="hidden" />
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">文本</label>
+			<div class="col-sm-9 col-xs-12">
+				<textarea class="form-control" rows="20" name="content" placeholder="请输入文本" ng-model="depot.text.content"></textarea>
+				<span class="help-block">微信回复的文本，支持&lt;a href="http://..../"&gt;超链接文本&lt;/a&gt;</span>
+			</div>
 		</div>
-		<div class="col-xs-8">
-			<div ng-include src="'wechat/depot/edit/news/form'"></div>
+		</form>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="wechat/depot/edit/callback">
+<div class="row">
+	<div class="col-xs-12">
+		<form name="forms.depot" action="{{'<{'admin/wechat/depot'|url}>' + (depot.id ? '/' + depot.id : '') | trustUrl}}" class="form-horizontal form-bordered" method="POST">
+		<{csrf_field() nofilter}>
+		<input type="hidden" value="{{depot.id > 0 ? 'PUT' : 'POST'}}" name="_method" />
+		<input type="text" ng-model="depot.type" name="type" class="hidden" />
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">标题</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" name="title" placeholder="请输入标题" ng-model="depot.callback.title">
+				<span class="help-block">描述下这段程序是做什么的</span>
+			</div>
 		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">程序段</label>
+			<div class="col-sm-9 col-xs-12">
+				<textarea class="form-control" rows="20" name="callback" placeholder="请输入文本" ng-model="depot.callback.callback"></textarea>
+				<div class="help-block"><code >
+				function($) {
+
+				}
+				</code></div>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="wechat/depot/edit/image">
+<div class="row">
+	<div class="col-xs-12">
+		<form name="forms.depot" action="{{'<{'admin/wechat/depot'|url}>' + (depot.id ? '/' + depot.id : '') | trustUrl}}" class="form-horizontal form-bordered" method="POST">
+		<{csrf_field() nofilter}>
+		<input type="hidden" value="{{depot.id > 0 ? 'PUT' : 'POST'}}" name="_method" />
+		<input type="text" ng-model="depot.type" name="type" class="hidden" />
+		
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">图片</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control hidden" uploader="1" name="aid" ng-model="depot.image.aid">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">文件标题</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" name="title" placeholder="请输入标题" ng-model="depot.image.title">
+			</div>
+		</div>
+		<input type="text" class="form-control hidden" name="size" ng-model="depot.image.size">
+		</form>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="wechat/depot/edit/video">
+<div class="row">
+	<div class="col-xs-12">
+		<form name="forms.depot" action="{{'<{'admin/wechat/depot'|url}>' + (depot.id ? '/' + depot.id : '') | trustUrl}}" class="form-horizontal form-bordered" method="POST">
+		<{csrf_field() nofilter}>
+		<input type="hidden" value="{{depot.id > 0 ? 'PUT' : 'POST'}}" name="_method" />
+		<input type="text" ng-model="depot.type" name="type" class="hidden" />
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">视频标题</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" name="title" placeholder="请输入标题" ng-model="depot.video.title">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">视频</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control hidden" uploader="1" filetype="mp4" filesize="52428800" name="aid" ng-model="depot.video.aid">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">视频描述</label>
+			<div class="col-sm-9 col-xs-12">
+				<textarea class="form-control " name="description" placeholder="请输入简短的描述" ng-model="depot.video.description"></textarea>
+			</div>
+		</div>
+		<input type="text" class="form-control hidden" name="size" ng-model="depot.video.size">
+		<input type="text" class="form-control hidden" name="format" ng-model="depot.video.format">
+		</form>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="wechat/depot/edit/voice">
+<div class="row">
+	<div class="col-xs-12">
+		<form name="forms.depot" action="{{'<{'admin/wechat/depot'|url}>' + (depot.id ? '/' + depot.id : '') | trustUrl}}" class="form-horizontal form-bordered" method="POST">
+		<{csrf_field() nofilter}>
+		<input type="hidden" value="{{depot.id > 0 ? 'PUT' : 'POST'}}" name="_method" />
+		<input type="text" ng-model="depot.type" name="type" class="hidden" />
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">录音标题</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" name="title" placeholder="请输入标题" ng-model="depot.voice.title">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">录音</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control hidden" uploader="1" filetype="mp3,amr" filesize="5242880" name="aid" ng-model="depot.voice.aid">
+			</div>
+		</div>
+		<input type="text" class="form-control hidden" name="size" ng-model="depot.voice.size">
+		<input type="text" class="form-control hidden" name="format" ng-model="depot.voice.format">
+		</form>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="wechat/depot/edit/music">
+<div class="row">
+	<div class="col-xs-12">
+		<form name="forms.depot" action="{{'<{'admin/wechat/depot'|url}>' + (depot.id ? '/' + depot.id : '') | trustUrl}}" class="form-horizontal form-bordered" method="POST">
+		<{csrf_field() nofilter}>
+		<input type="hidden" value="{{depot.id > 0 ? 'PUT' : 'POST'}}" name="_method" />
+		<input type="text" ng-model="depot.type" name="type" class="hidden" />
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">音乐标题</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control" name="title" placeholder="请输入标题" ng-model="depot.music.title">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">音乐</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control hidden" uploader="1" filetype="mp3" filesize="5242880" name="aid" ng-model="depot.music.aid">
+			</div>
+		</div>
+		<input type="text" class="form-control hidden" name="size" ng-model="depot.music.size">
+		<input type="text" class="form-control hidden" name="format" ng-model="depot.music.format">
+		</form>
 	</div>
 </div>
 </script>
 
 <script type="text/ng-template" id="wechat/depot/edit">
-<div ng-include src="'wechat/depot/edit/'+type"></div>
+<div class="modal-header">
+	<h3 class="modal-title">新建/修改素材</h3>
+</div>
+<div class="modal-body">
+	<div ng-include src="'wechat/depot/edit/'+type"></div>
+</div>
 <div class="modal-footer">
 	<button class="btn btn-primary" type="button" ng-click="save()" ng-disabled="submiting">保存</button>
 	<button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
