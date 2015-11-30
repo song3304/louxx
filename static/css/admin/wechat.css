@@ -1,3 +1,5 @@
+.modal-lg {width: 90%;max-width: 1080px;}
+
 .depot-none {text-align: center; height: 50px;line-height: 50px;display: block}
 .depot-list {font-size: 14px;}
 .depot-list a {color: #000;}

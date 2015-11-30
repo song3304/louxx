@@ -1,7 +1,27 @@
+document.getElementsByTagName('html')[0].setAttribute('ng-app', 'app');
 //depot controllers
-
-$app.controller('depotController',  function($rootScope, $scope, $query, $uibModal, $log, $element) {
+var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputModified', 'ng.ueditor'])
+.config(function(inputModifiedConfigProvider) {
+	inputModifiedConfigProvider.disableGlobally(); //默认关闭ngInputModified
+})
+.config(function($provide) {
+	$provide.decorator('$controller', function($delegate) {
+		return function(constructor, locals, later, indent) {
+			if (typeof constructor === 'string' && !locals.$scope.controllerName) {
+				locals.$scope.controllerName =  constructor;
+			}
+			return $delegate(constructor, locals, later, indent);
+		};
+	});
+})
+.run(function($rootScope) {
+	/*$rootScope.load = function(page, filters, orders) {};
+	$rootScope.reload = function() {};*/
+}).controller('depotController',  function($rootScope, $scope, $query, $uibModal, $log, $element) {
 	$scope.dataList = {};
+	$scope.types = {'news': {title:'图文'},'text': {title:'文本'},'image': {title:'图片'},'callback': {title:'编程'},'video': {title:'视频'},'voice': {title:'录音'},'music': {title:'音乐'}};
+	$scope.types[$scope.type].active = true; //根据attr参数
+
 	$scope.load = function(type, page, filters, orders)
 	{
 		if (!filters) filters = {};
@@ -21,6 +41,7 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 		$scope.type = type;
 		if (!$scope[type] || reload)
 			$scope.load(type, 1);
+		$scope.types[type].active = true;
 	};
 	$scope.edit = function(type, depotId){
 		$newScope = $rootScope.$new(true, $scope);
@@ -72,7 +93,6 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 
 
 	//builder date
-	$scope.types = {'news': '图文','text': '文本','image': '图片','callback': '编程','video': '视频','voice': '录音','music': '音乐'};
 
 	//monitor page change
 	angular.forEach($scope.types, function(text, type){
@@ -168,6 +188,7 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 	// $uibModalInstance.dismiss('cancel');
 	$scope.forms = {}; //form 变量
 	$scope.submiting = false; //正在提交
+	$scope.ueditor_config = jQuery.ueditor_default_setting.simple;
 	$scope.init = function(){
 		$scope.depot = {
 			id: 0,
@@ -271,11 +292,6 @@ $app.controller('depotController',  function($rootScope, $scope, $query, $uibMod
 		//$scope.depot.news[index] = $scope.depot.news.splice(index+1, 1, $scope.depot.news[index])[0];
 		var a = angular.copy($scope.depot.news[index]);var b = angular.copy($scope.depot.news[index + 1]);$scope.depot.news[index] = b; $scope.depot.news[index + 1] = a;
 		$scope.editNews(index + 1);
-	}
-
-	$scope.updateAttachment = function(form) {
-		console.log(this);
-		console.log(form);
 	}
 
 	$scope.cancel = function()

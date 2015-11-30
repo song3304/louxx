@@ -91,7 +91,8 @@
 				<div class="form-group" ng-show="!item.redirect">
 					<label class="col-xs-12 col-sm-3 col-md-2 control-label">內容</label>
 					<div class="col-sm-9 col-xs-12">
-						
+						<div style="margin-bottom:1.25rem" class="ueditor" ng-model="item.content" config="ueditor_config"></div>
+						<textarea ng-model="item.content" class="hidden" name="content"></textarea>
 					</div>
 				</div>
 				<div class="form-group">

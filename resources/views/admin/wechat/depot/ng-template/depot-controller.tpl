@@ -35,7 +35,7 @@
 	<div class="col-xs-12">
 		<div class="block">
 			<uib-tabset type="tabs" template-url="wechat/depot/tabset">
-				<uib-tab ng-repeat="(key,text) in types" heading="{{text}}" active="" select="show(key)">
+				<uib-tab ng-repeat="(key,v) in types" heading="{{v.title}}" active="v.active" select="show(key)">
 					<div depot-list="key" from="dataList[key]"></div>
 				</uib-tab>
 			</uib-tabset>
