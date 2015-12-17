@@ -2,10 +2,10 @@
 <form action="<{'admin'|url}>/<{block "name"}><{/block}>/" method="GET" class="form-bordered form-horizontal">
 	<input type="hidden" name="base" value="<{$_base}>">
 	<div class="form-group col-sm-4">
-		<label class="col-md-3 control-label" for="name">名称</label>
+		<label class="col-md-3 control-label" for="content">名称</label>
 		<div class="col-md-9">
 			<div class="input-group">
-				<input type="text" id="name" name="name[like]" class="form-control" placeholder="请输入关键词..." value="<{$_filters.name.like}>">
+				<input type="text" id="content" name="content[like]" class="form-control" placeholder="请输入关键词..." value="<{$_filters.content.like}>">
 				<span class="input-group-addon"><i class="gi gi-user"></i></span>
 			</div>
 		</div>

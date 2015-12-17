@@ -210,9 +210,9 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 	$scope.createNews = function(){
 		if (!$scope.depot.news || !($scope.depot.news instanceof Array))
 			$scope.depot.news = [];
-		if ($scope.depot.news.length >= 7)
+		if ($scope.depot.news.length >= 8)
 		{
-			jQuery.alert('最多只能创建7条图文！');
+			jQuery.alert('最多只能创建8条图文！');
 			return false;
 		}
 		$scope.depot.news.push({

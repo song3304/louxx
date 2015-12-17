@@ -18,7 +18,7 @@
 			columns: [],
 			order: [],
 			searchDelay: <{block "datatable-config-searchDelay"}>800<{/block}>,
-			displayStart: <{block "datatable-config-displayStart"}>0<{/block}>,
+			displayStart: <{block "datatable-config-displayStart"}>0.0<{/block}>,
 			pageLength: <{block "datatable-config-pageLength"}>25<{/block}>
 		};
 		<{block "datatable-columns-id"}>
