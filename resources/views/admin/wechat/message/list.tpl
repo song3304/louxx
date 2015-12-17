@@ -65,7 +65,7 @@ $().ready(function(){
 					<{/if}>
 				</p>
 				<p>
-					<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->getKey()}>" data-nickname="<{$item->user->nickname}> (<{$item->user->openid}>)" name="reply" class="btn btn-xs btn-default"><i class="fa fa-reply"></i> 回复</a>
+					<a href="<{'admin'|url}>/<{block "name"}><{/block}>/<{$item->user->getKey()}>" data-nickname="<{$item->user->nickname}> (<{$item->user->openid}>)" name="reply" class="btn btn-xs btn-default"><i class="fa fa-reply"></i> 回复</a>
 					<a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-share-square-o"></i> Share</a>
 				</p>
 			</div>

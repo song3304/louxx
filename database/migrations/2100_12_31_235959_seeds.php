@@ -175,6 +175,7 @@ class Seeds extends Migration
 
 		foreach([
 			'role' => '用户组、权限',
+			'attachment' => '附件',
 			'member' => '用户',
 			'wechat-account' => '微信公众号',
 			'wechat-depot' => '微信素材',

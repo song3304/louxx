@@ -92,11 +92,11 @@ class DepotController extends Controller
 			case 'text':
 				$keys = 'content';
 				break;
+			case 'music':
 			case 'video':
-				$keys = 'title,size,aid,thumb_aid,format';
+				$keys = 'title,description,size,aid,thumb_aid,format';
 				break;
 			case 'voice':
-			case 'music':
 				$keys = 'title,size,aid,format';
 			case 'image':
 				$keys = 'title,size,aid';

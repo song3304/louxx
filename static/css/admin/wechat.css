@@ -60,6 +60,7 @@
 .depot-edit-form-4 {margin-top: 343px;}
 .depot-edit-form-5 {margin-top: 401px;}
 .depot-edit-form-6 {margin-top: 459px;}
+.depot-edit-form-7 {margin-top: 517px;}
 .depot-edit-form.active {display: block;}
 .depot-edit-form .arrow-left,.depot-edit-form .arrow-left:after{width: 0; height: 0; border-style: solid; border-width: 8px 10px 8px 0; border-color: transparent #d1d1d1 transparent transparent; position: absolute; left: -10px; top: 15px;}
 .depot-edit-form .arrow-left:after{content: ""; border-right-color: #fff; left: 1px; top: -8px;}

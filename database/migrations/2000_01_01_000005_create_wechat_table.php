@@ -130,8 +130,10 @@ class CreateWechatTable extends Migration
 		Schema::create('wechat_depot_musics', function (Blueprint $table) {
 			$table->unsignedInteger('id')->unique();
 			$table->string('title', 250)->comment = '标题'; //标题
+			$table->string('description', 250)->comment = '简介'; //摘要
 			$table->unsignedInteger('size')->comment = '文件大小'; //文件大小
 			$table->unsignedInteger('aid')->comment = '音乐AID'; //附件ID
+			$table->unsignedInteger('thumb_aid')->comment = '缩略图ID'; //缩略图附件ID
 			$table->string('format', 20)->comment = '音乐格式'; //附件ID
 			$table->timestamps();
 

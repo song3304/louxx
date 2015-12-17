@@ -17,7 +17,57 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 .run(function($rootScope) {
 	/*$rootScope.load = function(page, filters, orders) {};
 	$rootScope.reload = function() {};*/
-}).controller('depotController',  function($rootScope, $scope, $query, $uibModal, $log, $element) {
+})
+.controller('depotSelector',  function($rootScope, $scope, $query, $uibModal, $log, $element) {
+	$scope.select = function(){
+		$newScope = $rootScope.$new(true, $scope);
+		//$newScope.type = type;
+		//$newScope.depotId = depotId;
+		var modalInstance = $uibModal.open({
+			animation: true,
+			templateUrl: 'wechat/depot/selector',
+			controller: 'depotSelectorController',
+			size: 'lg',
+			backdrop: 'static',
+			scope: $newScope,
+			resolve: {
+				
+			}
+		});
+		$element.closest('.modal').hide(); //隐藏上层modal
+		modalInstance.result.then(function (){
+			$element.closest('.modal').show();
+			
+		}, function () {
+			$element.closest('.modal').show();
+			//$log.info('Modal dismissed at: ' + new Date());
+		});
+	}
+})
+.controller('depotSelectorController',  function($scope, $query, $uibModalInstance) {
+	$scope.cancel = function()
+	{
+		$uibModalInstance.dismiss('cancel');
+	}
+})
+.controller('depotPreview',  function($rootScope, $scope, $query, $uibModal, $log, $element) {
+
+})
+.directive('depotPreview',function() {
+	return {
+		restrict: 'A',
+		scope: {
+			type: '@type',
+			id: '@depotPreview'
+		},
+		controller: 'depotPreview',
+		replace: true,
+		templateUrl: function(element, attrs) {
+			return attrs.templateUrl || 'wechat/depot/preview';
+		}
+	}
+})
+.controller('depotController',  function($rootScope, $scope, $query, $uibModal, $log, $element) {
 	$scope.dataList = {};
 	$scope.types = {'news': {title:'图文'},'text': {title:'文本'},'image': {title:'图片'},'callback': {title:'编程'},'video': {title:'视频'},'voice': {title:'录音'},'music': {title:'音乐'}};
 	$scope.types[$scope.type].active = true; //根据attr参数

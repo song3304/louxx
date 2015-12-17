@@ -226,6 +226,13 @@
 				<textarea class="form-control " name="description" placeholder="请输入简短的描述" ng-model="depot.video.description"></textarea>
 			</div>
 		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">视频截图</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control hidden" uploader="1" name="thumb_aid" ng-model="depot.video.thumb_aid">
+				<span class="help-block">可以使用播放器截取一张图片后上传，也可以不填写</span>
+			</div>
+		</div>
 		<input type="text" class="form-control hidden" name="size" ng-model="depot.video.size">
 		<input type="text" class="form-control hidden" name="format" ng-model="depot.video.format">
 		</form>
@@ -276,6 +283,19 @@
 			<label class="col-xs-12 col-sm-3 col-md-2 control-label">音乐</label>
 			<div class="col-sm-9 col-xs-12">
 				<input type="text" class="form-control hidden" uploader="1" filetype="mp3" filesize="5242880" name="aid" ng-model="depot.music.aid">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">描述</label>
+			<div class="col-sm-9 col-xs-12">
+				<textarea class="form-control " name="description" placeholder="请输入简短描述" ng-model="depot.music.description"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">音乐封面</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" class="form-control hidden" uploader="1" name="thumb_aid" ng-model="depot.music.thumb_aid">
+				<span class="help-block">音乐专辑封面，没有可以不上传</span>
 			</div>
 		</div>
 		<input type="text" class="form-control hidden" name="size" ng-model="depot.music.size">

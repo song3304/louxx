@@ -12,6 +12,12 @@ class CreateCommonTable extends Migration
 	 */
 	public function up()
 	{
+		Schema::create('sessions', function ($table) {
+			$table->string('id', 190)->unique();
+			$table->text('payload');
+			$table->integer('last_activity');
+		});
+
 		Schema::create('fields', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('name', 150)->index()->comment = '英文名称'; //英文名称
@@ -34,5 +40,6 @@ class CreateCommonTable extends Migration
 	public function down()
 	{
 		Schema::drop('fields');
+		Schema::drop('sessions');
 	}
 }

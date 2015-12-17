@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use Addons\Core\Models\Attachment;
 use Addons\Core\Models\WechatAccount;
 use Addons\Core\Models\WechatMessage;
+use Addons\Core\Models\WechatDepot;
+use Addons\Core\Models\WechatUser;
 use Addons\Core\Tools\Wechat\Send;
 use Addons\Core\Controllers\AdminTrait;
 use Addons\Core\Tools\Wechat\Account;
@@ -26,7 +28,7 @@ class MessageController extends Controller
 	public function index(Request $request, Account $account)
 	{
 		$message = new WechatMessage;
-		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media'])->where('waid', $account->getAccountID());
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media'])->where('transport_type','receive')->where('waid', $account->getAccountID());
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$message->getTable(), $this->site['pagesize']['common']);
 		$base = boolval($request->input('base')) ?: false;
 
@@ -40,7 +42,7 @@ class MessageController extends Controller
 	public function data(Request $request, Account $account)
 	{
 		$message = new WechatMessage;
-		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media'])->where('waid', $account->getAccountID());
+		$builder = $message->newQuery()->with(['account', 'user', 'depot', 'link', 'location', 'text', 'media'])->where('transport_type','receive')->where('waid', $account->getAccountID());
 		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
 		$data = $this->_getData($request, $builder);
 		$data['recordsTotal'] = $total;
@@ -73,17 +75,24 @@ class MessageController extends Controller
 		return '';
 	}
 
-	public function update(Request $request, $id)
+	public function update(Request $request, $uid)
 	{
-		$message = WechatMessage::find($id);
-		if (empty($message))
+		$user = WechatUser::find($uid);
+		if (empty($user))
 			return $this->failure_noexists();
 
 		$keys = 'type,content';
 		$data = $this->autoValidate($request, 'wechat-message.store', $keys);
 	
 		//发送消息
-		(new Send($message->account, $message->user))->add($data['type'] == 'text' ? $data['content'] : Attachment::find($data['content']))->send();
+		$media = null;
+		if ($data['type'] == 'text')
+			$media = $data['content'];
+		else if ($data['type'] == 'depot')
+			$media = WechatDepot::findOrFail($data['content']);
+		else
+			$media = Attachment::findOrFail($data['content']);
+		(new Send($user))->add($media)->send();
 		return $this->success();
 	}
 

@@ -195,7 +195,7 @@ return [
 				'rules' => 'field',
 			],
 			'avatar_aid' => [
-				'name' => '头像AID',
+				'name' => '头像(AID)',
 				'rules' => 'numeric',
 			],
 			'country' => [
@@ -255,7 +255,7 @@ return [
 				'rules' => 'max:250',
 			],
 			'cover_aid' => [
-				'name' => '封面AID',
+				'name' => '封面(AID)',
 				'rules' => 'required|numeric|not_zero',
 			],
 			'cover_in_content' => [
@@ -292,15 +292,15 @@ return [
 			],
 			'size' => [
 				'name' => '文件大小',
-				'rules' => 'required|numeric|not_zero',
+				'rules' => 'required_with:aid|numeric|not_zero',
 			],
 			'aid' => [
-				'name' => '媒体文件AID',
+				'name' => '媒体文件(AID)',
 				'rules' => 'required|numeric|not_zero',
 			],
 			'thumb_aid' => [
-				'name' => '缩略图文件AID',
-				'rules' => 'required|numeric',
+				'name' => '缩略图文件(AID)',
+				'rules' => 'numeric',
 			],
 			'content' => [ // 文本
 				'name' => '内容',
@@ -316,7 +316,7 @@ return [
 			],
 			'format' => [
 				'name' => '格式',
-				'rules' => 'required',
+				'rules' => 'required_with:aid',
 			],
 		],
 	],

@@ -133,7 +133,7 @@
 </div>
 </script>
 
-<script type="text/ng-template" id="wechat/depot/list/options/select">
+<script type="text/ng-template" id="wechat/depot/list/options/selector">
 <div class="row">
 	<div class="col-md-12 col-xs-12 text-center tool">
 		<a href="" class=""><i class="glyphicon glyphicon-plus"></i> 选定<input type="radio" class="hidden" name="wdid[]" value="{{depotId}}"></a>

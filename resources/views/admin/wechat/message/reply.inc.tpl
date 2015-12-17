@@ -1,3 +1,4 @@
+<{include file="admin/wechat/depot/selector.tpl"}>
 <div id="reply-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -33,9 +34,16 @@
 									<button type="button" class="btn btn-alt btn-danger enable-tooltip" data-type="voice" data-original-title="声音消息">
 										<span class="glyphicon glyphicon-music" aria-hidden="true"></span>
 									</button>
+									<button type="button" class="btn btn-alt btn-primary enable-tooltip" data-type="depot" data-original-title="素材">
+										<span class="fa fa-newspaper-o" aria-hidden="true"></span>
+									</button>
 								</div>
 							</div>
 							<textarea id="content1" name="content" rows="10" class="form-control" maxlength="600" placeholder="请输入需要回复的内容(600字以内)"></textarea>
+							<div class="hidden" id="depot" ng-controller="depotSelector">
+								<a href="" class="btn btn-info" ng-click="select()"><i class="fa fa-newspaper-o"></i> 选择一个素材</a>
+								<div class="" depot-preview=""></div>
+							</div>
 						</div>
 					</div>
 		
@@ -68,6 +76,7 @@
 		var type = $(this).data('type');
 
 		$('#type1').val(type);
+		$('#depot').hide();
 		//$('#content1').data('original-content').val();
 		switch (type) {
 			case 'text':
@@ -81,6 +90,11 @@
 				break;
 			case 'voice':
 				$('#content1').val('0').hide().uploader(null, null, 5 * 1024 * 1024, 'mp3');
+				break;
+			case 'depot':
+				$('#content1').val('0').hide().uploader(true);
+				$('#depot').removeClass('hide hidden').show();
+
 				break;
 		}
 
