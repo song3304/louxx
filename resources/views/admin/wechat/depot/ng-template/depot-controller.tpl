@@ -5,17 +5,17 @@
 			<div class="btn-group">
 				<a class="btn  btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-plus"></i> 新建素材</a>
 				<ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-					<li><a href="javascript:void(0)" ng-click="$emit('create', 'news')"><i class="fa fa-newspaper-o pull-right"></i> 图文</a></li>
+					<li><a href="javascript:void(0)" ng-click="$parent.create('news');"><i class="fa fa-newspaper-o pull-right"></i> 图文</a></li>
 					<li class="divider"></li>
 					<li>
-						<a href="javascript:void(0)" ng-click="$emit('create', 'text')"><i class="fa fa-font pull-right"></i> 文字</a>
-						<a href="javascript:void(0)" ng-click="$emit('create', 'image')"><i class="fa fa-image pull-right"></i> 图片</a>
-						<a href="javascript:void(0)" ng-click="$emit('create', 'video')"><i class="fa fa-video-camera pull-right"></i> 视频</a>
-						<a href="javascript:void(0)" ng-click="$emit('create', 'voice')"><i class="fa fa-volume-up pull-right"></i> 语音</a>
-						<a href="javascript:void(0)" ng-click="$emit('create', 'music')"><i class="fa fa-music pull-right"></i> 音乐</a>
+						<a href="javascript:void(0)" ng-click="$parent.create('text');"><i class="fa fa-font pull-right"></i> 文字</a>
+						<a href="javascript:void(0)" ng-click="$parent.create('image');"><i class="fa fa-image pull-right"></i> 图片</a>
+						<a href="javascript:void(0)" ng-click="$parent.create('video');"><i class="fa fa-video-camera pull-right"></i> 视频</a>
+						<a href="javascript:void(0)" ng-click="$parent.create('voice');"><i class="fa fa-volume-up pull-right"></i> 语音</a>
+						<a href="javascript:void(0)" ng-click="$parent.create('music');"><i class="fa fa-music pull-right"></i> 音乐</a>
 					</li>
 					<li class="divider"></li>
-					<li><a href="javascript:void(0)" ng-click="$emit('create', 'callback')"><i class="fa fa-code pull-right"></i> 编程</a></li>
+					<li><a href="javascript:void(0)" ng-click="$parent.create('callback');"><i class="fa fa-code pull-right"></i> 编程</a></li>
 				</ul>
 			</div>
 		</div>

@@ -107,6 +107,9 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 			$scope.load(type, 1);
 		$scope.types[type].active = true;
 	};
+	$scope.create = function(type){
+		$scope.edit(type);
+	}
 	$scope.edit = function(type, depotId){
 		$newScope = $rootScope.$new(true, $scope);
 		$newScope.type = type;
