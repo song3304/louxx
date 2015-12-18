@@ -49,7 +49,6 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 
 	$scope.$watch('depotConfirmed', function(){
 		jQuery($scope.host).val(array_keys($scope.depotConfirmed));
-		console.log(jQuery($scope.host).val());
 	});
 
 })
@@ -75,7 +74,7 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 	$scope.types = {'news': {title:'图文'},'text': {title:'文本'},'image': {title:'图片'},'callback': {title:'编程'},'video': {title:'视频'},'voice': {title:'录音'},'music': {title:'音乐'}};
 	$scope.types[$scope.type].active = true; //根据attr参数
 
-	$scope.depotSelected = $scope.$parent.depotSelected || {};$log.info($scope);
+	$scope.depotSelected = $scope.$parent.depotSelected || {};
 	$scope.load = function(type, page, filters, orders)
 	{
 		if (!filters) filters = {};
