@@ -45,11 +45,14 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 	}
 	$scope.unpreview = function(depotId){
 		if (typeof depotId == 'undefined') for(var i in $scope.depotConfirmed) delete $scope.depotConfirmed[i]; else delete $scope.depotConfirmed[depotId];
+		
 	}
 
-	$scope.$watch('depotConfirmed', function(){
-		jQuery($scope.host).val(array_keys($scope.depotConfirmed));
-	});
+	$scope.$watch('depotConfirmed', function(newValue, oldValue){
+		if (newValue === oldValue) { return; }
+		var keys = array_keys($scope.depotConfirmed);
+		jQuery($scope.host).val(keys ? keys : '');
+	}, true);
 
 })
 .controller('depotSelectorModal',  function($scope, $query, $uibModalInstance) {
