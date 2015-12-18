@@ -98,8 +98,8 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 		}
 		$scope.depotSelected[depot.id] = depot;
 	};
-	$scope.unselect = function(depotId){
-		if (typeof depotId == 'undefined') for(var i in $scope.depotSelected) delete $scope.depotSelected[i]; else delete $scope.depotSelected[depotId];
+	$scope.unselect = function(depot){
+		if (typeof depot == 'undefined') for(var i in $scope.depotSelected) delete $scope.depotSelected[i]; else delete $scope.depotSelected[depot.id];
 	}
 	$scope.show = function(type, reload){
 		$scope.type = type;
@@ -350,7 +350,7 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 			$query.form(jQuery('[name="forms.depot"]')).done(function(json){
 				$scope.depot = json.data;
 				$uibModalInstance.close();
-				$scope.$emit(json.data.isCreated ? 'show' : 'reload', json.data.type);
+				json.data.isCreated ? $scope.$parent.$parent.show(json.data.type) : $scope.$parent.$parent.reload(json.data.type);
 			}).always(function(){
 				$scope.submiting = false;
 			});

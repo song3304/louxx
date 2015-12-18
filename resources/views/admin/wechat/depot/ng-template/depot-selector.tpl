@@ -24,7 +24,7 @@
 <div class="modal-footer">
 	<span class="pull-left" ng-if="selectLength > 1">（*）可以选择多个不同类型的素材，翻页也会保留已选中的素材</span>
 	<span ng-if="selectLength > 1">已选择：{{depotSelected | count}}/{{selectLength}} </span>
-	<button class="btn btn-primary" type="button" ng-click="$close()" ng-disabled="(depotSelected|count) <= 0"><i ></i>选择</button>
+	<button class="btn btn-primary" type="button" ng-click="$close()" ng-disabled="(depotSelected|count) <= 0"><i ></i>选择素材</button>
 	<button class="btn btn-warning" type="button" ng-click="$dismiss()">取消</button>
 </div>
 </script>

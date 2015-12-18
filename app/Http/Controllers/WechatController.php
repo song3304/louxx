@@ -30,7 +30,7 @@ class WechatController extends BaseWechatController {
 		if ($news->redirect)
 			return redirect($news['url']);
 
-		return view('wechat')->with('news', $news);
+		return view('wechat.news')->with('_news', $news);
 	}
 
 }

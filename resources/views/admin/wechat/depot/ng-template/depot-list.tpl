@@ -3,7 +3,7 @@
 	<div class="items">
 		<div class="item" ng-repeat="item in depot.news">
 			<h4 class="title">
-				<a href="<{'m/news'|url}>?id={{item.id}}" target="_blank">{{item.title}}</a>
+				<a href="<{'wechat/news'|url}>?id={{item.id}}" target="_blank">{{item.title}}</a>
 			</h4>
 			<div class="cover">
 				<img ng-src="<{'attachment'|url}>?id={{item.cover_aid}}" alt="" class="img-responsive">
@@ -136,7 +136,7 @@
 <div class="row">
 	<div class="col-md-12 col-xs-12 text-center tool">
 		<a href="" class="" ng-click="select(depot)" ng-if="!depotSelected[depot.id]"><i class="glyphicon glyphicon-plus"></i> 选定</a>
-		<a href="" class="" ng-click="unselect(depot.id)" ng-if="depotSelected[depot.id]"><i class="glyphicon glyphicon-remove text-danger"></i> 取消选定</a>
+		<a href="" class="" ng-click="unselect(depot)" ng-if="depotSelected[depot.id]"><i class="glyphicon glyphicon-remove text-danger"></i> 取消选定</a>
 	</div>
 </div>
 </script>
