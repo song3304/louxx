@@ -19,51 +19,54 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 	$rootScope.reload = function() {};*/
 })
 .controller('depotSelector',  function($rootScope, $scope, $query, $uibModal, $log, $element) {
-	$scope.select = function(){
-		$newScope = $rootScope.$new(true, $scope);
-		//$newScope.type = type;
-		//$newScope.depotId = depotId;
+	$scope.mode = 'preview';
+	$scope.depotConfirmed = {};
+	$scope.depotSelected = {};
+
+	$scope.toSelect = function(){
+		$scope.depotSelected = angular.copy($scope.depotConfirmed) || {};
 		var modalInstance = $uibModal.open({
 			animation: true,
-			templateUrl: 'wechat/depot/selector',
-			controller: 'depotSelectorController',
+			templateUrl: 'wechat/depot/selector-modal',
+			controller: 'depotSelectorModal',
 			size: 'lg',
 			backdrop: 'static',
-			scope: $newScope,
-			resolve: {
-				
-			}
+			scope: $scope
 		});
 		$element.closest('.modal').hide(); //隐藏上层modal
 		modalInstance.result.then(function (){
-			$element.closest('.modal').show();
+			if (count($scope.depotSelected) >= 1)
+				$scope.depotConfirmed = angular.copy($scope.depotSelected);
 			
+			$element.closest('.modal').show();
 		}, function () {
 			$element.closest('.modal').show();
-			//$log.info('Modal dismissed at: ' + new Date());
 		});
 	}
-})
-.controller('depotSelectorController',  function($scope, $query, $uibModalInstance) {
-	$scope.cancel = function()
-	{
-		$uibModalInstance.dismiss('cancel');
+	$scope.unpreview = function(depotId){
+		if (typeof depotId == 'undefined') for(var i in $scope.depotConfirmed) delete $scope.depotConfirmed[i]; else delete $scope.depotConfirmed[depotId];
 	}
-})
-.controller('depotPreview',  function($rootScope, $scope, $query, $uibModal, $log, $element) {
+
+	$scope.$watch('depotConfirmed', function(){
+		jQuery($scope.host).val(array_keys($scope.depotConfirmed));
+		console.log(jQuery($scope.host).val());
+	});
 
 })
-.directive('depotPreview',function() {
+.controller('depotSelectorModal',  function($scope, $query, $uibModalInstance) {
+	
+})
+.directive('depotSelector',function() {
 	return {
 		restrict: 'A',
-		scope: {
-			type: '@type',
-			id: '@depotPreview'
-		},
-		controller: 'depotPreview',
+		controller: 'depotSelector',
 		replace: true,
+		scope: {
+			host: '@depotSelector',
+			selectedLimit: '@selectedLimit',
+		},
 		templateUrl: function(element, attrs) {
-			return attrs.templateUrl || 'wechat/depot/preview';
+			return attrs.templateUrl || 'wechat/depot/selector';
 		}
 	}
 })
@@ -72,6 +75,7 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 	$scope.types = {'news': {title:'图文'},'text': {title:'文本'},'image': {title:'图片'},'callback': {title:'编程'},'video': {title:'视频'},'voice': {title:'录音'},'music': {title:'音乐'}};
 	$scope.types[$scope.type].active = true; //根据attr参数
 
+	$scope.depotSelected = $scope.$parent.depotSelected || {};$log.info($scope);
 	$scope.load = function(type, page, filters, orders)
 	{
 		if (!filters) filters = {};
@@ -87,6 +91,17 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 	$scope.reload = function(type){
 		$scope.load(type, $scope.dataList[type].current_page, $scope.dataList[type]['filters'], $scope.dataList[type]['orders']);
 	};
+	$scope.select = function(depot){
+		if ($scope.selectedLimit <= 1) $scope.unselect();
+		else if (count($scope.depotSelected) >= $scope.selectedLimit){
+			jQuery.alert('最多只能选择' + $scope.selectedLimit + '项，(请查看其它分类是否被选中)', true);
+			return false;
+		}
+		$scope.depotSelected[depot.id] = depot;
+	};
+	$scope.unselect = function(depotId){
+		if (typeof depotId == 'undefined') for(var i in $scope.depotSelected) delete $scope.depotSelected[i]; else delete $scope.depotSelected[depotId];
+	}
 	$scope.show = function(type, reload){
 		$scope.type = type;
 		if (!$scope[type] || reload)
@@ -118,31 +133,6 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 	{
 		$scope.reload(type);
 	}
-	
-	//读取
-	$scope.$on('show', function(e, type, reload){
-		$scope.show(type, reload)
-	});
-	$scope.$on('load', function(e, type, page, filters, orders){
-		$scope.load(type, page, filters, orders);
-	});
-	$scope.$on('reload', function(e, type){
-		$scope.reload(type)
-	});
-	//编辑
-	$scope.$on('create', function(e, type){
-		$scope.edit(type)
-	});
-	$scope.$on('edit', function(e, type, depotId){
-		$scope.edit(type, depotId);
-	});
-	//删除
-	$scope.$on('destroy', function(e, type, depotId) {
-		$scope.destroy(type, depotId);
-	});
-
-
-	//builder date
 
 	//monitor page change
 	angular.forEach($scope.types, function(text, type){
@@ -152,33 +142,31 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 				$scope.reload(type);
 		});
 	});
-	
-	//init
 
 }).directive('depotController',function() {
 	return {
 		restrict: 'A',
 		scope: {
 			mode: '@mode',
-			type: '@depotController'
+			type: '@depotController',
+			selectedLimit: '@'
 		},
 		controller: 'depotController',
 		replace: true,
 		templateUrl: function(element, attrs) {
 			return attrs.templateUrl || 'wechat/depot/controller';
+		},
+		link: function(scope, element, attrs) {
+			if (!scope.selectedLimit) scope.selectedLimit = 1;
 		}
 	}
 })
 .controller('depotListController',  function($scope){
-	$scope.mode = $scope.$parent.mode;
 
 }).directive('depotList',function() {
 	return {
 		restrict: 'A',
-		scope: {
-			dataFrom: '=from',
-			type: '=depotList'
-		},
+		scope: false,
 		//transclude: true,
 		require: ['^depotController'],
 		controller: 'depotListController',
@@ -194,21 +182,18 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 .directive('depotItem',function($compile, $templateRequest, $sce) {
 	return {
 		restrict: 'A',
-		scope: {
-			depot: '=depot',
-			type: '=depotItem'
-		},
+		scope: false,
 		transclude: true,
 		require: ['^depotList'],
 		replace: true,
 		link: function(scope, element, attrs) {	
-			var templateUrl = $sce.getTrustedResourceUrl('wechat/depot/' + scope.type);
+			/*var templateUrl = $sce.getTrustedResourceUrl('wechat/depot/' + scope.type);
 			$templateRequest(templateUrl).then(function(template) {
 				element.html(template);
 				$compile(element.contents())(scope);
 			}, function() {
 				// An error has occurred
-			});
+			});*/
 		}
 	}
 })
@@ -217,12 +202,9 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 }).directive('depotListOptions',function() {
 	return {
 		restrict: 'A',
-		scope: {
-			depotId: '=',
-			mode: '=depotListOptions'
-		},
+		scope: false,
 		//transclude: true,
-		require: ['^depotList'],
+		//require: ['^depotList'],
 		controller: 'depotListOptionsController',
 		replace: true,
 		templateUrl: function(element, attrs) {
@@ -262,7 +244,7 @@ var $app = angular.module('app', ['jquery', 'ui.bootstrap', 'untils', 'ngInputMo
 			$scope.depot.news = [];
 		if ($scope.depot.news.length >= 8)
 		{
-			jQuery.alert('最多只能创建8条图文！');
+			jQuery.alert('最多只能创建8条图文！', true);
 			return false;
 		}
 		$scope.depot.news.push({

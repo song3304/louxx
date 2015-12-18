@@ -102,7 +102,7 @@
 			<a href="<{'attachment'|url}>?id={{depot.music.aid}}" target="_blank">{{depot.music.title}}</a>
 			<span class="size pull-right">{{depot.music.size|byte2size}}</span>
 		</h4>
-		<div depot-list-options="mode" depot-id="depot.id"></div>
+		<div depot-list-options=""></div>
 	</div>
 </div>
 </script>
@@ -110,14 +110,13 @@
 <script type="text/ng-template" id="wechat/depot/list">
 <div>
 	<div class="depot-list row">
-		<div class="col-md-4 col-xs-4" ng-include="'wechat/depot/'+depot.type" ng-repeat="depot in dataFrom.data">
-		</div>
+		<div class="col-md-4 col-xs-4" ng-include="'wechat/depot/'+depot.type" ng-repeat="depot in dataList[type].data" ng-class="{selected: depotSelected[depot.id]}"></div>
 	</div>
-	<div class="depot-none" ng-if="dataFrom.total == 0">还没有素材，点击右上角添加一个？</div>
+	<div class="depot-none" ng-if="dataList[type].total == 0">还没有素材，点击右上角添加一个？</div>
 	<div class="clearfix"></div>
 	<!--页码-->
-	<div class="text-center" ng-show="dataFrom.total > 0">
-		<uib-pagination boundary-links="true" total-items="dataFrom.total" items-per-page="dataFrom.per_page" ng-model="dataFrom.current_page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+	<div class="text-center" ng-show="dataList[type].total > 0">
+		<uib-pagination boundary-links="true" total-items="dataList[type].total" items-per-page="dataList[type].per_page" ng-model="dataList[type].current_page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
 	</div>
 </div>
 </script>
@@ -125,10 +124,10 @@
 <script type="text/ng-template" id="wechat/depot/list/options/edit">
 <div class="row">
 	<div class="col-md-6 col-xs-6 text-center tool">
-		<a href="javascript:void(0);" ng-click="$emit('edit', $parent.$parent.type, depotId)" class=""><i class="glyphicon glyphicon-edit"></i> 编辑{{depot}}</a>
+		<a href="javascript:void(0);" ng-click="edit(depot.type, depot.id)" class=""><i class="glyphicon glyphicon-edit"></i> 编辑</a>
 	</div>
 	<div class="col-md-6 col-xs-6 text-center tool">
-		<a href="<{'admin/wechat/depot'|url}>/{{depotId}}" confirm="您确定删除本素材吗？" method="delete" query done="$emit('destroy', $parent.$parent.type)"><i class="glyphicon glyphicon-trash text-danger"></i> 删除</a>
+		<a href="<{'admin/wechat/depot'|url}>/{{depot.id}}" confirm="您确定删除本素材吗？" method="delete" query done="destroy(depot.type, depot.id)"><i class="glyphicon glyphicon-trash text-danger"></i> 删除</a>
 	</div>
 </div>
 </script>
@@ -136,7 +135,16 @@
 <script type="text/ng-template" id="wechat/depot/list/options/selector">
 <div class="row">
 	<div class="col-md-12 col-xs-12 text-center tool">
-		<a href="" class=""><i class="glyphicon glyphicon-plus"></i> 选定<input type="radio" class="hidden" name="wdid[]" value="{{depotId}}"></a>
+		<a href="" class="" ng-click="select(depot)" ng-if="!depotSelected[depot.id]"><i class="glyphicon glyphicon-plus"></i> 选定</a>
+		<a href="" class="" ng-click="unselect(depot.id)" ng-if="depotSelected[depot.id]"><i class="glyphicon glyphicon-remove text-danger"></i> 取消选定</a>
+	</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="wechat/depot/list/options/preview">
+<div class="row">
+	<div class="col-md-12 col-xs-12 text-center tool">
+		<a href="" class="" ng-click="unpreview(depot.id)"><i class="glyphicon glyphicon-remove text-danger"></i> 取消选定</a>
 	</div>
 </div>
 </script>

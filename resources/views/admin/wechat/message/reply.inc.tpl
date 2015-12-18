@@ -40,9 +40,8 @@
 								</div>
 							</div>
 							<textarea id="content1" name="content" rows="10" class="form-control" maxlength="600" placeholder="请输入需要回复的内容(600字以内)"></textarea>
-							<div class="hidden" id="depot" ng-controller="depotSelector">
-								<a href="" class="btn btn-info" ng-click="select()"><i class="fa fa-newspaper-o"></i> 选择一个素材</a>
-								<div class="" depot-preview=""></div>
+							<div class="hidden" id="depot" depot-selector="#content1" selected-limit="1">
+								
 							</div>
 						</div>
 					</div>

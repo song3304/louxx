@@ -8,7 +8,7 @@
 <script src="<{'static/js/angular/common.js'|url}>"></script>
 <script src="<{'static/js/admin/wechat.js'|url}>"></script>
 
-<{include file="admin/wechat/depot/ng-template/depot-preview.tpl"}>
+<{include file="admin/wechat/depot/ng-template/depot-selector.tpl"}>
 <{include file="admin/wechat/depot/ng-template/depot-controller.tpl"}>
 <{include file="admin/wechat/depot/ng-template/depot-list.tpl"}>
 <{include file="admin/wechat/depot/ng-template/depot-edit.tpl"}>

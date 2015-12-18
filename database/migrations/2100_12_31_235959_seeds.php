@@ -32,7 +32,7 @@ class Seeds extends Migration
 			'title' => '企业号',
 			'field_class' => 'wechat_type',
 		])->create([
-			'name' => 'depots',
+			'name' => 'depot',
 			'title' => '素材',
 			'field_class' => 'wechat_message_type',
 		])->create([
