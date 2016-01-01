@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Routing\Router;
-use Addons\Core\Http\RouteServiceProvider as ServiceProvider;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {

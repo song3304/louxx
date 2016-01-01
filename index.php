@@ -20,6 +20,7 @@
 */
 define('APPPATH', realpath(__DIR__).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'laravel').DIRECTORY_SEPARATOR);
+define('PLUGINSPATH', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'l++').DIRECTORY_SEPARATOR);
 
 require APPPATH.'/bootstrap/autoload.php';
 

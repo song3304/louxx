@@ -41,6 +41,10 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->singleton('router', function ($app) {
+    return new Addons\Core\Http\Router($app['events'], $app);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
