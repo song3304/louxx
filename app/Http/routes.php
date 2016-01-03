@@ -18,6 +18,9 @@ $router->resources([
 ]);
 
 $router->any('wechat/feedback/{aid}/{oid?}', 'WechatController@feedback');
+$router->addAnyActionRoutes([
+	'wechat',
+]);
 
 $router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'role:admin|manager|owner|leader']], function($router) {
 	
@@ -25,20 +28,7 @@ $router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['au
 		'role' => 'RoleController',
 		'permission' => 'PermissionController',
 		'member' => 'MemberController',
-		'wechat/account' => 'Wechat\\AccountController',
 	]);
-
-	$router->group(['namespace' => 'Wechat', 'prefix' => 'wechat', 'middleware' => 'wechat.account'], function($router) {
-		$router->addAdminRoutes([
-			'user' => 'UserController',
-			'depot' => 'DepotController',
-			'depot-news' => 'DepotNewsController',
-			'menu' => 'MenuController',
-			'message' => 'MessageController',
-			'reply' => 'ReplyController',
-		]);
-	});
-
 
 	//admin目录下的其它路由需放置在本条前
 	$router->addUndefinedRoutes();

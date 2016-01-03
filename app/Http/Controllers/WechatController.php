@@ -2,11 +2,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Addons\Core\Controllers\WechatController as BaseWechatController;
-use Addons\Core\Models\WechatUser;
-use Addons\Core\Models\WechatDepotNews;
-use Addons\Core\Tools\Wechat\API;
-use Addons\Core\Tools\Wechat\User as WechatUserTool;
+use Plugins\Wechat\App\Http\Controllers\WechatController as BaseWechatController;
+use Plugins\Wechat\App\WechatUser;
+use Plugins\Wechat\App\WechatDepotNews;
+use Plugins\Wechat\App\Tools\API;
+use Plugins\Wechat\App\Tools\User as WechatUserTool;
 use App\Role;
 use Auth;
 class WechatController extends BaseWechatController {

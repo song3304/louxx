@@ -7,11 +7,11 @@ use App\Http\Requests;
 use App\Http\Controllers\WechatOAuth2Controller;
 use Illuminate\Support\Str;
 use App\User;
-use Addons\Core\Models\WechatAccount;
-use Addons\Core\Tools\Wechat\API;
-use Addons\Core\Tools\Wechat\Pay;
-use Addons\Core\Tools\Wechat\Js;
-use Addons\Core\Tools\Wechat\Pay\UnifiedOrder;
+use Plugins\Wechat\App\WechatAccount;
+use Plugins\Wechat\App\Tools\API;
+use Plugins\Wechat\App\Tools\Pay;
+use Plugins\Wechat\App\Tools\Js;
+use Plugins\Wechat\App\Tools\Pay\UnifiedOrder;
 
 class PayController extends WechatOAuth2Controller
 {
