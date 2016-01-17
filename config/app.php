@@ -27,7 +27,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://127.0.0.1'.env('APP_PATH'),
+	'url' => 'http://'.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '127.0.0.1').env('APP_PATH'),
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone

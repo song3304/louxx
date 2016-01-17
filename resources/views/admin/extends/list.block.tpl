@@ -62,10 +62,10 @@
 				<li class="dropdown-header">导出<i class="fa fa-share pull-right"></i></li>
 				<li>
 					<a href="javascript:void(0)"><i class="fa fa-print pull-right"></i> 打印</a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/csv" target="_blank"><i class="fi fi-csv pull-right"></i> CSV </a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/pdf" target="_blank"><i class="fi fi-pdf pull-right"></i> PDF</a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xls" target="_blank"><i class="fi fi-xls pull-right"></i> Excel 2003</a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx" target="_blank"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
+					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/csv?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-csv pull-right"></i> CSV </a>
+					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/pdf?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-pdf pull-right"></i> PDF</a>
+					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xls?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xls pull-right"></i> Excel 2003</a>
+					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
 				</li>
 			<{/block}>
 			</ul>
