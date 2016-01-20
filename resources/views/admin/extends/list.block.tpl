@@ -88,44 +88,54 @@
 <div class="table-responsive">
 	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover">
 		<thead>
+			<{block "table-thead-before"}><{/block}>
 			<tr>
 			<{block "table-th"}>
+				<{block "table-th-before"}><{/block}>
 				<{block "table-th-id"}><th class="text-left"><input type="checkbox" id="checkAll" > #</th><{/block}>
 				<{block "table-th-plus"}><{/block}>
 				<{block "table-th-timestamps"}>
-				<th>添加时间</th>
-				<th>最后更新</th>
+					<{block "table-th-timestamps-created_at"}><th>添加时间</th><{/block}>
+					<{block "table-th-timestamps-updated_at"}><th>最后更新</th><{/block}>
 				<{/block}>
 				<{block "table-th-options"}>
 				<th class="text-center">操作</th>
 				<{/block}>
+				<{block "table-th-after"}><{/block}>
 			<{/block}>
 			</tr>
 			<{block "table-thead-plus"}><{/block}>
+			<{block "table-thead-after"}><{/block}>
 		</thead>
 		<tbody>
+			<{block "table-tbody-before"}><{/block}>
 			<{block "table-tbody"}>
 			<{foreach $_table_data as $item}>
 			<tr id="line-<{$item->getKey()}>">
 			<{block "table-td"}>
+				<{block "table-td-before"}><{/block}>
 				<{block "table-td-id"}><td class="text-left"><input type="checkbox" name="id[]" value="<{$item->getKey()}>">	<{$item->getKey()}></td><{/block}>
 				<{block "table-td-plus"}><{/block}>
 				<{block "table-td-timestamps"}>
-				<td><{$item->created_at->format('Y-m-d H:i')}></td>
-				<td><{$item->updated_at->format('Y-m-d H:i')}></td>
+					<{block "table-td-timestamps-created_at"}><td><{$item->created_at->format('Y-m-d H:i')}></td><{/block}>
+					<{block "table-td-timestamps-updated_at"}><td><{$item->updated_at->format('Y-m-d H:i')}></td><{/block}>
 				<{/block}>
 				<{block "table-td-options"}>
 				<td class="text-center">
 					<div class="btn-group">
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/<{$item->getKey()}>/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+						<{block "table-td-options-before"}><{/block}>
+						<{block "table-td-options-edit"}><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/<{$item->getKey()}>/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a><{/block}>
 						<{block "table-td-options-plus"}><{/block}>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/<{$item->getKey()}>" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：<{$item->getKey()}>吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+						<{block "table-td-options-delete"}><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/<{$item->getKey()}>" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：<{$item->getKey()}>吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a><{/block}>
+						<{block "table-td-options-after"}><{/block}>
 					</div>
 				</td>
 				<{/block}>
+				<{block "table-td-after"}><{/block}>
 			<{/block}>
 			</tr>
 			<{block "table-tbody-plus"}><{/block}>
+			<{block "table-tbody-after"}><{/block}>
 			<{/foreach}>
 			<{/block}>
 		</tbody>
