@@ -42,12 +42,13 @@
 			<{block "datatable-columns-options-delete-confirm"}>var columns_options_delete_confirm = '您确定删除这项：'+full['id']+'吗？';<{/block}>
 			<{block "datatable-columns-options-edit"}>var columns_options_edit = '<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/'+full['id']+'/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>';<{/block}>
 			<{block "datatable-columns-options-delete"}>var columns_options_delete = '<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/'+full['id']+'" method="delete" confirm="'+(columns_options_delete_confirm ? columns_options_delete_confirm : '')+'" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>';<{/block}>
+			
 			return '<div class="btn-group">'
-				+columns_options_before ? columns_options_before : ''
-				+columns_options_edit ? columns_options_edit : ''
-				+columns_options_plus ? columns_options_plus.join() : ''
-				+columns_options_delete ? columns_options_delete : ''
-				+columns_options_after ? columns_options_after : ''
+				+(columns_options_before ? columns_options_before.join() : '')
+				+(columns_options_edit ? columns_options_edit : '')
+				+(columns_options_plus ? columns_options_plus.join() : '')
+				+(columns_options_delete ? columns_options_delete : '')
+				+(columns_options_after ? columns_options_after.join() : '')
 				+'</div>';
 			}
 		}];

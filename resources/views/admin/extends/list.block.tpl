@@ -47,15 +47,16 @@
 		<div class=" btn-group btn-group-sm">
 			<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-info dropdown-toggle enable-tooltip" data-toggle="dropdown" title="操作" data-original-title="操作"><span class="caret"></span></a>
 			<ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+			<{block "menu-before"}><{/block}>
 			<{block "menu-option"}>
 				<li class="dropdown-header">操作<i class="fa fa-cog pull-right"></i></li>
 				<li>
-				
+					<{block "menu-option-before"}><{/block}>
 					<{block "menu-option-plus"}><{/block}>
 					<{block "menu-option-delete"}>
 					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "menu-option-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class=""><span class="text-danger"><i class="fa fa-times pull-right "></i>删除所选</span></a>
 					<{/block}>
-				
+					<{block "menu-option-after"}><{/block}>
 				</li>
 			<{/block}>
 			<{block "menu-export"}>
@@ -68,6 +69,7 @@
 					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
 				</li>
 			<{/block}>
+			<{block "menu-after"}><{/block}>
 			</ul>
 		</div>
 	</div>
