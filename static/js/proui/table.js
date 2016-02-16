@@ -48,21 +48,23 @@ $().ready(function(){
 				fnInit: function(e, t, n) {
 					var i = e.oLanguage.oPaginate,
 					r = function(t) {
-						t.preventDefault(),
+						t.preventDefault();
+						e._iDisplayLength = parseInt(e._iDisplayLength, 10);
+						e._iDisplayStart = parseInt(e._iDisplayStart, 10);
 						e.oApi._fnPageChange(e, t.data.action) && n(e);
 					};
 					jQuery(t).append('<ul class="pagination pagination-sm remove-margin"><li class="first disabled"><a href="javascript:void(0)"><i class="fa fa-step-backward"></i> ' + i.sFirst + '</a></li><li class="prev disabled"><a href="javascript:void(0)"><i class="fa fa-chevron-left"></i> ' + i.sPrevious + '</a></li>' + '<li class="next disabled"><a href="javascript:void(0)">' + i.sNext + ' <i class="fa fa-chevron-right"></i></a></li><li class="last disabled"><a href="javascript:void(0)">' + i.sLast + ' <i class="fa fa-step-forward"></i></a></li>' + "</ul>");
 					var o = jQuery('a', t);
-					jQuery(o[0]).bind('click.DT', {
+					jQuery(o[0]).on('click.DT', {
 						action: 'first'
 					},r);
-					jQuery(o[1]).bind('click.DT', {
+					jQuery(o[1]).on('click.DT', {
 						action: 'previous'
 					},r);
-					jQuery(o[2]).bind('click.DT', {
+					jQuery(o[2]).on('click.DT', {
 						action: 'next'
 					},r);
-					jQuery(o[3]).bind('click.DT', {
+					jQuery(o[3]).on('click.DT', {
 						action: 'last'
 					},r);
 				},
@@ -74,7 +76,7 @@ $().ready(function(){
 					for (l.iTotalPages < s ? (o = 1, a = l.iTotalPages) : l.iPage <= u ? (o = 1, a = s) : l.iPage >= l.iTotalPages - u ? (o = l.iTotalPages - s + 1, a = l.iTotalPages) : (o = l.iPage - u + 1, a = o + s - 1), n = 0, iLen = c.length; iLen > n; n++) {
 						for (jQuery('li:not(.first,.prev,.next,.last)', c[n]).remove(), i = o; a >= i; i++)
 							r = i === l.iPage + 1 ? 'class="active"': '',
-							jQuery('<li ' + r + '><a href="javascript:void(0)">' + i + "</a></li>").insertBefore(jQuery('li.next', c[n])[0]).bind('click', function(n) {
+							jQuery('<li ' + r + '><a href="javascript:void(0)">' + i + "</a></li>").insertBefore(jQuery('li.next', c[n])[0]).on('click', function(n) {
 								n.preventDefault(),
 								e._iDisplayStart = (parseInt(jQuery("a", this).text(), 10) - 1) * l.iLength,
 								t(e)
@@ -161,11 +163,14 @@ $().ready(function(){
 			'processing': true,
 			'deferRender': true, //延时绘制
 			'serverSide': true, //服务器端
-			'displayStart': $.datatable_config.displayStart,
-			'pageLength': $.datatable_config.pageLength,
+			'displayStart': parseInt($.datatable_config.displayStart, 10),
+			'pageLength': parseInt($.datatable_config.pageLength, 10),
 			'order': $.datatable_config.order,
 			'columns': $.datatable_config.columns,
-			'searchDelay': $.datatable_config.searchDelay,
+			'searchDelay': parseInt($.datatable_config.searchDelay, 10),
+			'rowCallback': function( row, data, dataIndex ) {
+				if ($.datatable_config.onDrawingRow) $.datatable_config.onDrawingRow.call(this, row, data, dataIndex);
+			},
 			'createdRow': function( row, data, dataIndex ) {
 				//bind option's event
 				options_query.call(this, row);
