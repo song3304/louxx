@@ -47,13 +47,14 @@ $().ready(function(){
 			bootstrap: {
 				fnInit: function(e, t, n) {
 					var i = e.oLanguage.oPaginate,
+					l = e.oInstance.fnPagingInfo(),
 					r = function(t) {
 						t.preventDefault();
 						e._iDisplayLength = parseInt(e._iDisplayLength, 10);
 						e._iDisplayStart = parseInt(e._iDisplayStart, 10);
 						e.oApi._fnPageChange(e, t.data.action) && n(e);
 					};
-					jQuery(t).append('<ul class="pagination pagination-sm remove-margin"><li class="first disabled"><a href="javascript:void(0)"><i class="fa fa-step-backward"></i> ' + i.sFirst + '</a></li><li class="prev disabled"><a href="javascript:void(0)"><i class="fa fa-chevron-left"></i> ' + i.sPrevious + '</a></li>' + '<li class="next disabled"><a href="javascript:void(0)">' + i.sNext + ' <i class="fa fa-chevron-right"></i></a></li><li class="last disabled"><a href="javascript:void(0)">' + i.sLast + ' <i class="fa fa-step-forward"></i></a></li>' + "</ul>");
+					jQuery(t).append('<ul class="pagination pagination-sm remove-margin"><li class="first disabled"><a href="javascript:void(0)"><i class="glyphicon glyphicon-step-backward"></i> ' + i.sFirst + '</a></li><li class="prev disabled"><a href="javascript:void(0)"><i class="glyphicon glyphicon-chevron-left"></i> ' + i.sPrevious + '</a></li>' + '<li class="next disabled"><a href="javascript:void(0)">' + i.sNext + ' <i class="glyphicon glyphicon-chevron-right"></i></a></li><li class="last disabled"><a href="javascript:void(0)">' + i.sLast + ' <i class="glyphicon glyphicon-step-forward"></i></a></li>' + '<li class="more"><a href="javascript:void(0)"><i class="glyphicon glyphicon-option-horizontal"></i></a></li>' + "</ul>");
 					var o = jQuery('a', t);
 					jQuery(o[0]).on('click.DT', {
 						action: 'first'
@@ -66,7 +67,14 @@ $().ready(function(){
 					},r);
 					jQuery(o[3]).on('click.DT', {
 						action: 'last'
-					},r);
+					},r);console.log(l);
+					jQuery(o[4]).popover({
+						html: true,
+						title: '',
+						content: '<input type="text" id="datatable-paginate-slider" class="" data-slider-selection="after" data-slider-tooltip="show">',
+						placement: 'left',
+						trigger: 'focus'
+					});
 				},
 				fnUpdate: function(e, t) {
 					var n, i, r, o, a, s = 5,
@@ -74,7 +82,25 @@ $().ready(function(){
 					c = e.aanFeatures.p,
 					u = Math.floor(s / 2);
 					for (l.iTotalPages < s ? (o = 1, a = l.iTotalPages) : l.iPage <= u ? (o = 1, a = s) : l.iPage >= l.iTotalPages - u ? (o = l.iTotalPages - s + 1, a = l.iTotalPages) : (o = l.iPage - u + 1, a = o + s - 1), n = 0, iLen = c.length; iLen > n; n++) {
-						for (jQuery('li:not(.first,.prev,.next,.last)', c[n]).remove(), i = o; a >= i; i++)
+						jQuery('li:not(.first,.prev,.next,.last,.more)', c[n]).remove();
+						var $more = jQuery('a:eq(4)', c[n]);
+						if (l.iTotalPages > 1)
+							$more.off('shown.bs.popover').on('shown.bs.popover',function(){
+								if (jQuery.fn.slider) jQuery('#datatable-paginate-slider').slider({
+									value: parseInt(l.iPage) + 1,
+									max: parseInt(l.iTotalPages),
+									min: 1,
+									step: 1,
+								}).on('slideStop', function(){
+									var p = parseInt($(this).slider('getValue').val());
+									e._iDisplayStart = (parseInt(p, 10) - 1) * l.iLength,
+									t(e);
+									$more.popover('hide').blur();
+								});
+							});
+							else
+								$more.hide();
+						for (i = o; a >= i; i++)
 							r = i === l.iPage + 1 ? 'class="active"': '',
 							jQuery('<li ' + r + '><a href="javascript:void(0)">' + i + "</a></li>").insertBefore(jQuery('li.next', c[n])[0]).on('click', function(n) {
 								n.preventDefault(),
