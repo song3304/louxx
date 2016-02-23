@@ -16,7 +16,7 @@
 			};
 		}
 		$('#pagesize-slider').on('slideStop', function(e){
-			var pagesize = $(this).slider('getValue').val();
+			var pagesize = parseInt($(this).data('slider').getValue());
 			makeLinks(pagesize);
 		});
 		makeLinks(<{$_pagesize}>);
@@ -24,6 +24,12 @@
 	});
 })(jQuery);
 </script>
+
+<{/block}>
+
+<{"head-scripts-after"}>
+<link rel="stylesheet" href="<{'static/js/bootstrap-slider/bootstrap-slider.min.css'|url}>">
+<script src="<{'static/js/bootstrap-slider/bootstrap-slider.min.js'|url}>"></script>
 <{/block}>
 
 <{block "header"}>

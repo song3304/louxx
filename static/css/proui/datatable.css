@@ -56,6 +56,11 @@ div.dataTables_paginate ul.pagination {
 	white-space: nowrap;
 }
 
+div.dataTables_paginate .popover{
+	min-width: 80%;
+	max-width: 100%; /* Max Width of the popover (depending on the container!)*/
+}
+
 table.dataTable td,
 table.dataTable th {
 	-webkit-box-sizing: content-box;

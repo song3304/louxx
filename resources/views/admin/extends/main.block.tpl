@@ -30,7 +30,9 @@
 	<{/block}>
 
 	<{block "head-ui"}>
+	<{block "head-ui-before"}><{/block}>
 	<{include file="admin/common/ui.inc.tpl"}>
+	<{block "head-ui-after"}><{/block}>
 	<{/block}>
 	
 	<{block "head-plus"}><{/block}>

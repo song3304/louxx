@@ -67,13 +67,14 @@ $().ready(function(){
 					},r);
 					jQuery(o[3]).on('click.DT', {
 						action: 'last'
-					},r);console.log(l);
-					jQuery(o[4]).popover({
+					},r);
+					if (jQuery.fn.slider) jQuery(o[4]).popover({
 						html: true,
 						title: '',
-						content: '<input type="text" id="datatable-paginate-slider" class="" data-slider-selection="after" data-slider-tooltip="show">',
+						content: '<input type="text" id="datatable-paginate-slider" class="form-control" value="1" data-slider-selection="after" data-slider-tooltip="show">',
 						placement: 'left',
-						trigger: 'focus'
+						trigger: 'click',
+						container: t
 					});
 				},
 				fnUpdate: function(e, t) {
@@ -86,13 +87,13 @@ $().ready(function(){
 						var $more = jQuery('a:eq(4)', c[n]);
 						if (l.iTotalPages > 1)
 							$more.off('shown.bs.popover').on('shown.bs.popover',function(){
-								if (jQuery.fn.slider) jQuery('#datatable-paginate-slider').slider({
+								jQuery('#datatable-paginate-slider').slider({
 									value: parseInt(l.iPage) + 1,
 									max: parseInt(l.iTotalPages),
 									min: 1,
 									step: 1,
 								}).on('slideStop', function(){
-									var p = parseInt($(this).slider('getValue').val());
+									var p = parseInt(jQuery(this).data('slider').getValue());
 									e._iDisplayStart = (parseInt(p, 10) - 1) * l.iLength,
 									t(e);
 									$more.popover('hide').blur();
