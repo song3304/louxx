@@ -27,7 +27,7 @@
 
 <{/block}>
 
-<{"head-scripts-after"}>
+<{block "head-scripts-after"}>
 <link rel="stylesheet" href="<{'static/js/bootstrap-slider/bootstrap-slider.min.css'|url}>">
 <script src="<{'static/js/bootstrap-slider/bootstrap-slider.min.js'|url}>"></script>
 <{/block}>
