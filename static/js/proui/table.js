@@ -73,7 +73,7 @@ $().ready(function(){
 						title: '',
 						content: '<input type="text" id="datatable-paginate-slider" class="form-control" value="1" data-slider-selection="after" data-slider-tooltip="show">',
 						placement: 'left',
-						trigger: 'click',
+						trigger: 'focus',
 						container: t
 					});
 				},
@@ -92,6 +92,7 @@ $().ready(function(){
 									max: parseInt(l.iTotalPages),
 									min: 1,
 									step: 1,
+									formatter: function(v){return 'Page: ' + v;}
 								}).on('slideStop', function(){
 									var p = parseInt(jQuery(this).data('slider').getValue());
 									e._iDisplayStart = (parseInt(p, 10) - 1) * l.iLength,
