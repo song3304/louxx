@@ -82,4 +82,17 @@ return [
     */
     'user_foreign_key' => 'user_id',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Role Foreign key on Entrust's role_user and permission_role Tables (Pivot)
+    |--------------------------------------------------------------------------
+    */
+    'role_foreign_key' => 'role_id',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Permission Foreign key on Entrust's permission_role Table (Pivot)
+    |--------------------------------------------------------------------------
+    */
+    'permission_foreign_key' => 'permission_id',
 ];

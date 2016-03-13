@@ -41,6 +41,7 @@ return [
 	"in"               => "已选的属性 [:attribute] 非法。",
 	"integer"          => "[:attribute] 必须是整数。",
 	"ip"               => "[:attribute] 必须是有效的 IP 地址。",
+	'json'             => '[:attribute] 必须是有效的 JSON 字符串。',
 	"max"              => [
 		"numeric" => "[:attribute] 不能大于 :max。",
 		"file"    => "[:attribute] 不能大于 :max kb。",
