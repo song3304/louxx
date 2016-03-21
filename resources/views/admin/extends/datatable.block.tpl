@@ -5,6 +5,8 @@
 <{/block}>
 
 <{block "head-scripts-plus"}>
+<link rel="stylesheet" href="<{'static/js/bootstrap-slider/bootstrap-slider.min.css'|url}>">
+<script src="<{'static/js/bootstrap-slider/bootstrap-slider.min.js'|url}>"></script>
 <script src="<{'static/js/DatePicker/WdatePicker.js'|url}>"></script>
 <script src="<{'static/js/datatable/jquery.dataTables.min.js'|url}>"></script>
 <script>
