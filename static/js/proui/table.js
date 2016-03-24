@@ -202,6 +202,11 @@ $().ready(function(){
 			'createdRow': function( row, data, dataIndex ) {
 				//bind option's event
 				options_query.call(this, row);
+				// Initialize Tooltips
+				if ($.fn.tooltip) $('[data-toggle="tooltip"], .enable-tooltip', row).tooltip({container: 'body', animation: false});
+				// Initialize Popovers
+				if ($.fn.popover) $('[data-toggle="popover"], .enable-popover').popover({container: 'body', animation: true});
+				
 				if ($.datatable_config.onCreateRow) $.datatable_config.onCreateRow.call(this, row, data, dataIndex);
 			},
 			'drawCallback': function( settings ) {

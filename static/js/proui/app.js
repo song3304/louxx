@@ -444,7 +444,7 @@ var App = function($) {
 		$('a', colorList).click(function(e){
 			// Get theme name
 			theme = $(this).data('theme');
-			$.cookie('proui-theme', theme, {expires: 365});
+			$.cookie('proui-theme', theme, {expires: 365, path: $.baseuri});
 			$('li', colorList).removeClass('active');
 			$(this).parent('li').addClass('active');
 
