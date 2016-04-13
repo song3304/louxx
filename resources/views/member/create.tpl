@@ -1,5 +1,10 @@
 <{extends file="extends/main.block.tpl"}>
 
+<{block "head-scripts-inner"}>
+<link rel="stylesheet" href="<{'static/css/mui.min.css'|url}>" />
+<script src="<{'static/js/mui.min.js'|url}>"></script>
+<{/block}>
+
 <{block "head-scripts-plus"}>
 	<{include file="common/uploader.inc.tpl"}>
 	<script type="text/javascript">

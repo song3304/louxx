@@ -172,6 +172,7 @@ class CreateWechatTable extends Migration
 			$table->string('event_key', 150)->nullable()->comment = '事件参数'; //事件参数
 			$table->string('url', 250)->nullable()->comment = '网址'; //网址
 			$table->unsignedInteger('wdid')->default(0)->comment = '素材库DepotID'; //素材库did
+			$table->string('media_id', 250)->comment = '素材库MediaID'; //素材库media id
 			
 			//tree
 			$table->unsignedInteger('order')->default(0)->index()->comment = 'TREE排序';
