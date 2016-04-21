@@ -38,7 +38,7 @@ class MemberController extends Controller
 	{
 		$user = new User;
 		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
-		$_builder = clone $builder;$total = $_builder->count();unset($_builder);
+		$total = $this->_getCount($request, $builder, FALSE);
 		$data = $this->_getData($request, $builder, null, ['users.*']);
 		$data['recordsTotal'] = $total;
 		$data['recordsFiltered'] = $data['total'];
