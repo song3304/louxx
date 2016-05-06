@@ -2,6 +2,9 @@
 <!--[if IE 8]><script src="<{'static/js/excanvas.min.js'|url}>"></script><![endif]-->
 
 <!-- Modernizr (browser feature detection library) & Respond.js (Enable responsive CSS code on browsers that don't support it, eg IE8) -->
+<{block "head-scripts-debug"}>
+<script src="<{'static/js/debug/eruda.debug.js'|url}>"></script>
+<{/block}>
 <{block "head-scripts-jquery"}>
 <script src="<{'static/js/jquery-2.1.0.min.js'|url}>"></script>
 <script>jQuery.noConflict();</script>
