@@ -1,9 +1,6 @@
 <{extends file="extends/main.block.tpl"}>
 
-<{block "head-scripts-inner"}>
-<link rel="stylesheet" href="<{'static/css/mui.min.css'|url}>" />
-<script src="<{'static/js/mui.min.js'|url}>"></script>
-<{/block}>
+
 
 <{block "head-scripts-plus"}>
 	<{include file="common/uploader.inc.tpl"}>
@@ -20,18 +17,20 @@
 <{block "body-container"}>
 <div class="container">
 	<h1 class="page-header">注册</h1>
-	<form action="<{'member'|url nofilter}>" method="POST" autocomplete="off" id="form">
+</div>
+<div class="container">
+	<form action="<{'member'|url nofilter}>" class="" method="POST" autocomplete="off" id="form">
 		<input type="hidden" name="_token" value="<{csrf_token()}>">
 		<div class="form-group">
-			<label for="username">用户名</label>
+			<label for="username" class="control-label">用户名</label>
 			<input type="text" class="form-control" name="username" id="username" placeholder="请输入用户名..." value="<{old('username')}>">
 		</div>
 		<div class="form-group">
-			<label for="password">密码</label>
+			<label for="password" class="control-label">密码</label>
 			<input type="password" class="form-control" name="password" id="password" placeholder="请输入密码...">
 		</div>
 		<div class="form-group">
-			<label for="password_confirmation">密码确认</label>
+			<label for="password_confirmation" class="control-label">密码确认</label>
 			<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="请再次确认密码...">
 		</div>
 		<div class="form-group radio">
@@ -41,7 +40,7 @@
 			<div class="clearfix"></div>
 		</div>
 		<div class="form-group">
-			<label for="avatar_aid">上传图片</label>
+			<label for="avatar_aid" class="control-label">上传图片</label>
 			<input type="hidden" class="form-control" name="avatar_aid" id="avatar_aid" value="0">
 		</div>
 
