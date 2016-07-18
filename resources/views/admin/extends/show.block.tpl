@@ -2,13 +2,13 @@
 
 <{block "header"}>
 <!-- Form Header -->
-<div class="content-header">
+<!-- <div class="content-header">
 	<div class="header-section">
 		<h1>
 			<i class="gi gi-wifi_alt"></i><{block "title"}><{/block}>管理<br><small>查看<{block "title"}><{/block}>资料!</small>
 		</h1>
 	</div>
-</div>
+</div> -->
 <ul class="breadcrumb breadcrumb-top">
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>

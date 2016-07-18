@@ -52,13 +52,13 @@
 				<{block "header"}>
 				<{block "banner"}>
 				<!-- Form Header -->
-				<div class="content-header">
+				<!-- <div class="content-header">
 					<div class="header-section">
 						<h1>
 							<i class="hi hi-home"></i>后台<br><small>后台，用户体验的开始！</small>
 						</h1>
 					</div>
-				</div>
+				</div> -->
 				<{/block}>
 				<{block "breadcrumb"}>
 				<ul class="breadcrumb breadcrumb-top">

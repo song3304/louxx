@@ -43,7 +43,7 @@ $().ready(function(){
 <td><{$item->username}></td>
 <td><span class="enable-emoji"><{$item->nickname}></span></td>
 <td><{$item->realname}></td>
-<td><span class="label label-primary"><{$item->_gender|model:'title'}></span></td>
+<td><span class="label label-primary"><{$item->_gender->title}></span></td>
 <td><{$item->phone}></td>
 <td><{foreach $item->roles as $role}><span class="label label-info"><{$role->display_name}></span>&nbsp;<{/foreach}></td>
 <{/block}>

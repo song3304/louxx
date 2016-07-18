@@ -2,7 +2,7 @@
 <div class="sidebar-section sidebar-user clearfix">
 	<div class="sidebar-user-avatar">
 		<a href="<{'admin/member'|url}>/<{$_user->getKey()}>">
-			<img src="<{'attachment'|url}>?aid=<{$_user.avatar_aid}>" alt="avatar">
+			<img src="<{'attachment'|url}>?id=<{$_user.avatar_aid}>" alt="avatar">
 		</a>
 	</div>
 	<div class="sidebar-user-name"><{$_user.realname}></div>

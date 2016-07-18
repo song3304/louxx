@@ -16,13 +16,13 @@
 
 <{block "header"}>
 <!-- Form Header -->
-<div class="content-header">
+<!-- <div class="content-header">
 	<div class="header-section">
 		<h1>
 			<i class="fa fa-table"></i><{block "title"}><{/block}>管理<br><small>检索、新增、修改、删除<{block "title"}><{/block}>!</small>
 		</h1>
 	</div>
-</div>
+</div> -->
 <ul class="breadcrumb breadcrumb-top">
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>
@@ -34,13 +34,15 @@
 <{block "block-title"}>
 <!-- DataTable Title -->
 <div class="block-title">
-	<h2 class="pull-left"><strong><{block "title"}><{/block}>列表</strong> 检索</h2>
+	<{block "block-title-title"}><h2 class="pull-left"><strong><{block "title"}><{/block}>列表</strong> 检索</h2><{/block}>
+	
+	<{block "block-title-options"}>
 	<div class="block-options pull-right">
-		<{if $_base}>
+		<!-- <{if $_base}>
 		<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>" class="btn btn-alt btn-sm btn-warning enable-tooltip" title="点击切换到「功能视图」，可排序、选择行数等" data-original-title="点击切换到「功能视图」，可排序、选择行数等">功能视图</a>
 		<{else}>
 		<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>?base=1" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="数据读取失败时，请点击切换到「基本视图」" data-original-title="数据读取失败时，请点击切换到「基本视图」">基本视图</a>
-		<{/if}>
+		<{/if}> -->
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示" data-original-title="折叠/展示"><i class="fa fa-arrows-v"></i></a>
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换" data-original-title="全屏切换"><i class="fa fa-desktop"></i></a>
 		<!-- <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary" data-toggle="block-hide"><i class="fa fa-times"></i></a> -->
@@ -73,6 +75,7 @@
 			</ul>
 		</div>
 	</div>
+	<{/block}>
 	<div class="clearfix"></div>
 </div>
 <div class="clearfix"></div>
@@ -97,8 +100,8 @@
 				<{block "table-th-id"}><th class="text-left"><input type="checkbox" id="checkAll" > #</th><{/block}>
 				<{block "table-th-plus"}><{/block}>
 				<{block "table-th-timestamps"}>
-					<{block "table-th-timestamps-created_at"}><th>添加时间</th><{/block}>
-					<{block "table-th-timestamps-updated_at"}><th>最后更新</th><{/block}>
+					<{block "table-th-timestamps-created_at"}><th>添加</th><{/block}>
+					<{block "table-th-timestamps-updated_at"}><th>更新</th><{/block}>
 				<{/block}>
 				<{block "table-th-options"}>
 				<th class="text-center">操作</th>

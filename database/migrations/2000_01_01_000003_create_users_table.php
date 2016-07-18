@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
 			$table->string('email')->nullable()->comment = 'Email'; //Email
 			$table->string('phone', 20)->index()->comment = '电话'; //电话
 			$table->string('idcard', 50)->index()->comment = '身份证'; //身份证
+			$table->unsignedInteger('editor_uid')->default(0)->_comment = '编辑 ID';
 
 			$table->rememberToken(); //记住我的Token
 			$table->timestamps(); //创建/修改时间

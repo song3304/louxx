@@ -19,6 +19,7 @@ class VerifyCsrfToken extends BaseVerifier
 		'attachment/redirect',
 		'attachment/resize',
 		'attachment/download',
+		'attachment/fullavatar-query',
 		'attachment/*/*',
 		'wechat/push',
 		'wechat/feedback/*',

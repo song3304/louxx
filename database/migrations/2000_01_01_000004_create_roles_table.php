@@ -56,6 +56,19 @@ class CreateRolesTable extends Migration
 			$table->primary(['permission_id', 'role_id']);
 		});
 
+		// Create table for associating permissions to users (Many-to-Many)
+		Schema::create('permission_user', function (Blueprint $table) {
+			$table->integer('permission_id')->unsigned()->comment = '权限ID';
+			$table->integer('user_id')->unsigned()->comment = '用户ID';
+
+			$table->foreign('permission_id')->references('id')->on('permissions')
+				->onUpdate('cascade')->onDelete('cascade');
+			$table->foreign('user_id')->references('id')->on('users')
+				->onUpdate('cascade')->onDelete('cascade');
+
+			$table->primary(['permission_id', 'user_id']);
+		});
+
 	}
 
 	/**
