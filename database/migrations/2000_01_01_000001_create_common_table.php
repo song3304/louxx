@@ -31,6 +31,7 @@ class CreateCommonTable extends Migration
 
 			$table->unique(['name', 'field_class']);
 		});
+		
 		Schema::create('fields_content', function(Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('fid')->default(0)->index()->_comment = 'fields id'; //
@@ -49,15 +50,16 @@ class CreateCommonTable extends Migration
 	        });
 
 	        //评价
-	        Schema::create('taggables', function (Blueprint $table) {
-	            $table->increments('id');
+        Schema::create('taggables', function (Blueprint $table) {
+            $table->increments('id');
 
-	            $table->string('taggable_type', 100)->_comment = "标示Tag针对的类别";
-	            $table->unsignedInteger('taggable_id')->_comment = 'table column ID';
-	            $table->unsignedInteger('tag_id')->index()->_comment = 'tags ID';
+            $table->string('taggable_type', 100)->_comment = "指向表名";
+            $table->unsignedInteger('taggable_id')->_comment = 'table column ID';
+            $table->unsignedInteger('tag_id')->index()->_comment = 'tags ID';
 
-	            $table->foreign('tag_
-		}
+            $table->foreign('tag_id')->references('id')->on('tags')->onUpdate('cascade')->onDelete('cascade');
+        });
+	}
 
 	/**
 	 * Reverse the migrations.
