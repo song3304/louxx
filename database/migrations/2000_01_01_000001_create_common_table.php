@@ -57,8 +57,23 @@ class CreateCommonTable extends Migration
             $table->unsignedInteger('taggable_id')->_comment = 'table column ID';
             $table->unsignedInteger('tag_id')->index()->_comment = 'tags ID';
 
-            $table->foreign('tag_id')->references('id')->on('tags')->onUpdate('cascade')->onDelete('cascade');
-        });
+			$table->foreign('tag_id')->references('id')->on('tags')->onUpdate('cascade')->onDelete('cascade');
+		});
+
+		//点击
+		Schema::create('hits', function (Blueprint $table) {
+			$table->increments('id');
+
+			$table->unsignedInteger('uid')->nullable()->default(0)->_comment = '用户 ID';
+			$table->bigInteger('ip')->default(0)->_comment = 'IP';
+			$table->string('agent', 250)->nullable()->_comment = 'User Agent';
+			$table->string('table_type', 125)->index()->_comment = "多态关联TYPE";
+			$table->unsignedInteger('table_id')->index()->_comment = '多态关联ID';
+			$table->timestamps();
+
+		});
+
+
 	}
 
 	/**

@@ -24,14 +24,11 @@ class MemberController extends Controller
 		$user = new User;
 		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
-		$base = boolval($request->input('base')) ?: false;
-
 		//view's variant
-		$this->_base = $base;
 		$this->_pagesize = $pagesize;
 		$this->_filters = $this->_getFilters($request, $builder);
-		$this->_table_data = $base ? $this->_getPaginate($request, $builder, ['users.*'], ['base' => $base]) : [];
-		return $this->view('admin.member.'. ($base ? 'list' : 'datatable'));
+		$this->_table_data = [];
+		return $this->view('admin.member.datatable');
 	}
 
 	public function data(Request $request)
