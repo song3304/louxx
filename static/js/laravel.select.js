@@ -92,7 +92,7 @@ $().ready(function(){
 						var data = [], items = json.data.data;
 						console.log(items);
 						for(var i = 0; i < items.length; ++i)
-							data.push({'id': items[i].keywords, 'text': items[i].keywords + ' <span class="text-muted">('+ (items[i].count || 0) + '´ÎÊ¹ÓÃ)</span>', 'selection': items[i].keywords });
+							data.push({'id': items[i].keywords, 'text': items[i].keywords + ' <span class="text-muted">('+ (items[i].count || 0) + 'æ¬¡ä½¿ç”¨)</span>', 'selection': items[i].keywords });
 						return {results: data};
 					},
 					cache: true
@@ -106,7 +106,8 @@ $().ready(function(){
 					if (term === '') return null;
 					return {
 						id: term,
-						text: term,
+						selection: term,
+						text: term + ' <span style="color:#f5f5f5">(åˆ›å»º)</span>',
 						newTag: true // add additional parameters
 					};
 				}
