@@ -26,7 +26,7 @@ class CreateAttachmentsTable extends Migration
 		Schema::create('attachments', function (Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('afid')->default(0)->comment = 'AttachmentFile ID'; //文件ID
-			$table->string('uuid', 50)->nullable()->index()->comment = '上传的uuid'; //上传的uuid
+			$table->string('uuid', 50)->nullable()->unique()->comment = '上传的uuid'; //上传的uuid
 			$table->unsignedInteger('chunk_count')->default(1)->index()->comment = '块数'; //块数
 			$table->string('ext', 50)->index()->comment = '文件扩展名'; //显示的扩展名
 			$table->string('original_basename', 255)->comment = '原始文件名'; //原始名称

@@ -17,7 +17,7 @@ class PayController extends WechatOAuth2Controller
 {
 	public $wechat_oauth2_account = 1;
 	public $wechat_oauth2_type = 'snsapi_base'; // snsapi_base  snsapi_userinfo  hybrid
-	public $wechat_oauth2_bindUser = TRUE; // 是否将微信用户绑定到系统用户users
+	public $wechat_oauth2_bindUserRole = Role::WECHATER; // 将微信用户绑定到系统用户的用戶組，為空則不綁定
 
 	public function test()
 	{
