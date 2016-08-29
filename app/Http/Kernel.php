@@ -52,7 +52,7 @@ class Kernel extends HttpKernel
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-	'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'role' => \Addons\Core\Middleware\Role::class,
         'permission' => \Addons\Core\Middleware\Permission::class,
         'ability' =>\Addons\Core\Middleware\Ability::class,

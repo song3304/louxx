@@ -7,36 +7,44 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 //trait
 use Addons\Core\Controllers\ThrottlesLogins;
 
 class AuthController extends Controller
 {
-
 	use ThrottlesLogins;
+
+	
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		return $this->login();
+		return $this->login($request);
 	}
 
-	public function login()
+	public function login(Request $request)
 	{
-		Auth::logout();
-		$keys = [$this->loginUsername(), 'password'];
+		$this->guard()->logout();
+
+		$keys = [$this->username(), 'password'];
 		$validates = $this->getScriptValidate('member.store', $keys);
 		
 		$this->_validates = $validates;
 		return $this->view('admin/login');
 	}
 
-	public function logout()
+	public function logout(Request $request)
 	{
-		Auth::logout();
+		$this->guard()->logout();
+
+		$request->session()->flush();
+
+		$request->session()->regenerate();
+
 		return $this->success_logout(''); // redirect to homepage
 	}
 
@@ -60,14 +68,22 @@ class AuthController extends Controller
 		$throttles = $this->isUsingThrottlesLoginsTrait();
 
 		if ($throttles && $this->hasTooManyLoginAttempts($request)) 
-			return $this->sendLockoutResponse($request);
+		{
+			$this->fireLockoutEvent($request);
 
-		$keys = [$this->loginUsername(),'password'];
+			return $this->sendLockoutResponse($request);
+		}
+
+		$keys = [$this->username(),'password'];
 		$data = $this->autoValidate($request, 'member.login', $keys);
 		$remember = $request->has('remember');
-		if (Auth::attempt(['username' => $data['username'], 'password' => $data['password']], $remember))
+		if ($this->guard()->attempt([$this->username() => $data[$this->username()], 'password' => $data['password']], $remember))
 		{
-			$user = Auth::user();
+			//$request->session()->regenerate();
+
+			$this->clearLoginAttempts($request);
+
+			$user = $this->guard()->user();
 			$roles = $user->roles()->whereIn('roles.name',['admin','manager','owner','leader'])->get();
 			return $this->success_login($roles->count() >= 1 ? 'auth/choose' :$request->session()->pull('url.intended', '')); // redirect to the prevpage or homepage
 		} else {
@@ -82,11 +98,6 @@ class AuthController extends Controller
 		return redirect('member/create');
 	}
 
-	private function loginUsername()
-	{
-		return 'username';
-	}
-
 	/**
 	 * Redirect the user after determining they are locked out.
 	 *
@@ -95,9 +106,12 @@ class AuthController extends Controller
 	 */
 	protected function sendLockoutResponse(Request $request)
 	{
-		$seconds = (int) Cache::get($this->getLoginLockExpirationKey($request)) - time();
+		//$seconds = (int) Cache::get($this->getLoginLockExpirationKey($request)) - time();
+		$seconds = $this->limiter()->availableIn(
+            $this->throttleKey($request)
+        );
 
-		return $this->failure(['content' => $this->getLockoutErrorMessage($seconds)], FALSE, compact('seconds'));
+		return $this->failure(['content' => Lang::get('auth.throttle', ['seconds' => $seconds])], FALSE, compact('seconds'));
 	}
 
 	/**
@@ -110,5 +124,25 @@ class AuthController extends Controller
 		return in_array(
 			ThrottlesLogins::class, class_uses_recursive(get_class($this))
 		);
+	}
+
+    /**
+	 * Get the guard to be used during authentication.
+	 *
+	 * @return \Illuminate\Contracts\Auth\StatefulGuard
+	 */
+	protected function guard()
+	{
+		return Auth::guard();
+	}
+
+	/**
+	 * Get the login username to be used by the controller.
+	 *
+	 * @return string
+	 */
+	public function username()
+	{
+		return 'username';
 	}
 }

@@ -22,19 +22,18 @@ class MemberController extends Controller
 	public function index(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		//view's variant
 		$this->_pagesize = $pagesize;
-		$this->_filters = $this->_getFilters($request, $builder);
-		$this->_table_data = [];
+		$this->_filters = $this->_getFilters($request);
 		return $this->view('admin.member.datatable');
 	}
 
 	public function data(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
+		$builder = $user->newQuery()->with(['_gender', 'roles']);
+		$request->input('filters.role_id') && $builder->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
 		$total = $this->_getCount($request, $builder, FALSE);
 		$data = $this->_getData($request, $builder, null, ['users.*']);
 		$data['recordsTotal'] = $total;
@@ -45,7 +44,7 @@ class MemberController extends Controller
 	public function export(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
+		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
 		$page = $request->input('page') ?: 0;
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.export', 1000);
 		$total = $this->_getCount($request, $builder);

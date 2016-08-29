@@ -22,7 +22,7 @@ $router->addAnyActionRoutes([
 	'wechat',
 ]);
 
-$router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'role:admin|manager|owner|leader']], function($router) {
+$router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'role:admin,manager,owner,leader']], function($router) {
 	
 	$router->addAdminRoutes([
 		'member' => 'MemberController',
@@ -32,10 +32,6 @@ $router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['au
 	$router->addUndefinedRoutes();
 });
 
-
 //根目录的其它路由需放置在本条前
 $router->addUndefinedRoutes();
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
