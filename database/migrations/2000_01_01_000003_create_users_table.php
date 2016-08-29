@@ -48,15 +48,15 @@ class CreateUsersTable extends Migration
 			$table->foreign('id')->references('id')->on('users')->onDelete('cascade');
 
 		});
-
-		Schema::create('reset_password', function (Blueprint $table) {
+	
+		Schema::create('password_resets', function (Blueprint $table) {
 			$table->increments('id');
 			$table->unsignedInteger('uid')->comment = '用户ID'; //UID
-			$table->string('token', 150)->index()->comment = 'Token'; //Token
-			$table->timestamps();
-
+			$table->string('email')->index();
+			$table->string('token')->index();
+			$table->timestamp('created_at')->nullable();
 			$table->foreign('uid')->references('id')->on('users')->onDelete('cascade');
-		});		
+		});	
 	}
 
 	/**

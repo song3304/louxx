@@ -3,8 +3,8 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
@@ -17,8 +17,12 @@ class Handler extends ExceptionHandler
 	 * @var array
 	 */
 	protected $dontReport = [
-		HttpException::class,
-		ModelNotFoundException::class,
+		\Illuminate\Auth\AuthenticationException::class,
+		\Illuminate\Auth\Access\AuthorizationException::class,
+		\Symfony\Component\HttpKernel\Exception\HttpException::class,
+		\Illuminate\Database\Eloquent\ModelNotFoundException::class,
+		\Illuminate\Session\TokenMismatchException::class,
+		\Illuminate\Validation\ValidationException::class,
 	];
 
 	/**
@@ -26,29 +30,29 @@ class Handler extends ExceptionHandler
 	 *
 	 * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
 	 *
-	 * @param  \Exception  $e
+	 * @param  \Exception  $exception
 	 * @return void
 	 */
-	public function report(Exception $e)
+	public function report(Exception $exception)
 	{
-		return parent::report($e);
+		parent::report($exception);
 	}
 
 	/**
 	 * Render an exception into an HTTP response.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Exception  $e
+	 * @param  \Exception  $exception
 	 * @return \Illuminate\Http\Response
 	 */
-	public function render($request, Exception $e)
+	public function render($request, Exception $exception)
 	{
 		//if (/*!config('app.debug', false) &&*/ app()->environment() == 'production')
 		//{
 			// 当findOrFail等情况下出现的报错
-			if($e instanceof ModelNotFoundException)
+			if($exception instanceof ModelNotFoundException)
 			{
-				$traces = $e->getTrace();$file = $line = '';
+				$traces = $exception->getTrace();$file = $line = '';
 				foreach ($traces as $key => $value)
 					if (isset($value['class']) && $value['class'] == 'Addons\\Core\\Models\\Model')
 					{
@@ -56,15 +60,30 @@ class Handler extends ExceptionHandler
 						break;
 					}
 				unset($traces);
-				//$e = new NotFoundHttpException($e->getMessage(), $e);
-				return (new Controller(false))->failure('document.failure_model_noexist', FALSE, ['model' => $e->getModel(), 'file' => $file ,'line' => $line]);
+				//$exception = new NotFoundHttpException($exception->getMessage(), $exception);
+				return (new Controller(false))->failure('document.failure_model_noexist', FALSE, ['model' => $exception->getModel(), 'file' => $file ,'line' => $line]);
 			}
-			else if ($e instanceof TokenMismatchException)
+			else if ($exception instanceof TokenMismatchException)
 				return (new Controller(false))->failure('validation.failure_csrf');
 
 			// other 500 errors
 		//}
 
-		return parent::render($request, $e);
+		return parent::render($request, $exception);
+	}
+	/**
+	 * Convert an authentication exception into an unauthenticated response.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Illuminate\Auth\AuthenticationException  $exception
+	 * @return \Illuminate\Http\Response
+	 */
+	protected function unauthenticated($request, AuthenticationException $exception)
+	{
+		if ($request->expectsJson()) {
+			return response()->json(['error' => 'Unauthenticated.'], 401);
+		}
+
+		return redirect()->guest('login');
 	}
 }

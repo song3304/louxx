@@ -1,3 +1,6 @@
+/node_modules
+/public/storage
+/.idea
 /static/common
 /static/plugins
 /.tags
