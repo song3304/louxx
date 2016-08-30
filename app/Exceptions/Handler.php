@@ -61,10 +61,10 @@ class Handler extends ExceptionHandler
 					}
 				unset($traces);
 				//$exception = new NotFoundHttpException($exception->getMessage(), $exception);
-				return (new Controller(false))->failure('document.failure_model_noexist', FALSE, ['model' => $exception->getModel(), 'file' => $file ,'line' => $line]);
+				return (new Controller())->failure('document.failure_model_noexist', FALSE, ['model' => $exception->getModel(), 'file' => $file ,'line' => $line]);
 			}
 			else if ($exception instanceof TokenMismatchException)
-				return (new Controller(false))->failure('validation.failure_csrf');
+				return (new Controller())->failure('validation.failure_csrf');
 
 			// other 500 errors
 		//}
@@ -81,9 +81,9 @@ class Handler extends ExceptionHandler
 	protected function unauthenticated($request, AuthenticationException $exception)
 	{
 		if ($request->expectsJson()) {
-			return response()->json(['error' => 'Unauthenticated.'], 401);
+			return (new Controller())->failure('auth.failure_unlogin');//response()->json(['error' => 'Unauthenticated.'], 401);
 		}
 
-		return redirect()->guest('login');
+		return redirect()->guest('auth');
 	}
 }
