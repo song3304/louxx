@@ -14,7 +14,7 @@ class CreateAttachmentsTable extends Migration
 	{
 		Schema::create('attachment_files', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('basename', 255)->index()->comment = '存储的文件名'; //本地文件名
+			$table->string('basename', 255)->comment = '存储的文件名'; //本地文件名
 			$table->string('path', 255)->comment = '存储文件路径'; //本地文件名
 			$table->string('hash', 50)->index()->comment = '文件MD5'; //文件的MD5
 			$table->unsignedInteger('size')->index()->comment = '文件大小'; //文件大小
@@ -43,7 +43,7 @@ class CreateAttachmentsTable extends Migration
 			$table->unsignedInteger('index')->default(0)->index()->comment = '第几块'; //第几块
 			$table->unsignedInteger('start')->default(0)->index()->comment = '起始字节'; //起始字节
 			$table->unsignedInteger('end')->default(0)->index()->comment = '结束字节'; //结束字节
-			$table->string('basename', 255)->index()->comment = '存储的文件名'; //本地文件名
+			$table->string('basename', 255)->comment = '存储的文件名'; //本地文件名
 			$table->string('path', 255)->comment = '存储文件路径'; //本地文件名
 			$table->string('hash', 50)->index()->comment = '文件MD5'; //文件的MD5
 			$table->unsignedInteger('size')->index()->comment = '文件大小'; //文件大小

@@ -22,10 +22,10 @@ class CreateCommonTable extends Migration
 			$table->increments('id');
 			$table->string('name', 150)->index()->comment = '英文名称'; //英文名称
 			$table->string('title', 150)->comment = '名称'; //名称
-			$table->json('extra')->comment = '扩展数据'; //扩展
+			$table->text('extra')->nullable()->comment = '扩展数据'; //扩展
 			$table->unsignedInteger('pid')->default(0)->index()->_comment = '父ID'; //父ID
 			$table->unsignedInteger('order_index')->default(0)->index()->comment = '排序序号'; //排序
-			$table->string('field_class', 50)->index()->comment = '类别'; //类别
+			$table->string('field_class', 50)->nullable()->index()->comment = '类别'; //类别
 			$table->timestamps();
 //			$table->softDeletes(); //软删除
 

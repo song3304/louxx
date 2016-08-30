@@ -177,7 +177,7 @@ class CreateWechatTable extends Migration
 			//tree
 			$table->unsignedInteger('order')->default(0)->index()->comment = 'TREE排序';
 			$table->unsignedInteger('level')->default(0)->index()->comment = 'TREE等级';
-			$table->string('path', '250')->index()->comment = 'TREE路径';
+			$table->string('path', '250')->comment = 'TREE路径';
 
 			$table->timestamps();
 
