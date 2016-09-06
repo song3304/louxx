@@ -90,6 +90,6 @@ return [
     |
     */
 
-    'prefix' => md5(env('APP_URL')),
+    'prefix' => substr(md5(env('APP_URL')), 16, 16),
 
 ];
