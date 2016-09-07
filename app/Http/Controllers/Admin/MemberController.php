@@ -38,7 +38,7 @@ class MemberController extends Controller
 		$data = $this->_getData($request, $builder, null, ['users.*']);
 		$data['recordsTotal'] = $total;
 		$data['recordsFiltered'] = $data['total'];
-		return $this->success('', FALSE, $data);
+		return $this->api($data);
 	}
 
 	public function export(Request $request)
@@ -60,7 +60,7 @@ class MemberController extends Controller
 		$data = $this->_getExport($request, $builder, function(&$v){
 			$v['_gender'] = !empty($v['_gender']) ? $v['_gender']['title'] : NULL;
 		}, ['users.*']);
-		return $this->success('', FALSE, $data);
+		return $this->api($data);
 	}
 
 	public function show($id)
