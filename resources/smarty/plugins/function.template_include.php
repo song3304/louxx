@@ -62,7 +62,7 @@ function smarty_function_template_include($params, $template)
 			break;
 	}
 
-	$template->smarty->ext->_subtemplate->render($template, 'templates/'.$tpl->name.'.tpl', $template->cache_id, $template->compile_id, 0, $template->cache_lifetime, $scope, 0, true);
+	$template->_subTemplateRender('templates/'.$tpl->name.'.tpl', $template->cache_id, $template->compile_id, 0, $template->cache_lifetime, $scope, 0, true);
 }
 
 ?>
