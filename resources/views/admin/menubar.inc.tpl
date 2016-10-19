@@ -25,23 +25,11 @@
 						<a href="javascript:void(0)" class="btn btn-primary" id="options-header-inverse">深色</a>
 					</div>
 				</li>
-				<li class="dropdown-header text-center">菜单栏</li>
-				<li>
-					<button class="btn btn-sm btn-block btn-primary" id="options-header-top">固定顶部</button>
-					<button class="btn btn-sm btn-block btn-primary" id="options-header-bottom">固定底部</button>
-				</li>
 				<li class="dropdown-header text-center">页面风格</li>
 				<li>
 					<div class="btn-group btn-group-justified btn-group-sm">
 						<a href="javascript:void(0)" class="btn btn-primary" id="options-main-style">内容深色</a>
 						<a href="javascript:void(0)" class="btn btn-primary" id="options-main-style-alt">标题深色</a>
-					</div>
-				</li>
-				<li class="dropdown-header text-center">版权栏</li>
-				<li>
-					<div class="btn-group btn-group-justified btn-group-sm">
-						<a href="javascript:void(0)" class="btn btn-primary" id="options-footer-static">跟随页面</a>
-						<a href="javascript:void(0)" class="btn btn-primary" id="options-footer-fixed">固定</a>
 					</div>
 				</li>
 			</ul>

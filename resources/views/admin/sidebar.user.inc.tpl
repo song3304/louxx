@@ -1,5 +1,5 @@
 <!-- User Info -->
-<div class="sidebar-section sidebar-user clearfix">
+<div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
 	<div class="sidebar-user-avatar">
 		<a href="<{'admin/member'|url}>/<{$_user->getKey()}>">
 			<img src="<{'attachment'|url}>?id=<{$_user.avatar_aid}>" alt="avatar">

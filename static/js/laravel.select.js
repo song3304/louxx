@@ -19,7 +19,7 @@ $().ready(function(){
 					data.push({'id': id ? replaceData(items[i], id) : items[i].id, 'text': text ? replaceData(items[i], text) : items[i].text});
 				
 			} 
-			$this.select2({language: "zh-CN", data: data, allowClear: true});console.log(value);
+			$this.select2({language: "zh-CN", data: data, allowClear: true});
 			$this.val(value ? value.split(',') : null).trigger("change");
 		}, false);
 	});

@@ -2,7 +2,7 @@
 $().ready(function(){
 	var options_query = function(obj) {
 		$('a[method="delete"]', obj).query(function(json){
-			if (json.result == 'success' && json.data.id) {
+			if ((json.result == 'success' || json.result == 'api') && json.data.id) {
 				if ($.datatable_config && $.datatable_config.datatable)
 					$.datatable_config.datatable.ajax.reload(null, false);
 				else
@@ -175,7 +175,7 @@ $().ready(function(){
 					});
 				},
 				dataSrc: function(json){
-					if (json.result == 'success') {
+					if (json.result == 'success' || json.result == 'api') {
 						json.recordsTotal = json.data.recordsTotal;
 						json.recordsFiltered = json.data.recordsFiltered;
 						json.data.data.forEach(function(v, k){v['DT_RowId'] = 'line-' + (v['id'] ? v['id'] : k);});

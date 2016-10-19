@@ -22,6 +22,6 @@ class Hit extends Model
 
 Hit::creating(function($hit){
 	$request = app('request');
-	$hit->ip = $request->getClientIp();
+	$hit->ip = ip2long($request->getClientIp());
 	$hit->agent = $request->header('User-Agent');
 });
