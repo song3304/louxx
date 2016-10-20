@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'connection' => 'session',
+    'connection' => 'session', //reids => session, database => null
 
     /*
     |--------------------------------------------------------------------------

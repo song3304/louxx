@@ -21,7 +21,7 @@
 <div class="form-group">
 	<label class="col-md-3 control-label" for="avatar_aid">头像</label>
 	<div class="col-md-9">
-		<input type="hidden" id="avatar_aid" name="avatar_aid" class="form-control" value="<{$_data.avatar_aid}>">
+		<input type="hidden" id="avatar_aid" name="avatar_aid" class="form-control" value="<{$_data.avatar_aid|default:0}>">
 	</div>
 </div>
 <div class="form-group">
