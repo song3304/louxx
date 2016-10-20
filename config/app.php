@@ -178,7 +178,7 @@ return [
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
 		//Debuger
-		//Barryvdh\Debugbar\ServiceProvider::class,
+		Barryvdh\Debugbar\ServiceProvider::class,
 		//验证码
 		Mews\Captcha\CaptchaServiceProvider::class,
 		//验证体系
@@ -187,6 +187,8 @@ return [
 		Jenssegers\Agent\AgentServiceProvider::class,
 		//图片处理库
 		Intervention\Image\ImageServiceProvider::class,
+		//第三方登录
+		SocialiteProviders\Manager\ServiceProvider::class,
 	],
 
 	/*
