@@ -3,7 +3,10 @@
 <{block "head-styles-plus"}>
 <link rel="stylesheet" href="<{'static/css/proui/datatable.css'|url}>">
 <{/block}>
-
+<{block "head-scripts-common"}>
+<script src="<{'static/js/jsencrypt.min.js'|url}>"></script>
+<script src="<{'static/js/common.js'|url}>"></script>
+<{/block}>
 <{block "head-scripts-plus"}>
 <link rel="stylesheet" href="<{'static/js/bootstrap-slider/bootstrap-slider.min.css'|url}>">
 <script src="<{'static/js/bootstrap-slider/bootstrap-slider.min.js'|url}>"></script>
