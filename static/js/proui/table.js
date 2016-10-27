@@ -176,10 +176,6 @@ $().ready(function(){
 				},
 				dataSrc: function(json){
 					if (json && json.result == 'success' || json.result == 'api') {
-						if (json.encrypt && $.ssl) {
-							var key = $.ssl.decrypt(json.key);
-							console.log(key);
-						}
 						json.recordsTotal = json.data.recordsTotal;
 						json.recordsFiltered = json.data.recordsFiltered;
 						json.data.data.forEach(function(v, k){v['DT_RowId'] = 'line-' + (v['id'] ? v['id'] : k);});
