@@ -13,7 +13,7 @@ $().ready(function(){
 		var value = $this.attr('value');
 		$.POST($.baseuri + $this.data('model')+'/data/json', {all: 'true'}, function(json){
 			var data = [];
-			if (json.result == 'success') {
+			if (json.result == 'success' || json.result == 'api') {
 				var items = json.data.data;
 				for(var i = 0; i < items.length; ++i)
 					data.push({'id': id ? replaceData(items[i], id) : items[i].id, 'text': text ? replaceData(items[i], text) : items[i].text});
@@ -47,6 +47,7 @@ $().ready(function(){
 					return v;
 				},
 				processResults: function (json, page) {
+					if (json.result != 'success' && json.result != 'api') return {result: []};
 					var data = [], items = json.data.data;
 					for(var i = 0; i < items.length; ++i)
 						data.push({'id': id ? replaceData(items[i], id) : items[i].id, 'text': text ? replaceData(items[i], text) : items[i].text, 'selection': selection ? replaceData(items[i], selection) : items[i].selection});
@@ -62,7 +63,7 @@ $().ready(function(){
 		};
 		if (value) {
 			$.POST($.baseuri + $this.data('model')+'/data/json', {'filters[id][in]': value.split(',')}, function(json){
-				if (json.result == 'success') {
+				if (json.result == 'success' || json.result == 'api') {
 					var items = json.data.data;
 					for(var i = 0; i < items.length; ++i)
 						$('<option value="'+(id ? replaceData(items[i], id) : items[i].id)+'" selected="selected">'+(text ? replaceData(items[i], text) : items[i].text)+'</option>').appendTo($this);				
@@ -89,8 +90,8 @@ $().ready(function(){
 						return v;
 					},
 					processResults: function (json, page) {
+						if (json.result != 'success' && json.result != 'api') return {result: []};
 						var data = [], items = json.data.data;
-						console.log(items);
 						for(var i = 0; i < items.length; ++i)
 							data.push({'id': items[i].keywords, 'text': items[i].keywords + ' <span class="text-muted">('+ (items[i].count || 0) + '次使用)</span>', 'selection': items[i].keywords });
 						return {results: data};
