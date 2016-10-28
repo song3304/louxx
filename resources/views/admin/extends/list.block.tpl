@@ -1,7 +1,7 @@
 <{extends file="admin/extends/main.block.tpl"}>
 
 <{block "head-scripts-plus"}>
-<script src="<{'static/js/proui/table.js'|url}>"></script>
+<script src="<{'static/js/proui/table.min.js'|url}>"></script>
 <script src="<{'static/js/DatePicker/WdatePicker.js'|url}>"></script>
 
 <script>

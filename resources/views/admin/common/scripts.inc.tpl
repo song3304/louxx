@@ -27,10 +27,10 @@
 <link rel="stylesheet" href="<{'static/js/select2.4/select2.min.css'|url}>"></script>
 <script src="<{'static/js/select2.4/select2.min.js'|url}>"></script>
 <script src="<{'static/js/select2.4/i18n/zh-CN.js'|url}>"></script>
-<script src="<{'static/js/laravel.select.js'|url}>"></script>
+<script src="<{'static/js/laravel.select.min.js'|url}>"></script>
 <{/block}>
 <{block "head-scripts-app"}>
-<script src="<{'static/js/proui/app.js'|url}>"></script>
+<script src="<{'static/js/proui/app.min.js'|url}>"></script>
 <{/block}>
 <script>
 (function($){

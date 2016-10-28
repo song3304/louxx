@@ -3,12 +3,12 @@
 <link rel="stylesheet" href="<{'static/css/bootstrap3/bootstrap.min.css'|url}>">
 <link rel="stylesheet" href="<{'static/css/font-awesome.min.css'|url}>">
 <link rel="stylesheet" href="<{'static/css/font-glyphicons.min.css'|url}>">
-<!-- <link rel="stylesheet" href="<{'static/css/proui/plugins.css'|url}>"> -->
+<!-- <link rel="stylesheet" href="<{'static/css/proui/plugins.min.css'|url}>"> -->
 
 
 <link rel="stylesheet" href="<{'static/css/animate.min.css'|url}>">
-<link rel="stylesheet" href="<{'static/css/proui/main.css'|url}>">
-<link rel="stylesheet" href="<{'static/css/proui/themes.css'|url}>">
+<link rel="stylesheet" href="<{'static/css/proui/main.min.css'|url}>">
+<link rel="stylesheet" href="<{'static/css/proui/themes.min.css'|url}>">
 <!-- END Stylesheets -->
 <!--[if lte IE 8]>
 <script src="<{'static/js/bootstrap3/respond.min.js'|url}>"></script>

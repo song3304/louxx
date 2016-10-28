@@ -1,7 +1,7 @@
 <{extends file="admin/extends/list.block.tpl"}>
 
 <{block "head-styles-plus"}>
-<link rel="stylesheet" href="<{'static/css/proui/datatable.css'|url}>">
+<link rel="stylesheet" href="<{'static/css/proui/datatable.min.css'|url}>">
 <{/block}>
 <{block "head-scripts-common"}>
 <script src="<{'static/js/jsencrypt.min.js'|url}>"></script>
