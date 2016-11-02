@@ -1,17 +1,17 @@
 <{extends file="admin/extends/list.block.tpl"}>
 
 <{block "head-styles-plus"}>
-<link rel="stylesheet" href="<{'static/css/proui/datatable.min.css'|url}>">
+<link rel="stylesheet" href="<{'css/proui/datatable.min.css'|static}>">
 <{/block}>
 <{block "head-scripts-common"}>
-<script src="<{'static/js/jsencrypt.min.js'|url}>"></script>
-<script src="<{'static/js/common.js'|url}>"></script>
+<script src="<{'js/jsencrypt.min.js'|static}>"></script>
+<script src="<{'js/common.js'|static}>"></script>
 <{/block}>
 <{block "head-scripts-plus"}>
-<link rel="stylesheet" href="<{'static/js/bootstrap-slider/bootstrap-slider.min.css'|url}>">
-<script src="<{'static/js/bootstrap-slider/bootstrap-slider.min.js'|url}>"></script>
-<script src="<{'static/js/DatePicker/WdatePicker.js'|url}>"></script>
-<script src="<{'static/js/datatable/jquery.dataTables.min.js'|url}>"></script>
+<link rel="stylesheet" href="<{'js/bootstrap-slider/bootstrap-slider.min.css'|static}>">
+<script src="<{'js/bootstrap-slider/bootstrap-slider.min.js'|static}>"></script>
+<script src="<{'js/DatePicker/WdatePicker.js'|static}>"></script>
+<script src="<{'js/datatable/jquery.dataTables.min.js'|static}>"></script>
 <script>
 (function($){
 	$().ready(function(){
@@ -103,7 +103,7 @@
 	});
 })(jQuery);
 </script>
-<script src="<{'static/js/proui/table.js'|url}>"></script>
+<script src="<{'js/proui/table.min.js'|static}>"></script>
 <{/block}>
 
 <{block "table-tbody"}><{/block}>

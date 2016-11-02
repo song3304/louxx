@@ -12,7 +12,7 @@
 	<{include file="common/icons.inc.tpl"}>
 	<{include file="admin/common/styles.inc.tpl"}>
 	<{include file="admin/common/scripts.inc.tpl"}>
-	<script src="<{'static/js/chart/flot/jquery.flot.min.js'|url}>"></script>
+	<script src="<{'js/chart/flot/jquery.flot.min.js'|static}>"></script>
 </head>
 
 <body class="page-loading">

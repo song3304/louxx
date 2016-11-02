@@ -28,8 +28,8 @@
 <{/block}>
 
 <{block "head-scripts-after"}>
-<link rel="stylesheet" href="<{'static/js/bootstrap-slider/bootstrap-slider.min.css'|url}>">
-<script src="<{'static/js/bootstrap-slider/bootstrap-slider.min.js'|url}>"></script>
+<link rel="stylesheet" href="<{'js/bootstrap-slider/bootstrap-slider.min.css'|static}>">
+<script src="<{'js/bootstrap-slider/bootstrap-slider.min.js'|static}>"></script>
 <{/block}>
 
 <{block "header"}>
