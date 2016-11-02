@@ -24,5 +24,6 @@ class VerifyCsrfToken extends BaseVerifier
 		'wechat/push',
 		'wechat/feedback/*',
 		'wechat/feedback/*/*',
+		'install/*',
 	];
 }
