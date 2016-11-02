@@ -17,6 +17,7 @@ class CreateRolesTable extends Migration
 			$table->string('name', 150)->unique()->comment = '用户组名(英文)';
 			$table->string('display_name')->nullable()->comment = '显示名称';
 			$table->string('description')->nullable()->comment = '摘要';
+			$table->integer('pid')->unsigned()->default(0)->comment = 'PID';
 			$table->string('url', 250)->nullable()->comment = '网址';
 			$table->timestamps();
 		});

@@ -3,8 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
-class Hit extends Model
+use Jenssegers\Agent\Agent;
+class Log extends Model
 {
     protected $guarded = ['id'];
 	protected $hidden = [];
@@ -20,8 +20,11 @@ class Hit extends Model
 	}
 }
 
-Hit::creating(function($hit){
+Log::creating(function($log){
 	$request = app('request');
-	$hit->ip = ip2long($request->getClientIp());
-	$hit->agent = $request->header('User-Agent');
+	$agent = new Agent();
+	$log->ip = ip2long($request->getClientIp());
+	$log->agent = $request->header('User-Agent');
+	$log->device = $agent->isDesktop() ? $agent->platform() : $agent->device();
+	
 });

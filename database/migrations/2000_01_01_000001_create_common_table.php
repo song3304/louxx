@@ -43,29 +43,30 @@ class CreateCommonTable extends Migration
 		});
 		
 		 Schema::create('tags', function (Blueprint $table) {
-	            $table->increments('id');
-	            $table->string('keywords', 100)->index()->_comment = "关键词";
-	            $table->timestamps();
+			$table->increments('id');
+			$table->string('keywords', 100)->index()->_comment = "关键词";
+			$table->timestamps();
+		});
 
-	        });
-
-	        //评价
-        Schema::create('taggables', function (Blueprint $table) {
-            $table->increments('id');
-            $table->morphs('taggable');
-            $table->unsignedInteger('tag_id')->index()->_comment = 'tags ID';
+			//评价
+		Schema::create('taggables', function (Blueprint $table) {
+			$table->increments('id');
+			$table->morphs('taggable');
+			$table->unsignedInteger('tag_id')->index()->_comment = 'tags ID';
 
 			$table->foreign('tag_id')->references('id')->on('tags')->onUpdate('cascade')->onDelete('cascade');
 		});
 
 		//点击
-		Schema::create('hits', function (Blueprint $table) {
+		Schema::create('logs', function (Blueprint $table) {
 			$table->increments('id');
 
 			$table->unsignedInteger('uid')->nullable()->default(0)->_comment = '用户 ID';
 			$table->bigInteger('ip')->default(0)->_comment = 'IP';
 			$table->string('agent', 250)->nullable()->_comment = 'User Agent';
-            $table->morphs('table');
+			$table->string('device', 50)->nullable()->_comment = '设备';
+			$table->string('event', 250)->nullable()->_comment = '事件';
+			$table->morphs('table');
 			$table->timestamps();
 
 		});
