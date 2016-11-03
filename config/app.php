@@ -183,7 +183,7 @@ return [
 		//验证码
 		Mews\Captcha\CaptchaServiceProvider::class,
 		//验证体系
-		Zizaco\Entrust\EntrustServiceProvider::class,
+		Addons\Entrust\ServiceProvider::class,
 		//判断客户端和操作系统
 		Jenssegers\Agent\AgentServiceProvider::class,
 		//图片处理库
@@ -238,9 +238,8 @@ return [
 		'View'      => Illuminate\Support\Facades\View::class,
 
 		//'Debugbar' => 'Barryvdh\Debugbar\Facade::class',
-		'Core'      => Addons\Core\Facades\Core::class,
 		'Captcha' => Mews\Captcha\Facades\Captcha::class,
-		'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+		'Entrust' => Addons\Entrust\Facade::class,
 		'Agent' => Jenssegers\Agent\Facades\Agent::class,
 		'Image' => Intervention\Image\Facades\Image::class,
 	],
