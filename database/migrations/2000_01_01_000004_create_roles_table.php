@@ -13,11 +13,11 @@ class CreateRolesTable extends Migration
 	{
 		// Create table for storing roles
 		Schema::create('roles', function (Blueprint $table) {
-			$table->increments('id');
+			$table->integer('id', true);
 			$table->string('name', 150)->unique()->comment = '用户组名(英文)';
 			$table->string('display_name')->nullable()->comment = '显示名称';
 			$table->string('description')->nullable()->comment = '摘要';
-			$table->integer('pid')->unsigned()->default(0)->comment = 'PID';
+			$table->integer('pid')->default(0)->comment = 'PID';
 			$table->string('url', 250)->nullable()->comment = '网址';
 			$table->timestamps();
 		});
@@ -25,7 +25,7 @@ class CreateRolesTable extends Migration
 		// Create table for associating roles to users (Many-to-Many)
 		Schema::create('role_user', function (Blueprint $table) {
 			$table->integer('user_id')->unsigned()->comment = '用户ID';
-			$table->integer('role_id')->unsigned()->comment = '用户组ID';
+			$table->integer('role_id')->comment = '用户组ID';
 
 			$table->foreign('user_id')->references('id')->on('users')
 				->onUpdate('cascade')->onDelete('cascade');
@@ -47,7 +47,7 @@ class CreateRolesTable extends Migration
 		// Create table for associating permissions to roles (Many-to-Many)
 		Schema::create('permission_role', function (Blueprint $table) {
 			$table->integer('permission_id')->unsigned()->comment = '权限ID';
-			$table->integer('role_id')->unsigned()->comment = '用户组ID';
+			$table->integer('role_id')->comment = '用户组ID';
 
 			$table->foreign('permission_id')->references('id')->on('permissions')
 				->onUpdate('cascade')->onDelete('cascade');
