@@ -21,7 +21,8 @@ class Seeds extends Migration
 		};
 
 		\DB::transaction(function() use ($fill) {
-			DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+			\Illuminate\Database\Eloquent\Model::unguard(true);
+			\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 			\DB::table('catalogs')->truncate();
 			\DB::table('permission_role')->truncate();
 			\DB::table('permission_user')->truncate();
@@ -63,7 +64,7 @@ class Seeds extends Migration
 				'name' => '10',
 				'title' => '',
 			])->create([
-				'name' => 'none',
+				'name' => '',
 				'title' => '无'
 			])->update(['id' => 0]);
 			DB::statement("ALTER TABLE `catalogs` AUTO_INCREMENT = 11;");
@@ -207,7 +208,7 @@ class Seeds extends Migration
 				'password' => '123456',
 				'nickname' => '超级管理员',
 			], 'super');
-
+			\Illuminate\Database\Eloquent\Model::unguard(false);
 		});
 	}
 
