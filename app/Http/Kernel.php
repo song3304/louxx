@@ -53,8 +53,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'role' => \Addons\Core\Middleware\Role::class,
-        'permission' => \Addons\Core\Middleware\Permission::class,
-        'ability' =>\Addons\Core\Middleware\Ability::class,
+        'role' => \Addons\Entrust\Middleware\Role::class,
+        'permission' => \Addons\Entrust\Middleware\Permission::class,
     ];
 }

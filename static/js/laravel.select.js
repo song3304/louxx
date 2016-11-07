@@ -6,17 +6,27 @@ $().ready(function(){
 			return data[$1];
 		});
 	}
+	var recursion = function(items, id, text) {
+		var result = [];
+		for(var i = 0; i < items.length; ++i) {
+			var d = {'id': id ? replaceData(items[i], id) : items[i].id, 'text': text ? replaceData(items[i], text) : items[i].text};
+			if (typeof items[i]['children'] == 'object' && typeof items[i]['children'].length != 'undefinded')
+				d['children'] = recursion(items[i]['children'], id, text);
+			result.push(d);
+		}
+		return result;
+	}
 	$('.select-model').each(function(){
 		var $this = $(this);
 		var id = $this.data('id');
 		var text = $this.data('text');
+		var params = $this.data('params');
 		var value = $this.attr('value');
-		$.POST($.baseuri + $this.data('model')+'/data/json', {all: 'true'}, function(json){
+		$.POST($.baseuri + $this.data('model')+'/data/json', $.extend({}, {all: 'true'}, params), function(json){
 			var data = [];
 			if (json.result == 'success' || json.result == 'api') {
 				var items = json.data.data;
-				for(var i = 0; i < items.length; ++i)
-					data.push({'id': id ? replaceData(items[i], id) : items[i].id, 'text': text ? replaceData(items[i], text) : items[i].text});
+				data = recursion(items, id, text);
 				
 			} 
 			$this.select2({language: "zh-CN", data: data, allowClear: true});

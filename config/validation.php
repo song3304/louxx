@@ -27,7 +27,7 @@ return [
 			],
 			'gender' => [
 				'name' => '性别',
-				'rules' => 'required|not_zero|field',
+				'rules' => 'required|not_zero|catalog:fields.gender',
 			],
 			'phone' => [
 				'name' => '手机',

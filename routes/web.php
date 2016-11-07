@@ -22,7 +22,7 @@ $router->addAnyActionRoutes([
 	'wechat',
 ]);
 
-$router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'role:admin,manager,owner,leader']], function($router) {
+$router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'role:administrator']], function($router) {
 	
 	$router->addAdminRoutes([
 		'member' => 'MemberController',

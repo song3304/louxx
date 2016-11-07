@@ -50,8 +50,8 @@ class AuthController extends Controller
 
 	public function choose()
 	{
-		$user = Auth::user();
-		$this->_roles = $user->roles()->whereIn('roles.name',['admin','manager','owner','leader'])->get();
+		$user = $this->guard()->user();
+		$this->_roles = $user->roles;
 		return $this->_roles->count() == 1 ? redirect($this->_roles[0]->url) : $this->view('auth.choose');
 	}
 
@@ -84,8 +84,8 @@ class AuthController extends Controller
 			$this->clearLoginAttempts($request);
 
 			$user = $this->guard()->user();
-			$roles = $user->roles()->whereIn('roles.name',['admin','manager','owner','leader'])->get();
-			return $this->success_login($roles->count() >= 1 ? 'auth/choose' :$request->session()->pull('url.intended', '')); // redirect to the prevpage or homepage
+			$roles = $user->roles;
+			return $this->success_login($roles->count() >= 1 ? 'auth/choose' : $request->session()->pull('url.intended', $this->_roles[0]->url)); // redirect to the prevpage or url
 		} else {
 			//记录重试次数
 			$throttles && $this->incrementLoginAttempts($request);

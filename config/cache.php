@@ -91,5 +91,5 @@ return [
     */
 
     'prefix' => substr(md5(env('APP_URL')), 16, 16),
-
+    'ttl' => env('CACHE_TTL', 1440),
 ];

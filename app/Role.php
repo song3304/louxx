@@ -1,9 +1,9 @@
 <?php
-
 namespace App;
 
-use Addons\Core\Models\Role as BaseRole;
+use Addons\Entrust\Role as BaseRole;
 
 class Role extends BaseRole
 {
+	
 }

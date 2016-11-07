@@ -72,15 +72,15 @@ class Seeds extends Migration
 			$fields = [
 				'gender|性别' => [
 					'male|男' => [],
-					'female|男女' => [],
+					'female|女' => [],
 				],
 				'wechat|微信' => [
-					'wechat_type|公众号类型' => [
+					'type|公众号类型' => [
 						'news|订阅号' => [],
 						'service|服务号' => [],
 						'enterprise|企业号' => [],
 					],
-					'wechat_message_type|消息类型' => [
+					'message_type|消息类型' => [
 						'depot|素材' => [],
 						'news|图文' => [],
 						'image|图片' => [],
@@ -95,7 +95,7 @@ class Seeds extends Migration
 						'callback|回调' => [],
 						'event|事件' => [],
 					],
-					'wechat_event_type|事件类型' => [
+					'event_type|事件类型' => [
 						'subscribe|关注' => [],
 						'unsubscribe|取消关注' => [],
 						'SCAN|扫描二维码' => [],
@@ -133,6 +133,36 @@ class Seeds extends Migration
 				'url' => '',
 			])->create([
 				'id' => 3,
+				'name' => 'extra3',
+				'display_name' => '其他用户组3',
+				'url' => '',
+			])->create([
+				'id' => 4,
+				'name' => 'extra4',
+				'display_name' => '其它用户组4',
+				'url' => '',
+			])->create([
+				'id' => 5,
+				'name' => 'extra5',
+				'display_name' => '其它用户组5',
+				'url' => '',
+			])->create([
+				'id' => 6,
+				'name' => 'extra6',
+				'display_name' => '其它用户组6',
+				'url' => '',
+			])->create([
+				'id' => 7,
+				'name' => 'extra7',
+				'display_name' => '其它用户组7',
+				'url' => '',
+			])->create([
+				'id' => 8,
+				'name' => 'extra8',
+				'display_name' => '其它用户组8',
+				'url' => '',
+			])->create([
+				'id' => 9,
 				'name' => 'administrator',
 				'display_name' => '管理用户组',
 				'url' => '',
@@ -142,38 +172,67 @@ class Seeds extends Migration
 				'display_name' => '访客(无下级分类)',
 				'url' => '',
 			])->update(['id' => 0]);
-			DB::statement("ALTER TABLE `roles` AUTO_INCREMENT = 4;");
-
+			//添加受限 子项
+			$role = \App\Role::findByName('forbidden')->children();
+			$role->create([
+				'id' => '-10',
+				'name' => 'banned',
+				'display_name' => '禁止登录',
+				'url' => '',
+			]);
+			$role->create([
+				'id' => '-9',
+				'name' => 'zombie',
+				'display_name' => '禁止交互',
+				'url' => '',
+			]);
+			$role->create([
+				'id' => '-2',
+				'name' => 'pending',
+				'display_name' => '待验证',
+				'url' => '',
+			]);
+			DB::statement("ALTER TABLE `roles` AUTO_INCREMENT = 10;");
 			//添加管理员 子项
-			\App\Role::findByName('administrator')->children()
-			->create([
+			$role = \App\Role::findByName('administrator')->children();
+			$role->create([
 				'name' => 'super',
 				'display_name' => '超级管理员',
 				'url' => 'admin',
-			])
-			->create([
+			]);
+			$role->create([
 				'name' => 'manager',
 				'display_name' => '产品经理',
 				'url' => 'admin',
-			])
-			->create([
+			]);
+			$role->create([
 				'name' => 'editor',
 				'display_name' => '编辑',
 				'url' => 'admin',
 			]);
-			//添加受限 子项
-			\App\Role::findByName('forbidden')->children()
-			->create([
-				'id' => '-10',
-				'name' => 'banned',
-				'display_name' => '黑名单',
-				'url' => 'admin',
-			])
-			->create([
-				'id' => '-2',
-				'name' => 'pending',
-				'display_name' => '待验证',
-				'url' => 'admin',
+			//添加普通用户 子项
+			$role = \App\Role::findByName('user')->children();
+			$role->create([
+				'name' => 'user1',
+				'display_name' => '普通用户',
+				'url' => '',
+			]);
+			$role->create([
+				'name' => 'user2',
+				'display_name' => '活跃用户',
+				'url' => '',
+			]);
+			//添加VIP 子项
+			$role = \App\Role::findByName('vip')->children();
+			$role->create([
+				'name' => 'vip1',
+				'display_name' => 'VIP 1',
+				'url' => '',
+			]);
+			$role->create([
+				'name' => 'vip2',
+				'display_name' => 'VIP 2',
+				'url' => '',
 			]);
 
 			//添加权限

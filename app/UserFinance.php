@@ -1,9 +1,12 @@
 <?php
-
 namespace App;
 
-use Addons\Core\Models\UserFinance as BaseUserFinance;
+use Addons\Core\Models\Model;
 
-class UserFinance extends BaseUserFinance 
+class UserFinance extends Model 
 {
+	public function user()
+	{
+		return $this->hasOne('App\\User', 'id', 'id');
+	}
 }

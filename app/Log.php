@@ -1,9 +1,9 @@
 <?php
-
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Addons\Core\Models\Model;
 use Jenssegers\Agent\Agent;
+
 class Log extends Model
 {
     protected $guarded = ['id'];

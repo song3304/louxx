@@ -166,7 +166,7 @@ return [
 		Illuminate\View\ViewServiceProvider::class,
 
 		//Smarty注入模块
-		Addons\Smarty\View\ServiceProvider::class,
+		Addons\Smarty\ServiceProvider::class,
 		//Core before RouteServiceProvider
 		Addons\Core\ServiceProvider::class,
 
@@ -190,6 +190,8 @@ return [
 		Intervention\Image\ImageServiceProvider::class,
 		//第三方登录
 		SocialiteProviders\Manager\ServiceProvider::class,
+		//Oauth2-server
+		Laravel\Passport\PassportServiceProvider::class,
 	],
 
 	/*
