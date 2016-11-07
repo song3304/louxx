@@ -41,7 +41,7 @@ $().ready(function(){
 				iFilteredTotal: e.fnRecordsDisplay(),
 				iPage: Math.ceil(e._iDisplayStart / e._iDisplayLength),
 				iTotalPages: Math.ceil(e.fnRecordsDisplay() / e._iDisplayLength)
-			}
+			};
 		};
 		jQuery.extend(jQuery.fn.dataTableExt.oPagination, {
 			bootstrap: {
@@ -52,7 +52,7 @@ $().ready(function(){
 						t.preventDefault();
 						e._iDisplayLength = parseInt(e._iDisplayLength, 10);
 						e._iDisplayStart = parseInt(e._iDisplayStart, 10);
-						e.oApi._fnPageChange(e, t.data.action) && n(e);
+						if (e.oApi._fnPageChange(e, t.data.action)) n(e);
 					};
 					jQuery(t).append('<ul class="pagination pagination-sm remove-margin"><li class="first disabled"><a href="javascript:void(0)"><i class="glyphicon glyphicon-step-backward"></i> ' + i.sFirst + '</a></li><li class="prev disabled"><a href="javascript:void(0)"><i class="glyphicon glyphicon-chevron-left"></i> ' + i.sPrevious + '</a></li>' + '<li class="next disabled"><a href="javascript:void(0)">' + i.sNext + ' <i class="glyphicon glyphicon-chevron-right"></i></a></li><li class="last disabled"><a href="javascript:void(0)">' + i.sLast + ' <i class="glyphicon glyphicon-step-forward"></i></a></li>' + '<li class="more"><a href="javascript:void(0)"><i class="glyphicon glyphicon-option-horizontal"></i></a></li>' + "</ul>");
 					var o = jQuery('a', t);
@@ -86,7 +86,7 @@ $().ready(function(){
 						jQuery('li:not(.first,.prev,.next,.last,.more)', c[n]).remove();
 						var $more = jQuery('a:eq(4)', c[n]);
 						if (l.iTotalPages > 1)
-							$more.off('shown.bs.popover').on('shown.bs.popover',function(){
+							$more.off('shown.bs.popover').on('shown.bs.popover', function() {
 								jQuery('#datatable-paginate-slider').slider({
 									value: parseInt(l.iPage) + 1,
 									max: parseInt(l.iTotalPages),
@@ -95,7 +95,7 @@ $().ready(function(){
 									formatter: function(v){return 'Page: ' + v;}
 								}).on('slideStop', function(){
 									var p = parseInt(jQuery(this).data('slider').getValue());
-									e._iDisplayStart = (parseInt(p, 10) - 1) * l.iLength,
+									e._iDisplayStart = (parseInt(p, 10) - 1) * l.iLength;
 									t(e);
 									$more.popover('hide').blur();
 								});
@@ -103,14 +103,24 @@ $().ready(function(){
 							else
 								$more.hide();
 						for (i = o; a >= i; i++)
-							r = i === l.iPage + 1 ? 'class="active"': '',
+						{
+							r = i === l.iPage + 1 ? 'class="active"': '';
 							jQuery('<li ' + r + '><a href="javascript:void(0)">' + i + "</a></li>").insertBefore(jQuery('li.next', c[n])[0]).on('click', function(n) {
-								n.preventDefault(),
-								e._iDisplayStart = (parseInt(jQuery("a", this).text(), 10) - 1) * l.iLength,
-								t(e)
+								n.preventDefault();
+								e._iDisplayStart = (parseInt(jQuery("a", this).text(), 10) - 1) * l.iLength;
+								t(e);
 							});
-						0 === l.iPage ? jQuery('li.first,li.prev', c[n]).addClass('disabled') : jQuery('li.first,li.prev', c[n]).removeClass('disabled'),
-						l.iPage === l.iTotalPages - 1 || 0 === l.iTotalPages ? jQuery('li.last,li.next', c[n]).addClass('disabled') : jQuery('li.last,li.next', c[n]).removeClass('disabled')
+						}
+						
+						if (0 === l.iPage) //第一页
+							jQuery('li.first,li.prev', c[n]).addClass('disabled');
+						else 
+							jQuery('li.first,li.prev', c[n]).removeClass('disabled');
+						if (l.iPage === l.iTotalPages - 1 || 0 === l.iTotalPages) //尾页
+							jQuery('li.last,li.next', c[n]).addClass('disabled');
+						else
+							jQuery('li.last,li.next', c[n]).removeClass('disabled');
+						
 					}
 				}
 			}
@@ -149,7 +159,7 @@ $().ready(function(){
 				order: []
 			};
 			settings.aLastSort.forEach(function(v){
-				json.order.push([v['col'], v['dir']]);
+				json.order.push([v.col, v.dir]);
 			});
 			$.bbq.pushState(json);
 			return true;
@@ -178,7 +188,7 @@ $().ready(function(){
 					if (json && json.result == 'success' || json.result == 'api') {
 						json.recordsTotal = json.data.recordsTotal;
 						json.recordsFiltered = json.data.recordsFiltered;
-						json.data.data.forEach(function(v, k){v['DT_RowId'] = 'line-' + (v['id'] ? v['id'] : k);});
+						json.data.data.forEach(function(v, k){v.DT_RowId = 'line-' + (v.id ? v.id : k);});
 						return json.data.data;
 					}
 					 else 

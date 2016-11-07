@@ -5,17 +5,17 @@ $().ready(function(){
 		return format.replace(/\{([\w]+)\}/g, function($0, $1){
 			return data[$1];
 		});
-	}
+	};
 	var recursion = function(items, id, text) {
 		var result = [];
 		for(var i = 0; i < items.length; ++i) {
 			var d = {'id': id ? replaceData(items[i], id) : items[i].id, 'text': text ? replaceData(items[i], text) : items[i].text};
-			if (typeof items[i]['children'] == 'object' && typeof items[i]['children'].length != 'undefinded')
-				d['children'] = recursion(items[i]['children'], id, text);
+			if (typeof items[i].children == 'object' && typeof items[i].children.length != 'undefined')
+				d.children = recursion(items[i].children, id, text);
 			result.push(d);
 		}
 		return result;
-	}
+	};
 	$('.select-model').each(function(){
 		var $this = $(this);
 		var id = $this.data('id');
@@ -52,8 +52,8 @@ $().ready(function(){
 				delay: 250,
 				data: function (params) {
 					var v = {page: params.page, _token: $.crsf, filters: {}};
-					v['filters'][term] = {'like': params.term};
-					v['filters'] = $.extend({}, v['filters'], filters);
+					v.filters[term] = {'like': params.term};
+					v.filters = $.extend({}, v.filters, filters);
 					return v;
 				},
 				processResults: function (json, page) {
@@ -95,8 +95,8 @@ $().ready(function(){
 					delay: 250,
 					data: function (params) {
 						var v = {page: params.page, _token: $.crsf, filters: {}};
-						v['filters']['keywords'] = {'like': params.term};
-						v['filters'] = $.extend({}, v['filters'], filters);
+						v.filters.keywords = {'like': params.term};
+						v.filters = $.extend({}, v.filters, filters);
 						return v;
 					},
 					processResults: function (json, page) {

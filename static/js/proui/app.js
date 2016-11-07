@@ -143,9 +143,7 @@ var App = function($) {
 
 	/* Gets window width cross browser */
 	var getWindowWidth = function(){
-		return window.innerWidth
-				|| document.documentElement.clientWidth
-				|| document.body.clientWidth;
+		return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 	};
 
 	/* Sidebar Navigation functionality */
