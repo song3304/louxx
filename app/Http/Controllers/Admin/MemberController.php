@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\Role;
 use Addons\Core\Controllers\AdminTrait;
 
 class MemberController extends Controller
@@ -33,7 +34,12 @@ class MemberController extends Controller
 	{
 		$user = new User;
 		$builder = $user->newQuery()->with(['_gender', 'roles']);
-		$request->input('filters.role_id') && $builder->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
+		if ($roleId = $request->input('filters.role_id')){
+			$request->merge(['filters' => ['role_id' => NULL]]);
+			$role = Role::findByCache($roleId);
+			if (!empty($roleId))
+				$builder->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->whereIn('role_user.role_id', $role->getDescendant()->merge([$role])->pluck('id'));
+		} 
 		$total = $this->_getCount($request, $builder, FALSE);
 		$data = $this->_getData($request, $builder, null, ['users.*']);
 		$data['recordsTotal'] = $total;

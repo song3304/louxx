@@ -2,9 +2,11 @@
 namespace App;
 
 use Addons\Entrust\User as BaseUser;
+use Laravel\Passport\HasApiTokens;
 
 class User extends BaseUser 
 {
+	use HasApiTokens;
 	public function _gender()
 	{
 		return $this->hasOne('App\\Catalog', 'id', 'gender');

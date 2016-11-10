@@ -24,15 +24,12 @@ var path = require('path');
 var util = require("gulp-util");
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
-var sourcemaps = require('gulp-sourcemaps');
 var header = require('gulp-header');
 var rename = require('gulp-rename');
 var jshint = require('gulp-jshint');
 var csslint = require('gulp-csslint');
 var data = require('gulp-data');
-var stripDebug = require('gulp-strip-debug');
 var minifyCss = require('gulp-minify-css');
-//var vinylPaths = require('vinyl-paths');
 var del = require('del');
 var map = require('map-stream');
 
