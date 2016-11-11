@@ -7,6 +7,9 @@ use Laravel\Passport\HasApiTokens;
 class User extends BaseUser 
 {
 	use HasApiTokens;
+
+	protected $dates = ['lastlogin_at'];
+	
 	public function _gender()
 	{
 		return $this->hasOne('App\\Catalog', 'id', 'gender');
