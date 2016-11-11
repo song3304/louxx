@@ -86,7 +86,8 @@
 
 /* Main Structure */
 body {
-    font-family: "Microsoft Yahei", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /* font-family: "Microsoft Yahei", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; */
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","WenQuanYi Micro Hei","文泉驿微米黑","Microsoft YaHei","微软雅黑",Arial,sans-serif;
     color: #394263;
     font-size: 13px;
     background-color: #222222;
