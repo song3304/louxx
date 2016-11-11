@@ -78,6 +78,8 @@ return [
 	"phone"              => "[:attribute] 格式不正确。",
 	"id_card"              => "[:attribute] 格式不正确。",
 	"not_zero"              => "[:attribute] 必须有值，或不能为0。",
+	"catalog"              => "[:attribute] 必须是 :name 的有效分类ID。",
+	"catalog_name"              => "[:attribute] 必须是有效分类名。",
 
 	/*
 	|--------------------------------------------------------------------------
