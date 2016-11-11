@@ -262,7 +262,7 @@ class Seeds extends Migration
 			}
 			\App\Role::findByName('super')->perms()->sync(\App\Permission::all());
 
-			(new \App\User)->add([
+			\App\User::add([
 				'username' => 'admin',
 				'password' => '123456',
 				'nickname' => '超级管理员',
