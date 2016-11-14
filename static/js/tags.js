@@ -11,8 +11,8 @@ $.fn.extend({tags: function(filters){
 				delay: 250,
 				data: function (params) {
 					var v = {page: params.page, _token: $.crsf, filters: {}, of: 'json'};
-					v['filters']['keywords'] = {'like': params.term};
-					v['filters'] = $.extend({}, v['filters'], filters);console.log(v);
+					v.filters.keywords = {'like': params.term};
+					v.filters = $.extend({}, v.filters, filters);console.log(v);
 					return v;
 				},
 				processResults: function (json, page) {
