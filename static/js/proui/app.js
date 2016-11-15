@@ -63,22 +63,22 @@ var App = function($) {
 
 		// Initialize chat demo functionality (in sidebar)
 		//chatUi();
-		if (Mousetrap) shortCuts();
+		if (typeof Mousetrap != 'undefined') shortCuts();
 
 		// Initialize tabs
 		$('[data-toggle="tabs"] a, .enable-tabs a').click(function(e){ e.preventDefault(); $(this).tab('show'); });
 
 		// Initialize Tooltips
-		if ($.fn.tooltip) $('[data-toggle="tooltip"], .enable-tooltip').tooltip({container: 'body', animation: false});
+		if (typeof $.fn.tooltip != 'undefined') $('[data-toggle="tooltip"], .enable-tooltip').tooltip({container: 'body', animation: false});
 
 		// Initialize Popovers
-		if ($.fn.popover) $('[data-toggle="popover"], .enable-popover').popover({container: 'body', animation: true});
+		if (typeof $.fn.popover != 'undefined') $('[data-toggle="popover"], .enable-popover').popover({container: 'body', animation: true});
 
 		// Initialize single image lightbox
-		if ($.fn.magnificPopup) $('[data-toggle="lightbox-image"]').magnificPopup({type: 'image', image: {titleSrc: 'title'}});
+		if (typeof $.fn.magnificPopup != 'undefined') $('[data-toggle="lightbox-image"]').magnificPopup({type: 'image', image: {titleSrc: 'title'}});
 
 		// Initialize image gallery lightbox
-		if ($.fn.magnificPopup) $('[data-toggle="lightbox-gallery"]').each(function(){
+		if (typeof $.fn.magnificPopup != 'undefined') $('[data-toggle="lightbox-gallery"]').each(function(){
 			$(this).magnificPopup({
 				delegate: 'a.gallery-link',
 				type: 'image',
@@ -95,32 +95,32 @@ var App = function($) {
 		});
 
 		// Initialize Chosen
-		if ($.fn.chosen) $('.select-chosen').chosen({width: "100%"});
+		if (typeof $.fn.chosen != 'undefined') $('.select-chosen').chosen({width: "100%"});
 
 		// Initialize Select2
-		if ($.fn.select2) $('.select-select2').select2();
+		if (typeof $.fn.select2 != 'undefined') $('.select-select2').select2();
 
 		// Initialize Bootstrap Colorpicker
-		if ($.fn.colorpicker) {
+		if (typeof $.fn.colorpicker != 'undefined') {
 			$('.input-colorpicker').colorpicker({format: 'hex'});
 			$('.input-colorpicker-rgba').colorpicker({format: 'rgba'});
 		}
 		// Initialize Slider for Bootstrap
-		if ($.fn.slider) $('.input-slider').slider();
+		if (typeof $.fn.slider != 'undefined') $('.input-slider').slider();
 
 		// Initialize Tags Input
-		if ($.fn.tagsInput) $('.input-tags').tagsInput({ width: 'auto', height: 'auto'});
+		if (typeof $.fn.tagsInput != 'undefined') $('.input-tags').tagsInput({ width: 'auto', height: 'auto'});
 
 		// Initialize Datepicker
-		if ($.fn.datepicker) $('.input-datepicker, .input-daterange').datepicker({weekStart: 1});
-		if ($.fn.datepicker) $('.input-datepicker-close').datepicker({minDate: 2}).on('changeDate', function(e){ $(this).datepicker('hide'); });
+		if (typeof $.fn.datepicker != 'undefined') $('.input-datepicker, .input-daterange').datepicker({weekStart: 1});
+		if (typeof $.fn.datepicker != 'undefined') $('.input-datepicker-close').datepicker({minDate: 2}).on('changeDate', function(e){ $(this).datepicker('hide'); });
 
 		// Initialize Timepicker
-		if ($.fn.timepicker) $('.input-timepicker').timepicker({minuteStep: 1,showSeconds: true,showMeridian: true});
-		if ($.fn.timepicker) $('.input-timepicker24').timepicker({minuteStep: 1,showSeconds: true,showMeridian: false});
+		if (typeof $.fn.timepicker != 'undefined') $('.input-timepicker').timepicker({minuteStep: 1,showSeconds: true,showMeridian: true});
+		if (typeof $.fn.timepicker != 'undefined') $('.input-timepicker24').timepicker({minuteStep: 1,showSeconds: true,showMeridian: false});
 
 		// Easy Pie Chart
-		if ($.fn.easyPieChart) $('.pie-chart').easyPieChart({
+		if (typeof $.fn.easyPieChart != 'undefined') $('.pie-chart').easyPieChart({
 			barColor: $(this).data('bar-color') ? $(this).data('bar-color') : '#777777',
 			trackColor: $(this).data('track-color') ? $(this).data('track-color') : '#eeeeee',
 			lineWidth: $(this).data('line-width') ? $(this).data('line-width') : 3,
@@ -130,7 +130,7 @@ var App = function($) {
 		});
 
 		// Initialize Placeholder
-		if ($.fn.placeholder) $('input, textarea').placeholder();
+		if (typeof $.fn.placeholder != 'undefined') $('input, textarea').placeholder();
 	};
 
 	/* Page Loading functionality */
