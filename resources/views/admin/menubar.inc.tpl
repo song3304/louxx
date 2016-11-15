@@ -42,12 +42,12 @@
 <div class="collapse navbar-collapse" id="horizontal-menu-collapse"> 
 	<ul class="nav navbar-nav">
 		<li>
-			<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">用户(&U) <i class="fa fa-angle-down"></i></a>
+			<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">用户 <i class="fa fa-angle-down"></i></a>
 			<ul class="dropdown-menu">
-				<li><a href="<{'admin/member'|url}>"><i class="fa fa-asterisk fa-fw pull-right"></i> 所有用户(&A)</a></li>
-				<li><a href="<{'admin/member'|url}>?filters[role_id]=1"><i class="fa fa-lock fa-fw pull-right"></i> 会员列表(&U)</a></li>
-				<li><a href="<{'admin/member'|url}>?filters[role_id]=-1"><i class="fa fa-user fa-fw pull-right"></i> 受限列表(&T)</a></li>
-				<li><a href="<{'admin/member'|url}>?filters[role_id]=9"><i class="fa fa-magnet fa-fw pull-right"></i> 系统用户列表(&S)</a></li>
+				<li><a href="<{'admin/member'|url}>"><i class="fa fa-asterisk fa-fw pull-right"></i> 所有用户</a></li>
+				<li><a href="<{'admin/member'|url}>?filters[role_id]=1"><i class="fa fa-lock fa-fw pull-right"></i> 会员列表</a></li>
+				<li><a href="<{'admin/member'|url}>?filters[role_id]=-1"><i class="fa fa-user fa-fw pull-right"></i> 受限列表</a></li>
+				<li><a href="<{'admin/member'|url}>?filters[role_id]=9"><i class="fa fa-magnet fa-fw pull-right"></i> 系统用户列表</a></li>
 				<li class="divider"></li>
 			</ul>
 		</li>
