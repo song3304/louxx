@@ -30,6 +30,7 @@
 <script src="<{'js/laravel.select.min.js'|static}>"></script>
 <{/block}>
 <{block "head-scripts-app"}>
+<script src="<{'js/mousetrap.min.js'|static nofilter}>"></script>
 <script src="<{'js/proui/app.min.js'|static}>"></script>
 <{/block}>
 <script>

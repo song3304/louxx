@@ -63,6 +63,7 @@ var App = function($) {
 
 		// Initialize chat demo functionality (in sidebar)
 		//chatUi();
+		if (Mousetrap) shortCuts();
 
 		// Initialize tabs
 		$('[data-toggle="tabs"] a, .enable-tabs a').click(function(e){ e.preventDefault(); $(this).tab('show'); });
@@ -478,6 +479,16 @@ var App = function($) {
 		// Hide block
 		$('[data-toggle="block-hide"]').on('click', function(){
 			$(this).closest('.block').fadeOut();
+		});
+	};
+
+	var shortCuts = function(){
+		$('[data-shortcuts]').each(function(){
+			var t = $(this);
+			Mousetrap.bind(t.data('shortcuts'), function(e) {
+				t.trigger('click');
+				return false;
+			});
 		});
 	};
 
