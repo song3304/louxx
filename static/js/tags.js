@@ -11,13 +11,13 @@ $.fn.extend({tags: function(filters){
 				delay: 250,
 				data: function (params) {
 					var v = {page: params.page, _token: $.crsf, filters: {}, of: 'json'};
-					v['filters']['keywords'] = {'like': params.term};
-					v['filters'] = $.extend({}, v['filters'], filters);console.log(v);
+					v.filters.keywords = {'like': params.term};
+					v.filters = $.extend({}, v.filters, filters);console.log(v);
 					return v;
 				},
 				processResults: function (json, page) {
+					if (json.result != 'success' && json.result != 'api') return {result: []};
 					var data = [], items = json.data.data;
-					console.log(items);
 					for(var i = 0; i < items.length; ++i)
 						data.push({'id': items[i].keywords, 'text': items[i].keywords + ' <span class="text-muted">('+ (items[i].count || 0) + '次使用)</span>', 'selection': items[i].keywords });
 					return {results: data};

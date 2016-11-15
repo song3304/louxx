@@ -2,16 +2,41 @@
 
 return [
 
-	/*
-	|--------------------------------------------------------------------------
-	| Application Debug Mode
-	|--------------------------------------------------------------------------
-	|
-	| When your application is in debug mode, detailed error messages with
-	| stack traces will be shown on every error that occurs within your
-	| application. If disabled, a simple generic error page is shown.
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Application Name
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application. This value is used when the
+    | framework needs to place the application's name in a notification or
+    | any other location as required by the application or its packages.
+    */
+
+    'name' => 'My Application',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Environment
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the "environment" your application is currently
+    | running in. This may determine how you prefer to configure various
+    | services your application utilizes. Set this in your ".env" file.
+    |
+    */
+
+    'env' => env('APP_ENV', 'production'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Debug Mode
+    |--------------------------------------------------------------------------
+    |
+    | When your application is in debug mode, detailed error messages with
+    | stack traces will be shown on every error that occurs within your
+    | application. If disabled, a simple generic error page is shown.
+    |
+    */
 
 	'debug' => env('APP_DEBUG', false),
 
@@ -27,17 +52,19 @@ return [
 	|
 	*/
 
-	'url' => 'http://'.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '127.0.0.1').env('APP_PATH'),
-	/*
-	|--------------------------------------------------------------------------
-	| Application Timezone
-	|--------------------------------------------------------------------------
-	|
-	| Here you may specify the default timezone for your application, which
-	| will be used by the PHP date and date-time functions. We have gone
-	| ahead and set this to a sensible default for you out of the box.
-	|
-	*/
+    'url' => env('APP_URL', 'http://localhost'),
+    'static' => env('STATIC_PATH', 'static/'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Timezone
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the default timezone for your application, which
+    | will be used by the PHP date and date-time functions. We have gone
+    | ahead and set this to a sensible default for you out of the box.
+    |
+    */
 
 	'timezone' => 'Etc/GMT-8',
 
@@ -78,7 +105,7 @@ return [
 	|
 	*/
 
-	'key' => env('APP_KEY', 'rGwjZIybCefSm8X7yhsHj8V4skZUyxM2'),
+	'key' => env('APP_KEY'),
 
 	'cipher' => 'AES-256-CBC',
 
@@ -95,7 +122,11 @@ return [
 	|
 	*/
 
-	'log' => 'single',
+	'log' => env('APP_LOG', 'single'),
+
+	'log_level' => env('APP_LOG_LEVEL', 'debug'),
+
+	'log_max_files' => env('APP_LOG_MAX_FILES', 30),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -113,13 +144,11 @@ return [
 		/*
 		 * Laravel Framework Service Providers...
 		 */
-		Illuminate\Foundation\Providers\ArtisanServiceProvider::class,
 		Illuminate\Auth\AuthServiceProvider::class,
 		Illuminate\Broadcasting\BroadcastServiceProvider::class,
 		Illuminate\Bus\BusServiceProvider::class,
 		Illuminate\Cache\CacheServiceProvider::class,
 		Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-		Illuminate\Routing\ControllerServiceProvider::class,
 		Illuminate\Cookie\CookieServiceProvider::class,
 		Illuminate\Database\DatabaseServiceProvider::class,
 		Illuminate\Encryption\EncryptionServiceProvider::class,
@@ -127,6 +156,7 @@ return [
 		Illuminate\Foundation\Providers\FoundationServiceProvider::class,
 		Illuminate\Hashing\HashServiceProvider::class,
 		Illuminate\Mail\MailServiceProvider::class,
+		Illuminate\Notifications\NotificationServiceProvider::class,
 		Illuminate\Pagination\PaginationServiceProvider::class,
 		Illuminate\Pipeline\PipelineServiceProvider::class,
 		Illuminate\Queue\QueueServiceProvider::class,
@@ -138,7 +168,7 @@ return [
 		Illuminate\View\ViewServiceProvider::class,
 
 		//Smarty注入模块
-		Addons\Smarty\View\ServiceProvider::class,
+		Addons\Smarty\ServiceProvider::class,
 		//Core before RouteServiceProvider
 		Addons\Core\ServiceProvider::class,
 
@@ -146,19 +176,24 @@ return [
 		 * Application Service Providers...
 		 */
 		App\Providers\AppServiceProvider::class,
+		// App\Providers\BroadcastServiceProvider::class,
 		App\Providers\AuthServiceProvider::class,
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
 		//Debuger
-		//Barryvdh\Debugbar\ServiceProvider::class,
+		Barryvdh\Debugbar\ServiceProvider::class,
 		//验证码
 		Mews\Captcha\CaptchaServiceProvider::class,
 		//验证体系
-		Zizaco\Entrust\EntrustServiceProvider::class,
+		Addons\Entrust\ServiceProvider::class,
 		//判断客户端和操作系统
 		Jenssegers\Agent\AgentServiceProvider::class,
 		//图片处理库
 		Intervention\Image\ImageServiceProvider::class,
+		//第三方登录
+		SocialiteProviders\Manager\ServiceProvider::class,
+		//Oauth2-server
+		Laravel\Passport\PassportServiceProvider::class,
 	],
 
 	/*
@@ -178,7 +213,6 @@ return [
 		'Artisan'   => Illuminate\Support\Facades\Artisan::class,
 		'Auth'      => Illuminate\Support\Facades\Auth::class,
 		'Blade'     => Illuminate\Support\Facades\Blade::class,
-		'Bus'       => Illuminate\Support\Facades\Bus::class,
 		'Cache'     => Illuminate\Support\Facades\Cache::class,
 		'Config'    => Illuminate\Support\Facades\Config::class,
 		'Cookie'    => Illuminate\Support\Facades\Cookie::class,
@@ -189,11 +223,10 @@ return [
 		'File'      => Illuminate\Support\Facades\File::class,
 		'Gate'      => Illuminate\Support\Facades\Gate::class,
 		'Hash'      => Illuminate\Support\Facades\Hash::class,
-		'Input'     => Illuminate\Support\Facades\Input::class,
-		'Inspiring' => Illuminate\Foundation\Inspiring::class,
 		'Lang'      => Illuminate\Support\Facades\Lang::class,
 		'Log'       => Illuminate\Support\Facades\Log::class,
 		'Mail'      => Illuminate\Support\Facades\Mail::class,
+		'Notification' => Illuminate\Support\Facades\Notification::class,
 		'Password'  => Illuminate\Support\Facades\Password::class,
 		'Queue'     => Illuminate\Support\Facades\Queue::class,
 		'Redirect'  => Illuminate\Support\Facades\Redirect::class,
@@ -209,9 +242,8 @@ return [
 		'View'      => Illuminate\Support\Facades\View::class,
 
 		//'Debugbar' => 'Barryvdh\Debugbar\Facade::class',
-		'Core'      => Addons\Core\Facades\Core::class,
 		'Captcha' => Mews\Captcha\Facades\Captcha::class,
-		'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+		'Entrust' => Addons\Entrust\Facade::class,
 		'Agent' => Jenssegers\Agent\Facades\Agent::class,
 		'Image' => Intervention\Image\Facades\Image::class,
 	],

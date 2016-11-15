@@ -21,7 +21,7 @@
 <div class="form-group">
 	<label class="col-md-3 control-label" for="avatar_aid">头像</label>
 	<div class="col-md-9">
-		<input type="hidden" id="avatar_aid" name="avatar_aid" class="form-control" value="<{$_data.avatar_aid}>">
+		<input type="hidden" id="avatar_aid" name="avatar_aid" class="form-control" value="<{$_data.avatar_aid|default:0}>">
 	</div>
 </div>
 <div class="form-group">
@@ -39,7 +39,7 @@
 <div class="form-group">
 	<label class="col-md-3 control-label">性别</label>
 	<div class="col-md-9">
-		<{foreach $_fields.gender as $v}>
+		<{foreach 'fields.gender.children'|catalogs as $v}>
 		<label class="radio-inline">
 			<input type="radio" name="gender" value="<{$v.id}>" <{if $_data.gender == $v.id}>checked="checked"<{/if}> > <{$v.title}>
 		</label>
@@ -69,7 +69,7 @@
 <div class="form-group">
 	<label class="col-md-3 control-label" for="role_ids">用户组</label>
 	<div class="col-md-9">
-		<select id="role_ids" name="role_ids[]" class="form-control select-model" value="<{if !empty($_data)}><{$_data->roles->modelKeys()|implode:','}><{/if}>" data-model="admin/role" data-id="{id}" data-text="{display_name}({name})" data-placeholder="请输入用户组" multiple="multiple"></select>
+		<select id="role_ids" name="role_ids[]" class="form-control tree-model" value="<{if !empty($_data)}><{$_data->roles->modelKeys()|implode:','}><{/if}>" data-model="admin/role" data-id="{id}" data-text="{display_name}({name})" data-placeholder="请输入用户组" multiple="multiple"></select>
 	</div>
 </div>
 <div class="form-group form-actions">

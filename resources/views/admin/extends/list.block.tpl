@@ -1,8 +1,8 @@
 <{extends file="admin/extends/main.block.tpl"}>
 
 <{block "head-scripts-plus"}>
-<script src="<{'static/js/proui/table.js'|url}>"></script>
-<script src="<{'static/js/DatePicker/WdatePicker.js'|url}>"></script>
+<script src="<{'js/proui/table.min.js'|static}>"></script>
+<script src="<{'js/DatePicker/WdatePicker.js'|static}>"></script>
 
 <script>
 (function($){
@@ -44,7 +44,7 @@
 		<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>?base=1" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="数据读取失败时，请点击切换到「基本视图」" data-original-title="数据读取失败时，请点击切换到「基本视图」">基本视图</a>
 		<{/if}> -->
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示" data-original-title="折叠/展示"><i class="fa fa-arrows-v"></i></a>
-		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换" data-original-title="全屏切换"><i class="fa fa-desktop"></i></a>
+		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换" data-original-title="全屏切换" data-shortcuts="f11"><i class="fa fa-desktop"></i></a>
 		<!-- <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary" data-toggle="block-hide"><i class="fa fa-times"></i></a> -->
 		<div class=" btn-group btn-group-sm">
 			<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-info dropdown-toggle enable-tooltip" data-toggle="dropdown" title="操作" data-original-title="操作"><span class="caret"></span></a>
@@ -56,7 +56,7 @@
 					<{block "menu-option-before"}><{/block}>
 					<{block "menu-option-plus"}><{/block}>
 					<{block "menu-option-delete"}>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "menu-option-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class=""><span class="text-danger"><i class="fa fa-times pull-right "></i>删除所选</span></a>
+					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "menu-option-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class="" data-shortcuts="del"><span class="text-danger"><i class="fa fa-times pull-right "></i>删除所选</span></a>
 					<{/block}>
 					<{block "menu-option-after"}><{/block}>
 				</li>

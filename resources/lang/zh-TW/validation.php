@@ -75,8 +75,11 @@ return [
 	"timezone"         => "[:attribute] 必須是一個正確的時區值。",
 	"unique"           => "[:attribute] 已經存在。",
 	"url"              => "[:attribute] 的格式錯誤。",
-	"idcard"              => "[:attribute] 的格式錯誤。",
-	"phone"              => "[:attribute] 的格式錯誤。",
+	"phone"            => "[:attribute] 的格式錯誤。",
+	"idcard"           => "[:attribute] 的格式錯誤。",
+	"not_zero"              => "[:attribute] 必須有值，或不能為0。",
+	"catalog"          => "[:attribute] 必須是 :name 的有效分類ID。",
+	"catalog_name"     => "[:attribute] 必須是有效分類名。",
 
 	/*
 	|--------------------------------------------------------------------------

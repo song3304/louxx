@@ -28,8 +28,8 @@
 <{/block}>
 
 <{block "head-scripts-after"}>
-<link rel="stylesheet" href="<{'static/js/bootstrap-slider/bootstrap-slider.min.css'|url}>">
-<script src="<{'static/js/bootstrap-slider/bootstrap-slider.min.js'|url}>"></script>
+<link rel="stylesheet" href="<{'js/bootstrap-slider/bootstrap-slider.min.css'|static}>">
+<script src="<{'js/bootstrap-slider/bootstrap-slider.min.js'|static}>"></script>
 <{/block}>
 
 <{block "header"}>
@@ -55,7 +55,7 @@
 	<h2 class="pull-left"><strong><{block "title"}><{/block}>数据</strong> <{$_table}></h2>
 	<div class="block-options pull-right">
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示" data-original-title="折叠/展示"><i class="fa fa-arrows-v"></i></a>
-		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换" data-original-title="全屏切换"><i class="fa fa-desktop"></i></a>
+		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换" data-original-title="全屏切换" data-shortcuts="f11"><i class="fa fa-desktop"></i></a>
 	</div>
 	<div class="clearfix"></div>
 </div>

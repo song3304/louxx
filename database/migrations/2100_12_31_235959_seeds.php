@@ -11,199 +11,222 @@ class Seeds extends Migration
 	 */
 	public function up()
 	{
-		\App\Field::create([
-			'name' => 'male',
-			'title' => '男',
-			'field_class' => 'gender',
-		])->create([
-			'name' => 'female',
-			'title' => '女',
-			'field_class' => 'gender',
-		])->create([
-			'name' => 'news',
-			'title' => '订阅号',
-			'field_class' => 'wechat_type',
-		])->create([
-			'name' => 'service',
-			'title' => '服务号',
-			'field_class' => 'wechat_type',
-		])->create([
-			'name' => 'enterprise',
-			'title' => '企业号',
-			'field_class' => 'wechat_type',
-		])->create([
-			'name' => 'depot',
-			'title' => '素材',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'news',
-			'title' => '图文',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'image',
-			'title' => '图片',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'thumb',
-			'title' => '缩略图',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'video',
-			'title' => '视频',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'shortvideo',
-			'title' => '小视频',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'voice',
-			'title' => '音频',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'music',
-			'title' => '音乐',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'text',
-			'title' => '文字',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'link',
-			'title' => '连接',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'location',
-			'title' => '地址',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'callback',
-			'title' => '回调',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'event',
-			'title' => '事件',
-			'field_class' => 'wechat_message_type',
-		])->create([
-			'name' => 'subscribe',
-			'title' => '关注',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'unsubscribe',
-			'title' => '取消关注',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'SCAN',
-			'title' => '扫描二维码',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'LOCATION',
-			'title' => '地址',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'CLICK',
-			'title' => '点击',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'VIEW',
-			'title' => '视图',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'scancode_push',
-			'title' => '扫描事件',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'scancode_waitmsg',
-			'title' => '扫描事件「非跳转」',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'pic_sysphoto',
-			'title' => '系统拍照发图',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'pic_photo_or_album',
-			'title' => '拍照或者相册发图',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'pic_weixin',
-			'title' => '相册发图',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => 'location_select',
-			'title' => '地址选择',
-			'field_class' => 'wechat_event_type',
-		])->create([
-			'name' => '',
-			'title' => '无',
-		])->update(['id' => 0]);
-
-		\App\Role::create([
-			'id' => 99,
-			'name' => 'admin',
-			'display_name' => '超级管理员',
-			'url' => 'admin',
-		])->create([
-			'id' => 98,
-			'name' => 'manager',
-			'display_name' => '项目总监',
-			'url' => 'admin',
-		])->create([
-			'id' => 97,
-			'name' => 'owner',
-			'display_name' => '经理',
-			'url' => 'admin',
-		])->create([
-			'id' => 96,
-			'name' => 'leader',
-			'display_name' => '负责人',
-			'url' => 'admin',
-		])->create([
-			'id' => 1,
-			'name' => 'viewer',
-			'display_name' => '普通用户',
-			'url' => '',
-		])->create([
-			'id' => 2,
-			'name' => 'wechater',
-			'display_name' => '微信用户',
-			'url' => '',
-		])->create([
-			'id' => 0,
-			'name' => 'guest',
-			'display_name' => '访客',
-			'url' => '',
-		])->update(['id' => 0]);
-
-		foreach([
-			'role' => '用户组、权限',
-			'attachment' => '附件',
-			'member' => '用户',
-			'wechat-account' => '微信公众号',
-			'wechat-depot' => '微信素材',
-			'wechat-menu' => '微信菜单',
-			'wechat-message' => '微信消息',
-			'wechat-reply' => '微信自定义回复',
-			'wechat-user' => '微信用户',
-		] as $k => $v) {
-			foreach([
-				'view' => '查看',
-				'create' => '新建',
-				'edit' => '编辑',
-				'destroy' => '删除',
-				'export' => '导出'
-			] as $k1 => $v1) {
-				\App\Permission::create([
-					'name' => $k.'.'.$k1,
-					'display_name' => '允许'.$v1.$v,
-				]);
+		$fill = function(&$data, $parentNode) use (&$fill) {
+			foreach($data as $k => &$v)
+			{
+				list($name, $title) = explode('|', $k);
+				$node = $parentNode->children()->create(compact('name', 'title'));
+				!empty($v) && $fill($v, $node);
 			}
-		}
-		\App\Role::find(99)->perms()->sync(\App\Permission::all());
+		};
 
-		(new \App\User)->add([
-			'username' => 'admin',
-			'password' => '123456',
-			'nickname' => '超级管理员',
-		], \App\Role::ADMIN);
+		\DB::transaction(function() use ($fill) {
+			\Illuminate\Database\Eloquent\Model::unguard(true);
+			\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+			\DB::table('catalogs')->truncate();
+			\DB::table('permission_role')->truncate();
+			\DB::table('permission_user')->truncate();
+			\DB::table('role_user')->truncate();
+			\DB::table('permissions')->truncate();
+			\DB::table('roles')->truncate();
+			\DB::table('users')->truncate();
+			\DB::table('user_finances')->truncate();
+			DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+			\App\Catalog::create([
+				'name' => 'fields',
+				'title' => '字段',
+			])->create([
+				'name' => 'news',
+				'title' => '新闻分类',
+			])->create([
+				'name' => '3',
+				'title' => '',
+			])->create([
+				'name' => '4',
+				'title' => '',
+			])->create([
+				'name' => '5',
+				'title' => '',
+			])->create([
+				'name' => '6',
+				'title' => '',
+			])->create([
+				'name' => '7',
+				'title' => '',
+			])->create([
+				'name' => '8',
+				'title' => '',
+			])->create([
+				'name' => '9',
+				'title' => '',
+			])->create([
+				'name' => '10',
+				'title' => '',
+			])->create([
+				'name' => '',
+				'title' => '无'
+			])->update(['id' => 0]);
+			DB::statement("ALTER TABLE `catalogs` AUTO_INCREMENT = 11;");
+
+			$fields = [
+				'gender|性别' => [
+					'male|男' => [],
+					'female|女' => [],
+				],
+			];
+
+			$fill($fields, \App\Catalog::findByName('fields'));
+
+
+			//新建用户组
+			\App\Role::create([
+				'id' => -1,
+				'name' => 'forbidden',
+				'display_name' => '受限用户组',
+				'url' => '',
+			])->create([
+				'id' => 1,
+				'name' => 'user',
+				'display_name' => '普通用户组',
+				'url' => '',
+			])->create([
+				'id' => 2,
+				'name' => 'vip',
+				'display_name' => 'VIP用户组',
+				'url' => '',
+			])->create([
+				'id' => 3,
+				'name' => 'extra3',
+				'display_name' => '其他用户组3',
+				'url' => '',
+			])->create([
+				'id' => 4,
+				'name' => 'extra4',
+				'display_name' => '其它用户组4',
+				'url' => '',
+			])->create([
+				'id' => 5,
+				'name' => 'extra5',
+				'display_name' => '其它用户组5',
+				'url' => '',
+			])->create([
+				'id' => 6,
+				'name' => 'extra6',
+				'display_name' => '其它用户组6',
+				'url' => '',
+			])->create([
+				'id' => 7,
+				'name' => 'extra7',
+				'display_name' => '其它用户组7',
+				'url' => '',
+			])->create([
+				'id' => 8,
+				'name' => 'extra8',
+				'display_name' => '其它用户组8',
+				'url' => '',
+			])->create([
+				'id' => 9,
+				'name' => 'administrator',
+				'display_name' => '管理用户组',
+				'url' => '',
+			])->create([
+				'id' => 0,
+				'name' => 'guest',
+				'display_name' => '访客(无下级分类)',
+				'url' => '',
+			])->update(['id' => 0]);
+			//添加受限 子项
+			$role = \App\Role::findByName('forbidden')->children();
+			$role->create([
+				'id' => '-10',
+				'name' => 'banned',
+				'display_name' => '禁止登录',
+				'url' => '',
+			]);
+			$role->create([
+				'id' => '-9',
+				'name' => 'zombie',
+				'display_name' => '禁止交互',
+				'url' => '',
+			]);
+			$role->create([
+				'id' => '-2',
+				'name' => 'pending',
+				'display_name' => '待验证',
+				'url' => '',
+			]);
+			DB::statement("ALTER TABLE `roles` AUTO_INCREMENT = 10;");
+			//添加管理员 子项
+			$role = \App\Role::findByName('administrator')->children();
+			$role->create([
+				'name' => 'super',
+				'display_name' => '超级管理员',
+				'url' => 'admin',
+			]);
+			$role->create([
+				'name' => 'manager',
+				'display_name' => '产品经理',
+				'url' => 'admin',
+			]);
+			$role->create([
+				'name' => 'editor',
+				'display_name' => '编辑',
+				'url' => 'admin',
+			]);
+			//添加普通用户 子项
+			$role = \App\Role::findByName('user')->children();
+			$role->create([
+				'name' => 'user1',
+				'display_name' => '普通用户',
+				'url' => '',
+			]);
+			$role->create([
+				'name' => 'user2',
+				'display_name' => '活跃用户',
+				'url' => '',
+			]);
+			//添加VIP 子项
+			$role = \App\Role::findByName('vip')->children();
+			$role->create([
+				'name' => 'vip1',
+				'display_name' => 'VIP 1',
+				'url' => '',
+			]);
+			$role->create([
+				'name' => 'vip2',
+				'display_name' => 'VIP 2',
+				'url' => '',
+			]);
+
+			//添加权限
+			foreach([
+				'role' => '用户组、权限',
+				'attachment' => '附件',
+				'member' => '用户',
+			] as $k => $v) {
+				foreach([
+					'view' => '查看',
+					'create' => '新建',
+					'edit' => '编辑',
+					'destroy' => '删除',
+					'export' => '导出'
+				] as $k1 => $v1) {
+					\App\Permission::create([
+						'name' => $k.'.'.$k1,
+						'display_name' => '允许'.$v1.$v,
+					]);
+				}
+			}
+			\App\Role::findByName('super')->perms()->sync(\App\Permission::all());
+
+			\App\User::add([
+				'username' => 'admin',
+				'password' => '123456',
+				'nickname' => '超级管理员',
+			], 'super');
+			\Illuminate\Database\Eloquent\Model::unguard(false);
+		});
 	}
 
 	/**

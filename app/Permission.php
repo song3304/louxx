@@ -1,7 +1,9 @@
-<?php namespace App;
+<?php
+namespace App;
 
-use Addons\Core\Models\Permission as BasePermission;
+use Addons\Entrust\Permission as BasePermission;
 
 class Permission extends BasePermission
 {
+
 }

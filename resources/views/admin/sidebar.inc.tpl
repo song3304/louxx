@@ -1,7 +1,7 @@
 <!-- Main Sidebar -->
 <div id="sidebar">
 	<!-- Wrapper for scrolling functionality -->
-	<div class="sidebar-scroll">
+	<div id="sidebar-scroll">
 		<!-- Sidebar Content -->
 		<div class="sidebar-content">
 			<{block "sidebar-brand"}><{include file="admin/sidebar.brand.inc.tpl"}><{/block}>

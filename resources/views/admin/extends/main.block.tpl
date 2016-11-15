@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <!--[if IE 8]>         <html class="no-js lt-ie9"<{block "html-plus"}><{/block}>> <![endif]-->
 <!--[if IE 9]>         <html class="no-js lt-ie10"<{block "html-plus"}><{/block}>> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"<{block "html-plus"}><{/block}>> <!--<![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js"<{block "html-plus"}><{/block}>> <!--<![endif]-->
 <head>
 <{block "head"}>
 	<meta charset="utf-8">
 	<{block "head-title"}><{include file="common/title.inc.tpl"}><{/block}>
 	<meta name="csrf-token" content="<{csrf_token()}>">
 	<{block "head-meta-responsive"}>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="renderer" content="webkit">
 	<{/block}>
@@ -38,9 +38,10 @@
 	<{block "head-plus"}><{/block}>
 <{/block}>
 </head>
-<body class="page-loading">
+<body>
 <{block "body-before"}><{/block}>
 <{block "body-container"}>
+<div id="page-wrapper">
 	<{block "loading"}><{include file="admin/common/loading.inc.tpl"}><{/block}>
 	<div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
 		<{block "siderbar"}><{include file="admin/sidebar.inc.tpl"}><{/block}>
@@ -49,16 +50,9 @@
 			<{block "menubar"}><{include file="admin/menubar.inc.tpl"}><{/block}>
 			 <!-- Page content -->
 			<div id="page-content">
-				<{block "header"}>
+			<{block "header"}>
 				<{block "banner"}>
 				<!-- Form Header -->
-				<!-- <div class="content-header">
-					<div class="header-section">
-						<h1>
-							<i class="hi hi-home"></i>后台<br><small>后台，用户体验的开始！</small>
-						</h1>
-					</div>
-				</div> -->
 				<{/block}>
 				<{block "breadcrumb"}>
 				<ul class="breadcrumb breadcrumb-top">
@@ -76,7 +70,7 @@
 					<{block "block-content"}><{/block}>
 				</div>
 				<!-- END Form Elements Content -->
-				<{/block}>
+			<{/block}>
 			</div>
 			<!-- END Page Content -->
 
@@ -92,5 +86,6 @@
 <{block "body-scripts"}><{/block}>
 <{block "body-plus"}><{/block}>
 <{block "body-after"}><{/block}>
+</div>
 </body>
 </html>

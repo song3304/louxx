@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\Role;
 use Addons\Core\Controllers\AdminTrait;
 
 class MemberController extends Controller
@@ -22,30 +23,34 @@ class MemberController extends Controller
 	public function index(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
 		//view's variant
 		$this->_pagesize = $pagesize;
-		$this->_filters = $this->_getFilters($request, $builder);
-		$this->_table_data = [];
+		$this->_filters = $this->_getFilters($request);
 		return $this->view('admin.member.datatable');
 	}
 
 	public function data(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
+		$builder = $user->newQuery()->with(['_gender', 'roles']);
+		if ($roleId = $request->input('filters.role_id')){
+			$request->merge(['filters' => ['role_id' => NULL]]);
+			$role = Role::findByCache($roleId);
+			if (!empty($roleId))
+				$builder->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->whereIn('role_user.role_id', $role->getDescendant()->merge([$role])->pluck('id'));
+		} 
 		$total = $this->_getCount($request, $builder, FALSE);
 		$data = $this->_getData($request, $builder, null, ['users.*']);
 		$data['recordsTotal'] = $total;
 		$data['recordsFiltered'] = $data['total'];
-		return $this->success('', FALSE, $data);
+		return $this->api($data);
 	}
 
 	public function export(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->groupBy('users.id');
+		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
 		$page = $request->input('page') ?: 0;
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.export', 1000);
 		$total = $this->_getCount($request, $builder);
@@ -61,7 +66,7 @@ class MemberController extends Controller
 		$data = $this->_getExport($request, $builder, function(&$v){
 			$v['_gender'] = !empty($v['_gender']) ? $v['_gender']['title'] : NULL;
 		}, ['users.*']);
-		return $this->success('', FALSE, $data);
+		return $this->api($data);
 	}
 
 	public function show($id)
