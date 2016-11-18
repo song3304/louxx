@@ -16,13 +16,6 @@
 
 <{block "header"}>
 <!-- Form Header -->
-<!-- <div class="content-header">
-	<div class="header-section">
-		<h1>
-			<i class="fa fa-table"></i><{block "title"}><{/block}>管理<br><small>检索、新增、修改、删除<{block "title"}><{/block}>!</small>
-		</h1>
-	</div>
-</div> -->
 <ul class="breadcrumb breadcrumb-top">
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>
@@ -34,34 +27,46 @@
 <{block "block-title"}>
 <!-- DataTable Title -->
 <div class="block-title">
-	<{block "block-title-title"}><h2 class="pull-left"><strong><{block "title"}><{/block}>列表</strong> 检索</h2><{/block}>
-	
-	<{block "block-title-options"}>
+	<{block "menus"}>
+		<!-- <h2 class="pull-left"><strong><{block "title"}><{/block}>列表</strong> 检索</h2> -->
+		<div class="collapse navbar-collapse pull-left">
+			<ul class="nav navbar-nav">
+				<{block "menus-before"}><{/block}>
+				<{block "menus-create"}>
+				<li>
+					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/create"> <i class="fa fa-plus"></i> 添加</a>
+				</li>
+				<{/block}>
+				<{block "menus-dropdown-plus"}><{/block}>
+				<{block "menus-after"}><{/block}>
+			</ul>
+		</div>
+	<{/block}>
+	<{block "options"}>
 	<div class="block-options pull-right">
-		<!-- <{if $_base}>
-		<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>" class="btn btn-alt btn-sm btn-warning enable-tooltip" title="点击切换到「功能视图」，可排序、选择行数等" data-original-title="点击切换到「功能视图」，可排序、选择行数等">功能视图</a>
-		<{else}>
-		<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>?base=1" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="数据读取失败时，请点击切换到「基本视图」" data-original-title="数据读取失败时，请点击切换到「基本视图」">基本视图</a>
-		<{/if}> -->
+		<{block "options-toggle"}>
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示" data-original-title="折叠/展示"><i class="fa fa-arrows-v"></i></a>
+		<{/block}>
+		<{block "options-full"}>
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换" data-original-title="全屏切换" data-shortcuts="f11"><i class="fa fa-desktop"></i></a>
-		<!-- <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary" data-toggle="block-hide"><i class="fa fa-times"></i></a> -->
-		<div class=" btn-group btn-group-sm">
+		<{/block}>
+		<!-- <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary" data-toggle="block-hide"><i class="fa fa-times"></i></a>  -->
+		<div class="btn-group btn-group-sm">
 			<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-info dropdown-toggle enable-tooltip" data-toggle="dropdown" title="操作" data-original-title="操作"><span class="caret"></span></a>
 			<ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-			<{block "menu-before"}><{/block}>
-			<{block "menu-option"}>
+			<{block "options-dropdown-before"}><{/block}>
+			<{block "options-dropdown-operate"}>
 				<li class="dropdown-header">操作<i class="fa fa-cog pull-right"></i></li>
 				<li>
-					<{block "menu-option-before"}><{/block}>
-					<{block "menu-option-plus"}><{/block}>
-					<{block "menu-option-delete"}>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "menu-option-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class="" data-shortcuts="del"><span class="text-danger"><i class="fa fa-times pull-right "></i>删除所选</span></a>
+					<{block "options-dropdown-operate-before"}><{/block}>
+					<{block "options-dropdown-operate-delete"}>
+					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "options-dropdown-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class="" data-shortcuts="del"><span class="text-danger"><i class="fa fa-times pull-right "></i>删除所选</span></a>
 					<{/block}>
-					<{block "menu-option-after"}><{/block}>
+					<{block "options-dropdown-operate-plus"}><{/block}>
+					<{block "options-dropdown-operate-after"}><{/block}>
 				</li>
 			<{/block}>
-			<{block "menu-export"}>
+			<{block "options-dropdown-export"}>
 				<li class="dropdown-header">导出<i class="fa fa-share pull-right"></i></li>
 				<li>
 					<a href="javascript:void(0)"><i class="fa fa-print pull-right"></i> 打印</a>
@@ -71,7 +76,7 @@
 					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
 				</li>
 			<{/block}>
-			<{block "menu-after"}><{/block}>
+			<{block "options-dropdown-after"}><{/block}>
 			</ul>
 		</div>
 	</div>
