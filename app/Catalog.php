@@ -41,7 +41,7 @@ class Catalog extends Tree {
 			};
 			$method($root, $catalogs_with_name);
 
-			return ['id' => $catalogs, 'name' => $catalogs_with_name, 'none' => static::find(0)->toArray()];
+			return ['id' => $catalogs, 'name' => $catalogs_with_name, 'null' => static::find(0)->toArray()];
 		});
 		return static::$catalogs;
 	}
@@ -50,13 +50,13 @@ class Catalog extends Tree {
 	{
 		empty(static::$catalogs) && static::$catalogs = static::getCatalogs();
 		$name = str_replace(['.', '.children.children', '.children.children'], ['.children.', '.children', '.children'], $name);
-		return empty($name) ? static::$catalogs['name'] : Arr::get(static::$catalogs['name'], $name);
+		return is_null($name) ? static::$catalogs['name'] : (empty($name) || in_array($name, ['none', 'null']) ? static::$catalogs['null'] : Arr::get(static::$catalogs['name'], $name));
 	}
 
 	public static function getCatalogsById($id = NULL)
 	{
 		empty(static::$catalogs) && static::$catalogs = static::getCatalogs();
-		return empty($id) ? static::$catalogs['id'][ 0 ][ 'children' ] : Arr::get(static::$catalogs['id'], $id);
+		return is_null($id) ? static::$catalogs['id'][ 0 ][ 'children' ] : (empty($id) ? static::$catalogs['null'] : Arr::get(static::$catalogs['id'], $id));
 	}
 }
 

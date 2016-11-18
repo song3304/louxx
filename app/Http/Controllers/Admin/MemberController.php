@@ -33,7 +33,7 @@ class MemberController extends Controller
 	public function data(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['_gender', 'roles']);
+		$builder = $user->newQuery()->with([ 'roles']);
 		if ($roleId = $request->input('filters.role_id')){
 			$request->merge(['filters' => ['role_id' => NULL]]);
 			$role = Role::findByCache($roleId);
@@ -50,7 +50,7 @@ class MemberController extends Controller
 	public function export(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
+		$builder = $user->newQuery()->with(['roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
 		$page = $request->input('page') ?: 0;
 		$pagesize = $request->input('pagesize') ?: config('site.pagesize.export', 1000);
 		$total = $this->_getCount($request, $builder);
@@ -64,7 +64,7 @@ class MemberController extends Controller
 		}
 
 		$data = $this->_getExport($request, $builder, function(&$v){
-			$v['_gender'] = !empty($v['_gender']) ? $v['_gender']['title'] : NULL;
+			$v['gender'] = !empty($v['gender']) ? $v['gender']['title'] : NULL;
 		}, ['users.*']);
 		return $this->api($data);
 	}
