@@ -26,7 +26,7 @@ function smarty_function_template_include($params, $template)
 	for($i = 1; $i < count($dbt);$i++)
 		if ($dbt[$i]['function'] == __FUNCTION__)
 		{
-			trigger_error("template_include: cannot use under template_include (recursive)", E_USER_NOTICE);
+			trigger_error("template_include: cannot use under template_include (nested)", E_USER_NOTICE);
 			return;
 		}
 

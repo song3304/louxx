@@ -4,6 +4,7 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Addons\Core\Models\CacheTrait;
 use Addons\Core\Models\CallTrait;
+use Addons\Core\Models\PolyfillCallTrait;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -14,7 +15,7 @@ use App\Role;
 class User extends Authenticatable
 {
 	use HasApiTokens, SoftDeletes, Notifiable, UserTrait;
-	use CacheTrait, CallTrait;
+	use CacheTrait, CallTrait, PolyfillCallTrait;
 
 	protected $dates = ['lastlogin_at'];
 
