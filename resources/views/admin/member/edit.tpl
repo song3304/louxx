@@ -16,6 +16,10 @@ $('#password,#password_confirmation').attr('placeholder', '(无需修改则不�
 
 <{block "name"}>member<{/block}>
 
+<{block "block-title-title"}>
+<{include file="admin/member/fields-nav.inc.tpl"}>
+<{/block}>
+
 <{block "fields"}>
 <{include file="admin/member/fields.inc.tpl"}>
 <{/block}>

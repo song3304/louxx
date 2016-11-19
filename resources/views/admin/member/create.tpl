@@ -12,6 +12,11 @@ $('#avatar_aid').uploader();
 
 <{block "name"}>member<{/block}>
 
+<{block "block-title-title"}>
+<{include file="admin/member/fields-nav.inc.tpl"}>
+<{/block}>
+
 <{block "fields"}>
 <{include file="admin/member/fields.inc.tpl"}>
 <{/block}>
+

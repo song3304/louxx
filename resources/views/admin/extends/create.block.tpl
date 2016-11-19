@@ -14,13 +14,6 @@
 
 <{block "header"}>
 <!-- Form Header -->
-<!-- <div class="content-header">
-	<div class="header-section">
-		<h1>
-			<i class="hi hi-edit"></i><{block "title"}><{/block}>管理<br><small>新建<{block "title"}><{/block}>资料!</small>
-		</h1>
-	</div>
-</div> -->
 <ul class="breadcrumb breadcrumb-top">
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>
@@ -32,11 +25,19 @@
 <{block "block-title"}>
 <!-- Form Elements Title -->
 <div class="block-title">
+	<{block "block-title-title"}>
 	<h2 class="pull-left"><strong>新建<{block "title"}><{/block}></strong></h2>
+	<{/block}>
+	<{block "options"}>
 	<div class="block-options pull-right">
+		<{block "options-toggle"}>
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示" data-original-title="折叠/展示"><i class="fa fa-arrows-v"></i></a>
+		<{/block}>
+		<{block "options-full"}>
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换" data-original-title="全屏切换" data-shortcuts="f11"><i class="fa fa-desktop"></i></a>
+		<{/block}>
 	</div>
+	<{/block}>
 	<div class="clearfix"></div>
 </div>
 <!-- END Form Elements Title -->

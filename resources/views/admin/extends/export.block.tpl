@@ -34,13 +34,6 @@
 
 <{block "header"}>
 <!-- Form Header -->
-<div class="content-header">
-	<div class="header-section">
-		<h1>
-			<i class="fa fa-table"></i><{block "title"}><{/block}>导出<br><small>导出<{block "title"}><{/block}>的数据为PDF或Excel!</small>
-		</h1>
-	</div>
-</div>
 <ul class="breadcrumb breadcrumb-top">
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>
