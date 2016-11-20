@@ -1,4 +1,17 @@
 (function($){
+	var method = {};
+	method.checkError = function(element)
+	{
+		var $pane = $(element).closest(".tab-pane");console.log($pane);
+		if (!$pane.length) return;
+		var errors = $('.has-error', $pane);
+		var $a = $('.nav a[href="#' + $pane.attr('id') + '"]');
+		if (!$('sup.badge', $a).length) $a.append('<sup class="badge label-danger">0</sup>');
+		if (errors.length > 0)
+			$('sup.badge', $a).text(errors.length).show();
+		else
+			$('sup.badge', $a).text(errors.length).hide();
+	};
 	//给validator设置默认值
 	if ($.validator)
 	$.validator.setDefaults({
@@ -8,11 +21,13 @@
 			var $parent = $(element).closest('div');
 			if ($parent.hasClass('input-group')) $parent = $parent.closest('div');
 			$parent.removeClass('has-success').addClass('has-error');
+			method.checkError(element);
 		},
 		unhighlight: function(element, errorClass, validClass) {
 			var $parent = $(element).closest('div');
 			if ($parent.hasClass('input-group')) $parent = $parent.closest('div');
 			$parent.removeClass('has-error').addClass('has-success');
+			method.checkError(element);
 		},
 		errorPlacement: function(error, element) {
 			var $parent = $(element).closest('div');
@@ -30,7 +45,7 @@
 		},
 		invalidHandler: function(e, validator){
 			if(validator.errorList.length)
-				$('.nav a[href="#' + jQuery(validator.errorList[0].element).closest(".tab-pane").attr('id') + '"]').tab('show');
+				$('.nav a[href="#' + $(validator.errorList[0].element).closest(".tab-pane").attr('id') + '"]').tab('show');
 		}
 	});
 
