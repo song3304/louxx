@@ -2,15 +2,16 @@
 	var method = {};
 	method.checkError = function(element)
 	{
-		var $pane = $(element).closest(".tab-pane");console.log($pane);
+		var $pane = $(element).closest(".tab-pane");
 		if (!$pane.length) return;
 		var errors = $('.has-error', $pane);
 		var $a = $('.nav a[href="#' + $pane.attr('id') + '"]');
-		if (!$('sup.badge', $a).length) $a.append('<sup class="badge label-danger">0</sup>');
+		var $sup = $('sup.badge', $a);
+		if (!$sup.length) $sup = $('<sup class="badge label-danger">0</sup>').appendTo($a);
 		if (errors.length > 0)
-			$('sup.badge', $a).text(errors.length).show();
+			$sup.text(errors.length).show();
 		else
-			$('sup.badge', $a).text(errors.length).hide();
+			$sup.text(errors.length).hide();
 	};
 	//给validator设置默认值
 	if ($.validator)
