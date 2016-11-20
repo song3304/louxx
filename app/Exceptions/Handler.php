@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
-use Addons\Core\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use Doctrine\DBAL\Driver\PDOException;
+use App\Controller;
 class Handler extends ExceptionHandler
 {
 	/**
@@ -59,7 +61,7 @@ class Handler extends ExceptionHandler
 			}
 			else if ($exception instanceof TokenMismatchException)
 				return (new Controller())->failure('validation.failure_csrf');
-			else if ($exception instanceof \Illuminate\Database\QueryException)
+			else if (($exception instanceof QueryException) || ($exception instanceof PDOException))
 				return (new Controller())->error('server.error_database');
 			else
 				return (new Controller())->error('server.error_server');
