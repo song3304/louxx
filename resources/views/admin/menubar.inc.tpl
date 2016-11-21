@@ -1,6 +1,10 @@
 <header class="navbar navbar-default">
 <div class="navbar-header">
-
+	<ul class="nav navbar-nav-custom pull-right visible-xs">
+		<li>
+			<a href="javascript:void(0)" data-toggle="collapse" data-target="#horizontal-menu-collapse" class="collapsed" aria-expanded="false">菜单</a>
+		</li>
+	</ul>
 	<!-- Left Header Navigation -->
 	<ul class="nav navbar-nav-custom">
 		<!-- Main Sidebar Toggle Button -->
@@ -38,6 +42,7 @@
 	</li>
 	<!-- END Template Options -->
 </ul>
+
 <{block "menubar-menus"}>
 <div class="collapse navbar-collapse" id="horizontal-menu-collapse"> 
 	<ul class="nav navbar-nav">
