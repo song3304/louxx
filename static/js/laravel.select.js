@@ -26,8 +26,18 @@ $().ready(function(){
 	};
 	method.replaceData = function(data, format)
 	{
-		return format.replace(/\{([\w]+)\}/g, function($0, $1){
-			return data[$1];
+		return format.replace(/\{([\w\.]+)\}/g, function($0, $1){
+			var o = $1.split('.');
+			var d = data;
+			for(var i = 0; i < o.length; ++i)
+			{
+				var n = o[i];
+				if (typeof d[ n ] != 'undefined')
+					d = d[n];
+				else 
+					return null;
+			}
+			return d;
 		});
 	};
 	method.format = function(items, id, text, pid) {

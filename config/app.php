@@ -194,6 +194,9 @@ return [
 		SocialiteProviders\Manager\ServiceProvider::class,
 		//Oauth2-server
 		Laravel\Passport\PassportServiceProvider::class,
+		//全文搜索引擎
+		Laravel\Scout\ScoutServiceProvider::class,
+		ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
 	],
 
 	/*

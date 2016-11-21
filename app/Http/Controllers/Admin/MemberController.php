@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\User;
 use App\Role;
 use Addons\Core\Controllers\AdminTrait;
+use DB;
 
 class MemberController extends Controller
 {
@@ -88,8 +86,10 @@ class MemberController extends Controller
 		$data = $this->autoValidate($request, 'member.store', $keys);
 
 		$role_ids = array_pull($data, 'role_ids');
-		$user = (new User)->add($data);
-		$user->roles()->sync($role_ids);
+		DB::transaction(function() use ($data, $role_ids){
+			$user = (new User)->add($data);
+			$user->roles()->sync($role_ids);
+		});
 		return $this->success('', url('admin/member'));
 	}
 
@@ -121,8 +121,10 @@ class MemberController extends Controller
 		$keys = 'nickname,realname,gender,email,phone,idcard,avatar_aid,role_ids';
 		$data = $this->autoValidate($request, 'member.store', $keys, $user);
 		$role_ids = array_pull($data, 'role_ids');
-		$user->update($data);
-		$user->roles()->sync($role_ids);
+		DB::transaction(function() use ($user, $data, $role_ids){
+			$user->update($data);
+			$user->roles()->sync($role_ids);
+		});
 		return $this->success();
 	}
 
