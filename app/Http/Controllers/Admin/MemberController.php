@@ -67,9 +67,14 @@ class MemberController extends Controller
 		return $this->api($data);
 	}
 
-	public function show($id)
+	public function show(Request $request, $id)
 	{
-		return '';
+		$user = User::with(['roles'])->find($id);
+		if (empty($user))
+			return $this->failure_noexists();
+
+		$this->_data = $user;
+		return !$request->offsetExists('of') ? $this->view('admin.member.show') : $this->api($user->toArray());
 	}
 
 	public function create()
