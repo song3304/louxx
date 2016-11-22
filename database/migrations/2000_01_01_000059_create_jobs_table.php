@@ -36,7 +36,7 @@ class CreateJobsTable extends Migration
 		Schema::create('jobgables', function (Blueprint $table) {
 			$table->increments('id');
 			$table->morphs('jobgable');
-			$table->unsignedInteger('job_id')->index()->comment = 'jobs ID';
+			$table->unsignedBigInteger('job_id')->index()->comment = 'jobs ID';
 
 			$table->foreign('job_id')->references('id')->on('jobs')->onUpdate('cascade')->onDelete('cascade');
 		});
