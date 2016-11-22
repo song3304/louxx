@@ -38,7 +38,7 @@ class CreateCommonTable extends Migration
 			$table->timestamps();
 		});
 
-		//评价
+		//Tag多态关联表
 		Schema::create('taggables', function (Blueprint $table) {
 			$table->increments('id');
 			$table->morphs('taggable');
@@ -47,7 +47,7 @@ class CreateCommonTable extends Migration
 			$table->foreign('tag_id')->references('id')->on('tags')->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		//点击
+		//日志
 		Schema::create('logs', function (Blueprint $table) {
 			$table->increments('id');
 

@@ -31,6 +31,15 @@ class CreateJobsTable extends Migration
             $table->longText('exception');
             $table->timestamp('failed_at')->useCurrent();
         });
+
+        //Job多态关联表
+		Schema::create('jobgables', function (Blueprint $table) {
+			$table->increments('id');
+			$table->morphs('jobgable');
+			$table->unsignedInteger('job_id')->index()->comment = 'jobs ID';
+
+			$table->foreign('job_id')->references('id')->on('jobs')->onUpdate('cascade')->onDelete('cascade');
+		});
 	}
 
 	/**
@@ -40,6 +49,7 @@ class CreateJobsTable extends Migration
 	 */
 	public function down()
 	{
+		Schema::drop('jobgables');
 		Schema::drop('jobs');
 		Schema::drop('failed_jobs');
 	}
