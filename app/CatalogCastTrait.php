@@ -11,4 +11,7 @@ trait CatalogCastTrait {
 		$data = Catalog::getCatalogsByName($value);
 		return new Catalog($data);
 	}
+	public function asStatus($value) {
+		return $this->asCatalog($value);
+	}
 }
