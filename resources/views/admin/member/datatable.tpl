@@ -30,6 +30,7 @@
 
 <{block "datatable-config-pageLength"}><{$_pagesize}><{/block}>
 
+<script>
 <{block "datatable-columns-plus"}>
 var columns_plus = [
 	{'data': "avatar_aid", orderable: false, 'render': function(data, type, full){
@@ -56,3 +57,4 @@ var columns_plus = [
 ];
 <{/block}>
 <{block "datatable-columns-options-delete-confirm"}>var columns_options_delete_confirm = '您确定删除这个用户：'+full['username']+'吗？';<{/block}>
+</script>

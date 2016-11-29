@@ -96,7 +96,7 @@
 <div class="clearfix"></div>
 <{block "block-content-table"}>
 <div class="table-responsive">
-	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover">
+	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover" data-name="<{block 'name'}><{/block}>" data-namespace="<{block 'namespace'}><{/block}>">
 		<thead>
 			<{block "table-thead-before"}><{/block}>
 			<tr>
@@ -118,25 +118,33 @@
 			<{block "table-thead-after"}><{/block}>
 		</thead>
 		<tbody>
-			<{block "table-tbody-before"}><{/block}>
 			<{block "table-tbody"}>
-			<{foreach $_table_data as $item}>
-			<tr id="line-<{$item->getKey()}>">
+			<tr id="line-{{id}}">
 			<{block "table-td"}>
 				<{block "table-td-before"}><{/block}>
-				<{block "table-td-id"}><td class="text-left"><input type="checkbox" name="id[]" value="<{$item->getKey()}>">	<{$item->getKey()}></td><{/block}>
+					<{block "table-td-id"}>
+				<td class="text-left" data-from="id"><input type="checkbox" name="id[]" value="{{data}}">{{id}}</td>
+					<{/block}>
 				<{block "table-td-plus"}><{/block}>
 				<{block "table-td-timestamps"}>
-					<{block "table-td-timestamps-created_at"}><td><{$item->created_at->format('Y-m-d H:i')}></td><{/block}>
-					<{block "table-td-timestamps-updated_at"}><td><{$item->updated_at->format('Y-m-d H:i')}></td><{/block}>
+					<{block "table-td-timestamps-created_at"}>
+				<td data-from="created_at">{{data}}</td>
+					<{/block}>
+					<{block "table-td-timestamps-updated_at"}>
+				<td data-from="updated_at">{{data}}</td>
+					<{/block}>
 				<{/block}>
 				<{block "table-td-options"}>
-				<td class="text-center">
+				<td class="text-center" data-from="">
 					<div class="btn-group">
 						<{block "table-td-options-before"}><{/block}>
-						<{block "table-td-options-edit"}><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/<{$item->getKey()}>/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a><{/block}>
-						<{block "table-td-options-plus"}><{/block}>
-						<{block "table-td-options-delete"}><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/<{$item->getKey()}>" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：<{$item->getKey()}>吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a><{/block}>
+							<{block "table-td-options-edit"}>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/{{id}}/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+							<{/block}>
+							<{block "table-td-options-plus"}><{/block}>
+							<{block "table-td-options-delete"}>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/{{id}}" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：{{id}}吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+							<{/block}>
 						<{block "table-td-options-after"}><{/block}>
 					</div>
 				</td>
@@ -144,18 +152,15 @@
 				<{block "table-td-after"}><{/block}>
 			<{/block}>
 			</tr>
-			<{block "table-tbody-plus"}><{/block}>
-			<{block "table-tbody-after"}><{/block}>
-			<{/foreach}>
 			<{/block}>
 		</tbody>
 	</table>
 	<{block "table-foot"}>
 	<div class="row">
 		<div class="col-sm-5 hidden-xs">
-			<span><{$_table_data->firstItem()}> - <{$_table_data->lastItem()}> / <{$_table_data->total()}></span>
+			<span> -  / </span>
 		</div>
-		<div class="col-sm-7 col-xs-12 clearfix"><{$_table_data->render() nofilter}></div>
+		<div class="col-sm-7 col-xs-12 clearfix"></div>
 	</div>
 	<{/block}>
 </div>

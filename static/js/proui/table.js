@@ -130,6 +130,7 @@ $().ready(function(){
 			'pagingType': 'bootstrap',
 			'language': {
 				'lengthMenu': '_MENU_',
+				'zeroRecords': '没有记录',
 				'search': '<div class="input-group">_INPUT_<span class="input-group-addon"><i class="fa fa-search"></i></span></div>',
 				'info': '<strong>_START_</strong>-<strong>_END_</strong> of <strong>_TOTAL_</strong>',
 				'infoEmpty': '<strong>0</strong>-<strong>0</strong> of <strong>0</strong>',
@@ -199,6 +200,8 @@ $().ready(function(){
 			'autoWidth': false,
 			'searching': false,
 			'processing': true,
+			'scrollX': true,
+			'scrollY': true,
 			'deferRender': true, //延时绘制
 			'serverSide': true, //服务器端
 			'displayStart': parseInt($.datatable_config.displayStart, 10),
