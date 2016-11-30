@@ -8,7 +8,7 @@ $().ready(function(){
 		$('a[method]:not([method="delete"])', obj).query();
 		$('a[method="delete"]', obj).query(function(json){
 			if ((json.result == 'success' || json.result == 'api') && json.data.id) {
-				if (method.datatable)
+				if (method.datatable && json.url === true)
 					method.datatable.ajax.reload(null, false);
 				else
 					json.data.id.forEach(function(id){
@@ -286,7 +286,7 @@ $().ready(function(){
 						last: '尾页'
 					}
 				},
-				processing: '<div class="mask"></div><div class="inner"><h3 class="text-light"><strong>Loading..</strong></h3><div class="preloader-spinner fa-spin"></div></div>'
+				processing: '<div class="mask"></div><div class="inner"><h3 class="text-light"><strong>Loading...</strong></h3><div class="preloader-spinner fa-spin"></div></div>'
 			},
 			column: {
 				asSorting: [ 'desc', 'asc' ]  //first sort desc, then asc

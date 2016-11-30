@@ -16,28 +16,29 @@
 }
 
 .dataTables_wrapper .dataTables_processing {
-	position: absolute;
+	position: fixed;
 	left: 0;width: 100%;top: 0; height: 100%;
 	z-index: 99999;
 	background-color: transparent;
+	border: 0 none;
 }
 
 .dataTables_wrapper .dataTables_processing .mask {
 	position: absolute;
-	left: 0;width: 100%;top: 150px; height: 200px;
-	margin-top: -50px;
-	opacity: 0.4;
-	filter: alpha(opacity=40);
+	top: 50%; left: 50%; -webkit-transform: translate(-50%,-50%); transform: translate(-50%,-50%);
+	width: 200px; height: 200px;
+
+	opacity: 0.6;
+	filter: alpha(opacity=60);
 	z-index: 1;
 	background-color: #000;
+	border-radius: 35px;
 }
 .dataTables_wrapper .dataTables_processing .inner {
 	position: absolute;
-	top: 150px;
-    left: 50%;
-    margin: -50px 0 0 -50px;
-    width: 100px;
-    height: 100px;
+	top: 50%; left: 50%; -webkit-transform: translate(-50%,-50%); transform: translate(-50%,-50%);
+    width: 150px;
+    height: 170px;
     text-align: center;
 	z-index: 2;
 }
