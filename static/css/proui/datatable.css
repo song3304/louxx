@@ -19,20 +19,21 @@
 	position: absolute;
 	left: 0;width: 100%;top: 0; height: 100%;
 	z-index: 99999;
-
+	background-color: transparent;
 }
 
 .dataTables_wrapper .dataTables_processing .mask {
 	position: absolute;
-	left: 0;width: 100%;top: 0; height: 100%;
-	opacity: 0.2;
-	filter: alpha(opacity=20);
-	z-index: 1
-	background-color: #fff;
+	left: 0;width: 100%;top: 10%; height: 200px;
+	margin-top: -50px;
+	opacity: 0.4;
+	filter: alpha(opacity=40);
+	z-index: 1;
+	background-color: #000;
 }
 .dataTables_wrapper .dataTables_processing .inner {
 	position: absolute;
-	top: 50%;
+	top: 10%;
     left: 50%;
     margin: -50px 0 0 -50px;
     width: 100px;

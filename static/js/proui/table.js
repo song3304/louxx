@@ -286,7 +286,7 @@ $().ready(function(){
 						last: '尾页'
 					}
 				},
-				processing: '<div class="mask themed-background"></div><div class="inner"><h3 class="text-light"><strong>Loading..</strong></h3><div class="preloader-spinner fa-spin"></div></div>'
+				processing: '<div class="mask"></div><div class="inner"><h3 class="text-light"><strong>Loading..</strong></h3><div class="preloader-spinner fa-spin"></div></div>'
 			},
 			column: {
 				asSorting: [ 'desc', 'asc' ]  //first sort desc, then asc
