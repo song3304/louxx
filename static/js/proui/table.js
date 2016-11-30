@@ -259,8 +259,8 @@ $().ready(function(){
 		var columns = method.getColumns(true);
 		method.datatable = $dt.DataTable({
 			dom: "r" +
-				"<'row'<'col-sm-4'l><'#toolbar.col-sm-4 text-center'><'col-sm-4 search-filter text-right'f><'clearfix'>>" +
-				"<'row'<'col-sm-4 hidden-xs'i><'col-sm-8 col-xs-12'p><'clearfix'>>" +
+				"<'row'<'#toolbar.col-sm-8 text-left'><'col-sm-4 search-filter text-right'f><'clearfix'>>" +
+				"<'row'<'col-sm-4 hidden-xs'l><'col-sm-8 col-xs-12'p><'clearfix'>>" +
 				"t" +
 				"<'row'<'col-sm-4 hidden-xs'i><'col-sm-8 col-xs-12'p><'clearfix'>>",
 			language: {

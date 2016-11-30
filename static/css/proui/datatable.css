@@ -1,4 +1,4 @@
-.dataTables_wrapper {position: relative;}
+.dataTables_wrapper {position: relative;min-height: 500px;}
 .dataTables_wrapper > div {
 	background-color: #f9fafc;
 	padding: 8px 0 5px;

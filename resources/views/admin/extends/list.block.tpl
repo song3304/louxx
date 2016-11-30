@@ -39,8 +39,8 @@
 <!-- DataTable Title -->
 <div class="block-title">
 	<{block "menus"}>
-		<!-- <h2 class="pull-left"><strong><{block "title"}><{/block}>列表</strong> 检索</h2> -->
-		<div class="collapse navbar-collapse pull-left">
+		<h2 class="pull-left"><strong><{block "title"}><{/block}>列表</strong> 检索</h2>
+		<{* <div class="collapse navbar-collapse pull-left">
 			<ul class="nav navbar-nav">
 				<{block "menus-before"}><{/block}>
 				<{block "menus-create"}>
@@ -51,45 +51,17 @@
 				<{block "menus-dropdown-plus"}><{/block}>
 				<{block "menus-after"}><{/block}>
 			</ul>
-		</div>
+		</div> *}>
 	<{/block}>
 	<{block "options"}>
 	<div class="block-options pull-right">
 		<{block "options-toggle"}>
-		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示" data-original-title="折叠/展示"><i class="fa fa-arrows-v"></i></a>
+		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示 (Ctrl+Shift+T)" data-shortcuts="ctrl+shift+T"><i class="fa fa-arrows-v"></i></a>
 		<{/block}>
 		<{block "options-full"}>
-		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换" data-original-title="全屏切换" data-shortcuts="f11"><i class="fa fa-desktop"></i></a>
+		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换 (F11)" data-shortcuts="f11"><i class="fa fa-desktop"></i></a>
 		<{/block}>
 		<!-- <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary" data-toggle="block-hide"><i class="fa fa-times"></i></a>  -->
-		<div class="btn-group btn-group-sm">
-			<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-info dropdown-toggle enable-tooltip" data-toggle="dropdown" title="操作" data-original-title="操作"><span class="caret"></span></a>
-			<ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-			<{block "options-dropdown-before"}><{/block}>
-			<{block "options-dropdown-operate"}>
-				<li class="dropdown-header">操作<i class="fa fa-cog pull-right"></i></li>
-				<li>
-					<{block "options-dropdown-operate-before"}><{/block}>
-					<{block "options-dropdown-operate-delete"}>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "options-dropdown-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class="" data-shortcuts="del"><span class="text-danger"><i class="fa fa-times pull-right "></i>删除所选</span></a>
-					<{/block}>
-					<{block "options-dropdown-operate-plus"}><{/block}>
-					<{block "options-dropdown-operate-after"}><{/block}>
-				</li>
-			<{/block}>
-			<{block "options-dropdown-export"}>
-				<li class="dropdown-header">导出<i class="fa fa-share pull-right"></i></li>
-				<li>
-					<a href="javascript:void(0)"><i class="fa fa-print pull-right"></i> 打印</a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/csv?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-csv pull-right"></i> CSV </a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/pdf?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-pdf pull-right"></i> PDF</a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xls?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xls pull-right"></i> Excel 2003</a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
-				</li>
-			<{/block}>
-			<{block "options-dropdown-after"}><{/block}>
-			</ul>
-		</div>
 	</div>
 	<{/block}>
 	<div class="clearfix"></div>
@@ -108,18 +80,46 @@
 <{block "block-content-table"}>
 <div class="table-responsive">
 	<{block "table-tools"}>
-	<div class="btn-group" id="tools-contrainer">
+	<div class="block-options" id="tools-contrainer">
 		<{block "table-tools-before"}><{/block}>
 		<{block "table-tools-create"}>
-		<a class="btn btn-success" data-toggle="tooltip" title="新建数据" href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/create"><i class="fa fa-plus animated pulse infinite"></i></a>
+		<a class="btn btn-success btn-sm btn-alt" data-toggle="tooltip" title="新建数据" href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/create" data-shortcuts="ctrl+n"><i class="fa fa-plus animated pulse infinite"></i></a>
 		<{/block}>
 		<{block "table-tools-plus"}><{/block}>
 		<{block "table-tools-resh"}>
-		<a class="btn btn-info" data-toggle="tooltip" title="刷新" id="reload"><i class="fa fa-refresh fa-spin"></i></a>
+		<a class="btn btn-info btn-sm btn-alt " data-toggle="tooltip" title="刷新" id="reload"><i class="fa fa-refresh fa-spin"></i></a>
 		<{/block}>
-		<{block "table-tools-delete"}>
-		<a class="btn btn-danger" data-toggle="tooltip" title="删除选中" href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "options-dropdown-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class=""><i class="fa fa-trash-o animated infinite wobble"></i></a>
+		<{block "table-tools-dropdown"}>
+		<div class="btn-group btn-group-sm">
+			<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-info dropdown-toggle enable-tooltip" data-toggle="dropdown" title="操作" data-original-title="操作"><span class="caret"></span></a>
+			<ul class="dropdown-menu dropdown-custom dropdown-menu-left">
+				<{block "table-tools-dropdown-before"}><{/block}>
+				<{block "table-tools-dropdown-operate"}>
+					<li class="dropdown-header">操作<i class="fa fa-cog pull-right"></i></li>
+					<li>
+						<{block "table-tools-dropdown-operate-before"}><{/block}>
+						<{block "table-tools-dropdown-operate-delete"}>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "table-tools-dropdown-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class="" data-shortcuts="del"><span class="text-danger"><i class="fa fa-times pull-right "></i>删除所选</span></a>
+						<{/block}>
+						<{block "table-tools-dropdown-operate-plus"}><{/block}>
+						<{block "table-tools-dropdown-operate-after"}><{/block}>
+					</li>
+				<{/block}>
+				<{block "table-tools-dropdown-export"}>
+					<li class="dropdown-header">导出<i class="fa fa-share pull-right"></i></li>
+					<li>
+						<a href="javascript:void(0)"><i class="fa fa-print pull-right"></i> 打印</a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/csv?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-csv pull-right"></i> CSV </a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/pdf?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-pdf pull-right"></i> PDF</a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xls?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xls pull-right"></i> Excel 2003</a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
+					</li>
+				<{/block}>
+				<{block "table-tools-dropdown-after"}><{/block}>
+			</ul>
+		</div>
 		<{/block}>
+		
 		<{block "table-tools-after"}><{/block}>
 	</div>
 	<{/block}>
@@ -129,7 +129,7 @@
 		data-search-delay="<{block 'search-delay'}>800<{/block}>"
 		data-display-start="<{block 'display-start'}>0.0<{/block}>"
 		data-page-length="<{$_pagesize|default:25}>"
-		data-auto-width="<{block 'auto-width'}>true<{/block}>"
+		data-auto-width="<{block 'auto-width'}>false<{/block}>"
 		data-searching="<{block 'searching'}>true<{/block}>"
 		data-processing="<{block 'processing'}>true<{/block}>"
 		data-paging-type="<{block 'paging-type'}>full_numbers<{/block}>"
