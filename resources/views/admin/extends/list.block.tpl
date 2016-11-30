@@ -22,7 +22,7 @@
 <script src="<{'js/datatable/jquery.dataTables.min.js'|static}>"></script>
 <script src="<{'js/jquery.bbq.min.js'|static}>"></script>
 <script src="<{'js/template.js'|static}>"></script>
-<script src="<{'js/proui/table.js'|static}>"></script>
+<script src="<{'js/proui/table.min.js'|static}>"></script>
 <{/block}>
 
 <{block "header"}>
