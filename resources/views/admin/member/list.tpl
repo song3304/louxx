@@ -1,8 +1,4 @@
 <{extends file="admin/extends/list.block.tpl"}>
-<!-- 
-公共Block 
-由于extends中无法使用if/include，所以需要将公共Block均写入list.tpl、datatable.tpl
--->
 
 <{block "title"}>用户<{/block}>
 
@@ -27,7 +23,6 @@
 <{/block}>
 
 <!-- DataTable的Block -->
-
 <{block "table-td-plus"}>
 <td data-from="avatar_aid" data-orderable="false">
 	<img src="<{''|attachment}>?id={{data}}&width=80&height=80" alt="avatar" class="img-circle">
