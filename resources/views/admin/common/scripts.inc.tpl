@@ -8,6 +8,8 @@
 <{block "head-scripts-jquery"}>
 <script src="<{'js/jquery-2.1.0.min.js'|static}>"></script>
 <script>jQuery.noConflict();</script>
+<script src="<{'js/jquery.cookie.min.js'|static}>"></script>
+
 <{/block}>
 <{block "head-scripts-bootstrap"}>
 <script src="<{'js/bootstrap3/bootstrap.min.js'|static}>"></script>

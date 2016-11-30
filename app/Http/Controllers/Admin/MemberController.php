@@ -25,7 +25,7 @@ class MemberController extends Controller
 		//view's variant
 		$this->_pagesize = $pagesize;
 		$this->_filters = $this->_getFilters($request);
-		return $this->view('admin.member.datatable');
+		return $this->view('admin.member.list');
 	}
 
 	public function data(Request $request)

@@ -1,9 +1,16 @@
 <{extends file="admin/extends/main.block.tpl"}>
 
+<{block "head-scripts-common"}>
+<script src="<{'js/jsencrypt.min.js'|static}>"></script>
+<script src="<{'js/common.js'|static}>"></script>
+<{/block}>
+<{block "head-styles-plus"}>
+<link rel="stylesheet" href="<{'css/proui/datatable.min.css'|static}>">
+<{/block}>
 <{block "head-scripts-plus"}>
-<script src="<{'js/proui/table.min.js'|static}>"></script>
+<link rel="stylesheet" href="<{'js/bootstrap-slider/bootstrap-slider.min.css'|static}>">
+<script src="<{'js/bootstrap-slider/bootstrap-slider.min.js'|static}>"></script>
 <script src="<{'js/DatePicker/WdatePicker.js'|static}>"></script>
-
 <script>
 (function($){
 	$().ready(function(){
@@ -12,6 +19,10 @@
 	});
 })(jQuery);
 </script>
+<script src="<{'js/datatable/jquery.dataTables.min.js'|static}>"></script>
+<script src="<{'js/jquery.bbq.min.js'|static}>"></script>
+<script src="<{'js/template.js'|static}>"></script>
+<script src="<{'js/proui/table.js'|static}>"></script>
 <{/block}>
 
 <{block "header"}>
@@ -34,7 +45,7 @@
 				<{block "menus-before"}><{/block}>
 				<{block "menus-create"}>
 				<li>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/create"> <i class="fa fa-plus"></i> 添加</a>
+					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/create" data-shortcuts="ctrl+n"> <i class="fa fa-plus"></i> 添加</a>
 				</li>
 				<{/block}>
 				<{block "menus-dropdown-plus"}><{/block}>
@@ -96,7 +107,34 @@
 <div class="clearfix"></div>
 <{block "block-content-table"}>
 <div class="table-responsive">
-	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover" data-name="<{block 'name'}><{/block}>" data-namespace="<{block 'namespace'}><{/block}>">
+	<{block "table-tools"}>
+	<div class="btn-group" id="tools-contrainer">
+		<{block "table-tools-before"}><{/block}>
+		<{block "table-tools-create"}>
+		<a class="btn btn-success" data-toggle="tooltip" title="新建数据" href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/create"><i class="fa fa-plus animated pulse infinite"></i></a>
+		<{/block}>
+		<{block "table-tools-plus"}><{/block}>
+		<{block "table-tools-resh"}>
+		<a class="btn btn-info" data-toggle="tooltip" title="刷新" id="reload"><i class="fa fa-refresh fa-spin"></i></a>
+		<{/block}>
+		<{block "table-tools-delete"}>
+		<a class="btn btn-danger" data-toggle="tooltip" title="删除选中" href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "options-dropdown-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class=""><i class="fa fa-trash-o animated infinite wobble"></i></a>
+		<{/block}>
+		<{block "table-tools-after"}><{/block}>
+	</div>
+	<{/block}>
+	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover"
+		data-name="<{block 'name'}><{/block}>"
+		data-namespace="<{block 'namespace'}>admin<{/block}>"
+		data-search-delay="<{block 'search-delay'}>800<{/block}>"
+		data-display-start="<{block 'display-start'}>0.0<{/block}>"
+		data-page-length="<{$_pagesize|default:25}>"
+		data-auto-width="<{block 'auto-width'}>true<{/block}>"
+		data-searching="<{block 'searching'}>true<{/block}>"
+		data-processing="<{block 'processing'}>true<{/block}>"
+		data-paging-type="<{block 'paging-type'}>full_numbers<{/block}>"
+		<{block 'datatable-settings'}><{/block}>
+	>
 		<thead>
 			<{block "table-thead-before"}><{/block}>
 			<tr>
@@ -119,12 +157,12 @@
 		</thead>
 		<tbody>
 			<{block "table-tbody"}>
-			<tr id="line-{{id}}">
+			<tr>
 			<{block "table-td"}>
 				<{block "table-td-before"}><{/block}>
-					<{block "table-td-id"}>
-				<td class="text-left" data-from="id"><input type="checkbox" name="id[]" value="{{data}}">{{id}}</td>
-					<{/block}>
+				<{block "table-td-id"}>
+				<td class="text-left" data-from="id"><input type="checkbox" name="id[]" value="{{data}}">{{data}}</td>
+				<{/block}>
 				<{block "table-td-plus"}><{/block}>
 				<{block "table-td-timestamps"}>
 					<{block "table-td-timestamps-created_at"}>
@@ -135,15 +173,15 @@
 					<{/block}>
 				<{/block}>
 				<{block "table-td-options"}>
-				<td class="text-center" data-from="">
+				<td class="text-center" data-from="" data-orderable="false">
 					<div class="btn-group">
 						<{block "table-td-options-before"}><{/block}>
 							<{block "table-td-options-edit"}>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/{{id}}/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/{{full.id}}/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
 							<{/block}>
 							<{block "table-td-options-plus"}><{/block}>
 							<{block "table-td-options-delete"}>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/{{id}}" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：{{id}}吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/{{full.id}}" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：{{full.id}}吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
 							<{/block}>
 						<{block "table-td-options-after"}><{/block}>
 					</div>
@@ -155,14 +193,6 @@
 			<{/block}>
 		</tbody>
 	</table>
-	<{block "table-foot"}>
-	<div class="row">
-		<div class="col-sm-5 hidden-xs">
-			<span> -  / </span>
-		</div>
-		<div class="col-sm-7 col-xs-12 clearfix"></div>
-	</div>
-	<{/block}>
 </div>
 <div class="clearfix"></div>
 <{/block}>
