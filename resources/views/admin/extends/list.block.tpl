@@ -133,7 +133,7 @@
 		data-searching="<{block 'searching'}>true<{/block}>"
 		data-processing="<{block 'processing'}>true<{/block}>"
 		data-paging-type="<{block 'paging-type'}>full_numbers<{/block}>"
-		data-order="[[0, &quot;desc&quot;]]"
+		data-order="<{block 'order'}>[[0, &quot;desc&quot;]]<{/block}>"
 		<{block 'datatable-settings'}><{/block}>
 	>
 		<thead>
