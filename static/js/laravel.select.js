@@ -126,7 +126,6 @@ $().ready(function(){
 		var selection = $this.data('selection') ? $this.data('selection') : text;
 
 		var term = $this.data('term');
-		var params = $this.data('params');
 		var value = $this.attr('value');
 
 		var _config = {
@@ -137,6 +136,7 @@ $().ready(function(){
 				type: 'post',
 				delay: 250,
 				data: function (_params) {
+					var params = $this.data('params');
 					var v = {page: _params.page, _token: $.crsf, filters: {}};
 					v.filters[term] = {'like': _params.term};
 					v = $.extend(true, v, params);
@@ -169,7 +169,7 @@ $().ready(function(){
 		} else
 			$this.select2(_config);
 	});
-	$.fn.extend({tags: function(params){
+	$.fn.extend({tags: function(){
 		return this.each(function(){
 			var $this = $(this);
 			var _config = {
@@ -180,6 +180,7 @@ $().ready(function(){
 					type: 'post',
 					delay: 250,
 					data: function (_params) {
+						var params = $this.data('params');
 						var v = {page: _params.page, _token: $.crsf, filters: {}};
 						v.filters.keywords = {'like': _params.term};
 						v = $.extend(true, v, params);
