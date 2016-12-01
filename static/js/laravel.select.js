@@ -1,5 +1,4 @@
 (function($){
-$().ready(function(){
 	var method = {cacheData: {}};
 	method.getData = function(url, params) {
 		var key = JSON.stringify({url: url, params: params});
@@ -83,135 +82,160 @@ $().ready(function(){
 		}
 		return result;
 	};
-	$('.select-model').each(function(){
-		var $this = $(this);
-		var id = $this.data('id');
-		var text = $this.data('text');
-		var params = $this.data('params');
-		var value = $this.attr('value');
-		var url = $.baseuri + $this.data('model')+'/data/json';
-		params = $.extend(true, {all: 'true'}, params);
-		method.getData(url, params).done(function(json){
-			var data = method.format(json, id, text); 
-			$this.select2({language: "zh-CN", data: data, allowClear: true});
-			$this.val(value ? value.split(',') : null).trigger("change");
-		});
-	});
-	$('.tree-model').each(function(){
-		var $this = $(this);
-		var id = $this.data('id');
-		var pid = $this.data('pid');
-		var text = $this.data('text');
-		var params = $this.data('params');
-		var value = $this.attr('value');
-		var url = $.baseuri + $this.data('model')+'/data/json';
-		params = $.extend(true, {all: 'true', tree: 'true'}, params);
-
-		method.getData(url, params).done(function(json){
-			var data = method.format(json, id, text, pid);
-			data = method.recursive(data);
-			$this.select2({
-				//theme: "bootstrap",
-				language: "zh-CN",data: data, allowClear: true,
-				templateResult: function(data){return $('<div>' + data.text + '</div>');},
-      			templateSelection: function(data){return data.selection;}
+	$.fn.extend({
+		selectModel: function(options){
+			if (options == 'destroy') return this.select2('destroy');
+			if (options == 'open') return this.select2('open');
+			if (options == 'close') return this.select2('close');
+			return this.each(function(){
+				var $this = $(this);
+				var id = $this.data('id');
+				var text = $this.data('text');
+				var params = $this.data('params');
+				var value = $this.attr('value');
+				var url = $.baseuri + $this.data('model')+'/data/json';
+				params = $.extend(true, {all: 'true'}, params);
+				method.getData(url, params).done(function(json){
+					var data = method.format(json, id, text); 
+					$this.select2($.extend(true, {language: "zh-CN", data: data, allowClear: true}, options));
+					$this.val(value ? value.split(',') : null).trigger("change");
+				});
 			});
-			$this.val(value ? value.split(',') : null).trigger("change");
-		});
-	});
-	$('.suggest-model').each(function(){
-		var $this = $(this);
-		var id = $this.data('id');
-		var text = $this.data('text');
-		var selection = $this.data('selection') ? $this.data('selection') : text;
+		},
+		treeModel: function(options){
+			if (options == 'destroy') return this.select2('destroy');
+			if (options == 'open') return this.select2('open');
+			if (options == 'close') return this.select2('close');
+			return this.each(function(){
+				var $this = $(this);
+				var id = $this.data('id');
+				var pid = $this.data('pid');
+				var text = $this.data('text');
+				var params = $this.data('params');
+				var value = $this.attr('value');
+				var url = $.baseuri + $this.data('model')+'/data/json';
+				params = $.extend(true, {all: 'true', tree: 'true'}, params);
 
-		var term = $this.data('term');
-		var value = $this.attr('value');
+				method.getData(url, params).done(function(json){
+					var data = method.format(json, id, text, pid);
+					data = method.recursive(data);
+					$this.select2($.extend(true, {
+						//theme: "bootstrap",
+						language: "zh-CN",data: data, allowClear: true,
+						templateResult: function(data){return $('<div>' + data.text + '</div>');},
+						templateSelection: function(data){return data.selection;}
+					}, options));
+					$this.val(value ? value.split(',') : null).trigger("change");
+				});
+			});
+		},
+		suggestModel: function(options){
+			if (options == 'destroy') return this.select2('destroy');
+			if (options == 'open') return this.select2('open');
+			if (options == 'close') return this.select2('close');
+			return this.each(function(){
+				var $this = $(this);
+				var id = $this.data('id');
+				var text = $this.data('text');
+				var selection = $this.data('selection') ? $this.data('selection') : text;
 
-		var _config = {
-			language: "zh-CN",
-			ajax: {
-				url: $.baseuri + $this.data('model')+'/data/json',
-				dataType: 'json',
-				type: 'post',
-				delay: 250,
-				data: function (_params) {
-					var params = $this.data('params');
-					var v = {page: _params.page, _token: $.crsf, filters: {}};
-					v.filters[term] = {'like': _params.term};
-					v = $.extend(true, v, params);
-					return v;
-				},
-				processResults: function (json, page) {
-					if (json.result != 'success' && json.result != 'api') return {result: []};
-					var data = [], items = json.data.data;
-					for(var i = 0; i < items.length; ++i)
-						data.push({'id': id ? method.replaceData(items[i], id) : items[i].id, 'text': text ? method.replaceData(items[i], text) : items[i].text, 'selection': selection ? method.replaceData(items[i], selection) : items[i].selection});
-					return {results: data};
-				},
-				cache: true
-			},
-			escapeMarkup: function (markup) {return markup;},
-			minimumInputLength: 1,
-			allowClear: true,
-			templateResult: function(data){return data.text;},
-			templateSelection: function(data){return data.selection || data.text;}
-		};
-		if (value) {
-			$.POST($.baseuri + $this.data('model')+'/data/json', {'filters[id][in]': value.split(',')}, function(json){
-				if (json.result == 'success' || json.result == 'api') {
-					var items = json.data.data;
-					for(var i = 0; i < items.length; ++i)
-						$('<option value="'+(id ? method.replaceData(items[i], id) : items[i].id)+'" selected="selected">'+(text ? method.replaceData(items[i], text) : items[i].text)+'</option>').appendTo($this);				
-				}
-				$this.select2(_config);
-			}, false);
-		} else
-			$this.select2(_config);
+				var term = $this.data('term');
+				var value = $this.attr('value');
+
+				var _config = {
+					language: "zh-CN",
+					ajax: {
+						url: $.baseuri + $this.data('model')+'/data/json',
+						dataType: 'json',
+						type: 'post',
+						delay: 250,
+						data: function (_params) {
+							var params = $this.data('params');
+							var v = {page: _params.page, _token: $.crsf, filters: {}};
+							v.filters[term] = {'like': _params.term};
+							v = $.extend(true, v, params);
+							return v;
+						},
+						processResults: function (json, page) {
+							if (json.result != 'success' && json.result != 'api') return {result: []};
+							var data = [], items = json.data.data;
+							for(var i = 0; i < items.length; ++i)
+								data.push({'id': id ? method.replaceData(items[i], id) : items[i].id, 'text': text ? method.replaceData(items[i], text) : items[i].text, 'selection': selection ? method.replaceData(items[i], selection) : items[i].selection});
+							return {results: data};
+						},
+						cache: true
+					},
+					escapeMarkup: function (markup) {return markup;},
+					minimumInputLength: 1,
+					allowClear: true,
+					templateResult: function(data){return data.text;},
+					templateSelection: function(data){return data.selection || data.text;}
+				};
+				if (value) {
+					$.POST($.baseuri + $this.data('model')+'/data/json', {'filters[id][in]': value.split(',')}, function(json){
+						if (json.result == 'success' || json.result == 'api') {
+							var items = json.data.data;
+							for(var i = 0; i < items.length; ++i)
+								$('<option value="'+(id ? method.replaceData(items[i], id) : items[i].id)+'" selected="selected">'+(text ? method.replaceData(items[i], text) : items[i].text)+'</option>').appendTo($this);				
+						}
+						$this.select2($.extend(true, _config, options));
+					}, false);
+				} else
+					$this.select2($.extend(true, _config, options));
+			});
+		},
+		tags: function(options){
+			if (options == 'destroy') return this.select2('destroy');
+			if (options == 'open') return this.select2('open');
+			if (options == 'close') return this.select2('close');
+			return this.each(function(){
+				var $this = $(this);
+				var _config = {
+					language: "zh-CN",
+					ajax: {
+						url: $.baseuri +'admin/tag/data/json',
+						dataType: 'json',
+						type: 'post',
+						delay: 250,
+						data: function (_params) {
+							var params = $this.data('params');
+							var v = {page: _params.page, _token: $.crsf, filters: {}};
+							v.filters.keywords = {'like': _params.term};
+							v = $.extend(true, v, params);
+							return v;
+						},
+						processResults: function (json, page) {
+							if (json.result != 'success' && json.result != 'api') return {result: []};
+							var data = [], items = json.data.data;
+							for(var i = 0; i < items.length; ++i)
+								data.push({'id': items[i].keywords, 'text': items[i].keywords + ' <span class="text-muted">('+ (items[i].count || 0) + '次使用)</span>', 'selection': items[i].keywords });
+							return {results: data};
+						},
+						cache: true
+					},
+					escapeMarkup: function (markup) {return markup;},
+					minimumInputLength: 1,
+					templateResult: function(data){return data.text;},
+					templateSelection: function(data){return data.selection || data.text;},
+					createTag: function (_params) {
+						var term = $.trim(_params.term);
+						if (term === '') return null;
+						return {
+							id: term,
+							selection: term,
+							text: term + ' <span style="color:#f5f5f5">(创建)</span>',
+							newTag: true // add additional parameters
+						};
+					}
+				};
+				$this.select2($.extend(true, {tags: true}, _config, options));
+			});
+		}
 	});
-	$.fn.extend({tags: function(){
-		return this.each(function(){
-			var $this = $(this);
-			var _config = {
-				language: "zh-CN",
-				ajax: {
-					url: $.baseuri +'admin/tag/data/json',
-					dataType: 'json',
-					type: 'post',
-					delay: 250,
-					data: function (_params) {
-						var params = $this.data('params');
-						var v = {page: _params.page, _token: $.crsf, filters: {}};
-						v.filters.keywords = {'like': _params.term};
-						v = $.extend(true, v, params);
-						return v;
-					},
-					processResults: function (json, page) {
-						if (json.result != 'success' && json.result != 'api') return {result: []};
-						var data = [], items = json.data.data;
-						for(var i = 0; i < items.length; ++i)
-							data.push({'id': items[i].keywords, 'text': items[i].keywords + ' <span class="text-muted">('+ (items[i].count || 0) + '次使用)</span>', 'selection': items[i].keywords });
-						return {results: data};
-					},
-					cache: true
-				},
-				escapeMarkup: function (markup) {return markup;},
-				minimumInputLength: 1,
-				templateResult: function(data){return data.text;},
-				templateSelection: function(data){return data.selection || data.text;},
-				createTag: function (_params) {
-					var term = $.trim(_params.term);
-					if (term === '') return null;
-					return {
-						id: term,
-						selection: term,
-						text: term + ' <span style="color:#f5f5f5">(创建)</span>',
-						newTag: true // add additional parameters
-					};
-				}
-			};
-			$this.select2($.extend(true, {tags: true}, _config));
-		});
-	}});
+
+$().ready(function(){
+	$('.select-model').selectModel();
+	$('.tree-model').treeModel();
+	$('.suggest-model').suggestModel();
 });
 })(jQuery);
