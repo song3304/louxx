@@ -126,7 +126,7 @@ $().ready(function(){
 		var selection = $this.data('selection') ? $this.data('selection') : text;
 
 		var term = $this.data('term');
-		var filters = $this.data('filters');
+		var params = $this.data('params');
 		var value = $this.attr('value');
 
 		var _config = {
@@ -136,10 +136,10 @@ $().ready(function(){
 				dataType: 'json',
 				type: 'post',
 				delay: 250,
-				data: function (params) {
-					var v = {page: params.page, _token: $.crsf, filters: {}};
-					v.filters[term] = {'like': params.term};
-					v.filters = $.extend({}, v.filters, filters);
+				data: function (_params) {
+					var v = {page: _params.page, _token: $.crsf, filters: {}};
+					v.filters[term] = {'like': _params.term};
+					v = $.extend({}, v, params);
 					return v;
 				},
 				processResults: function (json, page) {
