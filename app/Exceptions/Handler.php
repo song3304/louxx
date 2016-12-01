@@ -10,7 +10,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Database\QueryException;
 use Doctrine\DBAL\Driver\PDOException;
-use App\Controller;
+use App\Http\Controllers\Controller;
 class Handler extends ExceptionHandler
 {
 	/**
