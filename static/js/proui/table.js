@@ -44,7 +44,7 @@ $().ready(function(){
 			r[ configs[i] ] = $dt.data( configs[i] ) || null;
 		var config = $.bbq.getState();
 		if (config)
-			r = $.extend(r, config);
+			r = $.extend(true, r, config);
 		r.displayStart = ~~r.displayStart;
 		r.pageLength = ~~r.pageLength;
 		$dt.data(r); //read from hash and set to table's data

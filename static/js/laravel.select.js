@@ -90,7 +90,7 @@ $().ready(function(){
 		var params = $this.data('params');
 		var value = $this.attr('value');
 		var url = $.baseuri + $this.data('model')+'/data/json';
-		params = $.extend({}, {all: 'true'}, params);
+		params = $.extend(true, {all: 'true'}, params);
 		method.getData(url, params).done(function(json){
 			var data = method.format(json, id, text); 
 			$this.select2({language: "zh-CN", data: data, allowClear: true});
@@ -105,7 +105,7 @@ $().ready(function(){
 		var params = $this.data('params');
 		var value = $this.attr('value');
 		var url = $.baseuri + $this.data('model')+'/data/json';
-		params = $.extend({}, {all: 'true', tree: 'true'}, params);
+		params = $.extend(true, {all: 'true', tree: 'true'}, params);
 
 		method.getData(url, params).done(function(json){
 			var data = method.format(json, id, text, pid);
@@ -139,7 +139,7 @@ $().ready(function(){
 				data: function (_params) {
 					var v = {page: _params.page, _token: $.crsf, filters: {}};
 					v.filters[term] = {'like': _params.term};
-					v = $.extend({}, v, params);
+					v = $.extend(true, v, params);
 					return v;
 				},
 				processResults: function (json, page) {
@@ -169,7 +169,7 @@ $().ready(function(){
 		} else
 			$this.select2(_config);
 	});
-	$.fn.extend({tags: function(filters){
+	$.fn.extend({tags: function(params){
 		return this.each(function(){
 			var $this = $(this);
 			var _config = {
@@ -179,10 +179,10 @@ $().ready(function(){
 					dataType: 'json',
 					type: 'post',
 					delay: 250,
-					data: function (params) {
-						var v = {page: params.page, _token: $.crsf, filters: {}};
-						v.filters.keywords = {'like': params.term};
-						v.filters = $.extend({}, v.filters, filters);
+					data: function (_params) {
+						var v = {page: _params.page, _token: $.crsf, filters: {}};
+						v.filters.keywords = {'like': _params.term};
+						v = $.extend(true, v, params);
 						return v;
 					},
 					processResults: function (json, page) {
@@ -198,8 +198,8 @@ $().ready(function(){
 				minimumInputLength: 1,
 				templateResult: function(data){return data.text;},
 				templateSelection: function(data){return data.selection || data.text;},
-				createTag: function (params) {
-					var term = $.trim(params.term);
+				createTag: function (_params) {
+					var term = $.trim(_params.term);
 					if (term === '') return null;
 					return {
 						id: term,
@@ -209,7 +209,7 @@ $().ready(function(){
 					};
 				}
 			};
-			$this.select2($.extend({tags: true}, _config));
+			$this.select2($.extend(true, {tags: true}, _config));
 		});
 	}});
 });

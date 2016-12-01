@@ -1,5 +1,5 @@
 (function($){
-$.fn.extend({tags: function(filters){
+$.fn.extend({tags: function(params){
 	return this.each(function(){
 		var $this = $(this);
 		var _config = {
@@ -9,10 +9,10 @@ $.fn.extend({tags: function(filters){
 				dataType: 'json',
 				type: 'post',
 				delay: 250,
-				data: function (params) {
-					var v = {page: params.page, _token: $.crsf, filters: {}, of: 'json'};
-					v.filters.keywords = {'like': params.term};
-					v.filters = $.extend({}, v.filters, filters);console.log(v);
+				data: function (_params) {
+					var v = {page: _params.page, _token: $.crsf, filters: {}, of: 'json'};
+					v.filters.keywords = {'like': _params.term};
+					v = $.extend(true, v, params);
 					return v;
 				},
 				processResults: function (json, page) {
@@ -28,8 +28,8 @@ $.fn.extend({tags: function(filters){
 			minimumInputLength: 1,
 			templateResult: function(data){return data.text;},
 			templateSelection: function(data){return data.selection || data.text;},
-			createTag: function (params) {
-				var term = $.trim(params.term);
+			createTag: function (_params) {
+				var term = $.trim(_params.term);
 				if (term === '') return null;
 				return {
 					id: term,
