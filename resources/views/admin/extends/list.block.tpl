@@ -83,7 +83,7 @@
 	<div class="block-options" id="tools-contrainer">
 		<{block "table-tools-before"}><{/block}>
 		<{block "table-tools-create"}>
-		<a class="btn btn-success btn-sm btn-alt" data-toggle="tooltip" title="新建数据" href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/create" data-shortcuts="ctrl+n"><i class="fa fa-plus animated pulse infinite"></i></a>
+		<a class="btn btn-success btn-sm btn-alt" data-toggle="tooltip" title="新建<{block 'title'}><{block}>" href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/create" data-shortcuts="ctrl+n"><i class="fa fa-plus animated pulse infinite"></i></a>
 		<{/block}>
 		<{block "table-tools-plus"}><{/block}>
 		<{block "table-tools-resh"}>
@@ -158,7 +158,7 @@
 		</thead>
 		<tbody>
 			<{block "table-tbody"}>
-			<tr>
+			<tr style="display: none;">
 			<{block "table-td"}>
 				<{block "table-td-before"}><{/block}>
 				<{block "table-td-id"}>
