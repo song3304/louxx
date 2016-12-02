@@ -25,7 +25,7 @@
 	};
 	method.replaceData = function(data, format)
 	{
-		return format.replace(/\{([\w\.]+)\}/g, function($0, $1){
+		return format.replace(/\{\{([\w\.]+)\}\}/g, function($0, $1){
 			var o = $1.split('.');
 			var d = data;
 			for(var i = 0; i < o.length; ++i)
