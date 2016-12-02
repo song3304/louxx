@@ -34,7 +34,7 @@
 	<div class="form-group col-sm-4">
 		<label class="col-md-3 control-label" for="role_id">用户组</label>
 		<div class="col-md-9">
-			<select type="text" id="role_id" name="filters[role_id]" class="form-control tree-model" data-model="admin/role" data-id="{{id}}" data-text="{{display_name}}({{name}})" data-placeholder="请输入关键词..." value="<{$_filters.role_id.equal}>"></select>
+			<select type="text" id="role_id" name="filters[role_id]" class="form-control tree-model" data-model="admin/role" data-text="{{display_name}}({{name}})" data-placeholder="请输入关键词..." value="<{$_filters.role_id.equal}>"></select>
 		</div>
 	</div>
 
