@@ -94,14 +94,14 @@
 				var text = $this.data('text');
 				var selection = $this.data('selection') ? $this.data('selection') : text;
 				var params = $this.data('params');
-				var value = $this.attr('value');
+				var values = $this.attr('value') ? $this.attr('value').split(',') : $this.val();
 				var url = $.baseuri + $this.data('model')+'/data/json';
 				params = $.extend(true, {all: 'true'}, params);
 				method.getData(url, params).done(function(json){
 					var data = method.format(json, id, selection, text); 
 					$this.select2($.extend(true, {language: "zh-CN", data: data, allowClear: true}, options));
 					//初始值
-					$this.val(value ? value.split(',') : null).trigger("change");
+					$this.val(values ? values : null).trigger("change");
 				});
 			});
 		},
@@ -116,7 +116,7 @@
 				var text = $this.data('text');
 				var selection = $this.data('selection') ? $this.data('selection') : text;
 				var params = $this.data('params');
-				var value = $this.attr('value');
+				var values = $this.attr('value') ? $this.attr('value').split(',') : $this.val();
 				var url = $.baseuri + $this.data('model')+'/data/json';
 				params = $.extend(true, {all: 'true', tree: 'true'}, params);
 
@@ -130,7 +130,7 @@
 						templateSelection: function(data){return data.selection;}
 					}, options));
 					//初始值
-					$this.val(value ? value.split(',') : null).trigger("change");
+					$this.val(values ? values : null).trigger("change");
 				});
 			});
 		},
@@ -143,35 +143,28 @@
 				var id = $this.data('id');
 				var text = $this.data('text');
 				var selection = $this.data('selection') ? $this.data('selection') : text;
-				var term = $this.data('term');
-				var value = $this.attr('value');
-
+				var term = $this.data('term') ? $this.data('term') : 'term';
+				var values = $this.attr('value') ? $this.attr('value').split(',') : $this.val();
+				var url = $.baseuri + $this.data('model') + '/data/json';
 				var _config = {
 					language: "zh-CN",
 					ajax: {
-						url: $.baseuri + $this.data('model')+'/data/json',
-						dataType: 'json',
-						type: 'post',
-						delay: 250,
-						data: function (_params) {
+						delay: 500,
+						//dataType: 'json',
+						//type: 'post',
+						//cache: true,
+						transport: function (_params, success, failure) {
 							var params = $this.data('params');
-							var v = {page: _params.page, _token: $.crsf, filters: {}};
-							v.filters[term] = {'like': _params.term};
-							v = $.extend(true, v, params);
-							return v;
+							var params1 = {page: _params.data.page, filters: {}};
+							params1.filters[term] = {'like': _params.data.term};
+							method.getData(url, $.extend(true, params1, params)).done(function(json){
+								var data = method.format(json, id, selection, text);
+								success(data);
+							});
 						},
 						processResults: function (json, page) {
-							if (json.result != 'success' && json.result != 'api') return {result: []};
-							var data = [], items = json.data.data;
-							for(var i = 0; i < items.length; ++i)
-								data.push({
-									'id': id ? method.replaceData(items[i], id) : items[i].id,
-									'text': text ? method.replaceData(items[i], text) : items[i].text, 
-									'selection': selection ? method.replaceData(items[i], selection) : items[i].selection
-								});
-							return {results: data};
-						},
-						cache: true
+							return {results: json};
+						}
 					},
 					escapeMarkup: function (markup) {return markup;},
 					minimumInputLength: 1,
@@ -180,9 +173,9 @@
 					templateSelection: function(data){return data.selection || data.text;}
 				};
 				//有初始的值
-				if (value) {
+				if (values) {
 					var params = $this.data('params');
-					method.getData(_config.ajax.url, $.extend(true, params, {filters: {id: {in: value.split(',')}}})).done(function(json){
+					method.getData(url, $.extend(true, params, {filters: {id: {in: values}}})).done(function(json){
 						var data = method.format(json, id, selection, text);
 						$this.select2($.extend(true, _config, options, {data: data}));
 
@@ -197,32 +190,31 @@
 			if (options == 'close') return this.select2('close');
 			return this.each(function(){
 				var $this = $(this);
+				var term = $this.data('term') ? $this.data('term') : 'keywords';
+				var id = $this.data('id') ? $this.data('id') : '{{keywords}}';
+				var text = $this.data('text') ? $this.data('text') : '{{keywords}} <span class="text-muted">({{count}}次使用)</span>';
+				var selection = $this.data('selection') ? $this.data('selection') : '{{keywords}}';
+				var values = $this.attr('value') ? $this.attr('value').split(',') : $this.val();
+				var url = $.baseuri + ($this.data('model') ? $this.data('model') : 'admin/tag') + '/data/json';
 				var _config = {
 					language: "zh-CN",
 					ajax: {
-						url: $.baseuri + ($this.data('model') ? $this.data('model') : 'admin/tag') + '/data/json',
-						dataType: 'json',
-						type: 'post',
-						delay: 250,
-						data: function (_params) {
+						delay: 500,
+						//dataType: 'json',
+						//type: 'post',
+						//cache: true,
+						transport: function (_params, success, failure) {
 							var params = $this.data('params');
-							var v = {page: _params.page, _token: $.crsf, filters: {}};
-							v.filters.keywords = {'like': _params.term};
-							v = $.extend(true, v, params);
-							return v;
+							var params1 = {page: _params.data.page, filters: {}};
+							params1.filters[term] = {'like': _params.data.term};
+							method.getData(url, $.extend(true, params1, params)).done(function(json){
+								var data = method.format(json, id, selection, text);
+								success(data);
+							});
 						},
 						processResults: function (json, page) {
-							if (json.result != 'success' && json.result != 'api') return {result: []};
-							var data = [], items = json.data.data;
-							for(var i = 0; i < items.length; ++i)
-								data.push({
-									'id': items[i].keywords, 
-									'text': items[i].keywords + ' <span class="text-muted">('+ (items[i].count || 0) + '次使用)</span>', 
-									'selection': items[i].keywords 
-								});
-							return {results: data};
-						},
-						cache: true
+							return {results: json};
+						}
 					},
 					escapeMarkup: function (markup) {return markup;},
 					minimumInputLength: 1,
@@ -239,7 +231,16 @@
 						};
 					}
 				};
-				$this.select2($.extend(true, {tags: true}, _config, options));
+				if (values) {
+					var params = $this.data('params');
+					var params1 = {filters: {}};
+					params1.filters[term] = {'in': values};
+					method.getData(url, $.extend(true, params1, params)).done(function(json){
+						var data = method.format(json, id, selection, text);
+						$this.select2($.extend(true, _config, options, {data: data}));
+					});
+				} else
+					$this.select2($.extend(true, _config, options));
 			});
 		}
 	});
