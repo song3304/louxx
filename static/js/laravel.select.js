@@ -39,16 +39,17 @@
 			return d;
 		});
 	};
-	method.format = function(items, id, text, pid) {
+	method.format = function(items, id, selection, text, pid) {
 		var result = [];
 		for(var i = 0; i < items.length; ++i) {
 			var d = {
 				'id': id ? method.replaceData(items[i], id) : items[i].id, 
 				'text': text ? method.replaceData(items[i], text) : items[i].text,
+				'selection': selection ? method.replaceData(items[i], selection) : items[i].selection,
 				'pid': pid ? method.replaceData(items[i], pid) : items[i].pid
 			};
 			if (typeof items[i].children == 'object' && typeof items[i].children.length != 'undefined')
-				d.children = method.format(items[i].children, id, text);
+				d.children = method.format(items[i].children, id, selection, text, pid);
 			result.push(d);
 		}
 		return result;
@@ -69,7 +70,7 @@
 
 			var d = {
 				'id': v.id,
-				'selection': v.text,
+				'selection': v.selection,
 				'text': prefix + '<span class="'+_class+'"></span>' + v.text
 			};
 			result.push(d);
@@ -91,13 +92,15 @@
 				var $this = $(this);
 				var id = $this.data('id');
 				var text = $this.data('text');
+				var selection = $this.data('selection') ? $this.data('selection') : text;
 				var params = $this.data('params');
 				var value = $this.attr('value');
 				var url = $.baseuri + $this.data('model')+'/data/json';
 				params = $.extend(true, {all: 'true'}, params);
 				method.getData(url, params).done(function(json){
-					var data = method.format(json, id, text); 
+					var data = method.format(json, id, selection, text); 
 					$this.select2($.extend(true, {language: "zh-CN", data: data, allowClear: true}, options));
+					//初始值
 					$this.val(value ? value.split(',') : null).trigger("change");
 				});
 			});
@@ -111,13 +114,14 @@
 				var id = $this.data('id');
 				var pid = $this.data('pid');
 				var text = $this.data('text');
+				var selection = $this.data('selection') ? $this.data('selection') : text;
 				var params = $this.data('params');
 				var value = $this.attr('value');
 				var url = $.baseuri + $this.data('model')+'/data/json';
 				params = $.extend(true, {all: 'true', tree: 'true'}, params);
 
 				method.getData(url, params).done(function(json){
-					var data = method.format(json, id, text, pid);
+					var data = method.format(json, id, selection, text, pid);
 					data = method.recursive(data);
 					$this.select2($.extend(true, {
 						//theme: "bootstrap",
@@ -125,6 +129,7 @@
 						templateResult: function(data){return $('<div>' + data.text + '</div>');},
 						templateSelection: function(data){return data.selection;}
 					}, options));
+					//初始值
 					$this.val(value ? value.split(',') : null).trigger("change");
 				});
 			});
@@ -138,7 +143,6 @@
 				var id = $this.data('id');
 				var text = $this.data('text');
 				var selection = $this.data('selection') ? $this.data('selection') : text;
-
 				var term = $this.data('term');
 				var value = $this.attr('value');
 
@@ -160,7 +164,11 @@
 							if (json.result != 'success' && json.result != 'api') return {result: []};
 							var data = [], items = json.data.data;
 							for(var i = 0; i < items.length; ++i)
-								data.push({'id': id ? method.replaceData(items[i], id) : items[i].id, 'text': text ? method.replaceData(items[i], text) : items[i].text, 'selection': selection ? method.replaceData(items[i], selection) : items[i].selection});
+								data.push({
+									'id': id ? method.replaceData(items[i], id) : items[i].id,
+									'text': text ? method.replaceData(items[i], text) : items[i].text, 
+									'selection': selection ? method.replaceData(items[i], selection) : items[i].selection
+								});
 							return {results: data};
 						},
 						cache: true
@@ -171,20 +179,19 @@
 					templateResult: function(data){return data.text;},
 					templateSelection: function(data){return data.selection || data.text;}
 				};
+				//有初始的值
 				if (value) {
-					$.POST($.baseuri + $this.data('model')+'/data/json', {'filters[id][in]': value.split(',')}, function(json){
-						if (json.result == 'success' || json.result == 'api') {
-							var items = json.data.data;
-							for(var i = 0; i < items.length; ++i)
-								$('<option value="'+(id ? method.replaceData(items[i], id) : items[i].id)+'" selected="selected">'+(text ? method.replaceData(items[i], text) : items[i].text)+'</option>').appendTo($this);				
-						}
-						$this.select2($.extend(true, _config, options));
-					}, false);
+					var params = $this.data('params');
+					method.getData(_config.ajax.url, $.extend(true, params, {filters: {id: {in: value.split(',')}}})).done(function(json){
+						var data = method.format(json, id, selection, text);
+						$this.select2($.extend(true, _config, options, {data: data}));
+
+					});
 				} else
 					$this.select2($.extend(true, _config, options));
 			});
 		},
-		tags: function(options){
+		tagsModel: function(options){
 			if (options == 'destroy') return this.select2('destroy');
 			if (options == 'open') return this.select2('open');
 			if (options == 'close') return this.select2('close');
@@ -193,7 +200,7 @@
 				var _config = {
 					language: "zh-CN",
 					ajax: {
-						url: $.baseuri +'admin/tag/data/json',
+						url: $.baseuri + ($this.data('model') ? $this.data('model') : 'admin/tag') + '/data/json',
 						dataType: 'json',
 						type: 'post',
 						delay: 250,
@@ -208,7 +215,11 @@
 							if (json.result != 'success' && json.result != 'api') return {result: []};
 							var data = [], items = json.data.data;
 							for(var i = 0; i < items.length; ++i)
-								data.push({'id': items[i].keywords, 'text': items[i].keywords + ' <span class="text-muted">('+ (items[i].count || 0) + '次使用)</span>', 'selection': items[i].keywords });
+								data.push({
+									'id': items[i].keywords, 
+									'text': items[i].keywords + ' <span class="text-muted">('+ (items[i].count || 0) + '次使用)</span>', 
+									'selection': items[i].keywords 
+								});
 							return {results: data};
 						},
 						cache: true
@@ -237,5 +248,6 @@ $().ready(function(){
 	$('.select-model').selectModel();
 	$('.tree-model').treeModel();
 	$('.suggest-model').suggestModel();
+	$('.tags-model').tagsModel();
 });
 })(jQuery);
