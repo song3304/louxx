@@ -12,12 +12,13 @@ use Addons\Entrust\Traits\UserTrait;
 
 use App\Role;
 use App\CatalogCastTrait;
-
+use Laravel\Scout\Searchable;
 class User extends Authenticatable
 {
 	use HasApiTokens, SoftDeletes, Notifiable, UserTrait;
 	use CacheTrait, CallTrait, PolyfillTrait;
 	use CatalogCastTrait;
+	//use Searchable;
 	protected $dates = ['lastlogin_at'];
 
 	//不能批量赋值

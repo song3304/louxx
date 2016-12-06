@@ -4,9 +4,11 @@ namespace App;
 use Addons\Entrust\Role as BaseRole;
 use Addons\Core\Models\TreeCacheTrait;
 use Illuminate\Support\Arr;
+use Laravel\Scout\Searchable;
 class Role extends BaseRole
 {
 	use TreeCacheTrait;
+	//use Searchable;
 	
 	public static function getRolesByName($name = NULL)
 	{

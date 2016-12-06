@@ -5,8 +5,10 @@ use Addons\Core\Models\Tree;
 use Addons\Core\Models\TreeCacheTrait;
 use Illuminate\Support\Arr;
 use Cache;
+use Laravel\Scout\Searchable;
 class Catalog extends Tree {
 	use TreeCacheTrait;
+	//use Searchable;
 	//不能批量赋值
 	public $orderKey = 'order_index';
 	public $pathKey = NULL;
