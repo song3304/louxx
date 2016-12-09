@@ -59,9 +59,8 @@ return [
              *
              * If logging is enabled, you either need to set the path and log level
              * (some defaults are given for you below), or you can use a custom logger by
-             * setting 'logObject' to an instance of Psr\Log\LoggerInterface.  In fact,
-             * if you just want to use the default Laravel logger, then set 'logObject'
-             * to \Log::getMonolog().
+             * setting 'logObject' to an instance of Psr\Log\LoggerInterface or 'monolog'.  In fact,
+             * if you just want to use the default Laravel logger, then set 'logObject' to 'monolog'
              *
              * Note: 'logObject' takes precedent over 'logPath'/'logLevel', so set
              * 'logObject' null if you just want file-based logging to a custom path.
@@ -70,9 +69,9 @@ return [
              */
             'logging' => true,
             // If you have an existing instance of Monolog you can use it here.
-            'logObject' => \Log::getMonolog(),
-            'logPath' => storage_path('logs/elasticsearch.log'),
-            'logLevel' => Monolog\Logger::INFO,
+            'logObject' => 'monolog',
+            //'logPath' => storage_path('logs/elasticsearch.log'),
+            //'logLevel' => Monolog\Logger::INFO,
             /**
              * Retries
              *

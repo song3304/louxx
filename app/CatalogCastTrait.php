@@ -9,7 +9,7 @@ trait CatalogCastTrait {
 		return (new Catalog())->setRawAttributes($data);
 	}
 
-	public function fromCatalog($value) {
+	public function catalogToArray($value) {
 		return $value->toArray();
 	}
 
@@ -19,7 +19,7 @@ trait CatalogCastTrait {
 		return (new Catalog())->setRawAttributes($data);
 	}
 
-	public function fromCatalogName($value) {
+	public function catalogNameToArray($value) {
 		return $value->toArray();
 	}
 
@@ -27,7 +27,7 @@ trait CatalogCastTrait {
 		return $this->asCatalog($value);
 	}
 
-	public function fromStatus($value) {
+	public function statusToArray($value) {
 		return $value->toArray();
 	}
 }

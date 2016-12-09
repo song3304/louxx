@@ -77,6 +77,7 @@ return [
             'hosts' => [
                 env('ELASTICSEARCH_HOST', 'localhost'),
             ],
+            'logger' => 'monolog',
         ],
     ],
 
