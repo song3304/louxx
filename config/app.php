@@ -196,6 +196,7 @@ return [
 		Laravel\Passport\PassportServiceProvider::class,
 		//全文搜索引擎
 		Laravel\Scout\ScoutServiceProvider::class,
+		Addons\Elasticsearch\ServiceProvider::class,
 	],
 
 	/*
@@ -248,6 +249,7 @@ return [
 		'Entrust' => Addons\Entrust\Facade::class,
 		'Agent' => Jenssegers\Agent\Facades\Agent::class,
 		'Image' => Intervention\Image\Facades\Image::class,
+		'Elasticsearch' => Addons\Elasticsearch\Facade::class,
 	],
 
 ];
