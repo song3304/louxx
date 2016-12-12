@@ -6,6 +6,6 @@ use Laravel\Scout\Searchable;
 
 class Permission extends BasePermission
 {
-	//use Searchable;
+	use Searchable;
 
 }

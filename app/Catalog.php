@@ -8,7 +8,7 @@ use Cache;
 use Laravel\Scout\Searchable;
 class Catalog extends Tree {
 	use TreeCacheTrait;
-	//use Searchable;
+	use Searchable;
 	//不能批量赋值
 	public $orderKey = 'order_index';
 	public $pathKey = NULL;

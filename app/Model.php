@@ -12,6 +12,6 @@ use Laravel\Scout\Searchable;
 class Model extends BaseModel {
 	use CacheTrait, CallTrait, PolyfillTrait;
 	use CatalogCastTrait;
-	//use Searchable;
+	use Searchable;
 
 }

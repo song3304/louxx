@@ -37,7 +37,7 @@ class CreateElasticsearch extends Migration
 								'type' => 'custom',
 								'tokenizer' => 'title_pinyin', //先转拼音
 								'filter' => [
-								   'title_ngram' //为了适应任何字的搜索，将每种组合都来一遍
+									'title_ngram' //为了适应任何字的搜索，将每种组合都来一遍
 								]
 							],
 						],
@@ -94,6 +94,9 @@ class CreateElasticsearch extends Migration
 										'search_analyzer' => 'standard',
 										'analyzer' => 'english',
 									],
+									/*'filter' => [
+										'title_ngram' //为了适应任何字的搜索，将每种组合都来一遍
+									]*/
 								],
 							],
 							[

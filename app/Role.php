@@ -8,7 +8,7 @@ use Laravel\Scout\Searchable;
 class Role extends BaseRole
 {
 	use TreeCacheTrait;
-	//use Searchable;
+	use Searchable;
 	
 	public static function getRolesByName($name = NULL)
 	{
