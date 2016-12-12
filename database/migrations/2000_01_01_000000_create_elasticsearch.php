@@ -12,7 +12,7 @@ class CreateElasticsearch extends Migration
 	 */
 	public function up()
 	{
-		if (!env('ELASTICSEARCH_HOST')) return;
+		if (!env('SCOUT_DRIVER')) return;
 		$e = app('elasticsearch');
 		$params = [
 			'index' => $e->getConfig('index'),
@@ -20,59 +20,65 @@ class CreateElasticsearch extends Migration
 				'settings' => [
 					'analysis' => [
 						'analyzer' => [
-							'pinyin' => [ //常规的拼音+汉字搜
-								'tokenizer' => 'title_pinyin'
+							'pinyin_standard' => [ //常规的拼音+汉字搜
+								'tokenizer' => 't_pinyin'
 							],
-							'ik_smart_pinyin' => [ //分词之后的拼音
+							'ik_smart_standard' => [ //适合正文
 								'type' => 'custom',
 								'tokenizer' => 'ik_max_word', //先分词
 								'filter' => [
-									'single_pinyin' //将分词转化成拼音
+									'unique'
 								],
 								'char_filter' => [
 									'html_strip' //去除html代码
 								]
 							],
-							'title_pinyin'  => [ //标题使用拼音+汉字搜
+							'ik_smart_pinyin' => [ //适合标题
 								'type' => 'custom',
-								'tokenizer' => 'title_pinyin', //先转拼音
+								'tokenizer' => 'ik_max_word', //先分词
 								'filter' => [
-									'title_ngram' //为了适应任何字的搜索，将每种组合都来一遍
+									'f_pinyin', 'f_ngram', 'unique' //将分词转化成拼音，并且一律ngram
+								],
+								'char_filter' => [
+									'html_strip' //去除html代码
+								]
+							],
+							'title_standard' => [
+								'type' => 'custom',
+								'tokenizer' => 'standard',
+								'filter' => [
+									'lowercase', 'asciifolding', 'f_ngram', 'unique' //为了适应任何字的搜索，将每种组合都来一遍
 								]
 							],
 						],
 						'tokenizer' => [
-							'title_pinyin' => [ //常规拼音 全拼/首拼
+							't_pinyin' => [
 								'type' => 'pinyin',
 								'keep_first_letter' => true,
 								'keep_separate_first_letter' => false,
 								'keep_full_pinyin' => false,
 								'keep_joined_full_pinyin' => true,
 								'keep_original' => true,
-								'limit_first_letter_length' => 150,
+								'limit_first_letter_length' => 25,
 								'lowercase' => true
 							],
-							
 						],
 						'filter' => [
-							'single_pinyin' => [
+							'f_pinyin' => [
 								'type' => 'pinyin',
-								'keep_first_letter' =>  true,
+								'keep_first_letter' => true,
 								'keep_separate_first_letter' => false,
 								'keep_full_pinyin' => false,
 								'keep_joined_full_pinyin' => true,
 								'keep_original' => true,
-								'limit_first_letter_length' => 150,
+								'limit_first_letter_length' => 25,
 								'lowercase' => true
 							],
-							'title_ngram' => [ //主要针对不换行的标题使用，方便模糊搜索
-							  'type' => 'ngram',
-							  'min_gram' => 2,
-							  'max_gram' => 6,
-							  'token_chars' => [
-								'letter',
-								'digit'
-							  ]
+							'f_ngram' => [ //主要针对不换行的标题使用，方便模糊搜索
+								'type' => 'edgeNGram',
+								'min_gram' => 2,
+								'max_gram' => 25,
+								'side' => 'front',
 							],
 						],
 					],
@@ -92,11 +98,9 @@ class CreateElasticsearch extends Migration
 									'mapping' => [
 										'type' => 'text',
 										'search_analyzer' => 'standard',
-										'analyzer' => 'english',
+										'analyzer' => 'title_standard',
 									],
-									/*'filter' => [
-										'title_ngram' //为了适应任何字的搜索，将每种组合都来一遍
-									]*/
+									
 								],
 							],
 							[
@@ -106,8 +110,8 @@ class CreateElasticsearch extends Migration
 									'match' => '^.*?(content|text)$',
 									'mapping' => [
 										'type' => 'text',
-										'search_analyzer' => 'ik_smart_pinyin',
-										'analyzer' => 'ik_smart_pinyin',
+										'search_analyzer' => 'ik_smart_standard',
+										'analyzer' => 'ik_smart_standard',
 									],
 								],
 							],
@@ -115,11 +119,11 @@ class CreateElasticsearch extends Migration
 								'pinyin' => [
 									'match_pattern' => 'regex',
 									'match_mapping_type' => 'string',
-									'match' => '^(title|realname|nickname|alias)$',
+									'match' => '^.*?(name|title|alias)$', //realname nickname title subtitle
 									'mapping' => [
 										'type' => 'text',
-										'search_analyzer' => 'pinyin',
-										'analyzer' => 'title_pinyin',
+										'search_analyzer' => 'pinyin_standard',
+										'analyzer' => 'ik_smart_pinyin',
 									],
 								],
 							],
