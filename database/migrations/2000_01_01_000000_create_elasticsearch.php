@@ -27,7 +27,7 @@ class CreateElasticsearch extends Migration
 								'type' => 'custom',
 								'tokenizer' => 'ik_max_word', //先分词
 								'filter' => [
-									'unique'
+									'unique' //分词之后去重
 								],
 								'char_filter' => [
 									'html_strip' //去除html代码
@@ -47,20 +47,30 @@ class CreateElasticsearch extends Migration
 								'type' => 'custom',
 								'tokenizer' => 'standard',
 								'filter' => [
-									'lowercase', 'asciifolding', 'f_ngram', 'unique' //为了适应任何字的搜索，将每种组合都来一遍
+									'lowercase',
+									'asciifolding',
+									'f_ngram', //为了适应任何字的搜索，将每种组合都来一遍
+									'unique',
+								]
+							],
+							'title_search_standard' => [
+								'type' => 'custom',
+								'tokenizer' => 'standard',
+								'filter' => [
+									'lowercase', 'asciifolding','unique' //为了适应任何字的搜索，将每种组合都来一遍
 								]
 							],
 						],
 						'tokenizer' => [
 							't_pinyin' => [
 								'type' => 'pinyin',
-								'keep_first_letter' => true,
-								'keep_separate_first_letter' => false,
-								'keep_full_pinyin' => false,
-								'keep_joined_full_pinyin' => true,
-								'keep_original' => true,
-								'limit_first_letter_length' => 25,
-								'lowercase' => true
+								'keep_first_letter' => true, //首拼 ldh
+								'keep_separate_first_letter' => false, //拆分首拼成单个 l d h
+								'keep_full_pinyin' => false, //全拼(单个) liu de hua
+								'keep_joined_full_pinyin' => true, //全拼(合并) liudehua
+								'keep_original' => true, //保留原始
+								'limit_first_letter_length' => 25, //首拼最长字符长
+								'lowercase' => true, //小写
 							],
 						],
 						'filter' => [
@@ -80,6 +90,17 @@ class CreateElasticsearch extends Migration
 								'max_gram' => 25,
 								'side' => 'front',
 							],
+							'f_word_delimiter' => [ //与 standard 冲突
+								'type' => 'word_delimiter',
+								'split_on_numerics' => true, //单词中有数字则分割 w3c -> w 3 c
+								'split_on_case_change' => true, // 按照大小写分割getAllData -> get All Data
+								'generate_word_parts' => true, //按照有意义的单词分割，比如PowerPoint -> Power Point
+								'generate_number_parts' => true, //数字被符号分割 111+222 -> 111 222
+								'catenate_words' => true, //将 blue-ray 转为 blueray
+								'catenate_numbers' => true, //将 139-1234-5678 转为 13912345678
+								'catenate_all' => true, //将 uni-corn-110 转为 unicorn110
+								'preserve_original' => true, //保留原始的
+							]
 						],
 					],
 				],
@@ -97,7 +118,7 @@ class CreateElasticsearch extends Migration
 									'match' => '^(name|username)$',
 									'mapping' => [
 										'type' => 'text',
-										'search_analyzer' => 'standard',
+										'search_analyzer' => 'title_search_standard',
 										'analyzer' => 'title_standard',
 									],
 									
