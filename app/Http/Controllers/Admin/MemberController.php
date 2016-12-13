@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Role;
-use Addons\Core\Controllers\AdminTrait;
+use Addons\Core\Controllers\ApiTrait;
 use DB;
 
 class MemberController extends Controller
 {
-	use AdminTrait;
+	use ApiTrait;
 	public $RESTful_permission = 'member';
 	/**
 	 * Display a listing of the resource.
