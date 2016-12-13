@@ -100,7 +100,11 @@ class CreateElasticsearch extends Migration
 								'catenate_numbers' => true, //将 139-1234-5678 转为 13912345678
 								'catenate_all' => true, //将 uni-corn-110 转为 unicorn110
 								'preserve_original' => true, //保留原始的
-							]
+							],
+							'f_synonym' => [
+								'type' => 'synonym',
+								'synonyms_path' => 'analysis/synonym.txt', //同义词路径 相对于config目录
+							],
 						],
 					],
 				],
