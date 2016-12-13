@@ -143,7 +143,8 @@
 				var id = $this.data('id');
 				var text = $this.data('text');
 				var selection = $this.data('selection') ? $this.data('selection') : text;
-				var term = $this.data('term') ? $this.data('term') : 'term';
+				var term = $this.data('term') ? $this.data('term') : null;
+				var q = $this.data('q') ? $this.data('q') : null;
 				var values = $this.attr('value') ? $this.attr('value').split(',') : $this.val();
 				var url = $.baseuri + $this.data('model') + '/data/json';
 				var _config = {
@@ -155,9 +156,10 @@
 						//cache: true,
 						transport: function (_params, success, failure) {
 							var params = $this.data('params');
-							var params1 = {page: _params.data.page, filters: {}};
-							params1.filters[term] = {'like': _params.data.term};
-							method.getData(url, $.extend(true, params1, params)).done(function(json){
+							var config = {page: _params.data.page, f: {}, q: {}};
+							if(term) config.f[term] = {'like': _params.data.term};
+							if(q) config.q[q] = _params.data.q;
+							method.getData(url, $.extend(true, config, params)).done(function(json){
 								var data = method.format(json, id, selection, text);
 								success(data);
 							});
@@ -175,7 +177,7 @@
 				//有初始的值
 				if (values) {
 					var params = $this.data('params');
-					method.getData(url, $.extend(true, params, {filters: {id: {in: values}}})).done(function(json){
+					method.getData(url, $.extend(true, params, {f: {id: {in: values}}})).done(function(json){
 						var data = method.format(json, id, selection, text);
 						$this.select2($.extend(true, _config, options, {data: data}));
 
@@ -190,7 +192,9 @@
 			if (options == 'close') return this.select2('close');
 			return this.each(function(){
 				var $this = $(this);
-				var term = $this.data('term') ? $this.data('term') : 'keywords';
+				var term = $this.data('term') ? $this.data('term') : null;
+				var q = $this.data('q') ? $this.data('q') : null;
+				if (!term && !q) term = 'keywords';
 				var id = $this.data('id') ? $this.data('id') : '{{keywords}}';
 				var text = $this.data('text') ? $this.data('text') : '{{keywords}} <span class="text-muted">({{count}}次使用)</span>';
 				var selection = $this.data('selection') ? $this.data('selection') : '{{keywords}}';
@@ -205,9 +209,10 @@
 						//cache: true,
 						transport: function (_params, success, failure) {
 							var params = $this.data('params');
-							var params1 = {page: _params.data.page, filters: {}};
-							params1.filters[term] = {'like': _params.data.term};
-							method.getData(url, $.extend(true, params1, params)).done(function(json){
+							var config = {page: _params.data.page, f: {}, q: {}};
+							if(term) config.f[term] = {'like': _params.data.term};
+							if(q) config.q[q] = _params.data.q;
+							method.getData(url, $.extend(true, config, params)).done(function(json){
 								var data = method.format(json, id, selection, text);
 								success(data);
 							});
@@ -233,9 +238,8 @@
 				};
 				if (values) {
 					var params = $this.data('params');
-					var params1 = {filters: {}};
-					params1.filters[term] = {'in': values};
-					method.getData(url, $.extend(true, params1, params)).done(function(json){
+					var config = {f: {id: {in: values}}, q: {}};
+					method.getData(url, $.extend(true, config, params)).done(function(json){
 						var data = method.format(json, id, selection, text);
 						$this.select2($.extend(true, _config, options, {data: data}));
 					});
