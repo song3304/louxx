@@ -21,9 +21,9 @@ class MemberController extends Controller
 	public function index(Request $request)
 	{
 		$user = new User;
-		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
+		$size = $request->input('size') ?: config('size.models.'.$user->getTable(), config('size.common'));
 		//view's variant
-		$this->_pagesize = $pagesize;
+		$this->_size = $size;
 		$this->_filters = $this->_getFilters($request);
 		return $this->view('admin.member.list');
 	}
@@ -50,14 +50,14 @@ class MemberController extends Controller
 		$user = new User;
 		$builder = $user->newQuery()->with(['roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
 		$page = $request->input('page') ?: 0;
-		$pagesize = $request->input('pagesize') ?: config('site.pagesize.export', 1000);
+		$size = $request->input('size') ?: config('size.export', 1000);
 		$total = $this->_getCount($request, $builder);
 
 		if (empty($page)){
 			$this->_of = $request->input('of');
 			$this->_table = $user->getTable();
 			$this->_total = $total;
-			$this->_pagesize = $pagesize > $total ? $total : $pagesize;
+			$this->_size = $size > $total ? $total : $size;
 			return $this->view('admin.member.export');
 		}
 

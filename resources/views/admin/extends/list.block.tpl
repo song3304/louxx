@@ -128,7 +128,7 @@
 		data-namespace="<{block 'namespace'}>admin<{/block}>"
 		data-search-delay="<{block 'search-delay'}>800<{/block}>"
 		data-display-start="<{block 'display-start'}>0.0<{/block}>"
-		data-page-length="<{$_pagesize|default:25}>"
+		data-page-length="<{$_size|default:25}>"
 		data-auto-width="<{block 'auto-width'}>false<{/block}>"
 		data-searching="<{block 'searching'}>true<{/block}>"
 		data-processing="<{block 'processing'}>true<{/block}>"

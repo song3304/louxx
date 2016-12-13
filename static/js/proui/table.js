@@ -297,9 +297,23 @@ $().ready(function(){
 				url: $.baseuri + config.namespace+'/'+config.name+'/data/json',
 				timeout: 20 * 1000,
 				type: 'POST',
-				data: function(d){
-					return $.extend({}, d, {
-						filters: window.location.query('filters')
+				data: function(d){console.log(d);
+					var o = {};
+					for(var i = 0; i < d.order.length; ++i)
+					{
+						var item = d.order[i];
+						if (typeof d.columns[item.column] != 'undefined' && !!d.columns[item.column].orderable)
+						{
+							var name = !!d.columns[item.column].name ? d.columns[item.column].name : d.columns[item.column].data;
+							if (name) o[name] = item.dir;
+						}
+					}
+					return $.extend(true, {}, {
+						size: d.length,
+						page: !isNaN(d.start / d.length) ? Math.ceil(d.start / d.length) : 1,
+						q: {_all: d.search.value},
+						o: o,
+						f: window.location.query('f')
 					});
 				},
 				dataSrc: function(json){

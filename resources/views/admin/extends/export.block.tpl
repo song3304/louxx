@@ -5,21 +5,21 @@
 (function($){
 	$().ready(function(){
 		$('[name="<{block "name"}><{/block}>/list"]').addClass('active').closest('li[name="<{block "name"}><{/block}>"]').addClass('active');
-		var makeLinks = function(pagesize) {
-			if (isNaN(pagesize) || pagesize <= 0) return;
+		var makeLinks = function(size) {
+			if (isNaN(size) || size <= 0) return;
 			var total = <{$_total}>;
-			var pages = Math.ceil(total / pagesize);
+			var pages = Math.ceil(total / size);
 			var $links = $('#links').empty();
-			$('#pagesize').text(pagesize);
+			$('#size').text(size);
 			for (var i = 1; i <= pages; i++) {
-				$links.append('<div class="col-md-3 col-xs-4"><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block name="name"}><{/block}>/export/<{$_of}>?page='+i+'&pagesize='+pagesize+'&<{'filters'|query_string nofilter}>" class="btn btn-link" target="_blank">第'+i+'个</a> ('+ (i == pages ? 0 : total - pagesize * i) + '-' + (total - pagesize * (i - 1)) +')</div>');
+				$links.append('<div class="col-md-3 col-xs-4"><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block name="name"}><{/block}>/export/<{$_of}>?page='+i+'&size='+size+'&<{'filters'|query_string nofilter}>" class="btn btn-link" target="_blank">第'+i+'个</a> ('+ (i == pages ? 0 : total - size * i) + '-' + (total - size * (i - 1)) +')</div>');
 			};
 		}
-		$('#pagesize-slider').on('slideStop', function(e){
-			var pagesize = parseInt($(this).data('slider').getValue());
-			makeLinks(pagesize);
+		$('#size-slider').on('slideStop', function(e){
+			var size = parseInt($(this).data('slider').getValue());
+			makeLinks(size);
 		});
-		makeLinks(<{$_pagesize}>);
+		makeLinks(<{$_size}>);
 		<{block "inline-script-plus"}><{/block}>
 	});
 })(jQuery);
@@ -61,9 +61,9 @@
 	<p>导出格式：<label for="" class="label label-info"><{$_of}></label></p>
 	<p>总：<{$_total}>条数据，</p>
 	<p>
-	每个文件：<span id="pagesize"><{$_pagesize}></span>条：
+	每个文件：<span id="size"><{$_size}></span>条：
 	 <div class="input-slider-success">
-		<input type="text" id="pagesize-slider" name="pagesize-slider" class="form-control input-slider" data-slider-min="0" data-slider-max="<{$_total}>" data-slider-step="1" data-slider-value="<{$_pagesize}>" data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="show">
+		<input type="text" id="size-slider" name="size-slider" class="form-control input-slider" data-slider-min="0" data-slider-max="<{$_total}>" data-slider-step="1" data-slider-value="<{$_size}>" data-slider-orientation="horizontal" data-slider-selection="before" data-slider-tooltip="show">
 	</div>
 
 	</p>
