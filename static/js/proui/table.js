@@ -297,7 +297,7 @@ $().ready(function(){
 				url: $.baseuri + config.namespace+'/'+config.name+'/data/json',
 				timeout: 20 * 1000,
 				type: 'POST',
-				data: function(d){console.log(d);
+				data: function(d){
 					var o = {};
 					for(var i = 0; i < d.order.length; ++i)
 					{
