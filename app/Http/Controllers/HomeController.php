@@ -19,9 +19,7 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-
-		include base_path('/database/migrations/2000_01_01_000000_create_elasticsearch.php');
-		(new \CreateElasticsearch())->up();
+		return $this->view('index');
 	}
 
 }

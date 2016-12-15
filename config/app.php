@@ -197,6 +197,8 @@ return [
 		//全文搜索引擎
 		Laravel\Scout\ScoutServiceProvider::class,
 		Addons\Elasticsearch\ServiceProvider::class,
+		//Log Viewer
+		Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 	],
 
 	/*
