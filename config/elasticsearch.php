@@ -95,7 +95,7 @@ return [
              *     }
              * }
              */
-            'logstashDriver' => 'redis',
+            'logstashDriver' => null,
             /**
              * Retries
              *
