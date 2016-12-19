@@ -19,7 +19,8 @@
  * @return string
  */
 use App\Catalog;
-function smarty_modifier_catalogs($name)
+function smarty_modifier_catalogs($name, $key = NULL)
 {
-	return Catalog::getCatalogsByName($name);
+	$c = Catalog::getCatalogsByName($name);
+	return empty($key) ? $c : array_get($c, $key);
 }
