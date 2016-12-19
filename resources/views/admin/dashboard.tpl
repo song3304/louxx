@@ -33,7 +33,7 @@
 						<div class="row">
 							<!-- Main Title (hidden on small devices for the statistics to fit) -->
 							<div class="col-md-4 col-lg-6 hidden-xs hidden-sm">
-								<h1>欢迎 <strong><{$_user.nickname}></strong> <{if $_user.gender==1}>先生<{else if $_user.gender==2}>女士<{/if}><br><small>后台其实也可以很美！</small></h1>
+								<h1>欢迎 <strong><{$_user.nickname}></strong> <{if $_user.gender.name=='male'}>先生<{else if $_user.gender.name=='female'}>女士<{/if}><br><small>学而时习之！</small></h1>
 							</div>
 							<!-- END Main Title -->
 

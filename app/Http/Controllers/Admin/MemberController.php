@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\User;
 use App\Role;
-use Addons\Core\Controllers\AdminTrait;
+use Addons\Core\Controllers\ApiTrait;
+use DB;
 
 class MemberController extends Controller
 {
-	use AdminTrait;
+	use ApiTrait;
 	public $RESTful_permission = 'member';
 	/**
 	 * Display a listing of the resource.
@@ -23,17 +21,17 @@ class MemberController extends Controller
 	public function index(Request $request)
 	{
 		$user = new User;
-		$pagesize = $request->input('pagesize') ?: config('site.pagesize.admin.'.$user->getTable(), $this->site['pagesize']['common']);
+		$size = $request->input('size') ?: config('size.models.'.$user->getTable(), config('size.common'));
 		//view's variant
-		$this->_pagesize = $pagesize;
+		$this->_size = $size;
 		$this->_filters = $this->_getFilters($request);
-		return $this->view('admin.member.datatable');
+		return $this->view('admin.member.list');
 	}
 
 	public function data(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['_gender', 'roles']);
+		$builder = $user->newQuery()->with([ 'roles']);
 		if ($roleId = $request->input('filters.role_id')){
 			$request->merge(['filters' => ['role_id' => NULL]]);
 			$role = Role::findByCache($roleId);
@@ -50,28 +48,33 @@ class MemberController extends Controller
 	public function export(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['_gender', 'roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
+		$builder = $user->newQuery()->with(['roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
 		$page = $request->input('page') ?: 0;
-		$pagesize = $request->input('pagesize') ?: config('site.pagesize.export', 1000);
+		$size = $request->input('size') ?: config('size.export', 1000);
 		$total = $this->_getCount($request, $builder);
 
 		if (empty($page)){
 			$this->_of = $request->input('of');
 			$this->_table = $user->getTable();
 			$this->_total = $total;
-			$this->_pagesize = $pagesize > $total ? $total : $pagesize;
+			$this->_size = $size > $total ? $total : $size;
 			return $this->view('admin.member.export');
 		}
 
 		$data = $this->_getExport($request, $builder, function(&$v){
-			$v['_gender'] = !empty($v['_gender']) ? $v['_gender']['title'] : NULL;
+			$v['gender'] = !empty($v['gender']) ? $v['gender']['title'] : NULL;
 		}, ['users.*']);
 		return $this->api($data);
 	}
 
-	public function show($id)
+	public function show(Request $request, $id)
 	{
-		return '';
+		$user = User::with(['roles'])->find($id);
+		if (empty($user))
+			return $this->failure_noexists();
+
+		$this->_data = $user;
+		return !$request->offsetExists('of') ? $this->view('admin.member.show') : $this->api($user->toArray());
 	}
 
 	public function create()
@@ -88,8 +91,10 @@ class MemberController extends Controller
 		$data = $this->autoValidate($request, 'member.store', $keys);
 
 		$role_ids = array_pull($data, 'role_ids');
-		$user = (new User)->add($data);
-		$user->roles()->sync($role_ids);
+		DB::transaction(function() use ($data, $role_ids){
+			$user = (new User)->add($data);
+			$user->roles()->sync($role_ids);
+		});
 		return $this->success('', url('admin/member'));
 	}
 
@@ -121,8 +126,10 @@ class MemberController extends Controller
 		$keys = 'nickname,realname,gender,email,phone,idcard,avatar_aid,role_ids';
 		$data = $this->autoValidate($request, 'member.store', $keys, $user);
 		$role_ids = array_pull($data, 'role_ids');
-		$user->update($data);
-		$user->roles()->sync($role_ids);
+		DB::transaction(function() use ($user, $data, $role_ids){
+			$user->update($data);
+			$user->roles()->sync($role_ids);
+		});
 		return $this->success();
 	}
 

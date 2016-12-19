@@ -194,6 +194,11 @@ return [
 		SocialiteProviders\Manager\ServiceProvider::class,
 		//Oauth2-server
 		Laravel\Passport\PassportServiceProvider::class,
+		//全文搜索引擎
+		Laravel\Scout\ScoutServiceProvider::class,
+		Addons\Elasticsearch\ServiceProvider::class,
+		//Log Viewer
+		Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 	],
 
 	/*
@@ -246,6 +251,7 @@ return [
 		'Entrust' => Addons\Entrust\Facade::class,
 		'Agent' => Jenssegers\Agent\Facades\Agent::class,
 		'Image' => Intervention\Image\Facades\Image::class,
+		'Elasticsearch' => Addons\Elasticsearch\Facade::class,
 	],
 
 ];

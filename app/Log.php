@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use Addons\Core\Models\Model;
+use App\Model;
 use Jenssegers\Agent\Agent;
 
 class Log extends Model

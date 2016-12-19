@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use Addons\Core\Models\Model;
+use App\Model;
 
 class UserFinance extends Model 
 {

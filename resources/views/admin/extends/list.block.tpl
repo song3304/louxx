@@ -1,9 +1,16 @@
 <{extends file="admin/extends/main.block.tpl"}>
 
+<{block "head-scripts-common"}>
+<script src="<{'js/jsencrypt.min.js'|static}>"></script>
+<script src="<{'js/common.js'|static}>"></script>
+<{/block}>
+<{block "head-styles-plus"}>
+<link rel="stylesheet" href="<{'css/proui/datatable.min.css'|static}>">
+<{/block}>
 <{block "head-scripts-plus"}>
-<script src="<{'js/proui/table.min.js'|static}>"></script>
+<link rel="stylesheet" href="<{'js/bootstrap-slider/bootstrap-slider.min.css'|static}>">
+<script src="<{'js/bootstrap-slider/bootstrap-slider.min.js'|static}>"></script>
 <script src="<{'js/DatePicker/WdatePicker.js'|static}>"></script>
-
 <script>
 (function($){
 	$().ready(function(){
@@ -12,17 +19,14 @@
 	});
 })(jQuery);
 </script>
+<script src="<{'js/datatable/jquery.dataTables.min.js'|static}>"></script>
+<script src="<{'js/jquery.bbq.min.js'|static}>"></script>
+<script src="<{'js/template.js'|static}>"></script>
+<script src="<{'js/proui/table.min.js'|static}>"></script>
 <{/block}>
 
 <{block "header"}>
 <!-- Form Header -->
-<!-- <div class="content-header">
-	<div class="header-section">
-		<h1>
-			<i class="fa fa-table"></i><{block "title"}><{/block}>管理<br><small>检索、新增、修改、删除<{block "title"}><{/block}>!</small>
-		</h1>
-	</div>
-</div> -->
 <ul class="breadcrumb breadcrumb-top">
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>
@@ -34,46 +38,30 @@
 <{block "block-title"}>
 <!-- DataTable Title -->
 <div class="block-title">
-	<{block "block-title-title"}><h2 class="pull-left"><strong><{block "title"}><{/block}>列表</strong> 检索</h2><{/block}>
-	
-	<{block "block-title-options"}>
-	<div class="block-options pull-right">
-		<!-- <{if $_base}>
-		<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>" class="btn btn-alt btn-sm btn-warning enable-tooltip" title="点击切换到「功能视图」，可排序、选择行数等" data-original-title="点击切换到「功能视图」，可排序、选择行数等">功能视图</a>
-		<{else}>
-		<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>?base=1" class="btn btn-alt btn-sm btn-primary enable-tooltip" title="数据读取失败时，请点击切换到「基本视图」" data-original-title="数据读取失败时，请点击切换到「基本视图」">基本视图</a>
-		<{/if}> -->
-		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示" data-original-title="折叠/展示"><i class="fa fa-arrows-v"></i></a>
-		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换" data-original-title="全屏切换" data-shortcuts="f11"><i class="fa fa-desktop"></i></a>
-		<!-- <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary" data-toggle="block-hide"><i class="fa fa-times"></i></a> -->
-		<div class=" btn-group btn-group-sm">
-			<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-info dropdown-toggle enable-tooltip" data-toggle="dropdown" title="操作" data-original-title="操作"><span class="caret"></span></a>
-			<ul class="dropdown-menu dropdown-custom dropdown-menu-right">
-			<{block "menu-before"}><{/block}>
-			<{block "menu-option"}>
-				<li class="dropdown-header">操作<i class="fa fa-cog pull-right"></i></li>
+	<{block "menus"}>
+		<h2 class="pull-left"><strong><{block "title"}><{/block}>列表</strong> 检索</h2>
+		<{* <div class="collapse navbar-collapse pull-left">
+			<ul class="nav navbar-nav">
+				<{block "menus-before"}><{/block}>
+				<{block "menus-create"}>
 				<li>
-					<{block "menu-option-before"}><{/block}>
-					<{block "menu-option-plus"}><{/block}>
-					<{block "menu-option-delete"}>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "menu-option-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class="" data-shortcuts="del"><span class="text-danger"><i class="fa fa-times pull-right "></i>删除所选</span></a>
-					<{/block}>
-					<{block "menu-option-after"}><{/block}>
+					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/create" data-shortcuts="ctrl+n"> <i class="fa fa-plus"></i> 添加</a>
 				</li>
-			<{/block}>
-			<{block "menu-export"}>
-				<li class="dropdown-header">导出<i class="fa fa-share pull-right"></i></li>
-				<li>
-					<a href="javascript:void(0)"><i class="fa fa-print pull-right"></i> 打印</a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/csv?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-csv pull-right"></i> CSV </a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/pdf?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-pdf pull-right"></i> PDF</a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xls?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xls pull-right"></i> Excel 2003</a>
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
-				</li>
-			<{/block}>
-			<{block "menu-after"}><{/block}>
+				<{/block}>
+				<{block "menus-dropdown-plus"}><{/block}>
+				<{block "menus-after"}><{/block}>
 			</ul>
-		</div>
+		</div> *}>
+	<{/block}>
+	<{block "options"}>
+	<div class="block-options pull-right">
+		<{block "options-toggle"}>
+		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示 (Ctrl+Shift+T)" data-shortcuts="ctrl+shift+T"><i class="fa fa-arrows-v"></i></a>
+		<{/block}>
+		<{block "options-full"}>
+		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换 (F11)" data-shortcuts="f11"><i class="fa fa-desktop"></i></a>
+		<{/block}>
+		<!-- <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary" data-toggle="block-hide"><i class="fa fa-times"></i></a>  -->
 	</div>
 	<{/block}>
 	<div class="clearfix"></div>
@@ -91,7 +79,63 @@
 <div class="clearfix"></div>
 <{block "block-content-table"}>
 <div class="table-responsive">
-	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover">
+	<{block "table-tools"}>
+	<div class="block-options" id="tools-contrainer">
+		<{block "table-tools-before"}><{/block}>
+		<{block "table-tools-create"}>
+		<a class="btn btn-success btn-sm btn-alt" data-toggle="tooltip" title="新建<{block 'title'}><{/block}>" href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/create" data-shortcuts="ctrl+n"><i class="fa fa-plus animated pulse infinite"></i></a>
+		<{/block}>
+		<{block "table-tools-plus"}><{/block}>
+		<{block "table-tools-resh"}>
+		<a class="btn btn-info btn-sm btn-alt " data-toggle="tooltip" title="刷新" id="reload"><i class="fa fa-refresh fa-spin"></i></a>
+		<{/block}>
+		<{block "table-tools-dropdown"}>
+		<div class="btn-group btn-group-sm">
+			<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-info dropdown-toggle enable-tooltip" data-toggle="dropdown" title="操作" data-original-title="操作"><span class="caret"></span></a>
+			<ul class="dropdown-menu dropdown-custom dropdown-menu-left">
+				<{block "table-tools-dropdown-before"}><{/block}>
+				<{block "table-tools-dropdown-operate"}>
+					<li class="dropdown-header">操作<i class="fa fa-cog pull-right"></i></li>
+					<li>
+						<{block "table-tools-dropdown-operate-before"}><{/block}>
+						<{block "table-tools-dropdown-operate-delete"}>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/0" method="delete" selector="#datatable [name='id[]']:checked" confirm="<{block "table-tools-dropdown-delete-confirm"}>您确定删除这%L项？此操作不可恢复！<{/block}>" class="" data-shortcuts="del"><span class="text-danger"><i class="fa fa-times pull-right "></i>删除所选</span></a>
+						<{/block}>
+						<{block "table-tools-dropdown-operate-plus"}><{/block}>
+						<{block "table-tools-dropdown-operate-after"}><{/block}>
+					</li>
+				<{/block}>
+				<{block "table-tools-dropdown-export"}>
+					<li class="dropdown-header">导出<i class="fa fa-share pull-right"></i></li>
+					<li>
+						<a href="javascript:void(0)"><i class="fa fa-print pull-right"></i> 打印</a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/csv?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-csv pull-right"></i> CSV </a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/pdf?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-pdf pull-right"></i> PDF</a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xls?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xls pull-right"></i> Excel 2003</a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
+					</li>
+				<{/block}>
+				<{block "table-tools-dropdown-after"}><{/block}>
+			</ul>
+		</div>
+		<{/block}>
+		
+		<{block "table-tools-after"}><{/block}>
+	</div>
+	<{/block}>
+	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover"
+		data-name="<{block 'name'}><{/block}>"
+		data-namespace="<{block 'namespace'}>admin<{/block}>"
+		data-search-delay="<{block 'search-delay'}>800<{/block}>"
+		data-display-start="<{block 'display-start'}>0.0<{/block}>"
+		data-page-length="<{$_size|default:25}>"
+		data-auto-width="<{block 'auto-width'}>false<{/block}>"
+		data-searching="<{block 'searching'}>true<{/block}>"
+		data-processing="<{block 'processing'}>true<{/block}>"
+		data-paging-type="<{block 'paging-type'}>full_numbers<{/block}>"
+		data-order="<{block 'order'}>[[0, &quot;desc&quot;]]<{/block}>"
+		<{block 'datatable-settings'}><{/block}>
+	>
 		<thead>
 			<{block "table-thead-before"}><{/block}>
 			<tr>
@@ -113,25 +157,33 @@
 			<{block "table-thead-after"}><{/block}>
 		</thead>
 		<tbody>
-			<{block "table-tbody-before"}><{/block}>
 			<{block "table-tbody"}>
-			<{foreach $_table_data as $item}>
-			<tr id="line-<{$item->getKey()}>">
+			<tr style="display: none;">
 			<{block "table-td"}>
 				<{block "table-td-before"}><{/block}>
-				<{block "table-td-id"}><td class="text-left"><input type="checkbox" name="id[]" value="<{$item->getKey()}>">	<{$item->getKey()}></td><{/block}>
+				<{block "table-td-id"}>
+				<td class="text-left" data-from="id"><input type="checkbox" name="id[]" value="{{data}}">{{data}}</td>
+				<{/block}>
 				<{block "table-td-plus"}><{/block}>
 				<{block "table-td-timestamps"}>
-					<{block "table-td-timestamps-created_at"}><td><{$item->created_at->format('Y-m-d H:i')}></td><{/block}>
-					<{block "table-td-timestamps-updated_at"}><td><{$item->updated_at->format('Y-m-d H:i')}></td><{/block}>
+					<{block "table-td-timestamps-created_at"}>
+				<td data-from="created_at">{{data}}</td>
+					<{/block}>
+					<{block "table-td-timestamps-updated_at"}>
+				<td data-from="updated_at">{{data}}</td>
+					<{/block}>
 				<{/block}>
 				<{block "table-td-options"}>
-				<td class="text-center">
+				<td class="text-center" data-from="" data-orderable="false">
 					<div class="btn-group">
 						<{block "table-td-options-before"}><{/block}>
-						<{block "table-td-options-edit"}><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/<{$item->getKey()}>/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a><{/block}>
-						<{block "table-td-options-plus"}><{/block}>
-						<{block "table-td-options-delete"}><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/<{$item->getKey()}>" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：<{$item->getKey()}>吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a><{/block}>
+							<{block "table-td-options-edit"}>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/{{full.id}}/edit" data-toggle="tooltip" title="编辑" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+							<{/block}>
+							<{block "table-td-options-plus"}><{/block}>
+							<{block "table-td-options-delete"}>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/{{full.id}}" method="delete" confirm="<{block "table-td-options-delete-confirm"}>您确定删除这项：{{full.id}}吗？<{/block}>" data-toggle="tooltip" title="删除" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+							<{/block}>
 						<{block "table-td-options-after"}><{/block}>
 					</div>
 				</td>
@@ -139,20 +191,9 @@
 				<{block "table-td-after"}><{/block}>
 			<{/block}>
 			</tr>
-			<{block "table-tbody-plus"}><{/block}>
-			<{block "table-tbody-after"}><{/block}>
-			<{/foreach}>
 			<{/block}>
 		</tbody>
 	</table>
-	<{block "table-foot"}>
-	<div class="row">
-		<div class="col-sm-5 hidden-xs">
-			<span><{$_table_data->firstItem()}> - <{$_table_data->lastItem()}> / <{$_table_data->total()}></span>
-		</div>
-		<div class="col-sm-7 col-xs-12 clearfix"><{$_table_data->render() nofilter}></div>
-	</div>
-	<{/block}>
 </div>
 <div class="clearfix"></div>
 <{/block}>

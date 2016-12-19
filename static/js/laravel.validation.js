@@ -1,4 +1,18 @@
 (function($){
+	var method = {};
+	method.checkError = function(element)
+	{
+		var $pane = $(element).closest(".tab-pane");
+		if (!$pane.length) return;
+		var errors = $('.has-error', $pane);
+		var $a = $('.nav a[href="#' + $pane.attr('id') + '"]');
+		var $sup = $('sup.badge', $a);
+		if (!$sup.length) $sup = $('<sup class="badge label-danger">0</sup>').appendTo($a);
+		if (errors.length > 0)
+			$sup.text(errors.length).show();
+		else
+			$sup.text(errors.length).hide();
+	};
 	//给validator设置默认值
 	if ($.validator)
 	$.validator.setDefaults({
@@ -8,11 +22,13 @@
 			var $parent = $(element).closest('div');
 			if ($parent.hasClass('input-group')) $parent = $parent.closest('div');
 			$parent.removeClass('has-success').addClass('has-error');
+			method.checkError(element);
 		},
 		unhighlight: function(element, errorClass, validClass) {
 			var $parent = $(element).closest('div');
 			if ($parent.hasClass('input-group')) $parent = $parent.closest('div');
 			$parent.removeClass('has-error').addClass('has-success');
+			method.checkError(element);
 		},
 		errorPlacement: function(error, element) {
 			var $parent = $(element).closest('div');
@@ -27,6 +43,10 @@
 			});
 			return false;
 			//form.submit();
+		},
+		invalidHandler: function(e, validator){
+			if(validator.errorList.length)
+				$('.nav a[href="#' + $(validator.errorList[0].element).closest(".tab-pane").attr('id') + '"]').tab('show');
 		}
 	});
 

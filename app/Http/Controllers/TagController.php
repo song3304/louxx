@@ -5,12 +5,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Addons\Core\Controllers\AdminTrait;
+use Addons\Core\Controllers\ApiTrait;
 
 use App\Tag;
 class TagController extends Controller
 {
-	use AdminTrait;
+	use ApiTrait;
 
 	public function data(Request $request)
 	{

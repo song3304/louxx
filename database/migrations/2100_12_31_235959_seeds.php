@@ -37,11 +37,11 @@ class Seeds extends Migration
 				'name' => 'fields',
 				'title' => '字段',
 			])->create([
-				'name' => 'news',
-				'title' => '新闻分类',
+				'name' => 'status',
+				'title' => '状态',
 			])->create([
-				'name' => '3',
-				'title' => '',
+				'name' => 'news',
+				'title' => '新闻',
 			])->create([
 				'name' => '4',
 				'title' => '',

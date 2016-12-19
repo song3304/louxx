@@ -1,10 +1,15 @@
 (function($){
 $().ready(function(){
-	var options_query = function(obj) {
+	var method = {config: {}};
+	var $dt = $('#datatable');
+
+	method.bindMethods = function(obj){
+
+		$('a[method]:not([method="delete"])', obj).query();
 		$('a[method="delete"]', obj).query(function(json){
 			if ((json.result == 'success' || json.result == 'api') && json.data.id) {
-				if ($.datatable_config && $.datatable_config.datatable)
-					$.datatable_config.datatable.ajax.reload(null, false);
+				if (method.datatable && json.url === true)
+					method.datatable.ajax.reload(null, false);
 				else
 					json.data.id.forEach(function(id){
 						$('#line-'+id).fadeOut(function(){
@@ -14,174 +19,301 @@ $().ready(function(){
 			}
 		}, {
 			layout: 'topCenter',
-			modal: false
+			modal: false,
 		});
-		$('a[method]:not([method="delete"])', obj).query();
+		if ($(obj).is('tr'))
+		{
+			$(obj).on('click', '*', function(e){
+				if ($(e.target).is('a,button,:checkbox')) return;
+				
+				$('td:eq(0) :checkbox', $(this).closest('tr')).trigger('click');
+			});
+			$('td:eq(0) :checkbox', obj).on('click', function(e){
+				var $tr = $(this).closest('tr');
+				if (this.checked) $tr.addClass('active'); else $tr.removeClass('active');
+			});
+		}
+			
 	};
-	options_query.call(this, document.body);
-	
-	 /* Select/Deselect all checkboxes in tables */
-	$('thead input:checkbox').click(function(e) {
-		var checkedStatus   = $(this).prop('checked');
-		var table           = $(this).closest('table');
-		e.stopPropagation();
-		$('tbody input:checkbox:visible', table).each(function() {
-			$(this).prop('checked', checkedStatus);
-		});
-	});
 
-	if ($.datatable_config) {
-		// Datatables Bootstrap Pagination Integration
-		jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(e) {
-			return {
-				iStart: e._iDisplayStart,
-				iEnd: e.fnDisplayEnd(),
-				iLength: e._iDisplayLength,
-				iTotal: e.fnRecordsTotal(),
-				iFilteredTotal: e.fnRecordsDisplay(),
-				iPage: Math.ceil(e._iDisplayStart / e._iDisplayLength),
-				iTotalPages: Math.ceil(e.fnRecordsDisplay() / e._iDisplayLength)
-			};
+	method.getConfig = function()
+	{
+		var configs = ['name', 'namespace', 'displayStart', 'pageLength'];
+		var r = {};
+		for (var i = 0; i < configs.length; i++)
+			r[ configs[i] ] = $dt.data( configs[i] ) || null;
+		var config = $.bbq.getState();
+		if (config)
+			r = $.extend(true, r, config);
+		r.displayStart = ~~r.displayStart;
+		r.pageLength = ~~r.pageLength;
+		$dt.data(r); //read from hash and set to table's data
+
+		return r;
+	};
+
+	method.setConfig = function(settings){
+		var config = {
+			displayStart: settings._iDisplayStart,
+			pageLength: settings._iDisplayLength,
+			search: {search: settings.oPreviousSearch.sSearch},
+			order: []
 		};
-		jQuery.extend(jQuery.fn.dataTableExt.oPagination, {
-			bootstrap: {
-				fnInit: function(e, t, n) {
-					var i = e.oLanguage.oPaginate,
-					l = e.oInstance.fnPagingInfo(),
-					r = function(t) {
-						t.preventDefault();
-						e._iDisplayLength = parseInt(e._iDisplayLength, 10);
-						e._iDisplayStart = parseInt(e._iDisplayStart, 10);
-						if (e.oApi._fnPageChange(e, t.data.action)) n(e);
-					};
-					jQuery(t).append('<ul class="pagination pagination-sm remove-margin"><li class="first disabled"><a href="javascript:void(0)"><i class="glyphicon glyphicon-step-backward"></i> ' + i.sFirst + '</a></li><li class="prev disabled"><a href="javascript:void(0)"><i class="glyphicon glyphicon-chevron-left"></i> ' + i.sPrevious + '</a></li>' + '<li class="next disabled"><a href="javascript:void(0)">' + i.sNext + ' <i class="glyphicon glyphicon-chevron-right"></i></a></li><li class="last disabled"><a href="javascript:void(0)">' + i.sLast + ' <i class="glyphicon glyphicon-step-forward"></i></a></li>' + '<li class="more"><a href="javascript:void(0)"><i class="glyphicon glyphicon-option-horizontal"></i></a></li>' + "</ul>");
-					var o = jQuery('a', t);
-					jQuery(o[0]).on('click.DT', {
-						action: 'first'
-					},r);
-					jQuery(o[1]).on('click.DT', {
-						action: 'previous'
-					},r);
-					jQuery(o[2]).on('click.DT', {
-						action: 'next'
-					},r);
-					jQuery(o[3]).on('click.DT', {
-						action: 'last'
-					},r);
-					if (jQuery.fn.slider) jQuery(o[4]).popover({
-						html: true,
-						title: '',
-						content: '<input type="text" id="datatable-paginate-slider" class="form-control" value="1" data-slider-selection="after" data-slider-tooltip="show">',
-						placement: 'left',
-						trigger: 'focus',
-						container: t
-					});
+		settings.aLastSort.forEach(function(v){
+			config.order.push([v.col, v.dir]);
+		});
+		//$dt.data(config); //已经写到hash中了，没必要设置table's data
+		$.bbq.pushState(config);
+		return true;
+	};
+
+	method.getColumns = function(removeIt)
+	{
+		var r = [];
+		$('tbody td,tbody th', $dt).each(function(i, v){
+			var $t = $(this);
+			var render = template.compile($t.html());
+
+			var c = {
+				data: $t.data('from') || null,
+				orderable: $t.data('orderable') !== false,
+				cellType: this.tagName.toLowerCase(),
+				className: this.className,
+				contentPadding: $t.data('contentPadding') || null,
+				defaultContent: $t.data('defaultContent') || null,
+				name: this.name || null,
+				orderData: $t.data('orderData'),
+				orderDataType: $t.data('orderDataType') || null,
+				orderSequence: $t.data('orderSequence') || [ 'asc', 'desc' ],
+				render: function(data, type, full) {
+					var d = {data: data, type: type, full: full};
+					return render(d);
 				},
-				fnUpdate: function(e, t) {
-					var n, i, r, o, a, s = 5,
-					l = e.oInstance.fnPagingInfo(),
-					c = e.aanFeatures.p,
-					u = Math.floor(s / 2);
-					for (l.iTotalPages < s ? (o = 1, a = l.iTotalPages) : l.iPage <= u ? (o = 1, a = s) : l.iPage >= l.iTotalPages - u ? (o = l.iTotalPages - s + 1, a = l.iTotalPages) : (o = l.iPage - u + 1, a = o + s - 1), n = 0, iLen = c.length; iLen > n; n++) {
-						jQuery('li:not(.first,.prev,.next,.last,.more)', c[n]).remove();
-						var $more = jQuery('a:eq(4)', c[n]);
-						if (l.iTotalPages > 1)
-							$more.off('shown.bs.popover').on('shown.bs.popover', function() {
-								jQuery('#datatable-paginate-slider').slider({
-									value: parseInt(l.iPage) + 1,
-									max: parseInt(l.iTotalPages),
-									min: 1,
-									step: 1,
-									formatter: function(v){return 'Page: ' + v;}
-								}).on('slideStop', function(){
-									var p = parseInt(jQuery(this).data('slider').getValue());
-									e._iDisplayStart = (parseInt(p, 10) - 1) * l.iLength;
-									t(e);
-									$more.popover('hide').blur();
-								});
-							});
-							else
-								$more.hide();
-						for (i = o; a >= i; i++)
-						{
-							r = i === l.iPage + 1 ? 'class="active"': '';
-							jQuery('<li ' + r + '><a href="javascript:void(0)">' + i + "</a></li>").insertBefore(jQuery('li.next', c[n])[0]).on('click', function(n) {
-								n.preventDefault();
-								e._iDisplayStart = (parseInt(jQuery("a", this).text(), 10) - 1) * l.iLength;
-								t(e);
-							});
-						}
-						
-						if (0 === l.iPage) //第一页
-							jQuery('li.first,li.prev', c[n]).addClass('disabled');
-						else 
-							jQuery('li.first,li.prev', c[n]).removeClass('disabled');
-						if (l.iPage === l.iTotalPages - 1 || 0 === l.iTotalPages) //尾页
-							jQuery('li.last,li.next', c[n]).addClass('disabled');
-						else
-							jQuery('li.last,li.next', c[n]).removeClass('disabled');
-						
+				searchable: $t.data('searchable') !== false,
+				//type: $t.data('type') || null,
+				visible: $t.data('visible') !== false,
+				//width: $t.data('width') || null
+			};
+			r.push(c);
+		});
+		if (removeIt === true) $('tbody', $dt).empty();
+		return r;
+	};
+	$.fn.dataTable.ext.renderer.pageButton.bootstrap = function ( settings, host, idx, buttons, page, pages ) {
+		var api     = new $.fn.dataTable.Api( settings );
+		var classes = settings.oClasses;
+		var lang    = settings.oLanguage.oPaginate;
+		var aria = settings.oLanguage.oAria.paginate || {};
+		var btnDisplay, btnClass, counter=0;
+
+		var attach = function( container, buttons ) {
+			var i, ien, node, button;
+			var clickHandler = function ( e ) {
+				e.preventDefault();
+				if ( !$(e.currentTarget).hasClass('disabled') && api.page() != e.data.action ) {
+					api.page( e.data.action ).draw( 'page' );
+				}
+			};
+
+			for ( i=0, ien=buttons.length ; i<ien ; i++ ) {
+				button = buttons[i];
+
+				if ( $.isArray( button ) ) {
+					attach( container, button );
+				}
+				else {
+					btnDisplay = '';
+					btnClass = '';
+
+					switch ( button ) {
+						case 'ellipsis':
+							btnDisplay = '&#x2026;';
+							btnClass = 'disabled';
+							break;
+
+						case 'first':
+							btnDisplay = lang.sFirst;
+							btnClass = button + (page > 0 ?
+								'' : ' disabled');
+							break;
+
+						case 'previous':
+							btnDisplay = lang.sPrevious;
+							btnClass = button + (page > 0 ?
+								'' : ' disabled');
+							break;
+
+						case 'next':
+							btnDisplay = lang.sNext;
+							btnClass = button + (page < pages-1 ?
+								'' : ' disabled');
+							break;
+
+						case 'last':
+							btnDisplay = lang.sLast;
+							btnClass = button + (page < pages-1 ?
+								'' : ' disabled');
+							break;
+
+						default:
+							btnDisplay = button + 1;
+							btnClass = page === button ?
+								'active' : '';
+							break;
+					}
+
+					if ( btnDisplay ) {
+						node = $('<li>', {
+								'class': classes.sPageButton+' '+btnClass,
+								'id': idx === 0 && typeof button === 'string' ?
+									settings.sTableId +'_'+ button :
+									null
+							} )
+							.append( $('<a>', {
+									'href': '#',
+									'aria-controls': settings.sTableId,
+									'aria-label': aria[ button ],
+									'data-dt-idx': counter,
+									'tabindex': settings.iTabIndex
+								} )
+								.html( btnDisplay )
+							)
+							.appendTo( container );
+
+						settings.oApi._fnBindAction(
+							node, {action: button}, clickHandler
+						);
+
+						counter++;
 					}
 				}
 			}
-		});
-		$.extend(true, $.fn.dataTable.defaults, {
-			'dom': "<'row'<'col-sm-6 col-xs-5'l><'col-sm-6 col-xs-7 search-filter text-right'f><'clearfix'>r>t<'row'<'col-sm-5 hidden-xs'i><'col-sm-7 col-xs-12 clearfix'p>>",
-			'pagingType': 'bootstrap',
-			'language': {
-				'lengthMenu': '_MENU_',
-				'search': '<div class="input-group">_INPUT_<span class="input-group-addon"><i class="fa fa-search"></i></span></div>',
-				'info': '<strong>_START_</strong>-<strong>_END_</strong> of <strong>_TOTAL_</strong>',
-				'infoEmpty': '<strong>0</strong>-<strong>0</strong> of <strong>0</strong>',
-				'infoFiltered': '(from <strong>_MAX_</strong>)',
-				'paginate': {
-					'previous': '',
-					'next': '',
-					'first': '',
-					'last': ''
-				},
-				'processing': '<div class="alert text-center"><i class="gi gi-refresh"></i> Loading...</div>'
-			},
-			'column': {
-				'asSorting': [ 'desc', 'asc' ]  //first sort desc, then asc
+		};
+
+		// IE9 throws an 'unknown error' if document.activeElement is used
+		// inside an iframe or frame. 
+		var activeEl;
+
+		try {
+			// Because this approach is destroying and recreating the paging
+			// elements, focus is lost on the select button which is bad for
+			// accessibility. So we want to restore focus once the draw has
+			// completed
+			activeEl = $(host).find(document.activeElement).data('dt-idx');
+		}
+		catch (e) {}
+
+		attach(
+			$('ul', $(host).empty().html('<div class="col-sm-10 col-xs-12"><ul class="pagination pull-right"/></div>')),
+			buttons
+		);
+		/*添加跳页功能*/
+		var inputPageJump = $('<input>', {
+			class: 'form-control',
+			type: "number",
+			min: 1,
+			max: pages
+		}).val(page+1).on("keyup", function(event){
+			if (event.keyCode == 13) {
+				var curr = this.value.replace(/\s|\D/g, '') | 0;
+				if (curr) {
+					var pages = api.page.info().pages;
+					curr = curr > pages ? pages : curr;
+					curr--;
+					api.page(curr).draw(false);
+				}
 			}
 		});
-		$.extend($.fn.dataTableExt.oStdClasses, {
-			'sWrapper': 'dataTables_wrapper form-inline',
-			'sFilterInput': 'form-control',
-			'sLengthSelect': 'form-control'
+		var btnPageJump = $('<span />', {
+			'class': "input-group-addon",
+			'aria-controls': settings.sTableId,
+			'tabindex': settings.iTabIndex
+		}).html(lang.jump).on("click",function(){
+			var curr = inputPageJump.val().replace(/\s|\D/g, '') | 0;
+			if (curr) {
+				var pages = api.page.info().pages;
+				curr = curr > pages ? pages : curr;
+				curr--;
+				api.page(curr).draw(false);
+			}
 		});
 
-		$.datatable_config.encode = function(settings){
-			var json = {
-				displayStart: settings._iDisplayStart,
-				pageLength: settings._iDisplayLength,
-				order: []
-			};
-			settings.aLastSort.forEach(function(v){
-				json.order.push([v.col, v.dir]);
-			});
-			$.bbq.pushState(json);
-			return true;
-		};
+		$(host).append($('<div />', {
+			'class' : "col-sm-2 pull-right input-group hidden-xs"
+		}).append(inputPageJump).append(btnPageJump));
 
-		$.datatable_config.decode = function(){
-			var json = $.bbq.getState();
-			if (json)			
-				$.datatable_config = $.extend($.datatable_config, json);
-			return true;
-		};
+		if ( activeEl ) {
+			$(host).find( '[data-dt-idx='+activeEl+']' ).focus();
+		}
+	};
 
-		$.datatable_config.decode();
+	$.extend($.fn.dataTable.ext.classes, {
+		sWrapper: 'dataTables_wrapper form-inline',
+		sFilterInput: 'form-control',
+		sLengthSelect: 'form-control',
+		sProcessing: 'dataTables_processing',
+	});
+	
+	method.make = function(){
+		var config = method.getConfig();
+		var columns = method.getColumns(true);
+		method.datatable = $dt.DataTable({
+			dom: "r" +
+				"<'row'<'#toolbar.col-sm-8 text-left'><'col-sm-4 search-filter text-right'f><'clearfix'>>" +
+				"<'row'<'col-sm-4 hidden-xs'l><'col-sm-8 col-xs-12'p><'clearfix'>>" +
+				"t" +
+				"<'row'<'col-sm-4 hidden-xs'i><'col-sm-8 col-xs-12'p><'clearfix'>>",
+			language: {
+				lengthMenu: '_MENU_',
+				zeroRecords: '没有记录',
+				search: '<div class="input-group">_INPUT_<span class="input-group-addon"><i class="fa fa-search"></i></span></div>',
+				info: '<strong>_START_</strong>-<strong>_END_</strong> of <strong>_TOTAL_</strong>',
+				infoEmpty: '<strong>0</strong>-<strong>0</strong> of <strong>0</strong>',
+				infoFiltered: '(from <strong>_MAX_</strong>)',
+				searchPlaceholder: '输入关键字',
+				paginate: {
+					previous: '<i class="fa fa-backward"></i>',
+					next: '<i class="fa fa-forward"></i>',
+					first: '<i class="fa fa-step-backward"></i>',
+					last: '<i class="fa fa-step-forward"></i>',
+					jump: '<i class="fa fa-paper-plane-o"></i>'
+				},
+				aria: {
+					paginate: {
+						first: '首页',
+						previous: '上页',
+						next: '下页',
+						last: '尾页'
+					}
+				},
+				processing: '<div class="mask"></div><div class="inner"><h3 class="text-light"><strong>Loading...</strong></h3><div class="preloader-spinner fa-spin"></div></div>'
+			},
+			column: {
+				asSorting: [ 'desc', 'asc' ]  //first sort desc, then asc
+			},
+			renderer: 'bootstrap',
 
-		$.datatable_config.datatable = $('#datatable').DataTable({
-			'ajax': {
-				url: $.baseuri + $.datatable_config.namespace+'/'+$.datatable_config.name+'/data/json',
+			ajax: {
+				url: $.baseuri + config.namespace+'/'+config.name+'/data/json',
 				timeout: 20 * 1000,
 				type: 'POST',
 				data: function(d){
-					return $.extend({}, d, {
-						filters: window.location.query('filters')
+					var o = {};
+					for(var i = 0; i < d.order.length; ++i)
+					{
+						var item = d.order[i];
+						if (typeof d.columns[item.column] != 'undefined' && !!d.columns[item.column].orderable)
+						{
+							var name = !!d.columns[item.column].name ? d.columns[item.column].name : d.columns[item.column].data;
+							if (name) o[name] = item.dir;
+						}
+					}
+					return $.extend(true, {}, {
+						size: d.length,
+						page: !isNaN(d.start / d.length) ? Math.ceil(d.start / d.length) : 1,
+						q: {_all: d.search.value},
+						o: o,
+						f: window.location.query('f')
 					});
 				},
 				dataSrc: function(json){
@@ -196,41 +328,50 @@ $().ready(function(){
 					return [];
 				}
 			},
-			'autoWidth': false,
-			'searching': false,
-			'processing': true,
-			'deferRender': true, //延时绘制
-			'serverSide': true, //服务器端
-			'displayStart': parseInt($.datatable_config.displayStart, 10),
-			'pageLength': parseInt($.datatable_config.pageLength, 10),
-			'order': $.datatable_config.order,
-			'columns': $.datatable_config.columns,
-			'searchDelay': parseInt($.datatable_config.searchDelay, 10),
-			'rowCallback': function( row, data, dataIndex ) {
-				if ($.datatable_config.onDrawingRow) $.datatable_config.onDrawingRow.call(this, row, data, dataIndex);
+			serverSide: true,
+			deferRender: true,
+			columns: columns,
+			rowCallback: function( row, data, dataIndex ) {
+				//call
 			},
-			'createdRow': function( row, data, dataIndex ) {
-				//bind option's event
-				options_query.call(this, row);
+			createdRow: function( row, data, dataIndex ) {
 				// Initialize Tooltips
 				if ($.fn.tooltip) $('[data-toggle="tooltip"], .enable-tooltip', row).tooltip({container: 'body', animation: false});
 				// Initialize Popovers
-				if ($.fn.popover) $('[data-toggle="popover"], .enable-popover').popover({container: 'body', animation: true});
-				
-				if ($.datatable_config.onCreateRow) $.datatable_config.onCreateRow.call(this, row, data, dataIndex);
+				if ($.fn.popover) $('[data-toggle="popover"], .enable-popover', row).popover({container: 'body', animation: true});		
+				//call	
+				method.bindMethods(row);
 			},
-			'drawCallback': function( settings ) {
-				$.datatable_config.encode(settings);
-				if ($.datatable_config.onDrawCallback) $.datatable_config.onDrawCallback.call(this, settings);
+			drawCallback: function( settings ) {
+				method.setConfig(settings);
+				//call
 			}/*,
-			'stateSave': true,
-			'stateDuration': -1*/
+			stateSave: false,
+			stateDuration: -1*/
 		});
-		$('.dataTables_filter input', $.datatable_config.datatable).attr('placeholder', '检索ID');
-		$('<a href="javascript:void(0);" class="btn btn-link"><i class="glyphicon glyphicon-refresh"></i> 重新加载</a>').appendTo('.search-filter').on('click', function(){
-			$.datatable_config.datatable.ajax.reload(null, false);
+	};
+
+	//初始化
+	method.bindMethods('body');
+	method.make();
+
+	$('#tools-contrainer').appendTo('#toolbar');
+	$('#reload').on('click', function(){
+		method.datatable.ajax.reload(null, false);
+	});
+	/* Select/Deselect all checkboxes in tables */
+	$('thead th:eq(0) :checkbox', '.table').on('click', function(e) {
+
+		var checkedStatus   = $(this).prop('checked');
+		var table           = $(this).closest('table');
+		e.stopPropagation();
+		//e.preventDefault();
+		$('tbody :checkbox:visible', $dt).each(function() {
+
+			$(this).prop('checked', checkedStatus).triggerHandler('click');
 		});
-	}
+
+	});
 });
 	
 })(jQuery);

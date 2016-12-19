@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
-use Addons\Core\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use Doctrine\DBAL\Driver\PDOException;
+use App\Http\Controllers\Controller;
 class Handler extends ExceptionHandler
 {
 	/**
@@ -47,27 +49,24 @@ class Handler extends ExceptionHandler
 	 */
 	public function render($request, Exception $exception)
 	{
-		//if (/*!config('app.debug', false) &&*/ app()->environment() == 'production')
-		//{
+		if (!config('app.debug', false))
+		{
 			// 当findOrFail等情况下出现的报错
 			if($exception instanceof ModelNotFoundException)
 			{
-				$traces = $exception->getTrace();$file = $line = '';
-				foreach ($traces as $key => $value)
-					if (isset($value['class']) && $value['class'] == 'Addons\\Core\\Models\\Model')
-					{
-						$file = str_replace(APPPATH, '', $traces[$key]['file']); $line = $traces[$key]['line'];
-						break;
-					}
-				unset($traces);
+				$file = str_replace(base_path(), '', $traces[$key]['file']);
+				$line = $traces[$key]['line'];
 				//$exception = new NotFoundHttpException($exception->getMessage(), $exception);
 				return (new Controller())->failure('document.failure_model_noexist', FALSE, ['model' => $exception->getModel(), 'file' => $file ,'line' => $line]);
 			}
 			else if ($exception instanceof TokenMismatchException)
 				return (new Controller())->failure('validation.failure_csrf');
-
+			else if (($exception instanceof QueryException) || ($exception instanceof PDOException))
+				return (new Controller())->error('server.error_database');
+			else
+				return (new Controller())->error('server.error_server');
 			// other 500 errors
-		//}
+		}
 
 		return parent::render($request, $exception);
 	}

@@ -88,8 +88,8 @@ gulp.task('watch-static', function() {
                     .pipe(minifyCss())
                     .pipe(header('/*! ${filename} ${date}*/\n', { date : (new Date()).toLocaleString()} ))
                     .pipe(rename({suffix:'.min'}))
-                    .pipe(gulp.dest(dir))
                     .pipe(sourcemaps.write('./'))
+                    .pipe(gulp.dest(dir))
                     .pipe(map(function(file, cb){
                         util.log('created ', file.path);
                         return cb(null, file);

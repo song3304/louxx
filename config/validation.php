@@ -6,7 +6,9 @@ return [
 			'username' => [
 				'name' => '用户名',
 				'rules' => 'required|ansi:2|unique:users,{{attribute}},{{id}}|regex:/^[a-z0-9\x{4e00}-\x{9fa5}\x{f900}-\x{fa2d}]*$/iu|max:150|min:3',
-				'message' => ['regex' => '用户名必须为汉字、英文、数字'],
+				'message' => [
+					'regex' => '[:attribute] 必须为汉字、英文、数字',
+				],
 			],
 			'nickname' => [
 				'name' => '昵称',
@@ -15,7 +17,9 @@ return [
 			'realname' => [
 				'name' => '真实姓名',
 				'rules' => 'ansi:2|regex:/^[a-z\x{4e00}-\x{9fa5}\x{f900}-\x{fa2d}\s]*$/iu|max:50|min:3',
-				'message' => ['regex' => '姓名必须为汉字、英文'],
+				'message' => [
+					'regex' => '[:attribute] 必须为汉字、英文'
+				],
 			],
 			'password' => [
 				'name' => '密码',
@@ -48,6 +52,7 @@ return [
 			'role_ids' => [
 				'name' => '用户组',
 				'rules' => 'required|array',
+				'tag_name' => 'role_ids[]',
 			],
 			'accept_license' => [
 				'name' => '阅读并同意协议',
