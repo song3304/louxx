@@ -15,12 +15,12 @@
 (function($){
 	$().ready(function(){
 		$('[name="<{block "name"}><{/block}>/list"]').addClass('active').parents('li').addClass('active');
+		$('a[data-append-queries]').each(function(){$(this).data('href', this.href);});
 		<{block "inline-script-plus"}><{/block}>
 	});
 })(jQuery);
 </script>
 <script src="<{'js/datatable/jquery.dataTables.min.js'|static}>"></script>
-<script src="<{'js/jquery.bbq.min.js'|static}>"></script>
 <script src="<{'js/template.js'|static}>"></script>
 <script src="<{'js/proui/table.min.js'|static}>"></script>
 <{/block}>
@@ -56,7 +56,7 @@
 	<{block "options"}>
 	<div class="block-options pull-right">
 		<{block "options-toggle"}>
-		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示 (Ctrl+Shift+T)" data-shortcuts="ctrl+shift+T"><i class="fa fa-arrows-v"></i></a>
+		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示 (Ctrl+Shift+T)" data-shortcuts="ctrl+shift+t"><i class="fa fa-arrows-v"></i></a>
 		<{/block}>
 		<{block "options-full"}>
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换 (F11)" data-shortcuts="f11"><i class="fa fa-desktop"></i></a>
@@ -108,11 +108,11 @@
 				<{block "table-tools-dropdown-export"}>
 					<li class="dropdown-header">导出<i class="fa fa-share pull-right"></i></li>
 					<li>
-						<a href="javascript:void(0)"><i class="fa fa-print pull-right"></i> 打印</a>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/csv?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-csv pull-right"></i> CSV </a>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/pdf?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-pdf pull-right"></i> PDF</a>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xls?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xls pull-right"></i> Excel 2003</a>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
+						<a href="javascript:void(0)" data-append-queries="true"><i class="fa fa-print pull-right"></i> 打印</a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/csv" target="_blank" data-append-queries="true"><i class="fi fi-csv pull-right"></i> CSV </a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/pdf" target="_blank" data-append-queries="true"><i class="fi fi-pdf pull-right"></i> PDF</a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xls" target="_blank" data-append-queries="true"><i class="fi fi-xls pull-right"></i> Excel 2003</a>
+						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx" target="_blank" data-append-queries="true"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
 					</li>
 				<{/block}>
 				<{block "table-tools-dropdown-after"}><{/block}>

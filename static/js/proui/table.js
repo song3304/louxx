@@ -308,13 +308,17 @@ $().ready(function(){
 							if (name) o[name] = item.dir;
 						}
 					}
-					return $.extend(true, {}, {
-						size: d.length,
-						page: !isNaN(d.start / d.length) ? Math.ceil(d.start / d.length) : 1,
-						q: {_all: d.search.value},
+					var config = {
+						q: $.extend(true, {_all: d.search.value}, window.location.query('q')),
 						o: o,
 						f: window.location.query('f')
-					});
+					};
+					//修改导出按钮的链接
+					$('a[data-append-queries]').each(function(){$(this).attr('href', $(this).data('href'));}).querystring(config);
+					return $.extend(true, {}, {
+						size: d.length,
+						page: !isNaN(d.start / d.length) ? Math.ceil(d.start / d.length) : 1
+					}, config);
 				},
 				dataSrc: function(json){
 					if (json && json.result == 'success' || json.result == 'api') {

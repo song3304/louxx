@@ -2,6 +2,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 use Addons\Core\Models\CacheTrait;
 use Addons\Core\Models\CallTrait;
 use Addons\Core\Models\PolyfillTrait;
@@ -45,6 +46,16 @@ class User extends Authenticatable
 	public function finance()
 	{
 		return $this->hasOne('App\\UserFinance', 'id', 'id');
+	}
+
+	public function scopeOfRole(Builder $builder, $roleIdOrName)
+	{
+		$role = Role::findByCache($roleIdOrName);
+		empty($role) && $role = Role::findByName($roleIdOrName);
+
+		$builder->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
+
+		$builder->whereIn('role_user.role_id', $role->getDescendant()->merge([$role])->pluck($role->getKeyName()));
 	}
 }
 

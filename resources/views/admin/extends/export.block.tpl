@@ -5,6 +5,8 @@
 (function($){
 	$().ready(function(){
 		$('[name="<{block "name"}><{/block}>/list"]').addClass('active').closest('li[name="<{block "name"}><{/block}>"]').addClass('active');
+		$('#orders').text(JSON.stringify(window.location.query('o')));
+		var qs = {q: window.location.query('q'), f: window.location.query('f'), o: window.location.query('o')};
 		var makeLinks = function(size) {
 			if (isNaN(size) || size <= 0) return;
 			var total = <{$_total}>;
@@ -12,8 +14,10 @@
 			var $links = $('#links').empty();
 			$('#size').text(size);
 			for (var i = 1; i <= pages; i++) {
-				$links.append('<div class="col-md-3 col-xs-4"><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block name="name"}><{/block}>/export/<{$_of}>?page='+i+'&size='+size+'&<{'filters'|query_string nofilter}>" class="btn btn-link" target="_blank">第'+i+'个</a> ('+ (i == pages ? 0 : total - size * i) + '-' + (total - size * (i - 1)) +')</div>');
+				$links.append('<div class="col-md-3 col-xs-4"><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block name="name"}><{/block}>/export/<{$_of}>?page='+i+'&size='+size+'" class="btn btn-link" target="_blank" data-append-queries="true">第'+i+'个</a> ('+ (i == pages ? 0 : total - size * i) + '-' + (total - size * (i - 1)) +')</div>');
 			};
+			$('a[data-append-queries]', $links).querystring(qs);
+
 		}
 		$('#size-slider').on('slideStop', function(e){
 			var size = parseInt($(this).data('slider').getValue());
@@ -67,6 +71,7 @@
 	</div>
 
 	</p>
+	<div class="alert alert-info"><b>注意：</b>数据排序方式：<span id="orders"></span></div>
 	<p>点击下面的链接进行下载</p>
 	<div class="row" id="links"></div>
 	<div class="clearfix"></div>

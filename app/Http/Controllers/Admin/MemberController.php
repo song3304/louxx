@@ -25,19 +25,15 @@ class MemberController extends Controller
 		//view's variant
 		$this->_size = $size;
 		$this->_filters = $this->_getFilters($request);
+		$this->_queries = $this->_getQueries($request);
 		return $this->view('admin.member.list');
 	}
 
 	public function data(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with([ 'roles']);
-		if ($roleId = $request->input('filters.role_id')){
-			$request->merge(['filters' => ['role_id' => NULL]]);
-			$role = Role::findByCache($roleId);
-			if (!empty($roleId))
-				$builder->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT')->whereIn('role_user.role_id', $role->getDescendant()->merge([$role])->pluck('id'));
-		} 
+		$builder = $user->newQuery()->with(['roles']);
+
 		$total = $this->_getCount($request, $builder, FALSE);
 		$data = $this->_getData($request, $builder, null, ['users.*']);
 		$data['recordsTotal'] = $total;
@@ -48,7 +44,7 @@ class MemberController extends Controller
 	public function export(Request $request)
 	{
 		$user = new User;
-		$builder = $user->newQuery()->with(['roles'])->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
+		$builder = $user->newQuery()->with(['roles']);
 		$page = $request->input('page') ?: 0;
 		$size = $request->input('size') ?: config('size.export', 1000);
 		$total = $this->_getCount($request, $builder);
