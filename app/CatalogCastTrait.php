@@ -2,6 +2,8 @@
 namespace App;
 
 use App\Catalog;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 trait CatalogCastTrait {
 	public function asCatalog($value) {
 		$data = Catalog::getCatalogsById($value);
@@ -29,5 +31,18 @@ trait CatalogCastTrait {
 
 	public function statusToArray($value) {
 		return $value->toArray();
+	}
+
+	public function scopeOfCatalog(Builder $builder, $idOrModel, $field_name)
+	{
+		$id = $idOrModel;
+		if ($idOrModel instanceof Model)
+			$id = $idOrModel->getKey();
+		elseif (!is_numeric($idOrModel) && strpos($idOrModel, '.') !== false) {
+			$catalog = $this->asCatalogName($idOrModel);
+			!empty($catalog->getKey()) && $id = $catalog->getKey();
+		}
+
+		$builder->where($field_name, $id);
 	}
 }
