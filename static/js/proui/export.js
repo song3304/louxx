@@ -10,7 +10,7 @@ $().ready(function(){
 		var $links = $('#export-links').empty();
 		$('#export-size').text(size);
 		for (var i = 1; i <= pages; i++) {
-			$links.append('<div class="col-md-3 col-xs-4"><a href="'+$.baseuri+namespace+'/'+name+'/export/'+format+'?page='+i+'&size='+size+'" class="btn btn-link" target="_blank" data-append-queries="true">第'+i+'个</a> ('+ (i == pages ? 0 : total - size * i) + '-' + (total - size * (i - 1)) +')</div>');
+			$links.append('<div class="col-md-3 col-xs-4"><a href="'+$.baseuri+namespace+'/'+name+'/export/'+format+'?page='+i+'&size='+size+'" class="btn btn-link" target="_blank" data-append-queries="true">第'+i+'个</a> ('+ (size * (i - 1) + 1) + '-' + (i == pages ? total : size * i)  +')</div>');
 		}
 		$('a', $links).querystring(urlQuery);
 
