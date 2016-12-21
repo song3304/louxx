@@ -132,7 +132,7 @@ class CreateElasticsearch extends Migration
 								'fulltext' => [
 									'match_pattern' => 'regex',
 									'match_mapping_type' => 'string',
-									'match' => '^.*?(content|text)$',
+									'match' => '^.*?(content|text|description)$',
 									'mapping' => [
 										'type' => 'text',
 										'search_analyzer' => 'ik_smart_standard',
@@ -191,6 +191,16 @@ class CreateElasticsearch extends Migration
 									'mapping' => [
 										'type' => 'text',
 										'tokenizer' => 'uax_url_email',
+									],
+								],
+							],
+							[
+								'ips' => [
+									'match_pattern' => 'regex',
+									'match_mapping_type' => 'string',
+									'match' => '^(ip)$',
+									'mapping' => [
+										'type' => 'ip',
 									],
 								],
 							],

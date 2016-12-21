@@ -31,4 +31,12 @@ class Catalog extends Tree {
 		return is_null($id) ? static::$cacheTree['id'][ 0 ][ 'children' ] : 
 			(empty($id) ? static::find(0)->toArray() : array_get(static::$cacheTree['id'], $id));
 	}
+
+	public function scope_all(Builder $builder, $keywords)
+	{
+		if (empty($keywords)) return;
+		$catalogs = static::search(null)->where('name,title,description,extra', $keywords)->take(2000)->get();
+		return $builder->whereIn($this->getKeyName(), $catalogs->pluck($this->getKeyName()));
+
+	}
 }

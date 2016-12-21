@@ -13,6 +13,7 @@ use Addons\Entrust\Traits\UserTrait;
 
 use App\Role;
 use App\CatalogCastTrait;
+use App\LogTrait;
 use Laravel\Scout\Searchable;
 class User extends Authenticatable
 {
@@ -20,6 +21,7 @@ class User extends Authenticatable
 	use CacheTrait, CallTrait, PolyfillTrait;
 	use CatalogCastTrait;
 	use Searchable;
+	use LogTrait;
 	protected $dates = ['lastlogin_at'];
 
 	//不能批量赋值
@@ -56,6 +58,13 @@ class User extends Authenticatable
 		$builder->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
 
 		$builder->whereIn('role_user.role_id', $role->getDescendant()->merge([$role])->pluck($role->getKeyName()));
+	}
+
+	public function scope_all(Builder $builder, $keywords)
+	{
+		if (empty($keywords)) return;
+		$users = static::search(null)->where('username,nickname,realname,phone,email', $keywords)->take(2000)->get();
+		return $builder->whereIn($this->getKeyName(), $users->pluck($this->getKeyName()));
 	}
 }
 
