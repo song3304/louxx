@@ -36,8 +36,8 @@ class MemberController extends Controller
 
 		$total = $this->_getCount($request, $builder, FALSE);
 		$data = $this->_getData($request, $builder, null, ['users.*']);
-		$data['recordsTotal'] = $total;
-		$data['recordsFiltered'] = $data['total'];
+		$data['recordsTotal'] = $total; //不带 f s 条件的总数
+		$data['recordsFiltered'] = $data['total']; //带 f s 条件的总数
 		return $this->api($data);
 	}
 
@@ -45,17 +45,7 @@ class MemberController extends Controller
 	{
 		$user = new User;
 		$builder = $user->newQuery()->with(['roles']);
-		$page = $request->input('page') ?: 0;
 		$size = $request->input('size') ?: config('size.export', 1000);
-		$total = $this->_getCount($request, $builder);
-
-		if (empty($page)){
-			$this->_of = $request->input('of');
-			$this->_table = $user->getTable();
-			$this->_total = $total;
-			$this->_size = $size > $total ? $total : $size;
-			return $this->view('admin.member.export');
-		}
 
 		$data = $this->_getExport($request, $builder, function(&$v){
 			$v['gender'] = !empty($v['gender']) ? $v['gender']['title'] : NULL;

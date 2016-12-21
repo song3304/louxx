@@ -267,9 +267,9 @@ $().ready(function(){
 				lengthMenu: '_MENU_',
 				zeroRecords: '没有记录',
 				search: '<div class="input-group">_INPUT_<span class="input-group-addon"><i class="fa fa-search"></i></span></div>',
-				info: '<strong>_START_</strong>-<strong>_END_</strong> of <strong>_TOTAL_</strong>',
-				infoEmpty: '<strong>0</strong>-<strong>0</strong> of <strong>0</strong>',
-				infoFiltered: '(from <strong>_MAX_</strong>)',
+				info: '<b>_START_</b>-<b>_END_</b> of <b>_TOTAL_</b>',
+				infoEmpty: '<b>0</b>-<b>0</b> of <b>0</b>',
+				infoFiltered: '(from <b>_MAX_</b>)',
 				searchPlaceholder: '输入关键字',
 				paginate: {
 					previous: '<i class="fa fa-backward"></i>',
@@ -286,7 +286,7 @@ $().ready(function(){
 						last: '尾页'
 					}
 				},
-				processing: '<div class="mask"></div><div class="inner"><h3 class="text-light"><strong>Loading...</strong></h3><div class="preloader-spinner fa-spin"></div></div>'
+				processing: '<div class="mask"></div><div class="inner"><h3 class="text-light"><b>Loading...</b></h3><div class="preloader-spinner fa-spin"></div></div>'
 			},
 			column: {
 				asSorting: [ 'desc', 'asc' ]  //first sort desc, then asc
@@ -308,17 +308,18 @@ $().ready(function(){
 							if (name) o[name] = item.dir;
 						}
 					}
-					var config = {
+					var query = {
 						q: $.extend(true, {_all: d.search.value}, window.location.query('q')),
 						o: o,
 						f: window.location.query('f')
 					};
+					$dt.data('url-query', query);
 					//修改导出按钮的链接
-					$('a[data-append-queries]').each(function(){$(this).attr('href', $(this).data('href'));}).querystring(config);
+					$('a[data-append-queries]').each(function(){$(this).attr('href', $(this).data('href'));}).querystring(query);
 					return $.extend(true, {}, {
 						size: d.length,
 						page: !isNaN(d.start / d.length) ? Math.ceil(d.start / d.length) : 1
-					}, config);
+					}, query);
 				},
 				dataSrc: function(json){
 					if (json && json.result == 'success' || json.result == 'api') {
