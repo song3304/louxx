@@ -13,8 +13,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+        \Addons\Core\Events\ControllerEvent::class => [
+            'App\Listeners\ControllerListener@handle',
+        ],
+        \Addons\Core\Events\BeforeControllerEvent::class => [
+            'App\Listeners\BeforeControllerListener@handle',
         ],
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             'SocialiteProviders\Weixin\WeixinExtendSocialite@handle',
@@ -22,6 +25,15 @@ class EventServiceProvider extends ServiceProvider
             'SocialiteProviders\Weibo\WeiboExtendSocialite@handle',
             'SocialiteProviders\QQ\QqExtendSocialite@handle',
         ],
+    ];
+
+    /**
+     * 要注册的订阅者类。
+     *
+     * @var array
+     */
+    protected $subscribe = [
+        
     ];
 
     /**
