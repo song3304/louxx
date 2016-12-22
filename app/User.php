@@ -13,21 +13,24 @@ use Addons\Entrust\Traits\UserTrait;
 
 use App\Role;
 use App\CatalogCastTrait;
+use OwenIt\Auditing\Auditable;
 use Laravel\Scout\Searchable;
+
 class User extends Authenticatable
 {
 	use HasApiTokens, SoftDeletes, Notifiable, UserTrait;
 	use CacheTrait, CallTrait, PolyfillTrait;
 	use CatalogCastTrait;
-	use Searchable;
-	protected $dates = ['lastlogin_at'];
+	use Searchable, Auditable;
 
 	//不能批量赋值
 	protected $guarded = ['id'];
 	protected $hidden = ['password', 'remember_token', 'deleted_at'];
+	protected $dates = ['lastlogin_at'];
 	protected $casts = [
 		'gender' => 'catalog',
 	];
+
 
 	public static function add($data, $role_name = NULL)
 	{

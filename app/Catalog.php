@@ -3,9 +3,13 @@ namespace App;
 
 use Addons\Core\Models\Tree;
 use Addons\Core\Models\TreeCacheTrait;
+use OwenIt\Auditing\Auditable;
+use Laravel\Scout\Searchable;
 
 class Catalog extends Tree {
 	use TreeCacheTrait;
+	use Searchable, Auditable;
+	
 	//不能批量赋值
 	public $orderKey = 'order_index';
 	public $pathKey = NULL;

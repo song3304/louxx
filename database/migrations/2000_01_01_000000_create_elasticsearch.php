@@ -198,7 +198,7 @@ class CreateElasticsearch extends Migration
 								'ips' => [
 									'match_pattern' => 'regex',
 									'match_mapping_type' => 'string',
-									'match' => '^(ip)$',
+									'match' => '^(ip|ip_address|ip_addr)$',
 									'mapping' => [
 										'type' => 'ip',
 									],
