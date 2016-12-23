@@ -4,13 +4,13 @@ namespace App;
 use Addons\Entrust\Role as BaseRole;
 use Addons\Core\Models\TreeCacheTrait;
 use Illuminate\Support\Arr;
-use OwenIt\Auditing\Auditable;
+use App\Logable;
 use Addons\Elasticsearch\Scout\Searchable;
 
 class Role extends BaseRole
 {
 	use TreeCacheTrait;
-	use Searchable, Auditable;
+	use Searchable, Logable;
 	
 	public static function getRolesByName($name = NULL)
 	{

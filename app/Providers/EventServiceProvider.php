@@ -13,11 +13,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        \Addons\Core\Events\ControllerEvent::class => [
-            'App\Listeners\ControllerListener@handle',
-        ],
         \Addons\Core\Events\BeforeControllerEvent::class => [
             'App\Listeners\BeforeControllerListener@handle',
+        ],
+        \Addons\Core\Events\ControllerEvent::class => [
+            'App\Listeners\ControllerListener@handle',
         ],
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             'SocialiteProviders\Weixin\WeixinExtendSocialite@handle',

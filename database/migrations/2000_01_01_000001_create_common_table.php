@@ -47,21 +47,23 @@ class CreateCommonTable extends Migration
 			$table->foreign('tag_id')->references('id')->on('tags')->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		//日志
 		Schema::create('logs', function (Blueprint $table) {
-			$table->increments('id');
-
-			$table->unsignedInteger('uid')->nullable()->default(0)->comment = '用户 ID';
-			$table->bigInteger('ip')->default(0)->comment = 'IP';
-			$table->string('agent', 250)->nullable()->comment = 'User Agent';
-			$table->string('device', 50)->nullable()->comment = '设备';
-			$table->string('event', 250)->nullable()->comment = '事件';
-			$table->morphs('table');
-			$table->timestamps();
-
+			$table->bigIncrements('id');
+			$table->string('type')->inex()->comment = '事件';
+			$table->morphs('auditable');
+			$table->text('old')->nullable()->comment = '舊數據';
+			$table->text('new')->nullable()->comment = '新數據';
+			$table->unsignedInteger('user_id')->nullable()->default(0)->comment = '用戶 ID';
+			$table->string('method', 50)->nullable()->comment = '請求方法';
+			$table->string('route')->nullable()->comment = '網址';
+			$table->longText('request')->nullable()->comment = '序列化后的Request';
+			$table->string('ua', 250)->nullable()->comment = 'User Agent';
+			$table->string('browser', 50)->nullable()->comment = '瀏覽器';
+			$table->string('platform', 50)->nullable()->comment = '平臺';
+			$table->string('device', 50)->nullable()->comment = '設備';
+			$table->ipAddress('ip_address', 45)->nullable()->comment = 'IP';
+			$table->timestamp('created_at');
 		});
-
-
 	}
 
 	/**
@@ -71,6 +73,7 @@ class CreateCommonTable extends Migration
 	 */
 	public function down()
 	{
+		Schema::dropIfExists('logs');
 		Schema::drop('fields');
 		Schema::drop('sessions');
 	}

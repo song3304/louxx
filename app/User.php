@@ -13,7 +13,7 @@ use Addons\Entrust\Traits\UserTrait;
 
 use App\Role;
 use App\CatalogCastTrait;
-use OwenIt\Auditing\Auditable;
+use App\Logable;
 use Addons\Elasticsearch\Scout\Searchable;
 
 class User extends Authenticatable
@@ -21,7 +21,7 @@ class User extends Authenticatable
 	use HasApiTokens, SoftDeletes, Notifiable, UserTrait;
 	use CacheTrait, CallTrait, PolyfillTrait;
 	use CatalogCastTrait;
-	use Searchable, Auditable;
+	use Searchable, Logable;
 
 	//不能批量赋值
 	protected $guarded = ['id'];

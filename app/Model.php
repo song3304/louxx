@@ -8,10 +8,10 @@ use Addons\Core\Models\CallTrait;
 use Addons\Core\Models\PolyfillTrait;
 use App\CatalogCastTrait;
 use Addons\Elasticsearch\Scout\Searchable;
-use OwenIt\Auditing\Auditable;
+use App\Logable;
 
 class Model extends BaseModel {
 	use CacheTrait, CallTrait, PolyfillTrait;
 	use CatalogCastTrait;
-	use Searchable, Auditable;
+	use Searchable, Logable;
 }
