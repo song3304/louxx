@@ -39,8 +39,8 @@ class Catalog extends Tree {
 	public function scope_all(Builder $builder, $keywords)
 	{
 		if (empty($keywords)) return;
-		$catalogs = static::search(null)->where('name,title,description,extra', $keywords)->take(2000)->get();
-		return $builder->whereIn($this->getKeyName(), $catalogs->pluck($this->getKeyName()));
+		$catalogs = static::search(null)->where(['name', 'title', 'description', 'extra'], $keywords)->take(2000)->keys();
+		return $builder->whereIn($this->getKeyName(), $catalogs);
 
 	}
 }

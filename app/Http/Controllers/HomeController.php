@@ -19,9 +19,6 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-		//User::find(1)->touch();
-		//$a = User::find(1)->audits()->first();
-		//dd($a->toArray());
 		return $this->view('index');
 	}
 

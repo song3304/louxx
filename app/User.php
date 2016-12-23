@@ -64,7 +64,7 @@ class User extends Authenticatable
 	public function scope_all(Builder $builder, $keywords)
 	{
 		if (empty($keywords)) return;
-		$users = static::search(null)->where('username,nickname,realname,phone,email', $keywords)->take(2000)->keys();
+		$users = static::search()->where(['username', 'nickname', 'realname', 'phone', 'email'], $keywords)->take(2000)->keys();
 		return $builder->whereIn($this->getKeyName(), $users);
 	}
 }

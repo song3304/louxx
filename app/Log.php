@@ -26,8 +26,15 @@ class Log extends Model
 	public function scope_all(Builder $builder, $keywords)
 	{
 		if (empty($keywords)) return;
-		$catalogs = static::search(null)->where('ip,agent,device,event', $keywords)->take(2000)->get();
-		return $builder->whereIn($this->getKeyName(), $catalogs->pluck($this->getKeyName()));
+		$logs = static::search()->where(['ip', 'agent', 'device', 'event'], $keywords)->take(2000)->keys();
+		return $builder->whereIn($this->getKeyName(), $logs);
+	}
+
+	public function scopeOfIp(Builder $builder, $ip)
+	{
+		if (empty($ip)) return;
+		$logs = static::search()->where('ip', $ip)->take(2000)->keys();
+		return $builder->whereIn($this->getKeyName(), $logs);
 	}
 }
 

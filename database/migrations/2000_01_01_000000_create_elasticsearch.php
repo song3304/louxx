@@ -164,7 +164,7 @@ class CreateElasticsearch extends Migration
 							],
 							[
 								'timestamp' => [
-									'match_mapping_type' => 'integer',
+									'match_mapping_type' => 'long',
 									'match' => '*_at',
 									'mapping' => [
 										'type' => 'date',
@@ -201,6 +201,16 @@ class CreateElasticsearch extends Migration
 									'match' => '^(ip|ip_address|ip_addr)$',
 									'mapping' => [
 										'type' => 'ip',
+									],
+								],
+							],
+							[
+								'locations' => [
+									'match_pattern' => 'regex',
+									'match_mapping_type' => '*',
+									'match' => '^(location|point|coordinate)$',
+									'mapping' => [
+										'type' => 'geo_point',
 									],
 								],
 							],
