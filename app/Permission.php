@@ -3,7 +3,7 @@ namespace App;
 
 use Addons\Entrust\Permission as BasePermission;
 use OwenIt\Auditing\Auditable;
-use Laravel\Scout\Searchable;
+use Addons\Elasticsearch\Scout\Searchable;
 
 class Permission extends BasePermission
 {

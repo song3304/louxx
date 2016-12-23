@@ -14,7 +14,7 @@ use Addons\Entrust\Traits\UserTrait;
 use App\Role;
 use App\CatalogCastTrait;
 use OwenIt\Auditing\Auditable;
-use Laravel\Scout\Searchable;
+use Addons\Elasticsearch\Scout\Searchable;
 
 class User extends Authenticatable
 {
@@ -64,8 +64,8 @@ class User extends Authenticatable
 	public function scope_all(Builder $builder, $keywords)
 	{
 		if (empty($keywords)) return;
-		$users = static::search(null)->where('username,nickname,realname,phone,email', $keywords)->take(2000)->get();
-		return $builder->whereIn($this->getKeyName(), $users->pluck($this->getKeyName()));
+		$users = static::search(null)->where('username,nickname,realname,phone,email', $keywords)->take(2000)->keys();
+		return $builder->whereIn($this->getKeyName(), $users);
 	}
 }
 

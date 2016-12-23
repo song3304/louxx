@@ -7,7 +7,7 @@ use Addons\Core\Models\CacheTrait;
 use Addons\Core\Models\CallTrait;
 use Addons\Core\Models\PolyfillTrait;
 use App\CatalogCastTrait;
-use Laravel\Scout\Searchable;
+use Addons\Elasticsearch\Scout\Searchable;
 use OwenIt\Auditing\Auditable;
 
 class Model extends BaseModel {

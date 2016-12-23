@@ -4,7 +4,7 @@ namespace App;
 use Addons\Core\Models\Tree;
 use Addons\Core\Models\TreeCacheTrait;
 use OwenIt\Auditing\Auditable;
-use Laravel\Scout\Searchable;
+use Addons\Elasticsearch\Scout\Searchable;
 
 class Catalog extends Tree {
 	use TreeCacheTrait;

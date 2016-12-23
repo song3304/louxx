@@ -5,7 +5,7 @@ use Addons\Entrust\Role as BaseRole;
 use Addons\Core\Models\TreeCacheTrait;
 use Illuminate\Support\Arr;
 use OwenIt\Auditing\Auditable;
-use Laravel\Scout\Searchable;
+use Addons\Elasticsearch\Scout\Searchable;
 
 class Role extends BaseRole
 {
