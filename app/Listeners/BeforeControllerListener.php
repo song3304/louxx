@@ -6,11 +6,12 @@ use Addons\Core\Listeners\BeforeControllerListener as BaseBeforeControllerListen
 
 class BeforeControllerListener extends BaseBeforeControllerListener {
 
-	// auto call class 'Namespace\App\Listener\ControllerBeforeListener' without defined
 	protected $controllerListeners = [
-		// 'App\Http\Controllers\HomeController' => [
-		// 		'App\Listener\HomeControllerBeforeListener', //auto @handle
-		// 		'App\Listener\HomeControllerBeforeListener1@function',
+		// eg: Admin\MemberController edit
+		// if not matched, auto call class 'App\Listener\Admin\MemberControllerBeforeListener@edit'
+		// 'App\Http\Controllers\Home*' => [
+		// 		'App\Listener\HomeControllerBeforeListener', //auto call current controller's method
+		// 		'App\Listener\HomeControllerBeforeListener@defined_method',
 		// 	],
 	];
 
