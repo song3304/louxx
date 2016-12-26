@@ -15,14 +15,15 @@
 (function($){
 	$().ready(function(){
 		$('[name="<{block "name"}><{/block}>/list"]').addClass('active').parents('li').addClass('active');
+		$('a[data-append-queries]').each(function(){$(this).data('href', this.href);});
 		<{block "inline-script-plus"}><{/block}>
 	});
 })(jQuery);
 </script>
 <script src="<{'js/datatable/jquery.dataTables.min.js'|static}>"></script>
-<script src="<{'js/jquery.bbq.min.js'|static}>"></script>
 <script src="<{'js/template.js'|static}>"></script>
 <script src="<{'js/proui/table.min.js'|static}>"></script>
+<script src="<{'js/proui/export.min.js'|static}>"></script>
 <{/block}>
 
 <{block "header"}>
@@ -56,7 +57,7 @@
 	<{block "options"}>
 	<div class="block-options pull-right">
 		<{block "options-toggle"}>
-		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示 (Ctrl+Shift+T)" data-shortcuts="ctrl+shift+T"><i class="fa fa-arrows-v"></i></a>
+		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-content" title="折叠/展示 (Ctrl+Shift+T)" data-shortcuts="ctrl+shift+t"><i class="fa fa-arrows-v"></i></a>
 		<{/block}>
 		<{block "options-full"}>
 		<a href="javascript:void(0)" class="btn btn-alt btn-sm btn-primary enable-tooltip" data-toggle="block-toggle-fullscreen" title="全屏切换 (F11)" data-shortcuts="f11"><i class="fa fa-desktop"></i></a>
@@ -109,10 +110,10 @@
 					<li class="dropdown-header">导出<i class="fa fa-share pull-right"></i></li>
 					<li>
 						<a href="javascript:void(0)"><i class="fa fa-print pull-right"></i> 打印</a>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/csv?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-csv pull-right"></i> CSV </a>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/pdf?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-pdf pull-right"></i> PDF</a>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xls?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xls pull-right"></i> Excel 2003</a>
-						<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block 'name'}><{/block}>/export/xlsx?<{'filters'|query_string nofilter}>" target="_blank"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
+						<a href="javascript:void(0)" data-namespace="<{block "namespace"}>admin<{/block}>" data-name="<{block 'name'}><{/block}>" data-export="csv"><i class="fi fi-csv pull-right"></i> CSV </a>
+						<a href="javascript:void(0)" data-namespace="<{block "namespace"}>admin<{/block}>" data-name="<{block 'name'}><{/block}>" data-export="pdf"><i class="fi fi-pdf pull-right"></i> PDF</a>
+						<a href="javascript:void(0)" data-namespace="<{block "namespace"}>admin<{/block}>" data-name="<{block 'name'}><{/block}>" data-export="xls"><i class="fi fi-xls pull-right"></i> Excel 2003</a>
+						<a href="javascript:void(0)" data-namespace="<{block "namespace"}>admin<{/block}>" data-name="<{block 'name'}><{/block}>" data-export="xlsx"><i class="fi fi-xlsx pull-right"></i> Excel 2007+</a>
 					</li>
 				<{/block}>
 				<{block "table-tools-dropdown-after"}><{/block}>
@@ -128,7 +129,7 @@
 		data-namespace="<{block 'namespace'}>admin<{/block}>"
 		data-search-delay="<{block 'search-delay'}>800<{/block}>"
 		data-display-start="<{block 'display-start'}>0.0<{/block}>"
-		data-page-length="<{$_size|default:25}>"
+		data-page-length="<{$_size|default:config('size.common')}>"
 		data-auto-width="<{block 'auto-width'}>false<{/block}>"
 		data-searching="<{block 'searching'}>true<{/block}>"
 		data-processing="<{block 'processing'}>true<{/block}>"
@@ -196,5 +197,34 @@
 	</table>
 </div>
 <div class="clearfix"></div>
+<{/block}>
+<{/block}>
+
+<{block "body-after"}>
+<{block "export"}>
+<div class="modal fade" id="export-modal" tabindex="-1" role="dialog" aria-labelledby="export-modal" aria-hidden="true" data-size="<{$_exportSize|default:config('size.export')}>">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+				<h4 class="modal-title">导出 数据</h4>
+			</div>
+			<div class="modal-body">
+				<p>导出格式：<label for="" class="label label-info" id="export-format"><{$_of}></label></p>
+				<p>当前总数：<span id="export-count"></span>条数据（无搜索条件：<span id="export-total"></span>）</p>
+				<div class="alert alert-info"><b>注意：</b>数据按照当前表格的<b>搜索</b>、<b>排序</b>方式导出</div>
+				<p>每个文件：<span id="export-size"></span>条
+				<div class="input-slider-success">
+					<input type="text" id="export-slider" class="form-control">
+				</div>
+				<div class="row" id="export-links"></div>
+				<div class="clearfix"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
 <{/block}>
 <{/block}>

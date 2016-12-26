@@ -22,6 +22,9 @@
 
 <{block "head-scripts-inner"}><{/block}>
 
+<{block "head-scripts-bbq"}>
+<script src="<{'js/jquery.bbq.min.js'|static}>"></script>
+<{/block}>
 <{block "head-scripts-common"}>
 <script src="<{'js/common.js'|static}>"></script>
 <{/block}>
