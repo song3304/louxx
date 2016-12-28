@@ -119,7 +119,7 @@ class CreateElasticsearch extends Migration
 								'whole_words' => [
 									'match_pattern' => 'regex',
 									'match_mapping_type' => 'string',
-									'match' => '^(name|username)$',
+									'match' => '^(name|username|account)$',
 									'mapping' => [
 										'type' => 'text',
 										'search_analyzer' => 'title_search_standard',
