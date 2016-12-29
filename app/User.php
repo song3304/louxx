@@ -58,7 +58,7 @@ class User extends Authenticatable
 
 		$builder->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
 
-		$builder->whereIn('role_user.role_id', $role->getDescendant()->merge([$role])->pluck($role->getKeyName()));
+		$builder->whereIn('role_user.role_id', $role->getDescendant()->merge([$role])->modelKeys());
 	}
 
 	public function scope_all(Builder $builder, $keywords)
