@@ -76,9 +76,21 @@ class MemberController extends Controller
 		$keys = ['username', 'password', 'nickname', 'realname', 'gender', 'email', 'phone', 'idcard', 'avatar_aid', 'role_ids'];
 		$data = $this->autoValidate($request, 'member.store', $keys);
 
+		$extraKeys = [];
+		$multipleKeys = [];
+		$extra = array_only($data, $extraKeys);
+		$multiples = array_only($data, $multipleKeys);
+
 		$role_ids = array_pull($data, 'role_ids');
-		DB::transaction(function() use ($data, $role_ids){
+		$data = array_except($data, array_merge($extraKeys, $multipleKeys));
+		DB::transaction(function() use ($data, $extra, $multiples, $role_ids){
 			$user = (new User)->add($data);
+			$user->extra()->create($extra);
+			foreach((array)$multiples as $k => $v)
+			{
+				$catalog = Catalog::getCatalogsByName('fields.'.Str::singular($k));
+				$game->$k()->attach($v, ['parent_cid' => $catalog['id']]);
+			}
 			$user->roles()->sync($role_ids);
 		});
 		return $this->success('', url('admin/member'));
@@ -111,9 +123,23 @@ class MemberController extends Controller
 		}
 		$keys = ['nickname', 'realname', 'gender', 'email', 'phone', 'idcard', 'avatar_aid', 'role_ids'];
 		$data = $this->autoValidate($request, 'member.store', $keys, $user);
+
+		$extraKeys = [];
+		$multipleKeys = [];
+		$extra = array_only($data, $extraKeys);
+		$multiples = array_only($data, $multipleKeys);
+
 		$role_ids = array_pull($data, 'role_ids');
-		DB::transaction(function() use ($user, $data, $role_ids){
+		$data = array_except($data, array_merge($extraKeys, $multipleKeys));
+		DB::transaction(function() use ($user, $extra, $multiples, $data, $role_ids){
 			$user->update($data);
+			$user->extra()->update($extra);
+			foreach((array)$multiples as $k => $v)
+			{
+				$catalog = Catalog::getCatalogsByName('fields.'.Str::singular($k));
+				$game->$k()->detach();
+				$game->$k()->attach($v, ['parent_cid' => $catalog['id']]);
+			}
 			$user->roles()->sync($role_ids);
 		});
 		return $this->success();

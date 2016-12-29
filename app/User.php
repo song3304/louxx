@@ -41,9 +41,16 @@ class User extends Authenticatable
 		return $user;
 	}
 
-	public function creator()
+
+	/*public function xxx_catalogs()
 	{
-		return $this->hasOne('App\\User', 'id', 'creator_uid');
+		$catalog = Catalog::getCatalogsByName('fields.xxx_catalog');
+		return $this->belongsToMany('App\Catalog', 'user_multiples', 'uid', 'cid')->withPivot(['parent_cid', 'extra'])->wherePivot('parent_cid', $catalog['id']);
+	}*/
+
+	public function extra()
+	{
+		return $this->hasOne('App\UserExtra', 'id', 'id');
 	}
 
 	public function finance()
