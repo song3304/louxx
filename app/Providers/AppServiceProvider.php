@@ -15,15 +15,21 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Validator::extend('catalog', function($attribute, $value, $parameters, $validator) {
-            $catalogs = Catalog::getCatalogsById($value);
-            return !empty($catalogs);
+            foreach ((array)$value as $v) {
+                 $catalogs = Catalog::getCatalogsById($v);
+                if(empty($catalogs)) return false;
+            }
+            return true;
         });
         Validator::replacer('catalog', function($message, $attribute, $rule, $parameters) {
             return str_replace([':name'], $parameters, $message);
         });
         Validator::extend('catalog_name', function($attribute, $value, $parameters, $validator) {
-            $catalogs = Catalog::getCatalogsByName((!empty($parameters[0]) ? $parameters[0] : '').'.'.$value);
-            return !empty($catalogs);
+            foreach ((array)$value as $v) {
+                $catalogs = Catalog::getCatalogsByName((!empty($parameters[0]) ? $parameters[0] : '').'.'.$v);
+                if(empty($catalogs)) return false;
+            }
+            return true;
         });
         Validator::replacer('catalog_name', function($message, $attribute, $rule, $parameters) {
             return str_replace([':name'], $parameters, $message);
