@@ -49,9 +49,9 @@ class AppServiceProvider extends ServiceProvider
                     break;
             }
         }
-       //app('log')->getMonolog()->pushHandler(new \Monolog\Handler\PHPConsoleHandler()); //chrome-php-console
-       //instead with DatabaseAuditor
-       app(\OwenIt\Auditing\AuditorManager::class)->extend('database', function(){
+        //app('log')->getMonolog()->pushHandler(new \Monolog\Handler\PHPConsoleHandler()); //chrome-php-console
+        //instead with DatabaseAuditor
+        app(\OwenIt\Auditing\AuditorManager::class)->extend('database', function(){
             return new \App\Drivers\DatabaseAuditor();
         });
     }

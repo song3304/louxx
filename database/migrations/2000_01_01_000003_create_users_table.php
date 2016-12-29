@@ -57,7 +57,7 @@ class CreateUsersTable extends Migration
 		});
 		//用户财务表
 		Schema::create('user_finances', function (Blueprint $table) {
-			$table->unsignedInteger('id')->unique();
+			$table->unsignedInteger('id')->unique()->primary();
 			$table->decimal('money', 16, 2)->index()->default(0)->comment = '余额';
 			$table->decimal('used_money', 16, 2)->index()->default(0)->comment = '已消费金额';
 			$table->decimal('bonus', 16, 2)->index()->default(0)->comment = '红包余额';

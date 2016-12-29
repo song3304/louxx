@@ -45,7 +45,7 @@ class User extends Authenticatable
 	/*public function xxx_catalogs()
 	{
 		$catalog = Catalog::getCatalogsByName('fields.xxx_catalog');
-		return $this->belongsToMany('App\Catalog', 'user_multiples', 'uid', 'cid')->withPivot(['parent_cid', 'extra'])->wherePivot('parent_cid', $catalog['id']);
+		return $this->belongsToMany('App\Catalog', 'user_multiples', 'uid', 'cid')->withPivot(['parent_cid', 'extra'])->wherePivot('parent_cid', $catalog['id'])->withTimestamps();
 	}*/
 
 	public function extra()
