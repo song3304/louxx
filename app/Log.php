@@ -28,7 +28,11 @@ class Log extends Auditing
 	public function toSearchableArray()
 	{
 		$data = $this->toArray();
-		return array_except($data, $this->appends);
+		$data = array_except($data, $this->appends);
+		!empty($data['new']) && $data['new'] = json_encode($data['new']);
+		!empty($data['old']) && $data['old'] = json_encode($data['old']);
+		$data['request']['server'] = array_only($data['request']['server'], ['HTTP_HOST', 'HTTP_CONNECTION', 'CONTENT_LENGTH', 'HTTP_ORIGIN', 'HTTP_X_CSRF_TOKEN', 'CONTENT_TYPE', 'HTTP_ACCEPT', 'HTTP_X_REQUESTED_WITH', 'HTTP_REFERER', 'HTTP_ACCEPT_ENCODING', 'HTTP_ACCEPT_LANGUAGE', 'HTTP_COOKIE', 'SERVER_SIGNATURE', 'SERVER_SOFTWARE', 'SERVER_NAME', 'SERVER_ADDR', 'SERVER_PORT', 'REMOTE_ADDR', 'DOCUMENT_ROOT', 'REQUEST_SCHEME', 'CONTEXT_PREFIX', 'CONTEXT_DOCUMENT_ROOT', 'SCRIPT_FILENAME', 'REMOTE_PORT', 'REDIRECT_URL', 'GATEWAY_INTERFACE', 'SERVER_PROTOCOL', 'REQUEST_METHOD', 'QUERY_STRING', 'REQUEST_URI', 'SCRIPT_NAME', 'PHP_SELF', 'REQUEST_TIME_FLOAT', 'REQUEST_TIME']);
+		return $data;
 	}
 
 	public function scope_all(Builder $builder, $keywords)
