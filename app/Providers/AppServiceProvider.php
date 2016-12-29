@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Validator, Agent;
-use App\Catalog;
+use Agent;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -14,27 +14,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Validator::extend('catalog', function($attribute, $value, $parameters, $validator) {
-            foreach ((array)$value as $v) {
-                 $catalogs = Catalog::getCatalogsById($v);
-                if(empty($catalogs)) return false;
-            }
-            return true;
-        });
-        Validator::replacer('catalog', function($message, $attribute, $rule, $parameters) {
-            return str_replace([':name'], $parameters, $message);
-        });
-        Validator::extend('catalog_name', function($attribute, $value, $parameters, $validator) {
-            foreach ((array)$value as $v) {
-                $catalogs = Catalog::getCatalogsByName((!empty($parameters[0]) ? $parameters[0] : '').'.'.$v);
-                if(empty($catalogs)) return false;
-            }
-            return true;
-        });
-        Validator::replacer('catalog_name', function($message, $attribute, $rule, $parameters) {
-            return str_replace([':name'], $parameters, $message);
-        });
-
         if (config('app.debug'))
         {
             switch (strtolower(Agent::browser())) {
