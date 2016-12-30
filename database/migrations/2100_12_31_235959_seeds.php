@@ -11,7 +11,7 @@ class Seeds extends Migration
 	 */
 	public function up()
 	{
-		\DB::transaction(function() use ($fill) {
+		\DB::transaction(function() {
 			\Illuminate\Database\Eloquent\Model::unguard(true);
 			\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 			\DB::table('catalogs')->truncate();
