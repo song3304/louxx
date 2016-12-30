@@ -11,15 +11,6 @@ class Seeds extends Migration
 	 */
 	public function up()
 	{
-		$fill = function(&$data, $parentNode) use (&$fill) {
-			foreach($data as $k => &$v)
-			{
-				list($name, $title) = explode('|', $k);
-				$node = $parentNode->children()->create(compact('name', 'title'));
-				!empty($v) && $fill($v, $node);
-			}
-		};
-
 		\DB::transaction(function() use ($fill) {
 			\Illuminate\Database\Eloquent\Model::unguard(true);
 			\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
@@ -75,8 +66,11 @@ class Seeds extends Migration
 					'female|女' => [],
 				],
 			];
+			$status = [
+			];
 
-			$fill($fields, \App\Catalog::findByName('fields'));
+			\App\Catalog::import($fields, \App\Catalog::findByName('fields'));
+			\App\Catalog::import($status, \App\Catalog::findByName('status'));
 
 
 			//新建用户组
