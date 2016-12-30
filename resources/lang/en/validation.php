@@ -80,10 +80,13 @@ return [
     'string'               => 'The :attribute must be a string.',
     'timezone'             => 'The :attribute must be a valid zone.',
     'unique'               => 'The :attribute has already been taken.',
-    'url'                  => 'The :attribute format is invalid.',
-    'idcard'                  => 'The :attribute format is invalid.',
-    'phone'                  => 'The :attribute format is invalid.',
-
+    'url'                  => 'The :attribute must be a url.',
+    'phone'                => 'The :attribute must be a phone number.',
+    'id_card'              => 'The :attribute must be a ID number.',
+    "not_zero"             => "The :attribute must not be 0。",
+    'catalog'              => 'The :attribute must be a catalog\'s id in :name.',
+    'catalog_name'         => 'The :attribute must be a catalog\'s name in :name.',
+    'required_if_catalog'  => 'The :attribute field is required when :other is :value.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

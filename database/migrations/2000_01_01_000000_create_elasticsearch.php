@@ -21,7 +21,11 @@ class CreateElasticsearch extends Migration
 					'analysis' => [
 						'analyzer' => [
 							'pinyin_standard' => [ //常规的拼音+汉字搜
-								'tokenizer' => 't_pinyin'
+								'type' => 'custom',
+								'tokenizer' => 't_pinyin',
+								'filter' => [
+									'unique' //分词之后去重
+								],
 							],
 							'ik_smart_standard' => [ //适合正文
 								'type' => 'custom',
@@ -57,7 +61,22 @@ class CreateElasticsearch extends Migration
 								'type' => 'custom',
 								'tokenizer' => 'standard',
 								'filter' => [
-									'lowercase', 'asciifolding','unique' //为了适应任何字的搜索，将每种组合都来一遍
+									'lowercase', 'asciifolding', 'unique'
+								]
+							],
+							'path' => [
+								'type' => 'custom',
+								'tokenizer' => 'path_hierarchy'
+							],
+							'url' => [
+								'type' => 'custom',
+								'tokenizer' => 'uax_url_email'
+							],
+							'email' => [
+								'type' => 'custom',
+								'tokenizer' => 'uax_url_email',
+								'filter' => [
+									'lowercase', 'unique'
 								]
 							],
 						],
@@ -153,6 +172,17 @@ class CreateElasticsearch extends Migration
 								],
 							],
 							[
+								'phones' => [
+									'match_mapping_type' => 'string',
+									'match' => '*phone',
+									'mapping' => [
+										'type' => 'text',
+										'search_analyzer' => 'title_search_standard',
+										'analyzer' => 'title_standard',
+									],
+								],
+							],
+							[
 								'dates' => [
 									'match_mapping_type' => 'string',
 									'match' => '*_at',
@@ -179,7 +209,8 @@ class CreateElasticsearch extends Migration
 									'match' => '^.*?(mail|link|url)s?$',
 									'mapping' => [
 										'type' => 'text',
-										'tokenizer' => 'uax_url_email',
+										'search_analyzer' => 'url',
+										'analyzer' => 'url',
 									],
 								],
 							],
@@ -190,7 +221,8 @@ class CreateElasticsearch extends Migration
 									'match' => '^.*?(path)s?$',
 									'mapping' => [
 										'type' => 'text',
-										'tokenizer' => 'uax_url_email',
+										'analyzer' => 'path',
+										//'search_analyzer' => 'path',
 									],
 								],
 							],

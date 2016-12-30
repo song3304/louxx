@@ -74,7 +74,7 @@ class AuthController extends Controller
 			return $this->sendLockoutResponse($request);
 		}
 
-		$keys = [$this->username(),'password'];
+		$keys = [$this->username(), 'password'];
 		$data = $this->autoValidate($request, 'member.login', $keys);
 		$remember = $request->has('remember');
 		if ($this->guard()->attempt([$this->username() => $data[$this->username()], 'password' => $data['password']], $remember))

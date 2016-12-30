@@ -11,16 +11,7 @@ class Seeds extends Migration
 	 */
 	public function up()
 	{
-		$fill = function(&$data, $parentNode) use (&$fill) {
-			foreach($data as $k => &$v)
-			{
-				list($name, $title) = explode('|', $k);
-				$node = $parentNode->children()->create(compact('name', 'title'));
-				!empty($v) && $fill($v, $node);
-			}
-		};
-
-		\DB::transaction(function() use ($fill) {
+		\DB::transaction(function() {
 			\Illuminate\Database\Eloquent\Model::unguard(true);
 			\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 			\DB::table('catalogs')->truncate();
@@ -68,6 +59,7 @@ class Seeds extends Migration
 				'title' => '无'
 			])->update(['id' => 0]);
 			DB::statement("ALTER TABLE `catalogs` AUTO_INCREMENT = 11;");
+			DB::statement("UPDAE `catalogs` SET `path` = '/0/' WHERE `id` = 0;");
 
 			$fields = [
 				'gender|性别' => [
@@ -75,8 +67,11 @@ class Seeds extends Migration
 					'female|女' => [],
 				],
 			];
+			$status = [
+			];
 
-			$fill($fields, \App\Catalog::findByName('fields'));
+			\App\Catalog::import($fields, \App\Catalog::findByName('fields'));
+			\App\Catalog::import($status, \App\Catalog::findByName('status'));
 
 
 			//新建用户组

@@ -41,9 +41,16 @@ class User extends Authenticatable
 		return $user;
 	}
 
-	public function creator()
+
+	/*public function xxx_catalogs()
 	{
-		return $this->hasOne('App\\User', 'id', 'creator_uid');
+		$catalog = Catalog::getCatalogsByName('fields.xxx_catalog');
+		return $this->belongsToMany('App\Catalog', 'user_multiples', 'uid', 'cid')->withPivot(['parent_cid', 'extra'])->wherePivot('parent_cid', $catalog['id'])->withTimestamps();
+	}*/
+
+	public function extra()
+	{
+		return $this->hasOne('App\UserExtra', 'id', 'id');
 	}
 
 	public function finance()
@@ -58,7 +65,7 @@ class User extends Authenticatable
 
 		$builder->join('role_user', 'role_user.user_id', '=', 'users.id', 'LEFT');
 
-		$builder->whereIn('role_user.role_id', $role->getDescendant()->merge([$role])->pluck($role->getKeyName()));
+		$builder->whereIn('role_user.role_id', $role->getDescendant()->merge([$role])->modelKeys());
 	}
 
 	public function scope_all(Builder $builder, $keywords)
