@@ -96,10 +96,10 @@
 				var params = $this.data('params');
 				var values = $this.attr('value') ? $this.attr('value').split(',') : $this.val();
 				var url = $.baseuri + $this.data('model')+'/data/json';
-				params = $.extend(true, {all: 'true'}, params);
+				params = $.extend(true, {}, {all: 'true'}, params);
 				method.getData(url, params).done(function(json){
 					var data = method.format(json, id, selection, text); 
-					$this.select2($.extend(true, {language: "zh-CN", data: data, allowClear: true}, options));
+					$this.select2($.extend(true, {}, {language: "zh-CN", data: data, allowClear: true}, options));
 					//初始值
 					$this.val(values ? values : null).trigger("change");
 				});
@@ -118,12 +118,12 @@
 				var params = $this.data('params');
 				var values = $this.attr('value') ? $this.attr('value').split(',') : $this.val();
 				var url = $.baseuri + $this.data('model')+'/data/json';
-				params = $.extend(true, {all: 'true', tree: 'true'}, params);
+				params = $.extend(true, {}, {all: 'true', tree: 'true'}, params);
 
 				method.getData(url, params).done(function(json){
 					var data = method.format(json, id, selection, text, pid);
 					data = method.recursive(data);
-					$this.select2($.extend(true, {
+					$this.select2($.extend(true, {}, {
 						//theme: "bootstrap",
 						language: "zh-CN",data: data, allowClear: true,
 						templateResult: function(data){return $('<div>' + data.text + '</div>');},
@@ -159,7 +159,7 @@
 							var config = {page: _params.data.page, f: {}, q: {}};
 							if(term) config.f[term] = {'like': _params.data.term};
 							if(q) config.q[q] = _params.data.q;
-							method.getData(url, $.extend(true, config, params)).done(function(json){
+							method.getData(url, $.extend(true, {}, config, params)).done(function(json){
 								var data = method.format(json, id, selection, text);
 								success(data);
 							});
@@ -169,7 +169,7 @@
 						}
 					},
 					escapeMarkup: function (markup) {return markup;},
-					minimumInputLength: 1,
+					minimumInputLength: 2,
 					allowClear: true,
 					templateResult: function(data){return data.text;},
 					templateSelection: function(data){return data.selection || data.text;}
@@ -177,13 +177,13 @@
 				//有初始的值
 				if (values) {
 					var params = $this.data('params');
-					method.getData(url, $.extend(true, params, {f: {id: {in: values}}})).done(function(json){
+					method.getData(url, $.extend(true, {}, params, {f: {id: {in: values}}})).done(function(json){
 						var data = method.format(json, id, selection, text);
-						$this.select2($.extend(true, _config, options, {data: data}));
+						$this.select2($.extend(true, {}, _config, options, {data: data}));
 
 					});
 				} else
-					$this.select2($.extend(true, _config, options));
+					$this.select2($.extend(true, {}, _config, options));
 			});
 		},
 		tagsModel: function(options){
@@ -212,7 +212,7 @@
 							var config = {page: _params.data.page, f: {}, q: {}};
 							if(term) config.f[term] = {'like': _params.data.term};
 							if(q) config.q[q] = _params.data.q;
-							method.getData(url, $.extend(true, config, params)).done(function(json){
+							method.getData(url, $.extend(true, {}, config, params)).done(function(json){
 								var data = method.format(json, id, selection, text);
 								success(data);
 							});
@@ -239,12 +239,12 @@
 				if (values) {
 					var params = $this.data('params');
 					var config = {f: {id: {in: values}}, q: {}};
-					method.getData(url, $.extend(true, config, params)).done(function(json){
+					method.getData(url, $.extend(true, {}, config, params)).done(function(json){
 						var data = method.format(json, id, selection, text);
-						$this.select2($.extend(true, _config, options, {data: data}));
+						$this.select2($.extend(true, {}, _config, options, {data: data}));
 					});
 				} else
-					$this.select2($.extend(true, _config, options));
+					$this.select2($.extend(true, {}, _config, options));
 			});
 		}
 	});
