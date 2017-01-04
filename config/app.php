@@ -202,7 +202,7 @@ return [
 		//Log Model Event
 		OwenIt\Auditing\AuditingServiceProvider::class,
 		//API
-		Dingo\Api\Provider\LaravelServiceProvider::class
+		//Dingo\Api\Provider\LaravelServiceProvider::class
 	],
 
 	/*
