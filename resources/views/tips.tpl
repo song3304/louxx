@@ -14,8 +14,8 @@
 				<h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> <strong>提示</strong> <{$_data.result|escape}></h3>
 			</div>
   			<div class="panel-body">
-				<h2><{$_data.message.title|escape:'html' nofilter}></h2>
-				<p><{$_data.message.content|escape:'noscript' nofilter}></p>
+				<h2><{if !empty($_data.message.title)}><{$_data.message.title|escape:'html' nofilter}><{else}><{$_data.status_code|escape:'html' nofilter}><{/if}></h2>
+				<p><{if !empty($_data.message.content)}><{$_data.message.content|noscript nofilter}><{else}><{$_data.message|noscript nofilter}><{/if}></p>
 			</div>
 			<div class="panel-footer">
 				<{if !is_bool($_data.url) }>

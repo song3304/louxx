@@ -13,6 +13,7 @@ use Doctrine\DBAL\Driver\PDOException;
 use Addons\Entrust\Exception\PermissionException;
 use Addons\Core\Http\OutputResponse;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -68,7 +69,6 @@ class Handler extends ExceptionHandler
 						return (new OutputResponse)->setResult('failure')->setMessage('document.failure_model_noexist', ['model' => $exception->getModel(), 'file' => $file , 'line' => $line, 'id' => implode(',', $exception->getIds())]);
 					}
 				}
-				
 			}
 			else if($exception instanceof PermissionException)
 				return (new OutputResponse)->setResult('failure')->setMessage('auth.failure_permission');
@@ -76,8 +76,8 @@ class Handler extends ExceptionHandler
 				return (new OutputResponse)->setResult('failure')->setMessage('validation.failure_csrf');
 			else if (($exception instanceof QueryException) || ($exception instanceof PDOException))
 				return (new OutputResponse)->setResult('error')->setMessage('server.error_database');
-			else
-				return (new OutputResponse)->setResult('error')->setMessage('server.error_server');
+			else if ($exception instanceof HttpException)
+				return (new OutputResponse)->setResult('error')->setRawMessage($exception->getMessage())->setStatusCode($exception->getStatusCode());
 			// other 500 errors
 		}
 
