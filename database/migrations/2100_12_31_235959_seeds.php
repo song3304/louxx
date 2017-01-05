@@ -59,7 +59,7 @@ class Seeds extends Migration
 				'title' => '无'
 			])->update(['id' => 0]);
 			DB::statement("ALTER TABLE `catalogs` AUTO_INCREMENT = 11;");
-			DB::statement("UPDAE `catalogs` SET `path` = '/0/' WHERE `id` = 0;");
+			DB::statement("UPDATE `catalogs` SET `path` = '/0/' WHERE `id` = 0;");
 
 			$fields = [
 				'gender|性别' => [
