@@ -1,1 +1,1 @@
-<title><{foreach $_site.titles as $v}><{if !$v@first}> - <{/if}><{$v.title}><{/foreach}></title>
+<title><{config('settings.title')}><{foreach config('settings.subtitles') as $v}> - <{$v.title}><{/foreach}></title>

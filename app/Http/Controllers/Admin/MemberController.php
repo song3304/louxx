@@ -12,7 +12,7 @@ use DB;
 class MemberController extends Controller
 {
 	use ApiTrait;
-	public $RESTful_permission = 'member';
+	public $permissions = ['member'];
 	/**
 	 * Display a listing of the resource.
 	 *
