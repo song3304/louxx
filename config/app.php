@@ -201,8 +201,6 @@ return [
 		Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 		//Log Model Event
 		OwenIt\Auditing\AuditingServiceProvider::class,
-		//API
-		//Dingo\Api\Provider\LaravelServiceProvider::class
 	],
 
 	/*
