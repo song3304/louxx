@@ -44,7 +44,7 @@ $().ready(function(){
 			r[ configs[i] ] = $dt.data( configs[i] ) || null;
 		var config = $.bbq.getState();
 		if (config)
-			r = $.extend(true, r, config);
+			r = $.extend(true, {},  r, config);
 		r.displayStart = ~~r.displayStart;
 		r.pageLength = ~~r.pageLength;
 		$dt.data(r); //read from hash and set to table's data
@@ -309,7 +309,7 @@ $().ready(function(){
 						}
 					}
 					var query = $.extend(true, {}, config.queryParams, {
-						q: $.extend(true, {_all: d.search.value}, window.location.query('q')),
+						q: $.extend(true, d.search.value ? {_all: d.search.value} : {}, window.location.query('q')),
 						o: o,
 						f: $.extend(true, {}, window.location.query('f'))
 					});
