@@ -73,11 +73,13 @@
 
 <{block "block-content"}>
 <div class="block-content">
-<!-- DataTable Content -->
+<{block "filter-before"}><{/block}>
 <{block "filter"}><{/block}>
-<!-- END DataTable Content -->
+	<div class="clearfix"></div>
+<{block "filter-after"}><{/block}>
 </div>
 <div class="clearfix"></div>
+<{block "block-content-table-before"}><{/block}>
 <{block "block-content-table"}>
 <div class="table-responsive">
 	<{block "table-tools"}>
@@ -199,6 +201,7 @@
 </div>
 <div class="clearfix"></div>
 <{/block}>
+<{block "block-content-table-after"}><{/block}>
 <{/block}>
 
 <{block "body-after"}>
