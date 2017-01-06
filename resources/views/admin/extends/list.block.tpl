@@ -125,17 +125,18 @@
 	</div>
 	<{/block}>
 	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover"
-		data-name="<{block 'name'}><{/block}>"
-		data-namespace="<{block 'namespace'}>admin<{/block}>"
-		data-search-delay="<{block 'search-delay'}>800<{/block}>"
-		data-display-start="<{block 'display-start'}>0.0<{/block}>"
-		data-page-length="<{$_size|default:config('size.common')}>"
-		data-auto-width="<{block 'auto-width'}>false<{/block}>"
-		data-searching="<{block 'searching'}>true<{/block}>"
-		data-processing="<{block 'processing'}>true<{/block}>"
-		data-paging-type="<{block 'paging-type'}>full_numbers<{/block}>"
-		data-order="<{block 'order'}>[[0, &quot;desc&quot;]]<{/block}>"
-		<{block 'datatable-settings'}><{/block}>
+		data-name='<{block "name"}><{/block}>'
+		data-namespace='<{block "namespace"}>admin<{/block}>'
+		data-search-delay='<{block "search-delay"}>800<{/block}>'
+		data-display-start='<{block "display-start"}>0.0<{/block}>'
+		data-page-length='<{$_size|default:config("size.common")}>'
+		data-auto-width='<{block "auto-width"}>false<{/block}>'
+		data-searching='<{block "searching"}>true<{/block}>'
+		data-processing='<{block "processing"}>true<{/block}>'
+		data-paging-type='<{block "paging-type"}>full_numbers<{/block}>'
+		data-order='<{block "order"}>[[0, "desc"]]<{/block}>'
+		data-query-params='<{block "query-params"}>{}<{/block}>'
+		<{block "datatable-settings"}><{/block}>
 	>
 		<thead>
 			<{block "table-thead-before"}><{/block}>
