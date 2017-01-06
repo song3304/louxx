@@ -311,7 +311,7 @@ $().ready(function(){
 					var query = $.extend(true, {}, config.queryParams, {
 						q: $.extend(true, {_all: d.search.value}, window.location.query('q')),
 						o: o,
-						f: window.location.query('f')
+						f: $.extend(true, {}, window.location.query('f'))
 					});
 					$dt.data('url-query', query);
 					//修改导出按钮的链接
