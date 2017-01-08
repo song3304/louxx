@@ -1,10 +1,13 @@
 <?php
 namespace App;
 
+use Illuminate\Database\Eloquent\Model as BaseModel;
 use OwenIt\Auditing\Auditing;
 use Jenssegers\Agent\Agent;
 use Addons\Elasticsearch\Scout\Searchable;
 use Addons\Core\Http\SerializableRequest;
+use Addons\Core\Contracts\Events\ControllerEvent;
+use Auth;
 
 class Log extends Auditing
 {
@@ -18,6 +21,44 @@ class Log extends Auditing
 		'old' => 'json',
 		'new' => 'json',
 	];
+
+	const VIEW = 'view'; //浏览
+	const LOGIN = 'login'; //登录
+	const LOGOUT = 'logout'; //登出
+	const REGISTER = 'register'; //注册
+
+	/**
+	 * 使用ControllerEvent创建一条记录
+	 * 
+	 * @param  ControllerEvent $event     控制器事件，来源于ControllerListener
+	 * @param  string          $type      日志类型
+	 * @param  [type]          $user_id   [description]
+	 * @param  array           $auditable [description]
+	 * @param  array           $data      [description]
+	 * @return [type]                     [description]
+	 */
+	public static function createByControllerEvent(ControllerEvent $event, $data = null, $user_id = null, $type = null, BaseModel $auditable = null)
+	{
+		$request = $event->getRequest();
+
+		if (is_null($type))
+			$type = $event->getControllerName().'@'.$event->getMethod();
+		if (is_null($user_id))
+			$user_id = Auth::check() ? Auth::user()->getKey() : 0;
+		if (is_null($data))
+			$data = $request->all();
+
+		$result = [
+			'type' => $type,
+			'user_id' => $user_id,
+			'new' => empty($data) ? null : $data,
+			'imei' => $request->input('imei'),
+			'auditable_id' => 0,
+			'auditable_type' => '',
+		];
+		if (!empty($auditable)) $result = array_merge($result, ['auditable_id' => $auditable->getKey(), 'auditable_type' => get_class($auditable)]);
+		return \App\Log::create($result);
+	}
 	
 
 	public function table()
