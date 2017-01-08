@@ -47,6 +47,7 @@ class CreateCommonTable extends Migration
 			$table->string('browser', 50)->nullable()->comment = '瀏覽器';
 			$table->string('platform', 50)->nullable()->comment = '平臺';
 			$table->string('device', 50)->nullable()->comment = '設備';
+			$table->string('imei', 50)->nullable()->comment = 'IMEI';
 			$table->ipAddress('ip_address', 45)->nullable()->comment = 'IP';
 			$table->timestamp('created_at');
 		});
