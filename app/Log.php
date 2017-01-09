@@ -37,7 +37,7 @@ class Log extends Auditing
 	 * @param  array           $data      [description]
 	 * @return [type]                     [description]
 	 */
-	public static function createByControllerEvent(ControllerEvent $event, $data = null, $user_id = null, $type = null, BaseModel $auditable = null)
+	public static function createByControllerEvent(ControllerEvent $event, $type = null, $data = null, $user_id = null, BaseModel $auditable = null)
 	{
 		$request = $event->getRequest();
 
