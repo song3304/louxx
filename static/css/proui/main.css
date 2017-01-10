@@ -3276,7 +3276,8 @@ fieldset[disabled] .btn-info.active {
 /* Pre, Code */
 pre {
     background: #151515;
-    overflow: scroll;
+    /* overflow: scroll; */
+    overflow: auto;
 }
 
 code {
