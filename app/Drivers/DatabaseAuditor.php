@@ -14,8 +14,10 @@ class DatabaseAuditor {
      */
     public function audit($auditable)
     {
+		$data = $auditable->toAudit();
+		unset($data['id']);
         $report = Log::create(
-            $auditable->toAudit()
+			$data
         );
 
         //if ($report) {

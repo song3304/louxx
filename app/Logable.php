@@ -15,6 +15,14 @@ trait Logable
 
     }
 
+    /**
+     * Get the entity's audits.
+     */
+    public function audits()
+    {
+        return $this->morphMany(Log::class, 'auditable');
+    }
+
 	/**
      * Get the entity's logs.
      */
