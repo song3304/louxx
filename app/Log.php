@@ -52,7 +52,6 @@ class Log extends Auditing
 			'type' => $type,
 			'user_id' => $user_id,
 			'new' => empty($data) ? null : $data,
-			'imei' => $request->input('imei'),
 			'auditable_id' => 0,
 			'auditable_type' => '',
 		];
