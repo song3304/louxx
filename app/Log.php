@@ -112,5 +112,5 @@ Log::creating(function($log){
 
 Log::created(function($log){
 	if (!in_arary($log->type, ['created', 'updated', 'deleted', 'saved', 'restored', ]))
-		event('log.'.$log->type, [$log]);
+		event('logs.type.'.$log->type, [$log]);
 });
