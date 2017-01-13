@@ -138,7 +138,7 @@ class CreateElasticsearch extends Migration
 								'keywords' => [
 									'match_pattern' => 'regex',
 									'match_mapping_type' => 'string',
-									'match' => '^.*?(table_type|able_type)$', //多态的type
+									'match' => '^.*?_type$', //多态的type 或者是其他string的type类型，全词匹配
 									'mapping' => [
 										'type' => 'keyword',
 									],
