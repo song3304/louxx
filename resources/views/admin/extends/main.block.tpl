@@ -56,7 +56,7 @@
 				<{/block}>
 				<{block "breadcrumb"}>
 				<ul class="breadcrumb breadcrumb-top">
-					<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
+					<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{config('settings.title')}></a></li>
 					<li class="active">后台</li>
 				</ul>
 				<{/block}>

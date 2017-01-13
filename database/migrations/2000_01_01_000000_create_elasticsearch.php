@@ -135,6 +135,16 @@ class CreateElasticsearch extends Migration
 						],*/
 						'dynamic_templates' => [
 							[
+								'keywords' => [
+									'match_pattern' => 'regex',
+									'match_mapping_type' => 'string',
+									'match' => '^.*?_type$', //多态的type 或者是其他string的type类型，全词匹配
+									'mapping' => [
+										'type' => 'keyword',
+									],
+								],
+							],
+							[
 								'whole_words' => [
 									'match_pattern' => 'regex',
 									'match_mapping_type' => 'string',

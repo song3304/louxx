@@ -27,6 +27,7 @@ class User extends Authenticatable
 	protected $guarded = ['id'];
 	protected $hidden = ['password', 'remember_token', 'deleted_at'];
 	protected $dates = ['lastlogin_at'];
+	protected $touches = ['roles'];
 	protected $casts = [
 		'gender' => 'catalog',
 	];

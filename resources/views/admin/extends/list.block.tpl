@@ -29,7 +29,7 @@
 <{block "header"}>
 <!-- Form Header -->
 <ul class="breadcrumb breadcrumb-top">
-	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{$_site.title}></a></li>
+	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>"><{config('settings.title')}></a></li>
 	<li><a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>"><{block "title"}><{/block}>管理</a></li>
 	<li class="active">列表</li>
 </ul>
@@ -73,11 +73,13 @@
 
 <{block "block-content"}>
 <div class="block-content">
-<!-- DataTable Content -->
+<{block "filter-before"}><{/block}>
 <{block "filter"}><{/block}>
-<!-- END DataTable Content -->
+	<div class="clearfix"></div>
+<{block "filter-after"}><{/block}>
 </div>
 <div class="clearfix"></div>
+<{block "block-content-table-before"}><{/block}>
 <{block "block-content-table"}>
 <div class="table-responsive">
 	<{block "table-tools"}>
@@ -125,17 +127,18 @@
 	</div>
 	<{/block}>
 	<table id="datatable" class="table table-vcenter table-condensed table-bordered table-striped table-hover"
-		data-name="<{block 'name'}><{/block}>"
-		data-namespace="<{block 'namespace'}>admin<{/block}>"
-		data-search-delay="<{block 'search-delay'}>800<{/block}>"
-		data-display-start="<{block 'display-start'}>0.0<{/block}>"
-		data-page-length="<{$_size|default:config('size.common')}>"
-		data-auto-width="<{block 'auto-width'}>false<{/block}>"
-		data-searching="<{block 'searching'}>true<{/block}>"
-		data-processing="<{block 'processing'}>true<{/block}>"
-		data-paging-type="<{block 'paging-type'}>full_numbers<{/block}>"
-		data-order="<{block 'order'}>[[0, &quot;desc&quot;]]<{/block}>"
-		<{block 'datatable-settings'}><{/block}>
+		data-name='<{block "name"}><{/block}>'
+		data-namespace='<{block "namespace"}>admin<{/block}>'
+		data-search-delay='<{block "search-delay"}>800<{/block}>'
+		data-display-start='<{block "display-start"}>0.0<{/block}>'
+		data-page-length='<{$_size|default:config("size.common")}>'
+		data-auto-width='<{block "auto-width"}>false<{/block}>'
+		data-searching='<{block "searching"}>true<{/block}>'
+		data-processing='<{block "processing"}>true<{/block}>'
+		data-paging-type='<{block "paging-type"}>full_numbers<{/block}>'
+		data-order='<{block "order"}>[[0, "desc"]]<{/block}>'
+		data-query-params='<{block "query-params"}>{}<{/block}>'
+		<{block "datatable-settings"}><{/block}>
 	>
 		<thead>
 			<{block "table-thead-before"}><{/block}>
@@ -198,6 +201,7 @@
 </div>
 <div class="clearfix"></div>
 <{/block}>
+<{block "block-content-table-after"}><{/block}>
 <{/block}>
 
 <{block "body-after"}>

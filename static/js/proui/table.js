@@ -38,13 +38,13 @@ $().ready(function(){
 
 	method.getConfig = function()
 	{
-		var configs = ['name', 'namespace', 'displayStart', 'pageLength'];
+		var configs = ['name', 'namespace', 'queryParams', 'displayStart', 'pageLength'];
 		var r = {};
 		for (var i = 0; i < configs.length; i++)
 			r[ configs[i] ] = $dt.data( configs[i] ) || null;
 		var config = $.bbq.getState();
 		if (config)
-			r = $.extend(true, r, config);
+			r = $.extend(true, {},  r, config);
 		r.displayStart = ~~r.displayStart;
 		r.pageLength = ~~r.pageLength;
 		$dt.data(r); //read from hash and set to table's data
@@ -308,11 +308,11 @@ $().ready(function(){
 							if (name) o[name] = item.dir;
 						}
 					}
-					var query = {
-						q: $.extend(true, {_all: d.search.value}, window.location.query('q')),
+					var query = $.extend(true, {}, config.queryParams, {
+						q: $.extend(true, d.search.value ? {_all: d.search.value} : {}, window.location.query('q')),
 						o: o,
-						f: window.location.query('f')
-					};
+						f: $.extend(true, {}, window.location.query('f'))
+					});
 					$dt.data('url-query', query);
 					//修改导出按钮的链接
 					$('a[data-append-queries]').each(function(){$(this).attr('href', $(this).data('href'));}).querystring(query);
