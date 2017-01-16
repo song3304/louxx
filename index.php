@@ -18,11 +18,10 @@
 | loading any of our classes later on. It feels nice to relax.
 |
 */
-define('APPPATH', realpath(__DIR__).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'laravel').DIRECTORY_SEPARATOR);
 define('PLUGINSPATH', realpath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'l++').DIRECTORY_SEPARATOR);
 
-require APPPATH.'/bootstrap/autoload.php';
+require __DIR__.'/bootstrap/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +35,7 @@ require APPPATH.'/bootstrap/autoload.php';
 |
 */
 
-$app = require_once APPPATH.'/bootstrap/app.php';
+$app = require_once __DIR__.'/bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------

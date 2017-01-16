@@ -15,7 +15,7 @@ define('LARAVEL_START', microtime(true));
 */
 
 $loader = require SYSPATH.'/vendor/autoload.php';
-$loader->setPsr4('App\\', array(APPPATH.'app'));
+$loader->setPsr4('App\\', [realpath(__DIR__.'/../app')]);
 
 /*
 |--------------------------------------------------------------------------
