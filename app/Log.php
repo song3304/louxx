@@ -22,6 +22,8 @@ class Log extends Auditing
 		'new' => 'json',
 	];
 
+	protected $request = null;
+
 	const VIEW = 'view'; //浏览
 	const LOGIN = 'login'; //登录
 	const LOGOUT = 'logout'; //登出
@@ -56,7 +58,20 @@ class Log extends Auditing
 			'auditable_type' => '',
 		];
 		if (!empty($auditable)) $result = array_merge($result, ['auditable_id' => $auditable->getKey(), 'auditable_type' => get_class($auditable)]);
-		return \App\Log::create($result);
+		$static = new static($result);
+		$static->setRequest($request);
+		return $static->save();
+	}
+
+	public function setRequest(Request $request)
+	{
+		$this->request = $request;
+		return $this;
+	}
+
+	public function getRequest()
+	{
+		return $this->request;
 	}
 	
 
@@ -95,10 +110,10 @@ class Log extends Auditing
 }
 
 Log::creating(function($log){
-	if (!app()->runningInConsole())
+	$request = $log->getRequest() ?: app('request');
+	if (!app()->runningInConsole() || (!empty($request) && !empty($request->header('User-Agent'))))
 	{
-		$request = app('request');
-		$agent = new Agent();
+		$agent = new Agent($request->header(), $request->header('User-Agent'));
 		$log->ip_address = $request->getClientIp();
 		$log->ua = $request->header('User-Agent');
 		$log->request = ((new SerializableRequest($request))->data());
