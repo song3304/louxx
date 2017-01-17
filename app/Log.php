@@ -1,13 +1,15 @@
 <?php
 namespace App;
 
-use Illuminate\Database\Eloquent\Model as BaseModel;
-use OwenIt\Auditing\Auditing;
-use Jenssegers\Agent\Agent;
-use Addons\Elasticsearch\Scout\Searchable;
-use Addons\Core\Http\SerializableRequest;
-use Addons\Core\Contracts\Events\ControllerEvent;
 use Auth;
+use Carbon\Carbon;
+use Jenssegers\Agent\Agent;
+use Illuminate\Http\Request;
+use OwenIt\Auditing\Auditing;
+use Addons\Core\Http\SerializableRequest;
+use Addons\Elasticsearch\Scout\Searchable;
+use Addons\Core\Contracts\Events\ControllerEvent;
+use Illuminate\Database\Eloquent\Model as BaseModel;
 
 class Log extends Auditing
 {
@@ -56,6 +58,7 @@ class Log extends Auditing
 			'new' => empty($data) ? null : $data,
 			'auditable_id' => 0,
 			'auditable_type' => '',
+			'created_at' => Carbon::now(),
 		];
 		if (!empty($auditable)) $result = array_merge($result, ['auditable_id' => $auditable->getKey(), 'auditable_type' => get_class($auditable)]);
 		$static = new static($result);
@@ -87,7 +90,7 @@ class Log extends Auditing
 		!empty($data['new']) && $data['new'] = json_encode($data['new']);
 		!empty($data['old']) && $data['old'] = json_encode($data['old']);
 
-		is_array($data['request']['server']) && $data['request']['server'] = array_only($data['request']['server'], ['HTTP_HOST', 'HTTP_SCHEME', 'HTTPS', 'HTTP_CONNECTION', 'CONTENT_LENGTH', 'HTTP_ORIGIN', 'HTTP_X_CSRF_TOKEN', 'CONTENT_TYPE', 'HTTP_ACCEPT', 'HTTP_X_REQUESTED_WITH', 'HTTP_REFERER', 'HTTP_ACCEPT_ENCODING', 'HTTP_ACCEPT_LANGUAGE', 'HTTP_COOKIE', 'SERVER_SIGNATURE', 'SERVER_SOFTWARE', 'SERVER_NAME', 'SERVER_ADDR', 'SERVER_PORT', 'REMOTE_ADDR', 'DOCUMENT_ROOT', 'REQUEST_SCHEME', 'CONTEXT_PREFIX', 'CONTEXT_DOCUMENT_ROOT', 'SCRIPT_FILENAME', 'REMOTE_PORT', 'REDIRECT_URL', 'GATEWAY_INTERFACE', 'SERVER_PROTOCOL', 'REQUEST_METHOD', 'QUERY_STRING', 'REQUEST_URI', 'SCRIPT_NAME', 'PHP_SELF', 'REQUEST_TIME_FLOAT', 'REQUEST_TIME', 'FCGI_ROLE', 'REDIRECT_STATUS']);
+		is_array($data['request']['server']) && $data['request']['server'] = array_only($data['request']['server'], ['HTTP_HOST', 'HTTP_SCHEME', 'HTTPS', 'HTTP_CONNECTION', 'CONTENT_LENGTH', 'HTTP_ORIGIN', 'HTTP_X_CSRF_TOKEN', 'CONTENT_TYPE', 'HTTP_ACCEPT', 'HTTP_X_REQUESTED_WITH', 'HTTP_REFERER', 'HTTP_ACCEPT_ENCODING', 'HTTP_ACCEPT_LANGUAGE', 'HTTP_COOKIE', 'SERVER_SIGNATURE', 'SERVER_SOFTWARE', 'SERVER_NAME', 'SERVER_ADDR', 'SERVER_PORT', 'REMOTE_ADDR', 'DOCUMENT_ROOT', 'REQUEST_SCHEME', 'CONTEXT_PREFIX', 'CONTEXT_DOCUMENT_ROOT', 'SCRIPT_FILENAME', 'REMOTE_PORT', 'REDIRECT_URL', 'GATEWAY_INTERFACE', 'SERVER_PROTOCOL', 'REQUEST_METHOD', 'QUERY_STRING', 'REQUEST_URI', 'SCRIPT_NAME', 'PHP_SELF', 'REQUEST_TIME_FLOAT', 'REQUEST_TIME', 'FCGI_ROLE', 'REDIRECT_STATUS', 'HTTP_X_FORWARDED_FOR']);
 		if (is_array($data['request']))
 			foreach($data['request'] as $k => &$v)
 				$k !== 'server' && $v = json_encode($v);
