@@ -39,7 +39,7 @@ class CreateCommonTable extends Migration
 			$table->morphs('auditable');
 			$table->text('old')->nullable()->comment = '舊數據';
 			$table->text('new')->nullable()->comment = '新數據';
-			$table->unsignedInteger('user_id')->nullable()->default(0)->comment = '用戶 ID';
+			$table->unsignedInteger('user_id')->index()->nullable()->default(0)->comment = '用戶 ID';
 			$table->string('method', 50)->nullable()->comment = '請求方法';
 			$table->string('route')->nullable()->comment = '網址';
 			$table->longText('request')->nullable()->comment = '序列化后的Request';
@@ -48,7 +48,7 @@ class CreateCommonTable extends Migration
 			$table->string('platform', 50)->nullable()->comment = '平臺';
 			$table->string('device', 50)->nullable()->comment = '設備';
 			$table->ipAddress('ip_address', 45)->nullable()->comment = 'IP';
-			$table->timestamp('created_at')->nullable();
+			$table->timestamp('created_at')->index()->nullable();
 		});
 	}
 
