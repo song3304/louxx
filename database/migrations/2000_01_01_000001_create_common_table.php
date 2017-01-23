@@ -35,7 +35,7 @@ class CreateCommonTable extends Migration
 
 		Schema::create('logs', function (Blueprint $table) {
 			$table->bigIncrements('id');
-			$table->string('type')->inex()->comment = '事件';
+			$table->string('type')->index()->comment = '事件';
 			$table->morphs('auditable');
 			$table->text('old')->nullable()->comment = '舊數據';
 			$table->text('new')->nullable()->comment = '新數據';
