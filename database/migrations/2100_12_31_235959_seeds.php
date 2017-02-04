@@ -22,44 +22,55 @@ class Seeds extends Migration
 			\DB::table('roles')->truncate();
 			\DB::table('users')->truncate();
 			\DB::table('user_finances')->truncate();
-			DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+			\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-			\App\Catalog::create([
+			\App\Catalog::forceCreate([
+				'id' => 1,
 				'name' => 'fields',
 				'title' => '字段',
-			])->create([
+			])->forceCreate([
+				'id' => 2,
 				'name' => 'status',
 				'title' => '状态',
-			])->create([
+			])->forceCreate([
+				'id' => 3,
 				'name' => 'news',
 				'title' => '新闻',
-			])->create([
+			])->forceCreate([
+				'id' => 4,
 				'name' => '4',
 				'title' => '',
-			])->create([
+			])->forceCreate([
+				'id' => 5,
 				'name' => '5',
 				'title' => '',
-			])->create([
+			])->forceCreate([
+				'id' => 6,
 				'name' => '6',
 				'title' => '',
-			])->create([
+			])->forceCreate([
+				'id' => 7,
 				'name' => '7',
 				'title' => '',
-			])->create([
+			])->forceCreate([
+				'id' => 8,
 				'name' => '8',
 				'title' => '',
-			])->create([
+			])->forceCreate([
+				'id' => 9,
 				'name' => '9',
 				'title' => '',
-			])->create([
+			])->forceCreate([
+				'id' => 10,
 				'name' => '10',
 				'title' => '',
-			])->create([
+			])->forceCreate([
+				'id' => 0,
 				'name' => '',
 				'title' => '无'
-			])->update(['id' => 0]);
-			DB::statement("ALTER TABLE `catalogs` AUTO_INCREMENT = 11;");
-			DB::statement("UPDATE `catalogs` SET `path` = '/0/' WHERE `id` = 0;");
+			]);
+			\DB::statement("ALTER TABLE `catalogs` AUTO_INCREMENT = 11;");
+			\DB::statement("UPDATE `catalogs` SET `path` = '/0/', `id` = 0 WHERE `id` = 11;");
 
 			$fields = [
 				'gender|性别' => [
@@ -151,7 +162,7 @@ class Seeds extends Migration
 				'display_name' => '待验证',
 				'url' => '',
 			]);
-			DB::statement("ALTER TABLE `roles` AUTO_INCREMENT = 10;");
+			\DB::statement("ALTER TABLE `roles` AUTO_INCREMENT = 10;");
 			//添加管理员 子项
 			$role = \App\Role::findByName('administrator')->children();
 			$role->create([
