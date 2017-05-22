@@ -71,7 +71,6 @@
 						</div>
 					</div>
 					<!-- For best results use an image with a resolution of 2560x248 pixels (You can also use a blurred image with ratio 10:1 - eg: 1000x100 pixels - it will adjust and look great!) -->
-					<img src="img/placeholders/headers/dashboard_header.jpg" alt="header image" class="animation-pulseSlow">
 				</div>
 				<!-- END Dashboard Header -->
 

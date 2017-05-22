@@ -78,4 +78,80 @@ return [
 			],
 		],
 	],
+    'properter' => [
+        'store' => [
+            'id' => [
+                'name' => '指定用户',
+                'rules' => 'required|numeric',
+            ],
+            'name' => [
+                'name' => '物业名称',
+                'rules' => 'required'
+            ],
+            'province'=>[
+                'name' => '省',
+                'rules' => 'required|numeric',
+            ],
+            'city'=>[
+                'name' => '市',
+                'rules' => 'required|numeric',
+            ],
+            'area'=>[
+                'name' => '区',
+                'rules' => 'required|numeric',
+            ],
+            'address'=>[
+                'name'=>'详细地址',
+                'rules' => 'required'
+            ],
+            'phone'=>[
+                'name' => '电话',
+                'rules' => 'required|phone',
+            ]
+         ]
+     ],
+    'office' => [
+        'store' => [
+            'id' => [
+                'name' => '指定用户',
+                'rules' => 'required|numeric',
+            ],
+            'name' => [
+                'name' => '物业名称',
+                'rules' => 'required'
+            ],
+            'province'=>[
+                'name' => '省',
+                'rules' => 'required|numeric',
+            ],
+            'city'=>[
+                'name' => '市',
+                'rules' => 'required|numeric',
+            ],
+                'area'=>[
+                    'name' => '区',
+                    'rules' => 'required|numeric',
+                ],
+                    'address'=>[
+                        'name'=>'详细地址',
+                        'rules' => 'required'
+                    ],
+            'phone'=>[
+                    'name' => '电话',
+                    'rules' => 'required|phone',
+            ],
+                    'longitude'=>[
+                    'name'=>'经度',
+                    'rules' => 'required|numeric'
+            ],
+                    'latitude'=>[
+                    'name' => '纬度',
+                    'rules' => 'required|numeric',
+                ],
+                        'status' => [
+                        'name' => '状态',
+                        'rules' => 'required|bool'
+             ]
+                    ]
+         ],
 ];

@@ -59,6 +59,11 @@ class User extends Authenticatable
 		return $this->hasOne('App\\UserFinance', 'id', 'id');
 	}
 
+	public function properter()
+	{
+	    return $this->hasOne('App\\Properter', 'id', 'id');
+	}
+	
 	public function scopeOfRole(Builder $builder, $roleIdOrName)
 	{
 		$role = Role::findByCache($roleIdOrName);
