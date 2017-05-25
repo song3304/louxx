@@ -17,6 +17,12 @@ class Tag extends Model{
 		return $id;
 	}
 
+	public function type_name()
+	{
+	    if($this->type == 0) return '办公楼';
+	    else return '公司';
+	}
+	
 	//办公楼
 	public function buildings()
 	{

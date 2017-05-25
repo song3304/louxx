@@ -77,7 +77,7 @@ class ProperterController extends Controller
 		$keys = 'id,name,province,city,area,address,phone';
 		$data = $this->autoValidate($request, 'properter.store', $keys);
 
-		Properter::create($data);
+		Properter::create($data);//
 		$properter = Properter::find($data['id']);
 		if(!$properter->user->hasRole('properter')) $properter->user->attachRole(Role::findByName('properter'));
 		return $this->success('', url('admin/properter'));

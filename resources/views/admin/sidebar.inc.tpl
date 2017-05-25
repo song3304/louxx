@@ -19,8 +19,8 @@
 				<li>
 					<a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator"></i><i class="gi gi-user sidebar-nav-icon"></i>会员管理</a>
 					<ul>
-						<li><a href="<{'admin/member'|url}>" name="member/list">会员列表</a></li>
-						<li><a href="<{'admin/member/create'|url}>" name="member/create"><i class="gi gi-plus"></i> 添加会员</a></li>
+						<li><a class="col-md-8" href="<{'admin/member'|url}>" name="member/list">会员列表</a>
+						<a class="col-md-4" href="<{'admin/member/create'|url}>" name="member/create"><i class="gi gi-plus"></i> 添加</a></li>
 					</ul>
 				</li>
 				<li>
@@ -28,24 +28,24 @@
 					<ul>
 						<li><a class="col-md-8" href="<{'admin/properter'|url}>" name="properter/list">物业列表</a>
 						<a class="col-md-4" href="<{'admin/properter/create'|url}>" name="properter/create"><i class="glyphicon glyphicon-plus"></i>添加</a></li>
-						<li><a href="<{'admin/properter-audit'|url}>" name="properter/audit_list">物业审核列表</a></li>
+						<li><a class="col-md-12" href="<{'admin/properter-audit'|url}>" name="properter-audit/list">物业审核列表</a></li>
 					</ul>
 				</li>
 				<li>
 					<a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator"></i><i class="fa fa-shopping-cart sidebar-nav-icon"></i>办公楼管理</a>
 					<ul>
-						<li><a class="col-md-8" href="<{'admin/product'|url}>" name="product/list">办公楼列表</a>
-						<a class="col-md-4" href="<{'admin/product/create'|url}>" name="product/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
-						<li><a class="col-md-8" href="<{'admin/product'|url}>" name="product/list">招租列表</a>
-						<a class="col-md-4" href="<{'admin/product/create'|url}>" name="product/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
-						<li><a class="col-md-8" href="<{'admin/product'|url}>" name="product/list">楼层列表</a>
-						<a class="col-md-4" href="<{'admin/product/create'|url}>" name="product/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
-						<li><a class="col-md-8" href="<{'admin/product'|url}>" name="product/list">公司列表</a>
-						<a class="col-md-4" href="<{'admin/product/create'|url}>" name="product/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
-						<li><a class="col-md-8" href="<{'admin/order'|url}>" name="order/list">资讯列表</a>
-						<a class="col-md-4" href="<{'admin/product/create'|url}>" name="product/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
-						<li><a class="col-md-8" href="<{'admin/order'|url}>" name="order/list">标签列表</a>
-						<a class="col-md-4" href="<{'admin/product/create'|url}>" name="product/create"><i class="glyphicon glyphicon-plus"></i> 添加</a>
+						<li><a class="col-md-8" href="<{'admin/building'|url}>" name="building/list">办公楼列表</a>
+						<a class="col-md-4" href="<{'admin/building/create'|url}>" name="building/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
+						<li><a class="col-md-8" href="<{'admin/hire'|url}>" name="hire/list">招租列表</a>
+						<a class="col-md-4" href="<{'admin/hire/create'|url}>" name="hire/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
+						<li><a class="col-md-8" href="<{'admin/floor'|url}>" name="floor/list">楼层列表</a>
+						<a class="col-md-4" href="<{'admin/floor/create'|url}>" name="floor/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
+						<li><a class="col-md-8" href="<{'admin/company'|url}>" name="company/list">公司列表</a>
+						<a class="col-md-4" href="<{'admin/company/create'|url}>" name="company/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
+						<li><a class="col-md-8" href="<{'admin/article'|url}>" name="article/list">资讯列表</a>
+						<a class="col-md-4" href="<{'admin/article/create'|url}>" name="article/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
+						<li><a class="col-md-8" href="<{'admin/tag'|url}>" name="order/list">标签列表</a>
+						<a class="col-md-4" href="<{'admin/tag/create'|url}>" name="tag/create"><i class="glyphicon glyphicon-plus"></i> 添加</a>
 					</ul>
 				</li>
 				<li>

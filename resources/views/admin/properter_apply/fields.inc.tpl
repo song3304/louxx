@@ -1,10 +1,4 @@
 <div class="form-group">
-	<label class="col-md-3 control-label" for="id">指定用户</label>
-	<div class="col-md-9">
-		<select id="id" name="id" class="select-model form-control" data-params='{"q[ofRole]":"3"}' data-model="admin/member" data-text="{{username}}" data-term="{{username}}" data-placeholder="请输入该物业用户." value="<{$_data.id}>"></select>
-	</div>
-</div>
-<div class="form-group">
 	<label class="col-md-3 control-label" for="name">物业名</label>
 	<div class="col-md-9">
 		<input type="text" id="name" name="name" class="form-control" placeholder="请输入物业名..." value="<{$_data.name}>">
@@ -39,6 +33,31 @@
 	<label class="col-md-3 control-label" for="phone">联系电话</label>
 	<div class="col-md-9">
 		<input type="text" id="phone" name="phone" class="form-control" placeholder="请输入联系电话..." value="<{$_data.phone}>">
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-md-3 control-label" for="phone">审核</label>
+	<div class="col-md-9">
+		<select id="status" name="status" class="form-control" placeholder="请选择审核状态.">
+			<option value="0"<{if $_data.status == 0}> selected="selected"<{/if}>>未审核</option>
+			<option value="1"<{if $_data.status == 1}> selected="selected"<{/if}>>审核通过</option>
+			<option value="2"<{if $_data.status == 2}> selected="selected"<{/if}>>审核不过</option>
+		</select>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-md-3 control-label" for="audit_note">审核备注</label>
+	<div class="col-md-9">
+		<textarea name="audit_note" id="audit_note" placeholder="请输入审核备注." class="form-control"><{$_data.audit_note}></textarea>
+	</div>
+</div>
+
+<div class="form-group" id="choose_user">
+	<label class="col-md-3 control-label" for="uid">指定用户</label>
+	<div class="col-md-9">
+		<select id="uid" name="uid" class="select-model form-control" data-model="admin/member" data-text="{{username}}" data-term="{{username}}" data-placeholder="请输入绑定该物业用户." value="<{$_data.uid}>"></select>
 	</div>
 </div>
 <div class="form-group form-actions">
@@ -144,7 +163,7 @@
 			$('#area').data('params',{"f[parent_id]":$(this).val()});
 			select_change.call($('#area')[0]);
 		});
-		
+		//区域连动变化
 		function select_change(){
 			var $this = $(this);
 				var id = $this.data('id');
@@ -163,7 +182,14 @@
 					//$this.val(values ? values : null).trigger("change");
 				});
 		}
-		
+	   //绑定切换事件
+	   $('#status').on('change',function(){
+	   	  if(parseInt($(this).children('option:selected').val()) == 1){
+	   	  	$('#choose_user').show();
+	   	  }else{
+	   	  	$('#choose_user').hide();
+	   	  }
+	   }).trigger('change');
 	});
 })(jQuery);	
 </script>

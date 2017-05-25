@@ -2,15 +2,34 @@
 namespace App;
 
 use App\Model;
+use Illuminate\Database\Eloquent\Builder;
+use App\Tag;
 
 class OfficeBuilding extends Model{
 	
 	protected $guarded = ['id'];
 	protected $hidden = [];
-    
+	protected $appends = ['full_address'];
+	
+	public function full_address($format = '%P%C%D %A')
+	{
+	    $data = [
+	        '%P' => $this->province_name->area_name,
+	        '%C' => $this->city_name->area_name,
+	        '%D' => $this->area_name->area_name,
+	        '%A' => $this->address,
+	    ];
+	    return strtr($format, $data);
+	}
+	
+	public function getFullAddressAttribute()
+	{
+	    return $this->full_address();
+	}
+	
 	//物业
-	public function property(){
-	    return $this->hasOne('App\\Property','id','property_id');
+	public function properter(){
+	    return $this->hasOne('App\\Properter','id','property_id');
 	}
 	
 	//省
@@ -56,12 +75,12 @@ class OfficeBuilding extends Model{
 	
 	public function pic_ids()
 	{
-	    return $this->covers()->get(['pic_id'])->pluck('pic_id');
+	    return $this->pics()->get(['pic_id'])->pluck('pic_id');
 	}
 	
 	public function pic()
 	{
-	    return $this->covers()->first();
+	    return $this->pics()->first();
 	}
 	
 	//标签
@@ -69,4 +88,17 @@ class OfficeBuilding extends Model{
 	{
 	    return $this->belongsToMany('App\\Tag', 'office_tag_relations', 'tid', 'oid');
 	}
+	
+	public function tag_ids()
+	{
+	    return $this->tags()->get()->pluck('id');
+	}
+	
+	public function scopeOfTag(Builder $builder, $tag_id)
+	{
+	    $builder->join('office_tag_relations', 'office_tag_relations.oid', '=', 'office_buildings.id', 'LEFT');
+	
+	    $builder->where('office_tag_relations.tid', $tag_id);
+	}
+	
 }

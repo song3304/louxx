@@ -27,7 +27,11 @@ $router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['au
 	$router->addAdminRoutes([
 		'member' => 'MemberController',
 	    'properter' => 'ProperterController',
-	    'area' => 'AreaController'
+	    'properter-audit' => 'ProperterAuditController',
+	    'building' => 'BuildingController',
+	    'floor' => 'FloorController',
+	    'tag' => 'TagController',
+	    'area' => 'AreaController',
 	]);
 
 	//admin目录下的其它路由需放置在本条前

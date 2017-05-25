@@ -110,12 +110,8 @@ return [
             ]
          ]
      ],
-    'office' => [
+    'properter-apply' => [
         'store' => [
-            'id' => [
-                'name' => '指定用户',
-                'rules' => 'required|numeric',
-            ],
             'name' => [
                 'name' => '物业名称',
                 'rules' => 'required'
@@ -128,30 +124,118 @@ return [
                 'name' => '市',
                 'rules' => 'required|numeric',
             ],
-                'area'=>[
-                    'name' => '区',
-                    'rules' => 'required|numeric',
-                ],
-                    'address'=>[
-                        'name'=>'详细地址',
-                        'rules' => 'required'
-                    ],
+            'area'=>[
+                'name' => '区',
+                'rules' => 'required|numeric',
+            ],
+            'address'=>[
+                'name'=>'详细地址',
+                'rules' => 'required'
+            ],
             'phone'=>[
-                    'name' => '电话',
-                    'rules' => 'required|phone',
+                'name' => '电话',
+                'rules' => 'required|phone',
             ],
-                    'longitude'=>[
-                    'name'=>'经度',
-                    'rules' => 'required|numeric'
+           'status' => [
+                'name' => '状态',
+                'rules' => 'required|bool'
+           ],
+           'note'=>[
+                'name' => '备注',
+                'rules' => [],
+           ],
+           'audit_note'=>[
+                'name' => '审核备注',
+                'rules' => [],
+           ],
+           'uid' => [
+               'name' => '指定用户',
+               'rules' => 'numeric',
+           ],
+        ]
+    ],
+    'building' => [
+        'store' => [
+            'property_id' => [
+                'name' => '所属物业',
+                'rules' => 'required|numeric',
             ],
-                    'latitude'=>[
-                    'name' => '纬度',
-                    'rules' => 'required|numeric',
-                ],
-                        'status' => [
-                        'name' => '状态',
-                        'rules' => 'required|bool'
-             ]
-                    ]
-         ],
+            'village_name' => [
+                'name' => '小区名',
+                'rules' => 'required'
+            ],
+            'building_name' => [
+                'name' => '办公楼名',
+                'rules' => 'required'
+            ],
+            'province'=>[
+                'name' => '省',
+                'rules' => 'required|numeric',
+            ],
+            'city'=>[
+                'name' => '市',
+                'rules' => 'required|numeric',
+            ],
+            'area'=>[
+                'name' => '区',
+                'rules' => 'required|numeric',
+            ],
+            'address'=>[
+                'name'=>'详细地址',
+                'rules' => 'required'
+             ],
+            'phone'=>[
+                'name' => '电话',
+                'rules' => 'required|phone',
+            ],
+            'longitude'=>[
+                'name'=>'经度',
+                'rules' => 'required|numeric'
+            ],
+            'latitude'=>[
+                'name' => '纬度',
+                'rules' => 'required|numeric',
+            ],
+            'pic_ids' => [
+                'name' => '办公楼图片',
+                'rules' => 'required|array',
+            ],
+            'tag_ids' => [
+                'name' => '标签',
+                'rules' => 'required|array',
+            ]
+        ]
+     ],
+    'floor' => [
+        'store' => [
+            'oid' => [
+                'name' => '所属办公楼',
+                'rules' => 'required|numeric',
+            ],
+            'name' => [
+                'name' => '楼层名',
+                'rules' => 'required'
+            ],
+            'description'=>[
+                'name'=>'楼层描述',
+                'rules' => 'required'
+            ],
+            'porder' => [
+                'name' => '排序',
+                'rules' => 'required|numeric'
+            ]
+         ]
+     ],
+    'tag' => [
+        'store' => [
+            'type' => [
+                'name' => '类型',
+                'rules' => 'required|numeric',
+            ],
+            'tag_name' => [
+                'name' => '标签名',
+                'rules' => 'required'
+            ]
+         ]
+     ],
 ];

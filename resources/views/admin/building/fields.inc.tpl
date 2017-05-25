@@ -1,13 +1,13 @@
 <div class="form-group">
-	<label class="col-md-3 control-label" for="id">指定用户</label>
+	<label class="col-md-3 control-label" for="property_id">指定物业</label>
 	<div class="col-md-9">
-		<select id="id" name="id" class="select-model form-control" data-params='{"q[ofRole]":"3"}' data-model="admin/member" data-text="{{username}}" data-term="{{username}}" data-placeholder="请输入该物业用户." value="<{$_data.id}>"></select>
+		<select id="property_id" name="property_id" class="select-model form-control" data-model="admin/properter" data-text="{{name}}" data-term="{{name}}" data-placeholder="请输入该物业用户." value="<{$_data.property_id}>"></select>
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" for="name">物业名</label>
+	<label class="col-md-3 control-label" for="name">办公楼</label>
 	<div class="col-md-9">
-		<input type="text" id="name" name="name" class="form-control" placeholder="请输入物业名..." value="<{$_data.name}>">
+		<input type="text" id="building_name" name="building_name" class="form-control" placeholder="请输入楼名..." value="<{$_data.building_name}>">
 	</div>
 </div>
 
@@ -36,9 +36,48 @@
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" for="phone">联系电话</label>
+	<label class="col-md-3 control-label" for="village_name">小区名</label>
 	<div class="col-md-9">
-		<input type="text" id="phone" name="phone" class="form-control" placeholder="请输入联系电话..." value="<{$_data.phone}>">
+		<input type="text" id="village_name" name="village_name" class="form-control" placeholder="请输入小区名..." value="<{$_data.village_name}>">
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-md-3 control-label" for="title">图片</label>
+	<div class="col-md-9">
+		<select id="pic_ids" name="pic_ids[]" class="form-control hidden" multiple="multiple">
+		<{if !empty($_data)}><{foreach $_data->pics as $item}>
+			<option value="<{$item->pic_id}>" selected="selected"></option>
+		<{/foreach}><{/if}>
+		</select>
+		<div class="alert alert-info"><i class="fa fa-warning"></i> 可以上传20张图片作为产品的封面</div>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-md-3 control-label" for="tag_ids">标签</label>
+	<div class="col-md-9">
+			<select type="text" id="tag_ids" name="tag_ids[]" class="form-control select-model" data-params='{"f[type]":"0"}' data-model="admin/tag" data-text="{{tag_name}}" data-placeholder="请输入标签..." value="<{if !empty($_data->tag_ids)}><{$_data->tag_ids|implode:','}><{/if}>" multiple="multiple"></select>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-md-3 control-label" for="longitude">经度</label>
+	<div class="col-md-9">
+		<input type="text" id="longitude" name="longitude" class="form-control" placeholder="请输入经度..." value="<{$_data.longitude}>" required readonly>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-md-3 control-label" for="latitude">纬度</label>
+	<div class="col-md-9">
+		<input type="text" id="latitude" name="latitude" class="form-control" placeholder="请输入纬度..." value="<{$_data.latitude}>" required readonly>
+	</div>
+</div>
+<div class="form-group">
+	<label class="col-md-3 control-label" for="latitude">地图</label>
+	<div class="col-md-9">
+		<input type="hidden" id="full_address" name="full_address" value="<{$_data.full_address}>"/>
+		<div id="map" style="height:550px;border:#ccc solid 1px;"></div>
 	</div>
 </div>
 <div class="form-group form-actions">

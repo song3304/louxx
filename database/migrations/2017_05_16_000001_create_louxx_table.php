@@ -12,7 +12,7 @@ class CreateLouxxTable extends Migration
 	public function up()
 	{
 		//物业申请
-		Schema::create('property_applies', function (Blueprint $table) {
+		Schema::create('properter_applies', function (Blueprint $table) {
 			$table->integer('id', true);
 			$table->string('name', 150)->unique()->comment = '物业名';
 			$table->integer('province')->nullable()->comment = '省';
@@ -52,12 +52,13 @@ class CreateLouxxTable extends Migration
 			$table->integer('province')->nullable()->comment = '省';
 			$table->integer('city')->nullable()->comment = '市';
 			$table->integer('area')->nullable()->comment = '区';
-			$table->integer('village_name')->nullable()->comment = '小区名';
-			$table->integer('building_name')->nullable()->comment = '办公楼名';
-			$table->integer('address')->default(0)->comment = '详情地址';
+			$table->string('village_name',250)->nullable()->comment = '小区名';
+			$table->string('building_name',250)->nullable()->comment = '办公楼名';
+			$table->string('address')->default(0)->comment = '详情地址';
 			$table->decimal('longitude', 16, 10)->comment='经度'; //经度
 			$table->decimal('latitude', 16, 10)->comment='纬度'; //纬度
 			$table->integer('property_id')->unsigned()->index()->comment = '所属物业';
+			$table->timestamps();
 			
 			$table->softDeletes(); //软删除
 			$table->foreign('id')->references('id')->on('users')
@@ -76,7 +77,7 @@ class CreateLouxxTable extends Migration
 		//标签处理
 		Schema::create('tags', function (Blueprint $table) {
 		    $table->increments('id')->comment='主键';
-		    $table->integer('tag_name')->nullable()->comment = '标签名';
+		    $table->string('tag_name',20)->nullable()->comment = '标签名';
 		    $table->tinyInteger('type')->default(0)->comment = '类型:0.办公楼 1.公司 ';
 		    
 		    $table->softDeletes(); //软删除
