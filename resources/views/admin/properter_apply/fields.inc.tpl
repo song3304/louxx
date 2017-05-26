@@ -178,8 +178,7 @@
 					$this.html('');
 					$this.select2($.extend(true, {}, {language: "zh-CN", data: data, allowClear: true}));
 					//初始值
-					$this.trigger("change");
-					//$this.val(values ? values : null).trigger("change");
+					$this.val(values ? values : null).trigger("change");
 				});
 		}
 	   //绑定切换事件

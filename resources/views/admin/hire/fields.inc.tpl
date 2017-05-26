@@ -1,52 +1,90 @@
 <div class="form-group">
-	<label class="col-md-3 control-label" for="id">指定用户</label>
+	<label class="col-md-3 control-label" for="oid">办公楼</label>
 	<div class="col-md-9">
-		<select id="id" name="id" class="select-model form-control" data-params='{"q[ofRole]":"3"}' data-model="admin/member" data-text="{{username}}" data-term="{{username}}" data-placeholder="请输入该物业用户." value="<{$_data.id}>"></select>
-	</div>
-</div>
-<div class="form-group">
-	<label class="col-md-3 control-label" for="name">物业名</label>
-	<div class="col-md-9">
-		<input type="text" id="name" name="name" class="form-control" placeholder="请输入物业名..." value="<{$_data.name}>">
+		<select id="oid" name="oid" class="select-model form-control" data-model="admin/building" data-text="{{village_name}}-{{building_name}}" data-term="{{village_name}}-{{building_name}}" data-placeholder="请输入该办公楼名." value="<{$_data.oid}>"></select>
 	</div>
 </div>
 
 <div class="form-group">
-	<label class="col-md-3 control-label" for="province">省</label>
+	<label class="col-md-3 control-label" for="fid">楼层</label>
 	<div class="col-md-9">
-		 <select id="province" name="province" class="select-model form-control input text" data-id="{{area_id}}" data-params='{"f[parent_id]":"0"}' data-model="admin/area" data-text="{{area_name}}" data-term="{{area_name}}" data-placeholder="请输入省" value="<{$_data.province|default:110000}>"></select>
+		<select id="fid" name="fid" class="select-model form-control" data-model="admin/floor"<{if $_data.oid}> data-params='{"f[oid][eq]":"<{$_data.oid}>"}'<{/if}> data-text="{{name}}" data-term="{{name}}" data-placeholder="请输入该楼层." value="<{if !empty($_data->floor)}><{$_data->floor->id}><{/if}>"></select>
 	</div>
 </div>
+
 <div class="form-group">
-	<label class="col-md-3 control-label" for="city">市</label>
+	<label class="col-md-3 control-label" for="rent">租金</label>
 	<div class="col-md-9">
-		 <select id="city" name="city" class="select-model form-control input text" data-id="{{area_id}}" data-params='{"f[parent_id]":"<{$_data.province|default:110000}>"}' data-model="admin/area" data-text="{{area_name}}" data-term="{{area_name}}" data-placeholder="请输入市" value="<{$_data.city|default:110100}>"></select>
+		<input type="text" id="rent" name="rent" class="form-control" placeholder="请输入租金(元/月)" value="<{$_data.rent}>">
 	</div>
 </div>
+
 <div class="form-group">
-	<label class="col-md-3 control-label" for="area">区</label>
-	<div class="col-md-9">
-        <select id="area" name="area" class="select-model form-control input text" data-id="{{area_id}}" data-params='{"f[parent_id]":"<{$_data.city|default:110100}>"}' data-model="admin/area" data-text="{{area_name}}" data-term="{{area_name}}" data-placeholder="请输入市" value="<{$_data.area|default:110101}>"></select>
-	</div>
+			<label class="col-md-3 control-label" for="pic_ids">租赁图片</label>
+			<div class="col-md-9">
+				<select id="pic_ids" name="pic_ids[]" class="form-control hidden" multiple="multiple">
+				<{if !empty($_data)}><{foreach $_data->pics as $item}>
+					<option value="<{$item->pic_id}>" selected="selected"></option>
+				<{/foreach}><{/if}>
+				</select>
+				<div class="alert alert-info"><i class="fa fa-warning"></i> 可以上传20张图片作为产品的封面</div>
+			</div>
 </div>
+
 <div class="form-group">
-	<label class="col-md-3 control-label" for="address">地址</label>
+	<label class="col-md-3 control-label" for="per_rent">每平方租金</label>
 	<div class="col-md-9">
-		<input type="text" id="address" name="address" class="form-control" placeholder="请输入地址..." value="<{$_data.address}>">
+		<input type="text" id="per_rent" name="per_rent" class="form-control" placeholder="请输入每平方租金(元/天)" value="<{$_data.per_rent}>">
 	</div>
 </div>
+
 <div class="form-group">
-	<label class="col-md-3 control-label" for="phone">联系电话</label>
+	<label class="col-md-3 control-label" for="acreage">面积</label>
 	<div class="col-md-9">
-		<input type="text" id="phone" name="phone" class="form-control" placeholder="请输入联系电话..." value="<{$_data.phone}>">
+		<input type="text" id="acreage" name="acreage" class="form-control" placeholder="面积(平方)" value="<{$_data.acreage}>">
 	</div>
 </div>
+
+
+<div class="form-group">
+	<label class="col-md-3 control-label" for="min_station_cnt">最小工位</label>
+	<div class="col-md-9">
+		<input type="text" id="min_station_cnt" name="min_station_cnt" class="form-control" placeholder="最小工位数" value="<{$_data.min_station_cnt}>">
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-md-3 control-label" for="max_station_cnt">最大工位</label>
+	<div class="col-md-9">
+		<input type="text" id="max_station_cnt" name="max_station_cnt" class="form-control" placeholder="最大工位数" value="<{$_data.max_station_cnt}>">
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-md-3 control-label" for="status">状态</label>
+	<div class="col-md-9">
+		<select id="status" name="status" class="form-control" placeholder="请选择租赁状态.">
+			<option value="0"<{if empty($_data.status)}> selected="selected"<{/if}>>招租中</option>
+			<option value="1"<{if $_data.status==1}> selected="selected"<{/if}>>已租</option>
+			<option value="-1"<{if $_data.status==-1}> selected="selected"<{/if}>>已废弃</option>
+		</select>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-md-3 control-label" for="note">租赁描述</label>
+	<div class="col-md-9">
+		<textarea id="note" name="note" class="form-control" placeholder="请输入租赁描述"><{$_data.note}></textarea>
+	</div>
+</div>
+
 <div class="form-group form-actions">
 	<div class="col-md-9 col-md-offset-3">
 		<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> 提交</button>
 		<button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> 重设</button>
 	</div>
 </div>
+
 <script>
 (function($){
 	var method = {cacheData: {}};
@@ -81,7 +119,7 @@
 			for(var i = 0; i < o.length; ++i)
 			{
 				var n = o[i];
-				if (typeof d[ n ] != 'undefined')
+				if (typeof d != 'undefined' && typeof d[ n ] != 'undefined')
 					d = d[n];
 				else 
 					return null;
@@ -134,15 +172,10 @@
 		return result;
 	};
 
-
 	$(function(){
-		$("#province").on('change',function(){
-			$('#city').data('params',{"f[parent_id]":$(this).val()});
-			select_change.call($('#city')[0]);
-		});
-		$("#city").on('change',function(){
-			$('#area').data('params',{"f[parent_id]":$(this).val()});
-			select_change.call($('#area')[0]);
+		$("#oid").on('change',function(){
+			$('#fid').data('params',{"f[oid][eq]":$('#oid').val()});
+			select_change.call($('#fid')[0]);
 		});
 		
 		function select_change(){
@@ -162,7 +195,6 @@
 					$this.val(values ? values : null).trigger("change");
 				});
 		}
-		
 	});
 })(jQuery);	
 </script>

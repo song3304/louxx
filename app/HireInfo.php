@@ -16,6 +16,22 @@ class HireInfo extends Model{
 	public function floor(){
 	    return $this->hasOne('App\\OfficeFloor','id','fid');
 	}
+	//图片
+	public function pics()
+	{
+	    return $this->hasMany('App\\HirePic', 'hid', 'id');
+	}
+	
+	public function pic_ids()
+	{
+	    return $this->pics()->get(['pic_id'])->pluck('pic_id');
+	}
+	
+	public function pic()
+	{
+	    return $this->pics()->first();
+	}
+	
 	//状态
 	public function status_tag(){
 	    $tag = '';

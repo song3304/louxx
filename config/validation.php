@@ -184,10 +184,6 @@ return [
                 'name'=>'详细地址',
                 'rules' => 'required'
              ],
-            'phone'=>[
-                'name' => '电话',
-                'rules' => 'required|phone',
-            ],
             'longitude'=>[
                 'name'=>'经度',
                 'rules' => 'required|numeric'
@@ -203,6 +199,79 @@ return [
             'tag_ids' => [
                 'name' => '标签',
                 'rules' => 'required|array',
+            ],
+            //办公楼详情
+            'occupancy_rate' => [
+                'name' => '得房率(0-100)',
+                'rules' => 'required|numeric'
+            ],
+            'owner_type' => [
+                'name' => '业主类型(0.大业主+小业主)',
+                'rules' => 'numeric'
+            ],
+            'floor_cnt' => [
+                'name' => '楼层数',
+                'rules' => 'required|numeric'
+            ],
+            'level' => [
+                'name' => '物业类型 ',
+                'rules' => 'numeric'
+            ],
+            'floor_height' => [
+                'name' => '每层净高(m)',
+                'rules' => 'required'
+            ],
+            'property_price' => [
+                'name' => '物业费(平方/月)',
+                'rules' => 'required'
+            ],
+            'property_type' => [
+                'name' => '物业类型',
+                'rules' => 'required'
+            ],
+            'developer' => [
+                'name' => '开发商',
+                'rules' => 'required'
+            ],
+            'avg_price' => [
+                'name' => '均价 元/平方 天',
+                'rules' => 'required'
+            ],
+            'parking_space_cnt' => [
+                'name' => '停车位',
+                'rules' => 'required|numeric'
+            ],
+            'parking_price' => [
+                'name' => '停车费 元/月',
+                'rules' => 'required'
+            ],
+            'publish_time' => [
+                'name' => '竣工时间',
+                'rules' => 'required|date'
+            ],
+            'area_covered' => [
+                'name' => '占地面积',
+                'rules' => 'required'
+            ],
+            'standard_area' => [
+                'name' => '标准层面积',
+                'rules' => 'required'
+            ],
+            'upstairs_cnt' => [
+                'name' => '楼上层数',
+                'rules' => 'numeric'
+            ],
+            'downstairs_cnt' => [
+                'name' => '楼下层数',
+                'rules' => 'numeric'
+            ],
+            'plot_ratio' => [
+                'name' => '容积率',
+                'rules' => 'required'
+            ],
+            'green_ratio' => [
+                'name' => '绿化率',
+                'rules' => 'required'
             ]
         ]
      ],
@@ -226,6 +295,38 @@ return [
             ]
          ]
      ],
+    'company' => [
+        'store' => [
+            'oid' => [
+                'name' => '所属办公楼',
+                'rules' => 'required|numeric',
+            ],
+            'name' => [
+                'name' => '公司名',
+                'rules' => 'required'
+            ],
+            'logo_id' => [
+                'name' => '公司logo',
+                'rules' => 'required|numeric',
+            ],
+            'description'=>[
+                'name'=>'楼层描述',
+                'rules' => 'required'
+            ],
+            'people_cnt' => [
+                'name' => '人数',
+                'rules' => 'required|numeric'
+            ],
+            'fids' => [
+                'name' => '楼层',
+                'rules' => 'required|array',
+            ],
+            'tag_ids' => [
+                'name' => '标签',
+                'rules' => 'required|array',
+            ],
+         ]
+    ],
     'tag' => [
         'store' => [
             'type' => [
@@ -238,4 +339,64 @@ return [
             ]
          ]
      ],
+    'article' => [
+        'store' => [
+            'title' => [
+                'name' => '标题',
+                'rules' => 'required'
+            ],
+            'pic_id' => [
+                'name' => '图片',
+                'rules' => 'numeric'
+            ],
+            'contents' => [
+                'name' => '内容',
+                'rules' => 'required'
+            ]
+        ]
+    ],
+    'hire' => [
+        'store' => [
+            'oid' => [
+                'name' => '所属办公楼',
+                'rules' => 'required|numeric',
+            ],
+            'fid' => [
+                'name' => '楼层',
+                'rules' => 'required|numeric',
+            ],
+            'rent' => [
+                'name' => '租金(元/月)',
+                'rules' => 'required|numeric'
+            ],
+            'per_rent' => [
+                'name' => '每平方租金(元/天)',
+                'rules' => 'required|numeric',
+            ],
+            'acreage'=>[
+                'name'=>'面积(平方)',
+                'rules' => 'required|numeric'
+            ],
+            'min_station_cnt' => [
+                'name' => '最小工位',
+                'rules' => 'required|numeric'
+            ],
+            'max_station_cnt' => [
+                'name' => '最大工位',
+                'rules' => 'required|numeric',
+             ],
+            'status' => [
+                'name' => '状态',
+                'rules' => 'numeric',
+            ],
+            'note' => [
+                'name' => '备注',
+                'rules' => [],
+            ],
+            'pic_ids' => [
+                'name' => '租赁图片',
+                'rules' => 'required|array',
+            ],
+        ]
+   ],
 ];

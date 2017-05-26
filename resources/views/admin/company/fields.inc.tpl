@@ -1,52 +1,65 @@
 <div class="form-group">
-	<label class="col-md-3 control-label" for="id">指定用户</label>
+	<label class="col-md-3 control-label" for="oid">办公楼</label>
 	<div class="col-md-9">
-		<select id="id" name="id" class="select-model form-control" data-params='{"q[ofRole]":"3"}' data-model="admin/member" data-text="{{username}}" data-term="{{username}}" data-placeholder="请输入该物业用户." value="<{$_data.id}>"></select>
-	</div>
-</div>
-<div class="form-group">
-	<label class="col-md-3 control-label" for="name">物业名</label>
-	<div class="col-md-9">
-		<input type="text" id="name" name="name" class="form-control" placeholder="请输入物业名..." value="<{$_data.name}>">
+		<select id="oid" name="oid" class="select-model form-control" data-model="admin/building" data-text="{{village_name}}-{{building_name}}" data-term="{{village_name}}-{{building_name}}" data-placeholder="请输入该楼名." value="<{$_data.oid}>"></select>
 	</div>
 </div>
 
 <div class="form-group">
-	<label class="col-md-3 control-label" for="province">省</label>
+	<label class="col-md-3 control-label" for="tag_ids">标签</label>
 	<div class="col-md-9">
-		 <select id="province" name="province" class="select-model form-control input text" data-id="{{area_id}}" data-params='{"f[parent_id]":"0"}' data-model="admin/area" data-text="{{area_name}}" data-term="{{area_name}}" data-placeholder="请输入省" value="<{$_data.province|default:110000}>"></select>
+		<select type="text" id="tag_ids" name="tag_ids[]" class="form-control select-model" data-params='{"f[type]":"1"}' data-model="admin/tag" data-text="{{tag_name}}" data-term="{{tag_name}}" data-placeholder="请输入标签..." value="<{if !empty($_data->tags)}><{$_data->tags->pluck('id')->toArray()|implode:','}><{/if}>" multiple="multiple"></select>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-md-3 control-label" for="fids">楼层</label>
+	<div class="col-md-9">
+		<select id="fids" name="fids[]" class="select-model form-control" data-model="admin/floor"<{if $_data.oid}> data-params='{"f[oid][eq]":"<{$_data.oid}>"}'<{/if}> data-text="{{name}}" data-term="{{name}}" data-placeholder="请输入该楼名." value="<{if !empty($_data->floors)}><{$_data->floors->pluck('id')->toArray()|implode:','}><{/if}>" multiple="multiple"></select>
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-md-3 control-label" for="city">市</label>
+	<label class="col-md-3 control-label" for="name">公司名</label>
 	<div class="col-md-9">
-		 <select id="city" name="city" class="select-model form-control input text" data-id="{{area_id}}" data-params='{"f[parent_id]":"<{$_data.province|default:110000}>"}' data-model="admin/area" data-text="{{area_name}}" data-term="{{area_name}}" data-placeholder="请输入市" value="<{$_data.city|default:110100}>"></select>
+		<input type="text" id="name" name="name" class="form-control" placeholder="请输入公司名" value="<{$_data.name}>">
 	</div>
 </div>
+
 <div class="form-group">
-	<label class="col-md-3 control-label" for="area">区</label>
+	<label class="col-md-3 control-label" for="logo_id">公司logo</label>
 	<div class="col-md-9">
-        <select id="area" name="area" class="select-model form-control input text" data-id="{{area_id}}" data-params='{"f[parent_id]":"<{$_data.city|default:110100}>"}' data-model="admin/area" data-text="{{area_name}}" data-term="{{area_name}}" data-placeholder="请输入市" value="<{$_data.area|default:110101}>"></select>
+		<input type="hidden" id="logo_id" name="logo_id" class="form-control" placeholder="请输入..." value="<{$_data.logo_id|default:0}>">
 	</div>
 </div>
+
 <div class="form-group">
-	<label class="col-md-3 control-label" for="address">地址</label>
+	<label class="col-md-3 control-label" for="logo_id">公司规模</label>
 	<div class="col-md-9">
-		<input type="text" id="address" name="address" class="form-control" placeholder="请输入地址..." value="<{$_data.address}>">
+		<select id="people_cnt" name="people_cnt" class="form-control" placeholder="请选择公司规模.">
+			<option value="0"<{if empty($_data.people_cnt)}> selected="selected"<{/if}>>1-10人</option>
+			<option value="1"<{if $_data.people_cnt==1}> selected="selected"<{/if}>>10-50人</option>
+			<option value="2"<{if $_data.people_cnt==2}> selected="selected"<{/if}>>50-100人</option>
+			<option value="3"<{if $_data.people_cnt==3}> selected="selected"<{/if}>>100-500人</option>
+			<option value="4"<{if $_data.people_cnt==4}> selected="selected"<{/if}>>500-1000人</option>
+			<option value="5"<{if $_data.people_cnt==5}> selected="selected"<{/if}>>1000人以上</option>
+		</select>
 	</div>
 </div>
+
 <div class="form-group">
-	<label class="col-md-3 control-label" for="phone">联系电话</label>
+	<label class="col-md-3 control-label" for="description">公司描述</label>
 	<div class="col-md-9">
-		<input type="text" id="phone" name="phone" class="form-control" placeholder="请输入联系电话..." value="<{$_data.phone}>">
+		<textarea id="description" name="description" class="form-control" placeholder="请输入公司"><{$_data.description}></textarea>
 	</div>
 </div>
+
 <div class="form-group form-actions">
 	<div class="col-md-9 col-md-offset-3">
 		<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> 提交</button>
 		<button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> 重设</button>
 	</div>
 </div>
+
 <script>
 (function($){
 	var method = {cacheData: {}};
@@ -81,7 +94,7 @@
 			for(var i = 0; i < o.length; ++i)
 			{
 				var n = o[i];
-				if (typeof d[ n ] != 'undefined')
+				if (typeof d != 'undefined' && typeof d[ n ] != 'undefined')
 					d = d[n];
 				else 
 					return null;
@@ -134,15 +147,10 @@
 		return result;
 	};
 
-
 	$(function(){
-		$("#province").on('change',function(){
-			$('#city').data('params',{"f[parent_id]":$(this).val()});
-			select_change.call($('#city')[0]);
-		});
-		$("#city").on('change',function(){
-			$('#area').data('params',{"f[parent_id]":$(this).val()});
-			select_change.call($('#area')[0]);
+		$("#oid").on('change',function(){
+			$('#fids').data('params',{"f[oid][eq]":$('#oid').val()});
+			select_change.call($('#fids')[0]);
 		});
 		
 		function select_change(){
@@ -162,7 +170,6 @@
 					$this.val(values ? values : null).trigger("change");
 				});
 		}
-		
 	});
 })(jQuery);	
 </script>

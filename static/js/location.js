@@ -38,9 +38,9 @@
 		this.addMarker = function(point){
 				var is_open = typeof(arguments[1]) == "undefined" ? true : arguments[1];
 			    var shop_title = $('#name').val();
-			    if(shop_title=='' || shop_title==null) shop_title='您的门店.';
+			    if(shop_title=='' || shop_title==null) shop_title='位置.';
 			    var shop_address = $('#address').val();
-			    if(shop_address=='') shop_address='点击地图,切换你门店的位置.';
+			    if(shop_address=='') shop_address='点击地图,切换位置.';
 			    
 		        marker = new BMap.Marker(point);//,{icon:iconImg}
 		        var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + shop_title + "'>" + shop_title + "</b><div class='iw_poi_content'>"+shop_address+"</div>");

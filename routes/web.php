@@ -30,6 +30,9 @@ $router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['au
 	    'properter-audit' => 'ProperterAuditController',
 	    'building' => 'BuildingController',
 	    'floor' => 'FloorController',
+	    'company' => 'CompanyController',
+	    'article' => 'ArticleController',
+	    'hire' => 'HireController',
 	    'tag' => 'TagController',
 	    'area' => 'AreaController',
 	]);

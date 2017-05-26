@@ -16,6 +16,6 @@ class OfficeFloor extends Model{
 	//公司
 	public function companies()
 	{
-	    return $this->belongsToMany('App\\Company', 'floor_company_relations', 'cid', 'fid');
+	    return $this->belongsToMany('App\\Company', 'floor_company_relations','fid' , 'cid');
 	}
 }

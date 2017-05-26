@@ -112,7 +112,7 @@ class CreateLouxxTable extends Migration
 		    $table->unsignedInteger('oid')->default(0)->comment='办公楼id';
 			$table->string('name',50)->comment = '公司名';
 			$table->unsignedInteger('logo_id')->default(0)->comment='公司logo';
-			$table->tinyInteger('people_cnt')->default(0)->comment = '公司人员:0.1-10人 1.10-50人 2.50-100人 3 100-500人 4.500-1000人 6 1000人以上 ';
+			$table->tinyInteger('people_cnt')->default(0)->comment = '公司人员:0.1-10人 1.10-50人 2.50-100人 3 100-500人 4.500-1000人 5 1000人以上 ';
 			$table->string('description')->nullable()->comment = '公司介绍';//招聘,查询
 
 			$table->softDeletes(); //软删除
@@ -140,7 +140,8 @@ class CreateLouxxTable extends Migration
 		Schema::create('articles', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('title',100)->nullable()->comment = '资讯标题';
-			$table->text('content')->nullable()->comment = '内容';
+			$table->unsignedInteger('pic_id')->default(0)->comment='图片logo';
+			$table->text('contents')->nullable()->comment = '内容';
 
 			$table->softDeletes(); //软删除
 			$table->timestamps();
@@ -163,6 +164,18 @@ class CreateLouxxTable extends Migration
 		    $table->foreign('fid')->references('id')->on('office_floors')
 		    ->onUpdate('cascade')->onDelete('cascade');
 		});
+		
+		//租赁图片
+		Schema::create('hire_pics', function (Blueprint $table) {
+		    $table->increments('id')->comment='主键';
+		    $table->unsignedInteger('hid')->default(0)->comment='租赁id';
+		    $table->unsignedInteger('pic_id')->default(0)->comment='图片id';
+		    $table->timestamps();
+		  
+		    $table->foreign('hid')->references('id')->on('hire_infos')
+		    ->onUpdate('cascade')->onDelete('cascade');
+		});
+		
 		//楼盘详情介绍
 		Schema::create('office_building_infos', function (Blueprint $table) {
 		    $table->increments('id');
@@ -177,8 +190,8 @@ class CreateLouxxTable extends Migration
 		    $table->string('developer',20)->nullable()->comment = '开发商';
 		    $table->decimal('avg_price',5,2)->default(0)->comment = '均价 元/平方 天';
 		    $table->integer('parking_space_cnt')->default(0)->index()->comment = '停车位';
-		    $table->decimal('parking_price',5,2)->default(0)->comment = '停车费 元/月';
-		    $table->timestamp('publish_time')->nullable()->comment = '竣工时间';
+		    $table->decimal('parking_price',11,2)->default(0)->comment = '停车费 元/月';
+		    $table->date('publish_time')->nullable()->comment = '竣工时间';
 		    $table->string('area_covered',20)->nullable()->comment = '占地面积';
 		    $table->string('standard_area',20)->nullable()->comment = '标准层面积';
 		    $table->integer('upstairs_cnt')->default(0)->comment = '楼上层数';

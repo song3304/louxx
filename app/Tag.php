@@ -26,12 +26,12 @@ class Tag extends Model{
 	//办公楼
 	public function buildings()
 	{
-	    return $this->belongsToMany('App\\OfficeBuilding', 'office_tag_relations', 'oid', 'tid');
+	    return $this->belongsToMany('App\\OfficeBuilding', 'office_tag_relations', 'tid','oid');
 	}
 
 	//公司 
 	public function companies()
 	{
-	    return $this->belongsToMany('App\\Company', 'company_tag_relations', 'cid', 'tid');
+	    return $this->belongsToMany('App\\Company', 'company_tag_relations','tid','cid');
 	}
 }

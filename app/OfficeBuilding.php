@@ -50,7 +50,7 @@ class OfficeBuilding extends Model{
 	//楼层
 	public function floors()
 	{
-	    return $this->hasMany('App\\OfficeFloor', 'oid', 'id')->with(['company']);
+	    return $this->hasMany('App\\OfficeFloor', 'oid', 'id')->with(['companies']);
 	}
 	//详情
 	public function info()
@@ -65,7 +65,7 @@ class OfficeBuilding extends Model{
 	//周边
 	public function peripheries()
 	{
-	    return $this->hasMany('App\\OfficePeripheries', 'oid', 'id');
+	    return $this->hasMany('App\\OfficePeriphery', 'oid', 'id');
 	}
 	//图片
 	public function pics()
@@ -86,7 +86,7 @@ class OfficeBuilding extends Model{
 	//标签
 	public function tags()
 	{
-	    return $this->belongsToMany('App\\Tag', 'office_tag_relations', 'tid', 'oid');
+	    return $this->belongsToMany('App\\Tag', 'office_tag_relations', 'oid', 'tid');
 	}
 	
 	public function tag_ids()
@@ -97,8 +97,7 @@ class OfficeBuilding extends Model{
 	public function scopeOfTag(Builder $builder, $tag_id)
 	{
 	    $builder->join('office_tag_relations', 'office_tag_relations.oid', '=', 'office_buildings.id', 'LEFT');
-	
-	    $builder->where('office_tag_relations.tid', $tag_id);
+	    $builder->where('office_tag_relations.tid', $tag_id)->select('office_buildings.*');
 	}
 	
 }
