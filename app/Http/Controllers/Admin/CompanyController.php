@@ -128,7 +128,7 @@ class CompanyController extends Controller
 		    array_walk($tag_ids, function($value,$key) use(&$attach_data,$data){
 		        $attach_data[$value]=['created_at'=>date("Y-m-d H:i:s"),'updated_at'=>date("Y-m-d H:i:s"),'porder'=>$key];
 		    });
-		    $company->tags()->attach($attach_data);
+		    $company->tags()->sync($attach_data);
 		
 		    $company->floors()->sync($fids);
 		});

@@ -107,7 +107,7 @@ class BuildingController extends Controller
 		    array_walk($tag_ids, function($value,$key) use(&$attach_data,$data){
 		        $attach_data[$value]=['created_at'=>date("Y-m-d H:i:s"),'updated_at'=>date("Y-m-d H:i:s"),'porder'=>$key];
 		    });
-		    $office_building->tags()->attach($attach_data);
+		    $office_building->tags()->sync($attach_data);
 
 		    $office_building->info()->create($info);
 		});
