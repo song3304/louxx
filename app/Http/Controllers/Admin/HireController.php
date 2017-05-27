@@ -137,4 +137,13 @@ class HireController extends Controller
 			$hire = HireInfo::destroy($v);
 		return $this->success('', count($id) > 5, compact('id'));
 	}
+	
+	public function toggle($id){
+	    $hire = HireInfo::find($id);
+	    if (empty($hire)||$hire->status == -1)
+	        return $this->failure_noexists();
+	
+	    $hire->update(['status'=>$hire->status?0:1]);
+	    return $this->success('', url('admin/hire'));
+	}
 }

@@ -32,11 +32,13 @@ $router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['au
 	    'floor' => 'FloorController',
 	    'company' => 'CompanyController',
 	    'article' => 'ArticleController',
+	    'periphery' => 'PeripheryController',
 	    'hire' => 'HireController',
 	    'tag' => 'TagController',
 	    'area' => 'AreaController',
 	]);
 
+	$router->get('hire/toggle/{id}','HireController@toggle');
 	//admin目录下的其它路由需放置在本条前
 	$router->addUndefinedRoutes();
 });

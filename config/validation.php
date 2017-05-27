@@ -70,14 +70,6 @@ return [
 			],
 		]
 	],
-	'tag' => [
-		'store' => [
-			'keywords' => [
-				'name' => '话题',
-				'rules' => 'required|max:50',
-			],
-		],
-	],
     'properter' => [
         'store' => [
             'id' => [
@@ -398,5 +390,29 @@ return [
                 'rules' => 'required|array',
             ],
         ]
-   ],
+    ],
+    'periphery' => [
+        'store' => [
+            'oid' => [
+                'name' => '所属办公楼',
+                'rules' => 'required|numeric',
+            ],
+            'name' => [
+                'name' => '场所名',
+                'rules' => 'required'
+            ],
+            'type' => [
+                'name' => '类型',
+                'rules' => 'required|numeric',
+            ],
+            'longitude'=>[
+                'name'=>'经度',
+                'rules' => 'required|numeric'
+            ],
+            'latitude'=>[
+                'name' => '纬度',
+                'rules' => 'required|numeric',
+            ]
+        ]
+    ],
 ];

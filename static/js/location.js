@@ -40,7 +40,7 @@
 			    var shop_title = $('#name').val();
 			    if(shop_title=='' || shop_title==null) shop_title='位置.';
 			    var shop_address = $('#address').val();
-			    if(shop_address=='') shop_address='点击地图,切换位置.';
+			    if(shop_address==''||typeof(shop_address) == "undefined") shop_address='点击地图,切换位置.';
 			    
 		        marker = new BMap.Marker(point);//,{icon:iconImg}
 		        var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + shop_title + "'>" + shop_title + "</b><div class='iw_poi_content'>"+shop_address+"</div>");
@@ -128,7 +128,8 @@
 				site_map.initMap();
 			}
 		}else{
-			site_map.initMap();
+			center_point = new BMap.Point(longitude,latitude);
+			site_map.initMap(center_point);
 		}
 	});
 	

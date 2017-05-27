@@ -18,7 +18,7 @@
 
 <{block "table-td-plus"}>
 <td data-from="name" data-orderable="false">{{data}}</td>
-<td data-from="building" data-orderable="false">{{data.building_name}}</td>
+<td data-from="building" data-orderable="false"><a href="<{'admin/building?f[id][eq]='|url}>{{data.id}}">{{data.building_name}}</a></td>
 <td data-from="" data-orderable="false"><a href="<{'admin/company?q[ofFloor]='|url}>{{full.id}}">{{full.company_cnt}}</a></td>
 <td data-from="description">{{data}}</td>
 <td data-from="porder">{{data}}</td>

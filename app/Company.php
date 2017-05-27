@@ -2,6 +2,7 @@
 namespace App;
 
 use App\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Company extends Model{
 	
@@ -38,5 +39,11 @@ class Company extends Model{
 	        default: $scale_tag='未知';
 	    }
 	    return $scale_tag;
+	}
+	
+	public function scopeOfFloor(Builder $builder, $floor_id)
+	{
+	    $builder->join('floor_company_relations', 'floor_company_relations.cid', '=', 'companies.id', 'LEFT');
+	    $builder->where('floor_company_relations.fid', $floor_id)->select('companies.*');
 	}
 }

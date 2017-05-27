@@ -42,6 +42,8 @@
 						<a class="col-md-4" href="<{'admin/floor/create'|url}>" name="floor/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
 						<li><a class="col-md-8" href="<{'admin/company'|url}>" name="company/list">公司列表</a>
 						<a class="col-md-4" href="<{'admin/company/create'|url}>" name="company/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
+						<li><a class="col-md-8" href="<{'admin/periphery'|url}>" name="periphery/list">周边列表</a>
+						<a class="col-md-4" href="<{'admin/periphery/create'|url}>" name="periphery/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
 						<li><a class="col-md-8" href="<{'admin/article'|url}>" name="article/list">资讯列表</a>
 						<a class="col-md-4" href="<{'admin/article/create'|url}>" name="article/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
 						<li><a class="col-md-8" href="<{'admin/tag'|url}>" name="order/list">标签列表</a>

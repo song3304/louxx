@@ -32,7 +32,9 @@
 <td data-from="per_rent">{{data}}</td>
 <td data-from="acreage">{{data}}</td>
 <td data-from="">{{full.min_station_cnt}}-{{full.max_station_cnt}}</td>
-<td data-from="status_tag">{{data}}</td>
+<td data-from="status_tag" class="text-center">
+{{if full.status!=-1}}<a href='<{''|url}>/<{block "namespace"}>admin<{/block}>/hire/toggle/{{full.id}}'>{{data}}</a>{{else}}{{data}}{{/if}}
+</td>
 <td data-from="note">{{data}}</td>
 <{/block}>
 
