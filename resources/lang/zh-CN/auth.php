@@ -13,4 +13,5 @@ return [
     'failed' => '用户名或密码错误。',
     'success' => '登录成功，跳转到登录之前的页面',
     'throttle' => '您的登录尝试次数过多. 请于 :seconds 秒后再试。',
+    'failure_permission'=>'对不起，你没有访问权限'
 ];

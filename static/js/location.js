@@ -2,7 +2,7 @@
 (function($){
 	function siteMap(){
 		var maplv = 17;
-		var default_px = [113.38431,31.71998];
+		var default_px = [121.52315400,31.30530700];
 		var center_point,map,marker;
         var iconImg = new BMap.Icon("http://map.baidu.com/image/us_mk_icon.png",new BMap.Size(23,25),{imageOffset: new BMap.Size(-46,-21),infoWindowOffset:new BMap.Size(17,1),offset:new BMap.Size(9,25)});
 			

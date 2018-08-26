@@ -46,4 +46,14 @@ class Company extends Model{
 	    $builder->join('floor_company_relations', 'floor_company_relations.cid', '=', 'companies.id', 'LEFT');
 	    $builder->where('floor_company_relations.fid', $floor_id)->select('companies.*');
 	}
+	
+	//筛选办公楼
+	public function scopeBuildings(Builder $builder, $building_ids)
+	{
+	    if(is_array($building_ids)){
+	        $builder->whereIn('oid',$building_ids);
+	    }else{
+	        $builder->where('oid', intval($building_ids));
+	    }
+	}
 }

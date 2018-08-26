@@ -3,9 +3,11 @@ namespace App;
 
 use App\Model;
 use Illuminate\Database\Eloquent\Builder;
+//use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Tag;
 
 class OfficeBuilding extends Model{
+	// use SoftDeletes;
 	
 	protected $guarded = ['id'];
 	protected $hidden = [];
@@ -92,6 +94,11 @@ class OfficeBuilding extends Model{
 	public function tag_ids()
 	{
 	    return $this->tags()->get()->pluck('id');
+	}
+	
+	public function scopeProperty(Builder $builder, $property_user_id)
+	{
+	    $builder->where('property_id', $property_user_id);
 	}
 	
 	public function scopeOfTag(Builder $builder, $tag_id)

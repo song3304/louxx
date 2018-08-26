@@ -46,6 +46,6 @@ class Properter extends Model{
 	//办公楼
 	public function bulidings()
 	{
-	    return $this->hasMany('App\\OfficeBuilding', 'property_id', 'id')->with(['product']);
+	    return $this->hasMany('App\\OfficeBuilding', 'property_id', 'id')->with(['floors']);
 	}
 }

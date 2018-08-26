@@ -43,6 +43,24 @@ $router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['au
 	$router->addUndefinedRoutes();
 });
 
+$router->group(['namespace' => 'Property','prefix' => 'property', 'middleware' => ['auth', 'role:property']], function($router) {
+    
+        $router->addAdminRoutes([
+            'building' => 'BuildingController',
+            'floor' => 'FloorController',
+            'company' => 'CompanyController',
+            'periphery' => 'PeripheryController',
+            'hire' => 'HireController',
+            'tag' => 'TagController',
+            'area' => 'AreaController'
+        ]);
+    
+        $router->get('hire/toggle/{id}','HireController@toggle');
+        //admin目录下的其它路由需放置在本条前
+        $router->addUndefinedRoutes();
+    });
+
+
 //根目录的其它路由需放置在本条前
 $router->addUndefinedRoutes();
 
