@@ -47,8 +47,10 @@ class MemberController extends Controller
 		$builder = $user->newQuery()->with(['roles']);
 		$size = $request->input('size') ?: config('size.export', 1000);
 
-		$data = $this->_getExport($request, $builder, function(&$v){
-			$v['gender'] = !empty($v['gender']) ? $v['gender']['title'] : NULL;
+		$data = $this->_getExport($request, $builder,function(&$datalist){
+		  foreach ($datalist as &$value){
+		      $value['gender'] = !empty($value['gender']) ? $value['gender']['title'] : NULL;
+		  }
 		}, ['*']);
 		return $this->_export($data);
 	}
