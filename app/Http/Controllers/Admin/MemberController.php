@@ -49,8 +49,8 @@ class MemberController extends Controller
 
 		$data = $this->_getExport($request, $builder, function(&$v){
 			$v['gender'] = !empty($v['gender']) ? $v['gender']['title'] : NULL;
-		}, ['users.*']);
-		return $this->export($data);
+		}, ['*']);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request, $id)

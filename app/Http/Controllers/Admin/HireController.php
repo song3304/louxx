@@ -54,8 +54,8 @@ class HireController extends Controller
 		    foreach ($datalist as &$value){
     		     
 		    }
-		}, ['hires.*']);
-		return $this->export($data);
+		}, ['*']);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request,$id)

@@ -50,8 +50,8 @@ class ProperterController extends Controller
 		    foreach ($datalist as &$value){
 		      $value['properter_status'] =  $value->status_tag();
 		    }
-		}, ['properters.*']);
-		return $this->export($data);
+		}, ['*']);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request,$id)

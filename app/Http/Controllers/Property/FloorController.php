@@ -53,7 +53,7 @@ class FloorController extends BaseController
     		     
 		    }
 		}, ['*']);
-		return $this->export($data);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request,$id)

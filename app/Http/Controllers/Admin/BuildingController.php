@@ -58,8 +58,8 @@ class BuildingController extends Controller
 		    foreach ($datalist as &$value){
 		      //$value['building_status'] =  $value->status_tag();
 		    }
-		}, ['buildings.*']);
-		return $this->export($data);
+		}, ['*']);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request,$id)

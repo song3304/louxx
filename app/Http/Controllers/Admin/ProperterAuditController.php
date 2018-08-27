@@ -55,8 +55,8 @@ class ProperterAuditController extends Controller
 		    foreach ($datalist as &$value){
 		      $value['status_tag'] =  $value->status_tag();
 		    }
-		}, ['properter_applies.*']);
-		return $this->export($data);
+		}, ['*']);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request,$id)

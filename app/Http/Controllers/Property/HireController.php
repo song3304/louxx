@@ -53,8 +53,8 @@ class HireController extends BaseController
 		    foreach ($datalist as &$value){
     		     
 		    }
-		}, ['hires.*']);
-		return $this->export($data);
+		}, ['*']);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request,$id)

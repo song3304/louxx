@@ -53,8 +53,8 @@ class CompanyController extends Controller
 		    foreach ($datalist as &$value){
     		     
 		    }
-		}, ['companys.*']);
-		return $this->export($data);
+		}, ['*']);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request,$id)

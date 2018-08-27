@@ -53,8 +53,8 @@ class PeripheryController extends Controller
 		    foreach ($datalist as &$value){
     		     
 		    }
-		}, ['peripherys.*']);
-		return $this->export($data);
+		}, ['*']);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request,$id)

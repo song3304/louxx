@@ -53,8 +53,8 @@ class FloorController extends Controller
 		    foreach ($datalist as &$value){
     		     
 		    }
-		}, ['floors.*']);
-		return $this->export($data);
+		}, ['*']);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request,$id)

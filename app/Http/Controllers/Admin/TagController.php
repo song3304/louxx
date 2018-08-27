@@ -55,8 +55,8 @@ class TagController extends Controller
 		    foreach ($datalist as &$value){
     		     
 		    }
-		}, ['tags.*']);
-		return $this->export($data);
+		}, ['*']);
+		return $this->_export($data);
 	}
 
 	public function show(Request $request,$id)

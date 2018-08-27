@@ -41,6 +41,20 @@ class ArticleController extends Controller
         $data['recordsFiltered'] = $data['total']; //带 f q 条件的总数
         return $this->api($data);
     }
+    
+    public function export(Request $request)
+    {
+        $article = new Article();
+        $builder = $article->newQuery();
+        $size = $request->input('size') ?: config('size.export', 1000);
+    
+        $data = $this->_getExport($request, $builder,function(&$datalist){
+            foreach ($datalist as &$value){
+                //$value['building_status'] =  $value->status_tag();
+            }
+        }, ['*']);
+        return $this->_export($data);
+    }
     /**
      * Show the form for creating a new resource.
      *
