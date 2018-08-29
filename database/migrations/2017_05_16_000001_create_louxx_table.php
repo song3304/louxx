@@ -221,6 +221,36 @@ class CreateLouxxTable extends Migration
 		    $table->foreign('oid')->references('id')->on('office_buildings')
 		    ->onUpdate('cascade')->onDelete('cascade');
 		 });
+		
+		//找楼
+		Schema::create('find_buildings', function (Blueprint $table) {
+		    $table->increments('id');
+		    $table->integer('uid')->unsigned()->index()->comment = '用户id';
+		    $table->decimal('rent',10,2)->default(0)->index()->comment = '租金(元/月)';
+		    $table->string('phone', 20)->nullable()->index()->comment = '电话'; //电话
+		    $table->unsignedInteger('province')->comment = '省'; //省
+		    $table->unsignedInteger('city')->comment = '市'; //市
+		    $table->unsignedInteger('area')->comment = '区'; //区县
+		    $table->text('note')->nullable()->comment = '备注';
+		    
+		    $table->softDeletes(); //软删除
+		    $table->timestamps();
+	    });
+		
+		//用户收藏
+		Schema::create('user_collections', function (Blueprint $table) {
+		    $table->increments('id');
+		    $table->integer('uid')->unsigned()->index()->comment = '用户id';
+		    $table->unsignedInteger('oid')->default(0)->comment='办公楼id';
+		    $table->softDeletes(); //软删除
+		    $table->timestamps();
+		    
+		    $table->foreign('oid')->references('id')->on('office_buildings')
+		        ->onUpdate('cascade')->onDelete('cascade');
+		    
+		    $table->foreign('uid')->references('id')->on('users')
+		        ->onUpdate('cascade')->onDelete('cascade');
+		    });
 	}
 
 	/**
@@ -244,5 +274,7 @@ class CreateLouxxTable extends Migration
 		Schema::drop('hire_infos');
 		Schema::drop('office_building_infos');
 		Schema::drop('office_peripheries');
+		Schema::drop('find_buildings');
+		Schema::drop('user_collections');
 	}
 }
