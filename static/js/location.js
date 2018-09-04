@@ -107,22 +107,34 @@
 				},
 				function showError(error)
 				{
-					switch(error.code) 
-					{
-						case error.PERMISSION_DENIED:
-						  alert("用户拒绝定位请求.");
-						  break;
-						case error.POSITION_UNAVAILABLE:
-						  alert("位置信息不可用.");
-						  break;
-						case error.TIMEOUT:
-						  alert("请求获得用户位置超时.");
-						  break;
-						case error.UNKNOWN_ERROR:
-						  alert("发生了一个未知错误.");
-						  break;
-					}
-					site_map.initMap();
+//					switch(error.code) 
+//					{
+//						case error.PERMISSION_DENIED:
+//						  alert("用户拒绝定位请求.");
+//						  break;
+//						case error.POSITION_UNAVAILABLE:
+//						  alert("位置信息不可用.");
+//						  break;
+//						case error.TIMEOUT:
+//						  alert("请求获得用户位置超时.");
+//						  break;
+//						case error.UNKNOWN_ERROR:
+//						  alert("发生了一个未知错误.");
+//						  break;
+//					}
+					var geolocation = new BMap.Geolocation();
+					geolocation.getCurrentPosition(function(r){
+						// 浏览器定位
+						if(this.getStatus() == BMAP_STATUS_SUCCESS){
+							$("#latitude").val(r.point.lat);
+							$("#longitude").val(r.point.lng);
+							center_point = new BMap.Point(r.point.lng,r.point.lat);
+							site_map.initMap(center_point);
+						}
+						else {
+							site_map.initMap();
+						}        
+					},{enableHighAccuracy: true});
 				});
 			}else{
 				site_map.initMap();
