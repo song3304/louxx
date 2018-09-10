@@ -6,27 +6,36 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Cache;
 use App\Tools\HxSmsApi;
+use App\ProperterApply;
 
-class RegisterController extends Controller
+//物业申请入驻
+class ApplyController extends Controller
 {
-    // 注册首页
+    // 物业申请入驻首页
 	public function index()
 	{
-	    $keys = ['phone', 'validate_code'];
-	    $this->_validates = $this->getScriptValidate('member.register', $keys);
-	    return $this->view('index.register');
+	    $keys = ['name', 'province','city','area','address','phone','note','valide_code'];
+	    $this->_validates = $this->getScriptValidate('properter-apply.store', $keys);
+	    return $this->view('index.apply_property');
 	}
 
-    // 用户注册,用户登录成功
+    // 物业申请入驻
 	public function login(Request $request)
 	{
-		$keys = ['phone', 'validate_code'];
-		$data = $this->autoValidate($request, 'member.register', $keys);
+		$keys = ['name', 'province','city','area','address','phone','note','valide_code'];
+		$data = $this->autoValidate($request, 'properter-apply.store', $keys);
 
-		$user = (new User)->add($data);
-		return $this->success(NULL, url('home/index'), $user->toArray());
+		// 验证手机验证码...
+		unset($data['valide_code']);
+		$apply_info = (new ProperterApply)->add($data);
+		return $this->success(NULL, 'apply', $apply_info->toArray());
 	}
 	
+	// 物业申请入驻提交成功
+	public function submit(Request $request)
+	{
+	    return $this->view('index.apply_submit');
+	}
 	// 用户发送验证码
 	public function sendCode(Request $request)
 	{

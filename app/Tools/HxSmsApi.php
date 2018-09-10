@@ -4,11 +4,11 @@ use Cache;
 
 class HxSmsApi {
     private $config = array(
-        'action_url'=>'https://sh2.ipyy.com/smsJson.aspx',           //地址
-        'single_code'=>'【楼查查】尊敬的客户，您的验证码为：%s，三分钟内有效！',          //消息格式
-        'userid'=>'',               //企业id
-        'account'=>'jkwl490',              //发送用户帐号
-        'password'=>'jkwl49088',             //密码
+        'action_url'=>'http://112.124.24.5/api/MsgSend.asmx/SendMsg',           //地址
+        'Msg'=>'【楼查查】尊敬的客户，您的验证码为：%s，三分钟内有效！',          //消息格式
+        'userCode'=>'xkxxcf',              //发送用户帐号
+        'userPass'=>'Thhsd126',             //密码
+        "Channel"=>0                        //通道号
     );
     
     //返回信息解析
@@ -54,16 +54,13 @@ class HxSmsApi {
         $config = $this->config;
         //发送
         $url = $config['action_url'];
-        $msg = mb_convert_encoding(sprintf($config['single_code'], $code), 'UTF-8', 'auto');
+        $msg = mb_convert_encoding(sprintf($config['Msg'], $code), 'UTF-8', 'auto');
         $data = array(
-            'userid' => $config['userid'], //企业id
-            'account' => $config['account'], //发送用户帐号
-            'mobile' => $phone,
-            'password' => strtoupper(md5($config['password'])), //密码
-            'content' => $msg,
-            'sendTime' => '',
-            'action' => 'send',
-            'extno' => ''
+            'userCode' => $config['account'], //发送用户帐号
+            'DesNo' => $phone,
+            'userPass' => $config['password'], //密码
+            'Msg' => $msg,
+            'Channel' => 0
         );
 
         $result = $this->_post_url($url, $data);
@@ -107,29 +104,20 @@ class HxSmsApi {
             return true;
         }
         return false;
-    }
+    }    
     
-    private function _post_url($url, $post_data, $timeout = 30)
-    {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($curl, CURLOPT_AUTOREFERER, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        //($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/html; charset=UTF-8'));
-        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post_data));
-        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $tmpInfo = curl_exec($curl);
-        if (curl_errno($curl))
+    function _post_url($url,$param,$timeout = 30){
+        $ch=curl_init();
+        $config=array(CURLOPT_RETURNTRANSFER=>true,CURLOPT_URL=>$url,CURLOPT_POST=>true);
+        $config[CURLOPT_POSTFIELDS]=http_build_query($param);
+        curl_setopt_array($ch,$config);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+        $result=curl_exec($ch);
+        if (curl_errno($ch))
         {
             return 'curl_error';
         }
-        curl_close($curl);
-    
-        return $tmpInfo;
+        curl_close($ch);
+        return $result;
     }
 }

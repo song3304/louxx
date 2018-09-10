@@ -136,6 +136,10 @@ return [
                 'name' => '备注',
                 'rules' => [],
            ],
+           'valide_code' =>[
+               'name' => '验证码',
+               'rules' => 'required',
+           ],
            'audit_note'=>[
                 'name' => '审核备注',
                 'rules' => [],
@@ -415,4 +419,36 @@ return [
             ]
         ]
     ],
+    'find-building' => [
+        'store' => [
+            'province'=>[
+                'name' => '省',
+                'rules' => 'required|numeric',
+            ],
+            'city'=>[
+                'name' => '市',
+                'rules' => 'required|numeric',
+            ],
+            'area'=>[
+                'name' => '区',
+                'rules' => 'required|numeric',
+            ],
+            'rent_low'=>[
+                'name' => '最低价',
+                'rules' => 'numeric',
+            ],
+            'rent_high'=>[
+                'name' => '最高价',
+                'rules' => 'required|numeric',
+            ],
+            'phone'=>[
+                'name' => '电话',
+                'rules' => 'required|phone',
+            ],
+            'valid_code'=>[
+                'name' => '验证码',
+                'rules' => 'required',
+            ]
+        ]
+    ]
 ];
