@@ -31,7 +31,7 @@ class RegisterController extends Controller
 	public function sendCode(Request $request)
 	{
 	    $phone = $request->input('phone');
-	    if (preg_match('/^1\d{10}$/',$phone)) {
+	    if (!preg_match('/^1\d{10}$/',$phone)) {
 	        return $this->error("手机号非法");
 	    }
 	    
@@ -42,7 +42,8 @@ class RegisterController extends Controller
 	        return $this->error("发送短信频次太高");
 	    }
 	    //发送短信，则在此记录时间
-	    if (0 === (new HxSmsApi)->sendSingleCodeSms($phone)) {
+	    $result = (new HxSmsApi)->sendSingleCodeSms($phone);
+	    if ($result['result']) {
 	        //发送成功
 	        Cache::put($valid_phone_key, time(),5);
 	        return $this->success('请注意查收短信');

@@ -68,7 +68,17 @@ return [
 				'name' => '密码',
 				'rules' => 'required',
 			],
-		]
+		],
+	    'register' => [
+	        'phone' => [
+	            'name' => '手机',
+				'rules' => 'phone|unique:users,{{attribute}},{{id}}',
+	        ],
+	        'validate_code' => [
+	            'name' => '验证码',
+	            'rules' => 'required',
+	        ],
+	    ]
 	],
     'properter' => [
         'store' => [

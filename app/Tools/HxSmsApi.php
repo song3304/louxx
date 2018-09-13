@@ -4,44 +4,69 @@ use Cache;
 
 class HxSmsApi {
     private $config = array(
-        'action_url'=>'http://112.124.24.5/api/MsgSend.asmx/SendMsg',           //地址
-        'Msg'=>'【楼查查】尊敬的客户，您的验证码为：%s，三分钟内有效！',          //消息格式
+        'action_url'=>'http://120.55.197.77:1210/Services/MsgSend.asmx/SendMsg',           //地址
+        'Msg'=>'尊敬的客户，您的验证码为：%s，三分钟内有效！【楼查查】',          //消息格式
         'userCode'=>'xkxxcf',              //发送用户帐号
         'userPass'=>'Thhsd126',             //密码
         "Channel"=>0                        //通道号
     );
     
-    //返回信息解析
-    private function post_result_analyze($result)
+    /*返回信息解析
+    -1	应用程序异常
+    -3	用户名密码错误或者用户无效
+    -4	短信内容和备案的模板不一样
+    -5	签名不正确(格式为:XXX【签名内容】), 注意：短信内容最后一个字符必须是】
+    -7	余额不足
+    -8	通道错误
+    -9	无效号码
+    -10	签名内容不符合长度
+    -11	用户有效期过期
+    -12	黑名单
+    -13	语音验证码的Amount参数必须是整形字符串
+    -14	语音验证码的内容只能为数字
+    */
+    private function post_result_analyze($code)
     {
-        $ret = array('returnstatus'=>-1,
-                    'message'=>'解析数据出错',
-                    'remainpoint'=>'-1',
-                    'taskID'=>'-1',
-                    'successCount'=>'-1');
-
-        $r = json_decode($result, TRUE);
-        if (!is_array($r)) {
-            //返回数据出错
-            return $ret;
-        } else {
-            if (isset($r['returnstatus'])) {
-                if ($r['returnstatus'] == 'Success')
-                    $ret['returnstatus'] = 0;
-                else
-                    $ret['returnstatus'] = 1;
-            }
-            if (isset($r['message']))
-                    $ret['message'] = $r['message'];
-            if (isset($r['remainpoint']))
-                    $ret['remainpoint'] = $r['remainpoint'];
-            if (isset($r['taskID']))
-                    $ret['taskID'] = $r['taskID'];
-            if (isset($r['successCount']))
-                    $ret['successCount'] = $r['successCount'];
-
-            return $ret;
-        }
+       $result = ['result'=>true,'msg'=>''];
+       switch ($code){
+           case '-1':
+               $result = ['result'=>false,'msg'=>'应用程序异常'];
+               break;
+            case '-3':
+               $result = ['result'=>false,'msg'=>'用户名密码错误或者用户无效'];
+               break;
+            case '-4':
+               $result = ['result'=>false,'msg'=>'短信内容和备案的模板不一样'];
+               break;
+            case '-5':
+               $result = ['result'=>false,'msg'=>'签名不正确'];
+               break;
+            case '-7':
+               $result = ['result'=>false,'msg'=>'余额不足'];
+               break;     
+            case '-8':
+               $result = ['result'=>false,'msg'=>'通道错误'];
+               break;
+            case '-9':
+               $result = ['result'=>false,'msg'=>'无效号码'];
+               break;
+            case '-10':
+               $result = ['result'=>false,'msg'=>'签名内容不符合长度'];
+               break;
+            case '-11':
+               $result = ['result'=>false,'msg'=>'用户有效期过期'];
+               break;
+            case '-12':
+               $result = ['result'=>false,'msg'=>'黑名单'];
+               break;
+            case '-13':
+               $result = ['result'=>false,'msg'=>'语音验证码的Amount参数必须是整形字符串'];
+               break;
+            case '-14':
+               $result = ['result'=>false,'msg'=>'语音验证码的内容只能为数字'];
+               break;
+       }
+       return $result;
     }
 
     //发送单条消息
@@ -49,23 +74,22 @@ class HxSmsApi {
     public function sendSingleCodeSms($phone ,$type = 1)
     {
         //生成验证码
-        $code = $this->__generateCode($phone);
+        $code = $this->_generateCode($phone);
         
         $config = $this->config;
         //发送
         $url = $config['action_url'];
-        $msg = mb_convert_encoding(sprintf($config['Msg'], $code), 'UTF-8', 'auto');
+        $msg = sprintf($config['Msg'], $code);//mb_convert_encoding(, 'UTF-8', 'auto');
         $data = array(
-            'userCode' => $config['account'], //发送用户帐号
+            'userCode' => $config['userCode'], //发送用户帐号
             'DesNo' => $phone,
-            'userPass' => $config['password'], //密码
+            'userPass' => $config['userPass'], //密码
             'Msg' => $msg,
             'Channel' => 0
         );
 
         $result = $this->_post_url($url, $data);
-        $post_result_analyze_array = $this->post_result_analyze($result);
-        return $post_result_analyze_array['returnstatus'];
+        return $this->post_result_analyze($result);
     }
     
     //生成验证码
@@ -109,6 +133,7 @@ class HxSmsApi {
     function _post_url($url,$param,$timeout = 30){
         $ch=curl_init();
         $config=array(CURLOPT_RETURNTRANSFER=>true,CURLOPT_URL=>$url,CURLOPT_POST=>true);
+        print_r(http_build_query($param));
         $config[CURLOPT_POSTFIELDS]=http_build_query($param);
         curl_setopt_array($ch,$config);
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
@@ -121,3 +146,5 @@ class HxSmsApi {
         return $result;
     }
 }
+
+
