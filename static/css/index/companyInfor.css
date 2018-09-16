@@ -1,0 +1,114 @@
+ul,li{
+	list-style: none;
+}
+.top{
+	width: 100%;
+	height: 14.3rem;
+	background: url(../image/bg.png) no-repeat;
+	background-size: 100% 100%;
+	position: relative;
+}
+.top_1{
+	height: 3.9rem;
+	background: rgba(0,0,0,0.7);
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.top_1>li:nth-of-type(1){
+	font-size: 1.4rem;
+	color: rgba(255,255,255,1);
+	margin-left: 0.8rem;
+	margin-right: 0.8rem;
+}
+.top_1>li:nth-of-type(2){
+	font-size: 1.4rem;
+	color: rgba(255,255,255,1);
+}
+.top_1>li:nth-of-type(3){
+	width: 2.2rem;
+	height: 1.8rem;
+	margin-left: 23rem;
+}
+.top_1>li:nth-of-type(3)>img{
+	width: 100%;
+	height: 100%;
+}
+.companyName{
+	margin-left: 3rem;
+	margin-top: 2.8rem;
+	display: flex;
+	align-items: center;
+}
+.companyName>img{
+	width: 1.8rem;
+	height: 1.8rem;
+}
+.companyName>span{
+	font-family: PingFangSC-Regular;
+	font-size: 1.4rem;
+	color: #FFFFFF;
+	margin-left: 1.3rem;
+}
+.flag{
+	margin-left: 3rem;
+	margin-top: 1.5rem;
+	display: flex;
+	justify-content:flex-start;
+}
+.flag>li{
+	height: 2rem;
+	background: rgba(255,255,255,0.6);
+	border-radius: 2px;
+	padding-left: 0.6rem;
+	padding-right: 0.6rem;
+	margin-left: 1.6rem;
+}
+.flag>li:nth-of-type(1){
+	margin-left: 0;
+}
+.flag>li>span{
+	font-family: PingFangSC-Regular;
+	font-size: 12px;
+	color: #FFFFFF;
+	line-height: 2rem;
+}
+.main{
+	width: 36.7rem;
+	box-sizing: border-box;
+	margin: 0 auto;
+	margin-top: 0.6rem;
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-bottom: 2.5rem;
+}
+.main>p:nth-of-type(1){
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #3A3A3A;
+	letter-spacing: -0.5px;
+	padding-top: 1.5rem;
+}
+.main>p:nth-of-type(2){
+	font-family: PingFangSC-Semibold;
+	font-size: 12px;
+	color: #3A3A3A;
+	letter-spacing: -0.43px;
+	margin-top: 0.5rem;
+}
+.main>p:nth-of-type(3){
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #3A3A3A;
+	letter-spacing: -0.5px;
+	margin-top: 2.6rem;
+}
+.main>p:nth-of-type(4){
+	font-family: PingFangSC-Semibold;
+	font-size: 12px;
+	color: #3A3A3A;
+	letter-spacing: -0.43px;
+	margin-top: 0.5rem;
+	text-align: justify;
+}

@@ -7,9 +7,12 @@
 	<{block "head-title"}><{include file="common/title.inc.tpl"}><{/block}>
 	<meta name="csrf-token" content="<{csrf_token()}>">
 	<{block "head-meta-responsive"}>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="renderer" content="webkit">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<meta content="email=no" name="format-detection" />
+	<meta name="csrf-token" content="<{csrf_token()}>">
 	<{/block}>
 	<{block "head-meta-seo"}>
 	<meta name="Keywords" content="" />

@@ -1,6 +1,3 @@
-<{block "head-scripts-laravel"}>
-	<script>var Laravel = { csrfToken: '<{csrf_token()}>' };</script>
-<{/block}>
 <{block "head-scripts-debug"}>
 	<script src="<{'js/debug/eruda.debug.js'|static}>"></script>
 <{/block}>
@@ -17,4 +14,6 @@
 
 <{block "head-scripts-common"}>
 	<script src="<{'js/common.js'|static}>"></script>
+	<script src="<{'js/public.js'|static}>"></script>
+	<script src="<{'js/toastr/toastr.min.js'|static}>"></script>
 <{/block}>

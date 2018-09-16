@@ -22,6 +22,8 @@ $router->addAnyActionRoutes([
 	'wechat',
 ]);
 
+$router->post('/sendCode', 'RegisterController@sendCode');
+
 $router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'role:administrator']], function($router) {
 	
 	$router->addAdminRoutes([

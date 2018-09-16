@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Cache;
 use App\Tools\HxSmsApi;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -23,8 +24,17 @@ class RegisterController extends Controller
 		$keys = ['phone', 'validate_code'];
 		$data = $this->autoValidate($request, 'member.register', $keys);
 
-		$user = (new User)->add($data);
-		return $this->success(NULL, url('home/index'), $user->toArray());
+		// 验证手机
+		if(!(new HxSmsApi)->checkPhoneCode($data['phone'],$data['validate_code'])){
+		    return $this->failure_user_login();
+		}
+		$user = User::where('phone',$data['phone'])->first();
+		if(empty($user)){
+		    $user = (new User)->add(['username'=>$data['phone'],'phone'=>$data['phone']],'user');
+		}
+		Auth::guard()->loginUsingId($user->getKey());
+		//return redirect('home/index');
+		return $this->success_login(url('home/index'));
 	}
 	
 	// 用户发送验证码

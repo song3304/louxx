@@ -87,7 +87,7 @@ class HxSmsApi {
             'Msg' => $msg,
             'Channel' => 0
         );
-
+return ['result'=>true,'msg'=>''];
         $result = $this->_post_url($url, $data);
         return $this->post_result_analyze($result);
     }
@@ -97,7 +97,7 @@ class HxSmsApi {
         $valid_code_key = 'send_code_phone_'.$phone;
         if (!Cache::has($valid_code_key)) {
             $valid_code = $this->_generateNonceStr(6);
-            Cache::put($valid_code_key, $valid_code, 5);//分钟数缓存5分钟
+            Cache::put($valid_code_key, $valid_code, 3);//分钟数缓存5分钟
         }else{
             $valid_code = Cache::get($valid_code_key);
         }
@@ -114,14 +114,15 @@ class HxSmsApi {
         {
         $str .= $chars[mt_rand(0, strlen($chars) - 1)];
         }
-        //return '123456';
+        return '123456';
         return $str;
     }
     
     
     //检查手机验证码是否正确
     public function checkPhoneCode($phone, $code) {
-        $valid_code_key = 'send_code_phone'.'_'.$phone;
+        $valid_code_key = 'send_code_phone_'.$phone;
+        //echo Cache::get($valid_code_key).'---'.$code;
         if (!empty($code) && Cache::get($valid_code_key) === $code) {
             //验证成功，将缓存清除
             Cache::pull($valid_code_key);
@@ -133,7 +134,7 @@ class HxSmsApi {
     function _post_url($url,$param,$timeout = 30){
         $ch=curl_init();
         $config=array(CURLOPT_RETURNTRANSFER=>true,CURLOPT_URL=>$url,CURLOPT_POST=>true);
-        print_r(http_build_query($param));
+        //print_r(http_build_query($param));
         $config[CURLOPT_POSTFIELDS]=http_build_query($param);
         curl_setopt_array($ch,$config);
         curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);

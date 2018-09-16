@@ -72,7 +72,7 @@ return [
 	    'register' => [
 	        'phone' => [
 	            'name' => '手机',
-				'rules' => 'phone|unique:users,{{attribute}},{{id}}',
+				'rules' => 'required|phone',//|unique:users,{{attribute}},{{id}}
 	        ],
 	        'validate_code' => [
 	            'name' => '验证码',

@@ -1,0 +1,224 @@
+
+ul,li{
+	list-style: none;
+}
+.officeTop{
+	width: 100%;
+	height: 24.8rem;
+	position: relative;
+}
+.officeTop_img{
+	width: 100%;
+	height: 100%;
+}
+.officeTop_img>img{
+	width: 100%;
+	height: 100%;
+}
+.officeTop_1{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 3.9rem;
+	background: rgba(0,0,0,0.7);
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.officeTop_1>li:nth-of-type(1){
+	font-size: 1.4rem;
+	color: rgba(255,255,255,1);
+	margin-left: 0.8rem;
+	margin-right: 0.8rem;
+}
+.officeTop_1>li:nth-of-type(2){
+	font-size: 1.4rem;
+	color: rgba(255,255,255,1);
+}
+.officeTop_1>li:nth-of-type(3){
+	width: 2.2rem;
+	height: 1.8rem;
+	margin-left: 23rem;
+}
+.officeTop_1>li:nth-of-type(3)>img{
+	width: 100%;
+	height: 100%;
+}
+.officebottom{
+	position: absolute;
+	top: 22.4rem;
+	left: 0.9rem;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.officebottom>li:nth-of-type(1){
+	width: 1.8rem;
+	height: 1.8rem;
+}
+.officebottom>li:nth-of-type(1)>img{
+	width: 100%;
+	height: 100%;
+}
+.officebottom>li:nth-of-type(2){
+	font-family: PingFangSC-Regular;
+	font-size: 1.2rem;
+	color: #FFFFFF;
+	letter-spacing: -0.22px;
+}
+.officebottom>li:nth-of-type(3){
+	font-family: PingFangSC-Regular;
+	font-size: 1.2rem;
+	color: #FFFFFF;
+	letter-spacing: -0.22px;
+	margin-left: 9.6rem;
+}
+.officeInfor{
+	box-sizing: border-box;
+	height: 11.5rem;
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	padding-left: 1.6rem;
+	padding-right: 1.4rem;
+	padding-top: 1.6rem;
+	padding-bottom: 1.5rem;
+}
+.officeInfor_1{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.officeInfor_1>p:nth-of-type(1){
+	font-family: PingFangSC-Regular;
+	font-size: 1.8rem;
+	color: #3A3A3A;
+	letter-spacing: -0.5px;
+}
+.officeInfor_1>p:nth-of-type(2)>span:nth-of-type(1){
+	font-family: PingFangSC-Semibold;
+	font-size: 1.8rem;
+	color: #D0021B;
+	letter-spacing: -0.5px;
+}
+.officeInfor_1>p:nth-of-type(2)>span:nth-of-type(2){
+	font-family: PingFangSC-Regular;
+	font-size: 1.4rem;
+	color: #3A3A3A;
+	letter-spacing: -0.39px;
+}
+.officeInfor_2{
+	margin-top: 0.8rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.officeInfor_2>p:nth-of-type(1){
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.officeInfor_2>p:nth-of-type(1)>span:nth-of-type(1){
+	font-family: PingFangSC-Regular;
+	font-size: 1.4rem;
+	color: #3A3A3A;
+	letter-spacing: -0.54px;
+}
+.officeInfor_2>p:nth-of-type(1)>span:nth-of-type(2){
+	display: block;
+	height: 0.8rem;
+	width: 1px;
+	background: #3A3A3A;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+.officeInfor_2>p:nth-of-type(1)>span:nth-of-type(3){
+	font-family: PingFangSC-Regular;
+	font-size: 1.4rem;
+	color: #3A3A3A;
+	letter-spacing: -0.54px;
+}
+.officeInfor_3{
+	margin-top: 1.3rem;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.officeInfor_3>p{
+	padding-left: 1rem;
+	padding-right: 1rem;
+	opacity: 0.27;
+	background: #C8C8C8;
+	border-radius: 2px;
+	font-family: PingFangSC-Regular;
+	font-size: 1.2rem;
+	color: #3A3A3A;
+	letter-spacing: -0.46px;
+	margin-right: 1.6rem;
+}
+.officeNav{
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.officeNav>li:nth-of-type(2n){
+	width: 1px;
+	height: 0.8rem;
+	background: #3A3A3A;
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+.argument{
+	font-family: PingFangSC-Semibold;
+	font-size: 14px;
+	color: #304098;
+	letter-spacing: -0.5px;
+}
+.facility{
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #3A3A3A;
+	letter-spacing: -0.5px;
+}
+.floorInf{
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #3A3A3A;
+	letter-spacing: -0.5px;
+}
+.rentout{
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #3A3A3A;
+	letter-spacing: -0.5px;
+}
+.floorArgument>ul{
+	width: 34rem;
+	height: 3rem;
+	margin: 0 auto;
+	border-bottom: 1px solid #F6F6F6;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.floorArgument>ul>li{
+	width: 48%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.floorArgument>ul>li>p:nth-of-type(1){
+	width: 40%;
+	font-family: PingFangSC-Regular;
+	font-size: 1.2rem;
+	color: #3A3A3A;
+	letter-spacing: -0.43px;
+}
+.floorArgument>ul>li>p:nth-of-type(2){
+	width: 55%;
+	font-family: PingFangSC-Regular;
+	font-size: 1.2rem;
+	color: #3A3A3A;
+	letter-spacing: -0.43px;
+}

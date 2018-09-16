@@ -1,56 +1,62 @@
 <{extends file="extends/main.block.tpl"}>
 
-
-
 <{block "head-scripts-plus"}>
-	<{include file="common/uploader.inc.tpl"}>
 	<script type="text/javascript">
 	(function($){
 		$().ready(function(){
-			$('#avatar_aid').uploader();
 			<{call validate selector='#form'}>
 		});
 	})(jQuery);
 	</script>
 <{/block}>
 
-<{block "body-container"}>
-用户登录,注册页
-<div class="container">
-	<h1 class="page-header">注册</h1>
-</div>
-<div class="container">
-	<form action="<{'member'|url nofilter}>" class="" method="POST" autocomplete="off" id="form">
-		<input type="hidden" name="_token" value="<{csrf_token()}>">
-		<div class="form-group">
-			<label for="username" class="control-label">用户名</label>
-			<input type="text" class="form-control" name="username" id="username" placeholder="请输入用户名..." value="<{old('username')}>">
-		</div>
-		<div class="form-group">
-			<label for="password" class="control-label">密码</label>
-			<input type="password" class="form-control" name="password" id="password" placeholder="请输入密码...">
-		</div>
-		<div class="form-group">
-			<label for="password_confirmation" class="control-label">密码确认</label>
-			<input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="请再次确认密码...">
-		</div>
-		<div class="form-group radio">
-		<{foreach $_fields.gender as $v}>
-			<label><input type="radio" class="" name="gender" value="<{$v['id']}>"> <{$v['title']}></label>
-		<{/foreach}>
-			<div class="clearfix"></div>
-		</div>
-		<div class="form-group">
-			<label for="avatar_aid" class="control-label">上传图片</label>
-			<input type="hidden" class="form-control" name="avatar_aid" id="avatar_aid" value="0">
-		</div>
+<{block "head-styles-plus"}>
+<link rel="stylesheet" href="<{'css/index/register.css'|static}>" />
+<{/block}>
 
-		<div class="form-group checkbox">
-			<label>
-				<input type="checkbox" class="" name="accept_license" id="accept_license" value="1"> 我已阅读并同意协议
-			</label>
-		</div>
-		<button type="submit" class="btn btn-default">注册</button>
-	</form>
+<{block "body-container"}>
+<div id="page">
+			<div class="logo">
+				<span>楼查查logo</span>
+				<!--<img src=""/>-->
+			</div>
+			<form action="<{'register/login'|url nofilter}>" class="" method="POST" autocomplete="off" id="form">
+			<input type="hidden" name="_token" value="<{csrf_token()}>">
+			<div class="form-group">
+				<input type="text" name="phone" id="phone" value="" placeholder="请输入手机号" class="phone"/>
+			</div>
+			<div class="line"></div>
+			<div class="middle">
+				<input type="text" name="validate_code" id="validate_code" value="" placeholder="请输入验证码" class="verify"/>
+				<input type="button" name="send_code_btn" id="send_code_btn" value="发送验证码" class="send_validate_code"/>
+			</div>
+			<div class="line"></div>
+			<div class="register" id="register_submit">登<span></span>录</div>
+			</form>
 </div>
+<{/block}>
+
+<{block "body-scripts-plus"}>
+<script>
+	!function($){
+		$(function(){
+			//登录处理
+			$('#register_submit').on('click',function(){
+				$('#form').submit();
+			});
+			//发送验证码
+			$('#send_code_btn').on('click',function(){
+				var phone = $('#phone').val();
+				$.POST("<{'sendCode'|url}>",{phone:phone},function(response){
+					if(response.result == 'success'){
+						toastr.success(response.message);
+					}else{
+						//发送短信失败
+						toastr.warning(response.message);
+					}
+				});
+			});
+		});
+	}(jQuery);
+</script>
 <{/block}>

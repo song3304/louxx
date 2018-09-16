@@ -1,0 +1,9 @@
+.toast-success{
+    background-color: #ffffff !important;
+    color:#333333 !important;
+    opacity: 1;
+}
+#toast-container>.toast-success{
+    background-image: url(/static/img/success.png) !important;
+    background-size: 9%;
+}
