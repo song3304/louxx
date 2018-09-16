@@ -132,7 +132,7 @@ return [
             ],
             'address'=>[
                 'name'=>'详细地址',
-                'rules' => 'required'
+                'rules' => []
             ],
             'phone'=>[
                 'name' => '电话',
@@ -146,7 +146,7 @@ return [
                 'name' => '备注',
                 'rules' => [],
            ],
-           'valide_code' =>[
+           'validate_code' =>[
                'name' => '验证码',
                'rules' => 'required',
            ],

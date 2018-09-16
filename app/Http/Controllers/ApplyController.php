@@ -14,21 +14,26 @@ class ApplyController extends Controller
     // 物业申请入驻首页
 	public function index()
 	{
-	    $keys = ['name', 'province','city','area','address','phone','note','valide_code'];
+	    $keys = ['name', 'province','city','area','address','phone','note','validate_code'];
 	    $this->_validates = $this->getScriptValidate('properter-apply.store', $keys);
 	    return $this->view('index.apply_property');
 	}
 
     // 物业申请入驻
-	public function login(Request $request)
+	public function enter(Request $request)
 	{
-		$keys = ['name', 'province','city','area','address','phone','note','valide_code'];
+		$keys = ['name', 'province','city','area','address','phone','note','validate_code'];
 		$data = $this->autoValidate($request, 'properter-apply.store', $keys);
 
+		// 验证手机
+		if(!(new HxSmsApi)->checkPhoneCode($data['phone'],$data['validate_code'])){
+		    return $this->failure('apply.failure_phone_validate_code');
+		}
+		
 		// 验证手机验证码...
-		unset($data['valide_code']);
-		$apply_info = (new ProperterApply)->add($data);
-		return $this->success(NULL, 'apply', $apply_info->toArray());
+		unset($data['validate_code']);
+		$apply_info = (new ProperterApply)->create($data);
+		return $this->success('apply.success', url('home/index'));
 	}
 	
 	// 物业申请入驻提交成功
@@ -36,11 +41,11 @@ class ApplyController extends Controller
 	{
 	    return $this->view('index.apply_submit');
 	}
-	// 用户发送验证码
+    // 用户发送验证码
 	public function sendCode(Request $request)
 	{
 	    $phone = $request->input('phone');
-	    if (preg_match('/^1\d{10}$/',$phone)) {
+	    if (!preg_match('/^1\d{10}$/',$phone)) {
 	        return $this->error("手机号非法");
 	    }
 	    
@@ -51,7 +56,8 @@ class ApplyController extends Controller
 	        return $this->error("发送短信频次太高");
 	    }
 	    //发送短信，则在此记录时间
-	    if (0 === (new HxSmsApi)->sendSingleCodeSms($phone)) {
+	    $result = (new HxSmsApi)->sendSingleCodeSms($phone);
+	    if ($result['result']) {
 	        //发送成功
 	        Cache::put($valid_phone_key, time(),5);
 	        return $this->success('请注意查收短信');
@@ -59,5 +65,4 @@ class ApplyController extends Controller
 	        return $this->error("发送验短信失败，请联系管理员");
 	    }
 	}
-
 }

@@ -1,0 +1,29 @@
+body,html{
+	height: 100%;
+	width: 100%;
+}
+#page{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	background: url(../image/background.png) no-repeat;
+	background-size: 100% 100%;
+}
+.successflag{
+	padding-top: 19.4rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.successflag>img{
+	width: 5.4rem;
+	height: 5.4rem;
+}
+.successflag>p{
+	font-family: PingFangSC-Regular;
+	font-size: 18px;
+	color: #FFFFFF;
+	letter-spacing: -0.25px;
+	margin-top: 1.3rem;
+}

@@ -1,0 +1,199 @@
+html,body{
+	height: 100%;
+	width: 100%;
+}
+#page{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	background: url(../image/background.png) no-repeat;
+	background-size: 100% 100%;
+}
+ul,li{
+	list-style: none;
+}
+/*select{
+  appearance:none;
+ -moz-appearance:none;
+ -webkit-appearance:none;
+}*/
+.top{
+	padding-top: 1rem;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.top>a{
+	margin-left: 1.1rem;
+	display: block;
+	width: 1.6rem;
+	height: 1.6rem;
+}
+.top>a>img{
+	width: 100%;
+	height: 100%;
+}
+.top>span{
+	margin-left: 13.2rem;
+	font-family: PingFangSC-Regular;
+	font-size: 1.8rem;
+	color: #FFFFFF;
+	letter-spacing: -0.33px;
+}
+/*所处区域*/
+.region{
+	margin-top: 2.8rem;
+	margin-left: 2rem;
+}
+.region>p{
+	font-family: PingFangSC-Regular;
+	font-size: 1.4rem;
+	color: #FFFFFF;
+	letter-spacing: -0.25px;
+}
+.region>div{
+	margin-top: 1rem;
+	display: flex;
+	justify-content: flex-start;
+}
+.region>div>select{
+	width: 10rem;
+	height: 2.7rem;
+	margin-right: 1rem;
+	background: rgba(255,255,255,0.10);
+	border: 1px solid #FFFFFF;
+	/*border-radius: 2px;*/
+}
+/*租金范围*/
+.rental{
+	margin-left: 2rem;
+	margin-top: 2.6rem;
+}
+.rental>p{
+	font-family: PingFangSC-Regular;
+	font-size: 1.4rem;
+	color: #FFFFFF;
+	letter-spacing: -0.25px;
+}
+.rental>div{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	margin-top: 1rem;
+}
+.rental>div>input{
+	width: 9rem;
+	height: 2.5rem;
+	outline-style: none;
+	border: 0;
+	background: rgba(255,255,255,0.34);
+	text-align: center;
+	color: #FFFFFF;
+}
+/* WebKit browsers */
+input::-webkit-input-placeholder {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+}
+/* Mozilla Firefox 4 to 18 */
+input:-moz-placeholder {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+}
+/* Mozilla Firefox 19+ */
+input::-moz-placeholder {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+}
+/* Internet Explorer 10+ */
+input:-ms-input-placeholder {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+}
+.rental>div>div{
+	width: 2rem;
+	border-bottom: 1px solid #FFFFFF;
+	margin-left: 1rem;
+	margin-right: 1rem;
+}
+
+/*备注*/
+.remark{
+	margin-left: 2rem;
+	margin-top: 2.6rem;
+}
+.remark>p{
+	font-family: PingFangSC-Regular;
+	font-size: 1.4rem;
+	color: #FFFFFF;
+	letter-spacing: -0.25px;
+	margin-bottom: 1rem;
+}
+.remark>textarea{
+	width: 33.8rem;
+	height: 9rem;
+	background: rgba(255,255,255,0.10);
+	border: 1px solid #FFFFFF;
+	border-radius: 2px;
+	color: #FFFFFF;
+	text-indent: 1rem;
+	outline-style: none;
+}
+
+#tel{
+	outline-style: none;
+	border: 0;
+	background-color: rgba(255,255,255,0);
+    color: rgba(255,255,255,1);
+    margin-top: 5.5rem;
+    margin-left: 2rem;
+}
+.line{
+	width: 33.8rem;
+	border-bottom: 1px solid rgba(255,255,255,0.8);
+	margin-left: 2rem;
+	margin-top: 1.3rem;
+}
+.middle{
+	width:33.8rem;
+	margin-left: 2rem;
+	margin-top: 2.7rem;
+	display: flex;
+	justify-content: space-between;
+}
+#verify{
+	outline-style: none;
+	border: 0;
+	background-color: rgba(255,255,255,0);
+    color: rgba(255,255,255,1);
+}
+#btn{
+	outline-style: none;
+	border: 0;
+	background-color: rgba(255,255,255,0);
+    color: rgba(255,255,255,1);
+}
+.warmprompt{
+	margin: 1.2rem;
+	text-align: center;
+	font-family: PingFangSC-Regular;
+	font-size: 12px;
+	color: #FFFFFF;
+	letter-spacing: -0.2px;
+}
+.makesure{
+	margin: 0 auto;
+	width: 25.8rem;
+	height: 3.8rem;
+	border: 2px solid rgba(255,255,255,0.8);
+	border-radius: 1.9rem;
+	color: rgba(255,255,255,1);
+	margin-top: 2rem;
+	font-size: 1.4rem;
+	line-height: 3.8rem;
+	text-align: center;
+}
+.makesure>span{
+	margin-left: 1rem;
+	margin-right: 1rem;
+}
