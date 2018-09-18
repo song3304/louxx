@@ -445,19 +445,23 @@ return [
             ],
             'rent_low'=>[
                 'name' => '最低价',
-                'rules' => 'numeric',
+                'rules' => 'numeric|required_without:rent_high',
             ],
             'rent_high'=>[
                 'name' => '最高价',
-                'rules' => 'required|numeric',
+                'rules' => 'numeric|required_without:rent_low',
             ],
             'phone'=>[
                 'name' => '电话',
                 'rules' => 'required|phone',
             ],
-            'valid_code'=>[
+            'validate_code'=>[
                 'name' => '验证码',
                 'rules' => 'required',
+            ],
+            'note'=>[
+                'name' => '备注',
+                'rules' => [],
             ]
         ]
     ]
