@@ -1,6 +1,7 @@
 <{extends file="extends/main.block.tpl"}>
 
 <{block "head-scripts-plus"}>
+<script src="<{'js/public.js'|static}>"></script>
 <link rel="stylesheet" href="<{'js/select2/select2.min.css'|static}>"></script>
 <script src="<{'js/select2/select2.min.js'|static}>"></script>
 <script src="<{'js/select2/i18n/zh-CN.js'|static}>"></script>
@@ -16,6 +17,7 @@
 <{/block}>
 
 <{block "head-styles-plus"}>
+<link rel="stylesheet" href="<{'css/common.css'|static}>" />
 <link rel="stylesheet" href="<{'css/index/lookbuilding.css'|static}>" />
 <{/block}>
 

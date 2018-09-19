@@ -1,0 +1,295 @@
+* {
+	padding: 0;
+	margin: 0;
+	outline: none;
+	list-style: none;
+}					 
+.place {
+	width: 100vw;
+	height: 5.6rem;
+	background-image: url(/static/image/background.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	overflow: hidden;
+}		
+.place>input {
+	opacity: 0.47;
+	background: #302F2F;
+	border-radius: 2px;
+	width: 80%;
+	height: 0.6rem;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	padding-left: 10%;
+	background-image: url(/static/image/keywords.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	color: white;
+}			
+.place>div {
+	width: 100%;
+	overflow: hidden;
+}			
+.place>div>li {
+	float: left;
+	font-family: PingFangSC-Regular;
+	font-size: 16px;
+	color: #FFFFFF;
+	margin-top: 0.4rem;
+	letter-spacing: -0.39px;
+	text-align: center;
+	margin-left: 0.4rem;
+	display: flex;
+	align-items: center;
+	width: auto;
+}			
+.place>div>li>img:nth-child(1) {
+	margin-right: 0.06rem;
+}			
+.selects {
+	width: 100%;
+	height: 0.44rem;
+	margin-top: 0.26rem;
+}
+.selects>div {
+	width: 1.5rem;
+	height: 100%;
+	float: left;
+	border: 1px solid #FFFFFF;
+	border-radius: 2px;
+	font-size: 0.22rem;
+	color: white;
+	border-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	margin-left: 5%;
+}
+			
+.selects>div>ul {
+	position: absolute;
+	height: 0;
+	overflow: hidden;
+	width: 100%;
+	transition: 0.3s;
+	z-index: 66;
+	top: 100%;
+}
+			
+.selects>div>ul>li {
+	width: 100%;
+	background: white;
+	height: 0.44rem;
+	display: flex;
+	align-content: center;
+	color: black;
+	justify-content: center;
+}
+			
+.list {
+	width: 97%;
+	overflow: hidden;
+	margin: auto;
+	transform: translateY(-2rem);
+	background: white;
+	padding-top: 0.2rem;
+	padding-bottom: 0.2rem;
+	box-shadow: 0 2px 4px 0 rgba(232, 232, 232, 0.50);
+}
+			
+.list>li:nth-child(1) {
+	height: 100%;
+	margin-left: 0.2rem;
+	width: 36%;
+	display: flex;
+	align-items: center;
+	float: left;
+}
+			
+.list>li:nth-child(1)>img {
+	width: 100%;
+	height: 1.6rem;
+}
+			
+.td {
+	width: 60%;
+	height: 1.6rem;
+	float: right;
+	position: relative;
+}
+			
+.td_md1 {
+	width: 100%;
+	overflow: hidden;
+}
+			
+.td_md1>span:nth-child(1) {
+	font-family: PingFangSC-Regular;
+	font-size: 0.26rem;
+	color: #3A3A3A;
+	letter-spacing: -0.39px;
+	text-align: center;
+	float: left;
+}
+			
+.td_md1>span:nth-child(2) {
+	float: right;
+	font-family: PingFangSC-Regular;
+	font-size: 0.26rem;
+	color: #3A3A3A;
+	letter-spacing: -0.39px;
+	text-align: center;
+}
+			
+.td_md1>span:nth-child(2)::before {
+	content: '9.5';
+	color: #D0021B;
+	margin-right: 0.08rem;
+}
+	
+.td>p {
+	font-family: PingFangSC-Regular;
+	font-size: 0.2rem;
+	color: #3A3A3A;
+	letter-spacing: -0.39px;
+	text-align: center;
+	float: left;
+	padding-top: 0.15rem;
+}
+		
+.td>div {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	height: 0.32rem;
+}
+			
+.td>div>li {
+	float: left;
+	height: 100%;
+	opacity: 0.27;
+	background: #C8C8C8;
+	border-radius: 2px;
+	padding-left: 0.07rem;
+	padding-right: 0.07rem;
+	font-family: PingFangSC-Regular;
+	font-size: 0.2rem;
+	color: #3A3A3A;
+	letter-spacing: -0.39px;
+	text-align: center;
+	margin-left: 0.25rem;
+}
+			
+.td>div>li:nth-of-type(1) {
+	margin: 0 !important;
+}
+		
+.foucs {
+	width: 0;
+	height: 0;
+	opacity: 0;
+}
+			
+.template {
+	width: 61.8%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 888;
+}
+			
+.template>div:nth-child(1) {
+	height: 3.52rem;
+	width: 100%;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: -0.25px;
+	text-align: center;
+}
+
+.template>div:nth-child(1)>p:nth-child(1) {
+	padding-top: 1rem;
+}
+
+.template>div:nth-child(1)>p:nth-child(2) {
+	padding-top: 0.44rem;
+}
+		
+.Login>span:nth-child(2) {
+	width: 1px;
+	background: white;
+	display: inline-block;
+	height: 0.18rem;
+}
+
+.Login>span:nth-child(1) {
+	margin-right: 0.3rem;
+}
+	
+.Login>span:nth-child(3) {
+	margin-left: 0.3rem;
+}
+	
+.template>div:nth-child(2) {
+	width: 100%;
+	border-top: 1px solid #FFFFFF;
+	border-bottom: 1px solid #FFFFFF;
+	height: 0.64rem;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: -0.25px;
+ 	display: flex;
+	align-items: center;
+}
+
+.template>div:nth-child(2) span {
+	margin-left: 0.7rem;
+}
+
+.can_bat {
+	width: 100%;
+	overflow: hidden;
+	margin-top: 3.52rem;
+}
+
+.can_bat>p {
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-position: 0.7rem;
+	height: 0.4rem;
+	width: 100%;
+	float: left;
+}
+			
+.can_bat>p:nth-child(1) {
+	background-image: url(/static/image/down_app.png);
+}		
+.can_bat>p:nth-child(2) {
+	background-image: url(/static/image/find_building.png);
+	margin-top: 0.4rem
+}	
+.can_bat>p:nth-child(3) {
+	background-image: url(/static/image/property_apply.png);
+	margin-top: 0.4rem;
+}
+.can_bat li{
+	width: 83.1%;
+	height: 0.5rem;
+	float: left;
+	margin-left: 50%;
+	transform: translate(-50%);
+	border-bottom: 1px solid white;
+}
+.template >p{
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: -0.25px;
+	text-align: center;
+	padding-top: 0.32rem;
+}

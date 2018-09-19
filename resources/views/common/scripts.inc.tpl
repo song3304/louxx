@@ -14,6 +14,5 @@
 
 <{block "head-scripts-common"}>
 	<script src="<{'js/common.js'|static}>"></script>
-	<script src="<{'js/public.js'|static}>"></script>
 	<script src="<{'js/toastr/toastr.min.js'|static}>"></script>
 <{/block}>

@@ -1,6 +1,7 @@
 <{extends file="extends/main.block.tpl"}>
 
 <{block "head-scripts-plus"}>
+<script src="<{'js/public.js'|static}>"></script>
 	<script type="text/javascript">
 	(function($){
 		$().ready(function(){
@@ -11,6 +12,7 @@
 <{/block}>
 
 <{block "head-styles-plus"}>
+<link rel="stylesheet" href="<{'css/common.css'|static}>" />
 <link rel="stylesheet" href="<{'css/index/register.css'|static}>" />
 <{/block}>
 
