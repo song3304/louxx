@@ -142,8 +142,7 @@
 	text-align: center;
 }
 			
-.td_md1>span:nth-child(2)::before {
-	content: '9.5';
+.price_per_m {
 	color: #D0021B;
 	margin-right: 0.08rem;
 }
