@@ -10,7 +10,6 @@
 </script>
 
 <script src="<{'js/index/main.js'|static}>"></script>
-<!--script type="text/javascript" src="<{'static/js/index/index_location.js'|url}>"></script-->
 <{/block}>
 
 <{block "head-styles-bootstrap"}>

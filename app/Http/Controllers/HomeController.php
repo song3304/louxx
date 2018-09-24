@@ -16,6 +16,9 @@ use DB;
 use App\OfficeBuilding;
 use App\OfficeFloor;
 use App\Company;
+use App\OfficePeriphery;
+use App\HireInfo;
+use GuzzleHttp\json_encode;
 
 class HomeController extends Controller
 {
@@ -175,6 +178,25 @@ class HomeController extends Controller
 	    if(empty($this->_office)){// 不存在
 	        return $this->failure_noexists();
 	    }
+	    //楼层信息
+	    $this->_floor_list = OfficeFloor::where('oid',$oid)->get();
+	    //dd($this->_floor_list);
+	    //周边
+	    $peripheries_info = [
+	        ['name'=>'餐厅','list'=>[]],
+	        ['name'=>'酒店','list'=>[]],
+	        ['name'=>'健身','list'=>[]],
+	        ['name'=>'银行','list'=>[]]
+	    ];
+	    $this->_peripheries = OfficePeriphery::where('oid',$oid)->get();
+	    foreach ($this->_peripheries as $periphery){
+	        in_array($periphery->type,[0,1,2,3]) && $peripheries_info[$periphery->type]['list'][] = $periphery;
+	    }
+	    $this->_peripheries_info = $peripheries_info;
+	    //招租信息
+	    $this->_hire_info_list = HireInfo::with('pics')->where('oid',$oid)->orderBy('created_at','desc')->get();
+	    //dd($this->_hire_info_list);
+	    //dd($this->_office);
 	    return $this->view('index.office');
 	}
 	// 楼层信息
