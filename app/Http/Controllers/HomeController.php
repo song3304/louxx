@@ -107,7 +107,7 @@ class HomeController extends Controller
 	        $builder->ofPrice($prices);
 	    }
 	    
-	    $buildings = $builder->with(['pics','tags','info','hires'])->get();exit($builder->toSql());
+	    $buildings = $builder->with(['pics','tags','info','hires'])->get();
 	    if($request->ajax()) return $this->success(null,null,['buildings'=>$buildings]);
 	    //整理数据
 	    $this->_buildings = $buildings;
