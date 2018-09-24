@@ -1,6 +1,7 @@
 <{extends file="extends/main.block.tpl"}>
 
 <{block "head-scripts-plus"}>
+<script src="<{'js/public.js'|static}>"></script>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=879a6e897959d23c7638450d40cc75e0"></script>
 <{/block}>
 
@@ -214,7 +215,7 @@
 					<span>GF <{$_office.info.parking_space_cnt|default:'--'}>个停车位</span>
 				</div>
 				<{foreach $_floor_list as $floor}>
-				<ul>
+				<ul class="floor_bref" data-fid="<{$floor.id}>">
 					<li><span><{$floor.name}></span></li>
 					<li><{$floor.description}></li>
 					<img src="<{'image/triangle.png'|static}>"/>
@@ -300,6 +301,11 @@
 	    		}else{
 	    			$('.floorRentoutMain_no_data').hide();
 	    		}
+	    	});
+	    	//进入楼层页
+	    	$('.floor_bref').on('click',function(){
+	    		var fid = $(this).data('fid');
+	    		window.location.href = "<{'home/floor'|url}>?fid="+fid;
 	    	});
 	    })(jQuery);
 	</script>

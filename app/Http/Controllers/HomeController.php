@@ -210,6 +210,7 @@ class HomeController extends Controller
 	    if(empty($this->_floor)){// 不存在
 	        return $this->failure_noexists();
 	    }
+	    //dd($this->_floor);
 	    return $this->view('index.floor');
 	}
 	// 公司信息
@@ -223,6 +224,7 @@ class HomeController extends Controller
 	    if(empty($this->_company)){
 	        return $this->failure_noexists();
 	    }
+	    //dd($this->_company);
 	    return $this->view('index.company');
 	}
 }
