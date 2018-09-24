@@ -88,7 +88,18 @@
 				</div>
 			</div>
 		</div>
-		
+		<div v-if="building_list.length<1" class="list">
+			<li>
+				
+			</li>
+			<div class="td">
+				<li class="td_md1">
+					<span></span>
+					<span></span>
+				</li>
+				<p>暂无数据</p>
+			</div>
+		</div>
 	</div>
 	<div id="map"/>
 <{/block}>
@@ -135,7 +146,7 @@
 				}
 				//解析定位错误信息
 				 function onError(data) {
-					 jQuery('#distance').html(''); //定位失败距离不可用
+					 //jQuery('#distance').html(''); //定位失败距离不可用
 					 lat = 31.19247; //测试数据要删除
 					 lon = 121.47247;//测试数据要删掉
 					 
@@ -264,6 +275,7 @@
 					this.keywords = _this.val();
 				},
 				search_building(){ //ajax请求更新数据
+					_this = this;
 					if(this.city_id<1) return;
 					var post_data = {
 						keywords:this.keywords,

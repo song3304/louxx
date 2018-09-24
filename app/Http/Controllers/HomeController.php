@@ -66,27 +66,8 @@ class HomeController extends Controller
 	    }
 	    // 处理距离
 	    if(!empty($this->_distance_scope) && !empty($lat) && !empty($lon)){
-	        $builder->select('*', DB::raw('ROUND(
-                6378.138 * 2 * ASIN(
-                    SQRT(
-                        POW(
-                            SIN(
-                                (
-                                    '.$lon.' * PI() / 180 - lat * PI() / 180
-                                ) / 2
-                            ),
-                            2
-                        ) + COS('.$lon.' * PI() / 180) * COS(lat * PI() / 180) * POW(
-                            SIN(
-                                (
-                                    '.$lat.' * PI() / 180 - lon * PI() / 180
-                                ) / 2
-                            ),
-                            2
-                        )
-                    )
-                ) * 1000
-            ) AS juli'));
+	        $juli = $this->__juli($lat, $lon);
+	        $builder->select('*', DB::raw($juli.' as juli'));
 	        $distance = [];
 	        switch ($this->_distance_scope){
 	            case 1:
@@ -104,7 +85,7 @@ class HomeController extends Controller
 	            default:
 	                $distance = [0,3000];
 	        }
-	        $builder->whereBetween('juli',$distance);
+	        $builder->whereRaw($juli.'>='.$distance[0].' and '.$juli.'<='.$distance[1]);
 	    }
 	    // 处理价格
 	    if(!empty($this->_price_type)){
@@ -126,13 +107,39 @@ class HomeController extends Controller
 	        $builder->ofPrice($prices);
 	    }
 	    
-	    $buildings = $builder->with(['pics','tags','info','hires'])->get();
+	    $buildings = $builder->with(['pics','tags','info','hires'])->get();exit($builder->toSql());
 	    if($request->ajax()) return $this->success(null,null,['buildings'=>$buildings]);
 	    //整理数据
 	    $this->_buildings = $buildings;
 		return $this->view('index.index');
 	}
-
+    
+	//距离查找sql
+	private function __juli($lat,$lon){
+	    $juli = 'ROUND(
+            6378.138 * 2 * ASIN(
+                SQRT(
+                    POW(
+                        SIN(
+                            (
+                                '.$lat.' * PI() / 180 - latitude * PI() / 180
+                            ) / 2
+                        ),
+                        2
+                    ) + COS('.$lat.' * PI() / 180) * COS(latitude * PI() / 180) * POW(
+                        SIN(
+                            (
+                                '.$lon.' * PI() / 180 - longitude * PI() / 180
+                            ) / 2
+                        ),
+                        2
+                    )
+                )
+            ) * 1000
+        )';
+	    return $juli;
+	}
+	
     // 定位城市,保存
 	public function setCity(Request $request){
 	    $city_name = $request->input('city_name');
