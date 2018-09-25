@@ -17,7 +17,16 @@
 }
 #container {
 	height: 24.6rem; 
-}  
+} 
+.marker {
+            color: #000;
+            padding: 4px 10px;
+            border: 1px solid #fff;
+            white-space: nowrap;
+            font-size: 12px;
+            font-family: "";
+            background-color: #fff;
+        }
 </style>
 <{/block}>
 
@@ -185,20 +194,21 @@
 			<!--周边设施-->
 			<div class="floorFacility infoToggle" style="display: none;">
 				<ul class="floorFacilityTop">
-					<li>
+					<li data-flag = "0">
 						<img src="<{'image/restaurant.png'|static}>"/>
-						<span>餐饮<{if count($_peripheries_info[1].list)>0}><{count($_peripheries_info[1].list)}><{/if}></span>
-					<li>
+						<span>餐饮<{if count($_peripheries_info[0].list)>0}><{count($_peripheries_info[0].list)}><{/if}></span>
+					</li>
+					<li data-flag = "1">
 						<img src="<{'image/hotel.png'|static}>"/>
-						<span>酒店<{if count($_peripheries_info[2].list)>0}><{count($_peripheries_info[2].list)}><{/if}></span>
+						<span>酒店<{if count($_peripheries_info[1].list)>0}><{count($_peripheries_info[1].list)}><{/if}></span>
 					</li>
-					<li>
+					<li data-flag = "2">
 						<img src="<{'image/health.png'|static}>"/>
-						<span>健身<{if count($_peripheries_info[3].list)>0}><{count($_peripheries_info[3].list)}><{/if}></span>
+						<span>健身<{if count($_peripheries_info[2].list)>0}><{count($_peripheries_info[2].list)}><{/if}></span>
 					</li>
-					<li>
+					<li data-flag = "3">
 						<img src="<{'image/bank.png'|static}>"/>
-						<span>银行<{if count($_peripheries_info[4].list)>0}><{count($_peripheries_info[4].list)}><{/if}></span>
+						<span>银行<{if count($_peripheries_info[3].list)>0}><{count($_peripheries_info[3].list)}><{/if}></span>
 					</li>
 				</ul>
 				
@@ -271,9 +281,72 @@
 		//地图处理
 		var peripheries_info = <{json_encode($_peripheries_info) nofilter}>;
 		var map = new AMap.Map('container', {
-	        zoom:11,//级别
-	        center: [116.397428, 39.90923],//中心点坐标
+			resizeEnable: true,
+		    dragEnable:true,
+		    scrollWheel:true,
+		    doubleClickZoom:true,
+		    keyboardEnable:true,
+	        zoom:13,//级别
+	        center: [<{$_office.longitude}>, <{$_office.latitude}>],//中心点坐标
 	    });
+	    
+	    AMap.plugin([
+			'AMap.ToolBar',
+		    'AMap.Scale',
+		    'AMap.OverView',
+		    'AMap.MapType',
+		    'AMap.Geolocation',
+		   ], function(){
+		   		// 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
+		        map.addControl(new AMap.ToolBar());
+		        // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
+		        map.addControl(new AMap.Scale());
+		});
+	    
+	    //添加办公楼自己坐标
+	    marker = new AMap.Marker({
+            title: '<{$_office.building_name}>',
+            icon: "<{'image/mark_red.png'|static}>",
+            position: [<{$_office.longitude}>, <{$_office.latitude}>]
+        });
+       
+        marker.setMap(map);
+	    
+	    //当前所有坐标
+	    var current_markers = [];
+	    function setMarks(flag){
+	    	//删除所有坐标 
+	    	current_markers.forEach(function(value,index){
+	    		value.setMap(null);
+	    		value = null;
+	    	});
+	    	current_markers = [];
+	    	//根据标记添加所有点
+	    	for(var j=0;j<peripheries_info[flag].list.length;j++){
+	    			var mk = new AMap.Marker({
+			            title: peripheries_info[flag].list[j].name,
+			            icon: "<{'image/mark_blue.png'|static}>",
+			            position: [peripheries_info[flag].list[j].longitude, peripheries_info[flag].list[j].latitude]
+			        });
+			        current_markers.push(mk);
+			        mk.setMap(map);
+	    	}
+	    	
+	    }
+	    
+	    function showAllMarks(){
+	    	for(var i=0;i<peripheries_info.length;i++){
+	    		for(var j=0;j<peripheries_info[i].list.length;j++){
+	    			var mk = new AMap.Marker({
+			            title: peripheries_info[i].list[j].name,
+			            icon: "<{'image/mark_blue.png'|static}>",
+			            position: [peripheries_info[i].list[j].longitude, peripheries_info[i].list[j].latitude]
+			        });
+			        current_markers.push(mk);
+			        mk.setMap(map);
+	    		}
+	    	}
+	    }
 	    
 	    (function($){
 	    	//tag切换处理
@@ -302,10 +375,19 @@
 	    			$('.floorRentoutMain_no_data').hide();
 	    		}
 	    	});
+	    	//地图切换
+	    	$('.floorFacilityTop li').on('click',function(){
+	    		var flag = parseInt($(this).data('flag'));
+	    		setMarks(flag);
+	    	});
 	    	//进入楼层页
 	    	$('.floor_bref').on('click',function(){
 	    		var fid = $(this).data('fid');
 	    		window.location.href = "<{'home/floor'|url}>?fid="+fid;
+	    	});
+	    	$(function(){
+	    		//默认显示所有周边点
+	    		showAllMarks();
 	    	});
 	    })(jQuery);
 	</script>
