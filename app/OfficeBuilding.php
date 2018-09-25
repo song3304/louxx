@@ -110,6 +110,9 @@ class OfficeBuilding extends Model{
 	public function scopeOfPrice(Builder $builder, $prices)
 	{
 	    $builder->join('hire_infos', 'hire_infos.oid', '=', 'office_buildings.id','LEFT');
+	    if(!is_array($prices)){
+	        $prices = [intval($prices),intval($prices)+1];
+	    }
 	    $builder->whereBetween('hire_infos.per_rent',$prices);
 	}
 }

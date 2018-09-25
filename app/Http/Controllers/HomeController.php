@@ -106,8 +106,11 @@ class HomeController extends Controller
 	        }
 	        $builder->ofPrice($prices);
 	    }
+	    if(!empty($this->_price_scope)){
+	        $builder->ofPrice($this->_price_scope);
+	    }
 	    
-	    $buildings = $builder->with(['pics','tags','info','hires'])->get();
+	    $buildings = $builder->select('office_buildings.*')->with(['pics','tags','info','hires'])->get();
 	    if($request->ajax()) return $this->success(null,null,['buildings'=>$buildings]);
 	    //整理数据
 	    $this->_buildings = $buildings;
@@ -219,6 +222,17 @@ class HomeController extends Controller
 	    }
 	    //dd($this->_floor);
 	    return $this->view('index.floor');
+	}
+	//查找公司
+	public function findCompany(Request $request)
+	{
+	    $keywords = $request->input('keywords');
+	    if(empty($keywords)){
+	        return $this->error_param(url('home/index'),['msg'=>'参数错误']);
+	    }
+	    $this->_keywords = $keywords;
+	    $this->_company_list = Company::with('tags')->where('name','like','%'.$keywords.'%')->get();
+	    return $this->view('index.search_company');
 	}
 	// 公司信息
 	public function company(Request $request)

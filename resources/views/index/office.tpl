@@ -76,7 +76,7 @@
 					</p>
 					<p>
 						<img src="<{'image/search.png'|static}>"/>
-						<input type="text" name="" id="" value="" placeholder="搜索企业"/>
+						<input type="text" name="keywords" id="search_company" value="" placeholder="搜索企业"/>
 					</p>
 				</li>
 				<li class="officeInfor_3">
@@ -384,6 +384,11 @@
 	    	$('.floor_bref').on('click',function(){
 	    		var fid = $(this).data('fid');
 	    		window.location.href = "<{'home/floor'|url}>?fid="+fid;
+	    	});
+	    	//搜索企业
+	    	$('#search_company').on('keyup',function(){
+	    		var keywords = $(this).val();
+	    		window.location.href = "<{'home/findCompany'|url}>?keywords="+keywords;
 	    	});
 	    	$(function(){
 	    		//默认显示所有周边点
