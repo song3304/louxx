@@ -146,9 +146,7 @@
 				}
 				//解析定位错误信息
 				 function onError(data) {
-					 //jQuery('#distance').html(''); //定位失败距离不可用
-					 lat = 31.19247; //测试数据要删除
-					 lon = 121.47247;//测试数据要删掉
+					 jQuery('#distance').html(''); //定位失败距离不可用
 					 
 					 //alert('获取经纬度失败.');
 				 }
