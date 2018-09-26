@@ -43,7 +43,18 @@ class FindBuildingController extends Controller
 	{
 	    return $this->view('index.find_building_submit');
 	}
+	public function data(Request $request)
+	{
+	    $area = new Area;
+	    $builder = $area->newQuery();
 	
+	    $total = $this->_getCount($request, $builder, FALSE);
+	    $builder = $builder->orderBy('area_id','asc');
+	    $data = $this->_getData($request, $builder, null);
+	    $data['recordsTotal'] = $total; //不带 f q 条件的总数
+	    $data['recordsFiltered'] = $data['total']; //带 f q 条件的总数
+	    return $this->api($data);
+	}
 	// 用户发送验证码
 	public function sendCode(Request $request)
 	{
