@@ -29,6 +29,11 @@ class FindBuilding extends Model{
 	    return $this->full_address();
 	}
 	
+	public function rentScope()
+	{
+	    return $this->rent_low.'-'.$this->rent_high;
+	}
+	
 	//用户
 	public function user(){
 	    return $this->hasOne('App\\User','id','uid');

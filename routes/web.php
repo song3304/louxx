@@ -39,6 +39,7 @@ $router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['au
 	    'hire' => 'HireController',
 	    'tag' => 'TagController',
 	    'area' => 'AreaController',
+	    'find-building' => 'FindBuildingController',
 	]);
 
 	$router->get('hire/toggle/{id}','HireController@toggle');
