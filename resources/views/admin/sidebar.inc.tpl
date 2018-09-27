@@ -55,8 +55,8 @@
 					<ul>
 						<li><a class="col-md-8" href="<{'admin/banner'|url}>" name="banner/list">租凭列表</a>
 						<a class="col-md-4" href="<{'admin/banner/create'|url}>" name="banner/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
-						<li><a class="col-md-12" href="<{'admin/find-building'|url}>" name="find-building/list">找楼列表</a>
-						<!--a class="col-md-4" href="<{'admin/find-building/create'|url}>" name="find-building/create"><i class="glyphicon glyphicon-plus"></i> 添加</a--></li>
+						<li><a class="col-md-8" href="<{'admin/find-building'|url}>" name="find-building/list">找楼列表</a>
+						<a class="col-md-4" href="<{'admin/find-building/create'|url}>" name="find-building/create"><i class="glyphicon glyphicon-plus"></i> 添加</a></li>
 					</ul>
 				</li>
 				<li>
