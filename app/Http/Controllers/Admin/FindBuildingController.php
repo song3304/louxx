@@ -96,6 +96,18 @@ class FindBuildingController extends Controller
         return $this->view('admin.find_building.edit');
 	}
 
+	public function toggle($id)
+	{
+	    $find_building = Building::find($id);
+	    if(empty($find_building)) {
+	        return $this->failure_noexists();
+	    }
+	    
+	    $status = $find_building->status?0:1;
+	    $find_building->update(['status'=>$status]);
+	    return redirect(url('admin/find-building'));
+	}
+	
 	public function update(Request $request, $id)
 	{
 		$find_building = Building::find($id);

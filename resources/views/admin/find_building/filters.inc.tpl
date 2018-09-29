@@ -1,7 +1,7 @@
 <!-- Form Content -->
 <form action="<{'admin'|url nofilter}>/<{block "name"}><{/block}>" method="GET" class="form-bordered form-horizontal">
 	<input type="hidden" name="base" value="<{$_base}>">
-	<div class="form-group col-sm-6">
+	<div class="form-group col-sm-4">
 		<label class="col-md-3 control-label" for="name">手机号</label>
 		<div class="col-md-9">
 			<div class="input-group">
@@ -9,7 +9,19 @@
 			</div>
 		</div>
 	</div>
-	<div class="form-group col-sm-6">
+	<div class="form-group col-sm-4">
+		<label class="col-md-3 control-label" for="status">是否处理</label>
+		<div class="col-md-9">
+			<div class="input-group">
+				<select id="status" name="f[status][eq]" class="form-control text-center">
+					<option value="">请选择</option>
+					<option value="1" <{if $_filters.status.eq==1}> selected="selected"<{/if}>>已处理</option>
+					<option value="0" <{if $_filters.status.eq==="0"}> selected="selected"<{/if}>>未处理</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="form-group col-sm-4">
 		<label class="col-md-3 control-label" for="created_at-min">加入时间</label>
 		<div class="col-md-9">
 			<div class="input-group input-daterange">

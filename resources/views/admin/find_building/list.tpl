@@ -16,6 +16,7 @@
 <th>市</th>
 <th>区</th>
 <th>备注</th>
+<th>是否处理</th>
 <{/block}>
 
 <{block "table-td-plus"}>
@@ -26,6 +27,7 @@
 <td data-from="city_name" data-orderable="false">{{data.area_name}}</td>
 <td data-from="area_name" data-orderable="false">{{data.area_name}}</td>
 <td data-from="note" data-orderable="false">{{data}}</td>
+<td data-from="status" class="text-center">{{if data}}<a href='/admin/find-building/toggle/{{full.id}}'>√</a>{{else}}<a href='/admin/find-building/toggle/{{full.id}}'>X</a>{{/if}}</td>
 <{/block}>
 
 <{block "table-td-options-delete-confirm"}>您确定删除这条找楼信息：{{full.note}}吗？<{/block}>

@@ -13,6 +13,7 @@ use Session;
 use App\FindBuilding;
 use App\Tools\HxSmsApi;
 use Cache;
+use App\Area;
 
 class FindBuildingController extends Controller
 {

@@ -26,7 +26,7 @@ $router->post('/sendCode', 'RegisterController@sendCode');
 $router->any('/area/data/json', 'AreaController@data');
 
 $router->group(['namespace' => 'Admin','prefix' => 'admin', 'middleware' => ['auth', 'role:administrator']], function($router) {
-	
+    $router->get('find-building/toggle/{id}','FindBuildingController@toggle');
 	$router->addAdminRoutes([
 		'member' => 'MemberController',
 	    'properter' => 'ProperterController',
