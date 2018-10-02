@@ -29,7 +29,9 @@
 			</div>
 			<div class="line"></div>
 			<div class="middle">
-				<input type="text" name="validate_code" id="validate_code" value="" placeholder="请输入验证码" class="verify"/>
+				<div>
+					<input type="text" name="validate_code" id="validate_code" value="" placeholder="请输入验证码" class="verify"/>
+				</div>
 				<input type="button" name="send_code_btn" id="send_code_btn" value="发送验证码" class="send_validate_code"/>
 			</div>
 			<div class="line"></div>
@@ -45,6 +47,21 @@
 		var count = 60; //间隔函数，1秒执行
 		var curCount; //当前剩余秒数
 		$(function(){
+			toastr.options = {  
+					            closeButton: false,  
+					            debug: false,  
+					            progressBar: false,  
+					            positionClass: "toast-top-center",  
+					            onclick: null,  
+					            showDuration: "300",  
+					            hideDuration: "1000",  
+					            timeOut: "5000",  
+					            extendedTimeOut: "1000",  
+					            showEasing: "swing",  
+					            hideEasing: "linear",  
+					            showMethod: "fadeIn",  
+					            hideMethod: "fadeOut"  
+        					};
 			//登录处理
 			$('#register_submit').on('click',function(){
 				$('#form').submit();
@@ -52,60 +69,21 @@
 			
 			//发送验证码
 			$('#send_code_btn').on('click',function(){
-				if (verifyIntervarl()) {
-					var phone = $('#phone').val();
-					$.POST("<{'sendCode'|url}>",{phone:phone},function(response){
-						if(response.result == 'success'){
-							toastr.success(response.message);
-						}else{
-							//发送短信失败
-							toastr.warning(response.message);
-						}
-					});
-				}
-			});
-			$("#phone").on("focus", function() {
-				$("#_token").hide();
-			});
-			$("#validate_code").on("focus", function() {
-				$("#_token").hide();
-			})
-		});
-
-		function verifyIntervarl() {
-			curCount = count;
-			var phone = $("#phone").val();
-			if (invalidatePhone(phone)) {
-				return false;
-			}
-			if (phone != "") {
-				//设置button效果，开始计时
+				curCount = count;
 				$("#send_code_btn").attr("disabled", "true");
 				$("#send_code_btn").val("请在" + curCount + "秒内输入");
 				InterValObj = window.setInterval(SetRemainTimes, 1000); //启动计时器，1秒执行一次
-				return true;
-			} else {
-				$("#_token").html("  手机号不能为空");
-				$("#_token").show();
-				return false;
-			}
-		};
-
-		//验证手机号
-		function invalidatePhone(phone) {
-			if(phone == '') {
-				$("#_token").html("  请先填写手机号");
-				$("#_token").show();
-				return true;
-			}
-			var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
-			if(!myreg.test(phone)) {
-				$("#_token").html("  请输入有效的手机号");
-				$("#_token").show();
-				return true;
-			}
-			return false;
-		};
+				var phone = $('#phone').val();
+				$.POST("<{'sendCode'|url}>",{phone:phone},function(response){
+					if(response.result == 'success'){
+						toastr.success(response.message);
+					}else{
+						//发送短信失败
+						toastr.warning(response.message);
+					}
+				});
+			});
+		});
 
 		function SetRemainTimes() {
 			if(curCount == 0) {

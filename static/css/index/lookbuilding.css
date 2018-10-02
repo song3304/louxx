@@ -130,7 +130,7 @@ input:-ms-input-placeholder {
 	margin-bottom: 1rem;
 }
 .remark>textarea{
-	width: 33.8rem;
+	width: 30.8rem;
 	height: 9rem;
 	background: rgba(255,255,255,0.10);
 	border: 1px solid #FFFFFF;
@@ -146,21 +146,31 @@ input:-ms-input-placeholder {
 	background-color: rgba(255,255,255,0);
     color: rgba(255,255,255,1);
     margin-top: 5.5rem;
-    margin-left: 2rem;
+    /* margin-left: 2rem; */
 }
+
+.tel-input {
+	display: flex;
+	margin-left: 2rem;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
 .line{
-	width: 33.8rem;
+	width: 30.8rem;
 	border-bottom: 1px solid rgba(255,255,255,0.8);
 	margin-left: 2rem;
 	margin-top: 1.3rem;
 }
 .middle{
-	width:33.8rem;
+	width:30.8rem;
 	margin-left: 2rem;
 	margin-top: 2.7rem;
 	display: flex;
 	justify-content: space-between;
+	flex-wrap: wrap;
 }
+
 .verify{
 	outline-style: none;
 	border: 0;

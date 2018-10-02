@@ -45,13 +45,20 @@ input:-ms-input-placeholder {
 	font-size: 20px;
 	color: white;
 }
+
+.form-group {
+	direction: flex;
+	margin-left: 5.9rem;
+	justify-content: flex-start;
+	flex-direction: column;
+}
+
 .phone{
 	outline-style: none;
 	border: 0;
 	background-color: rgba(255,255,255,0);
     color: rgba(255,255,255,1);
     margin-top: 5.5rem;
-    margin-left: 5.9rem;
 }
 .line{
 	width: 25.8rem;
@@ -59,12 +66,14 @@ input:-ms-input-placeholder {
 	margin-left: 5.9rem;
 	margin-top: 1.3rem;
 }
+
 .middle{
 	width:25.8rem;
 	margin-left: 5.9rem;
 	margin-top: 2.7rem;
 	display: flex;
 	justify-content: space-between;
+	flex-wrap: wrap;
 }
 .verify{
 	outline-style: none;
@@ -76,7 +85,7 @@ input:-ms-input-placeholder {
 	outline-style: none;
 	border: 0;
 	background-color: rgba(255,255,255,0);
-    color: rgba(255,255,255,1);
+	color: rgba(255,255,255,1);
 }
 .register{
 	width: 25.8rem;

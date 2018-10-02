@@ -65,6 +65,22 @@
 <script>
 	!function($){
 		var method = {cacheData: {}};
+		toastr.options = {  
+					            closeButton: false,  
+					            debug: false,  
+					            progressBar: false,  
+					            positionClass: "toast-top-center",  
+					            onclick: null,  
+					            showDuration: "300",  
+					            hideDuration: "1000",  
+					            timeOut: "5000",  
+					            extendedTimeOut: "1000",  
+					            showEasing: "swing",  
+					            hideEasing: "linear",  
+					            showMethod: "fadeIn",  
+					            hideMethod: "fadeOut"  
+        					};
+
 		method.getData = function(url, params) {
 			var key = JSON.stringify({url: url, params: params});
 			var $dfd = jQuery.Deferred();

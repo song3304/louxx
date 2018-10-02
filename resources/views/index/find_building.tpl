@@ -52,10 +52,14 @@
 		<textarea name="note" id="note" rows="" cols=""></textarea>
 	</div>
 	<div>
-		<input type="text" name="phone" id="phone" class="tel" value="" placeholder="请输入手机号" />
+		<div class='tel-input'>
+			<input type="text" name="phone" id="phone" class="tel" value="" placeholder="请输入手机号" />
+		</div>
 		<div class="line"></div>
 		<div class="middle">
-			<input type="text" name="validate_code" id="validate_code" value="" placeholder="请输入验证码" class="verify"/>
+			<div>
+				<input type="text" name="validate_code" id="validate_code" value="" placeholder="请输入验证码" class="verify"/>
+			</div>
 			<input type="button" name="send_code_btn" id="send_code_btn" value="发送验证码" class="send_validate_code"/>
 		</div>
 		<div class="line"></div>
@@ -70,7 +74,27 @@
 <{block "body-scripts-plus"}>
 <script>
 	!function($){
+		var InterValObj; //timer变量，控制时间
+		var count = 60; //间隔函数，1秒执行
+		var curCount; //当前剩余秒数
 		var method = {cacheData: {}};
+
+		toastr.options = {  
+					            closeButton: false,  
+					            debug: false,  
+					            progressBar: false,  
+					            positionClass: "toast-top-center",  
+					            onclick: null,  
+					            showDuration: "300",  
+					            hideDuration: "1000",  
+					            timeOut: "5000",  
+					            extendedTimeOut: "1000",  
+					            showEasing: "swing",  
+					            hideEasing: "linear",  
+					            showMethod: "fadeIn",  
+					            hideMethod: "fadeOut"  
+        					};
+
 		method.getData = function(url, params) {
 			var key = JSON.stringify({url: url, params: params});
 			var $dfd = jQuery.Deferred();
@@ -187,6 +211,10 @@
 			});
 			//发送验证码
 			$('#send_code_btn').on('click',function(){
+				curCount = count;
+				$("#send_code_btn").attr("disabled", "true");
+				$("#send_code_btn").val("请在" + curCount + "秒内输入");
+				InterValObj = window.setInterval(SetRemainTimes, 1000); //启动计时器，1秒执行一次
 				var phone = $('#phone').val();
 				$.POST("<{'sendCode'|url}>",{phone:phone},function(response){
 					if(response.result == 'success'){
@@ -198,6 +226,16 @@
 				});
 			});
 		});
+		function SetRemainTimes() {
+			if(curCount == 0) {
+				window.clearInterval(InterValObj); //停止计时器
+				$("#send_code_btn").removeAttr("disabled"); //启用按钮
+				$("#send_code_btn").val("重新发送验证码");
+			} else {
+				curCount--;
+				$("#send_code_btn").val("请在" + curCount + "秒内输入");
+			}
+		}
 	}(jQuery);
 </script>
 <{/block}>
