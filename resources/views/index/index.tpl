@@ -40,7 +40,7 @@
 				<p></p>
 				<li></li>
 			</div>
-			<p>我的收藏-xxx-xxx</p>
+			<p>我的收藏</p>
 		</div-->
 		<div class="place">
 			<div>

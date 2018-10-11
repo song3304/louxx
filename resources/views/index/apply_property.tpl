@@ -55,7 +55,7 @@
 		</div>
 		<div class="line"></div>
 	</div>
-	<p class="warmprompt">*您也可以拨打400-xxx-xxxx直接委托需求</p>
+	<p class="warmprompt">*您也可以拨打<{config('settings.contact_us_phone')}>直接委托需求</p>
 	<div class="makesure" id="apply_btn">确<span></span>定</div>
 	</form>
 </div>
