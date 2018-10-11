@@ -24,7 +24,7 @@
 <{block "body-container"}>
 <div id="page">
 	<div class="top">
-		<a href="#">
+		<a href="javascript:history.go(-1);">
 			<img src="<{'image/icon-arrow-left.png'|static}>"/>
 		</a>
 		<span>申请入驻</span>
