@@ -60,6 +60,7 @@ input:-ms-input-placeholder {
 	width: 2.2rem;
 	height: 1.8rem;
 	margin-left: 23rem;
+	margin-right: -1rem;
 }
 .officeTop_1>li:nth-of-type(3)>img{
 	width: 100%;
@@ -96,7 +97,7 @@ input:-ms-input-placeholder {
 }
 .officeInfor{
 	box-sizing: border-box;
-	height: 11.5rem;
+	height: 13rem;
 	box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	padding-left: 1.6rem;
 	padding-right: 1.4rem;
@@ -288,11 +289,21 @@ input:-ms-input-placeholder {
 	width: 1.8rem;
 	height: 1.8rem;
 }
-.floorFacilityTop>li>span{
+.floorFacilityTopLiSpan{
 	font-family: PingFangSC-Regular;
 	font-size: 12px;
 	color: #3A3A3A;
 	letter-spacing: -0.5px;
+}
+
+.floorFacilityTopLiSpanOn {
+	width: 16%;
+	margin-left: 2.4rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border:2px solid #008000;
+	padding: 5px;
 }
 
 
@@ -426,4 +437,108 @@ input:-ms-input-placeholder {
 }
 .current{
 	color: #304098;
+}
+
+.template {
+	width: 61.8%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 888;
+}
+			
+.template>div:nth-child(1) {
+	height: 6.52rem;
+	width: 100%;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: -0.25px;
+	text-align: center;
+}
+
+.template>div:nth-child(1)>p:nth-child(1) {
+	padding-top: 6rem;
+}
+
+.template>div:nth-child(1)>p:nth-child(2) {
+	padding-top: 2rem;
+}
+		
+.Login>span:nth-child(2) {
+	width: 1px;
+	background: white;
+	display: inline-block;
+	height: 1.18rem;
+}
+
+.Login>span:nth-child(1) {
+	margin-right: 1.3rem;
+}
+	
+.Login>span:nth-child(3) {
+	margin-left: 1.3rem;
+}
+	
+.template>div:nth-child(2) {
+	width: 100%;
+	border-top: 1px solid #FFFFFF;
+	border-bottom: 1px solid #FFFFFF;
+	height: 2.64rem;
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: -0.25px;
+ 	display: flex;
+	align-items: center;
+	margin-top: 13rem;
+}
+
+.template>div:nth-child(2) span {
+	margin-left: 3.5rem;
+}
+
+.can_bat {
+	width: 100%;
+	overflow: hidden;
+	margin-top: 7.2rem;
+}
+
+.can_bat>p {
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-position: 2.8rem;
+	height: 2.4rem;
+	width: 100%;
+	float: left;
+}
+			
+.can_bat>p:nth-child(1) {
+	background-image: url(/static/image/down_app.png);
+}		
+.can_bat>p:nth-child(2) {
+	background-image: url(/static/image/find_building.png);
+	margin-top: 1.8rem
+}	
+.can_bat>p:nth-child(3) {
+	background-image: url(/static/image/property_apply.png);
+	margin-top: 1.8rem;
+}
+.can_bat li{
+	width: 83.1%;
+	height: 1.5rem;
+	float: left;
+	margin-left: 50%;
+	transform: translate(-50%);
+	border-bottom: 1px solid white;
+}
+.template >p{
+	font-family: PingFangSC-Regular;
+	font-size: 14px;
+	color: #FFFFFF;
+	letter-spacing: -0.25px;
+	text-align: center;
+	padding-top: 2.32rem;
 }

@@ -32,6 +32,28 @@
 
 <{block "body-container"}>
 <div id="page">
+	<div class="template" id="template">
+			<div>
+				<p>
+					<img src="<{'image/logo2.png'|static}>"/>		
+				</p>
+				<p class="Login" id="login">
+					<span>登录</span>
+					<span></span>
+					<span>注册</span>
+				</p>
+			</div>
+			<div class="findOffice" id="findOffice">
+				<span>找办公楼</span>
+			</div>
+			<div class="can_bat">
+				<p></p>
+				<p id="findBuilding"></p>
+				<p id="findApply"></p>
+				<li></li>
+			</div>
+			<p>我的收藏-xxx-xxx</p>
+		</div>
 	<div class="officeTop">
 		<div class="officeTop_img">
 			<{foreach $_office.pics as $pic}>
@@ -41,9 +63,11 @@
 			<{/foreach}>			
 		</div>
 		<ul class="officeTop_1">
-			<li>LOGO</li>
-			<li><{$_office.building_name}></li>
 			<li>
+				<img src="<{'image/logo3.png'|static}>"/>			
+			</li>
+			<li><{$_office.building_name}></li>
+			<li class="moreItem" id="moreItem">
 				<img src="<{'image/more.png'|static}>"/>
 			</li>
 		</ul>
@@ -349,6 +373,69 @@
 	    }
 	    
 	    (function($){
+	    	$("#template").hide();	
+	    	$("#template").on("touchstart", function(e) {
+				    // // 判断默认行为是否可以被禁用
+				    // if (e.cancelable) {
+				    //     // 判断默认行为是否已经被禁用
+				    //     if (!e.defaultPrevented) {
+				    //         e.preventDefault();
+				    //     }
+				    // }   
+				    startX = e.originalEvent.changedTouches[0].pageX,
+				    startY = e.originalEvent.changedTouches[0].pageY;
+				});
+				$("#template").on("touchend", function(e) {         
+				    // // 判断默认行为是否可以被禁用
+				    // if (e.cancelable) {
+				    //     // 判断默认行为是否已经被禁用
+				    //     if (!e.defaultPrevented) {
+				    //         e.preventDefault();
+				    //     }
+				    // }               
+				    moveEndX = e.originalEvent.changedTouches[0].pageX,
+				    moveEndY = e.originalEvent.changedTouches[0].pageY,
+				    X = moveEndX - startX,
+				    Y = moveEndY - startY;
+				    //左滑
+				    if ( X > 0 ) {
+				        $("#template").hide();                
+				    }
+				    //右滑
+				    else if ( X < 0 ) {
+				        $("#template").hide();   
+				    }
+				    //下滑
+				    else if ( Y > 0) {
+				        $("#template").hide();   
+				    }
+				    //上滑
+				    else if ( Y < 0 ) {
+				        $("#template").hide();  
+				    }
+				    //单击
+				    else{ 
+				    }
+				});
+
+				$("#moreItem").on("click",function(){
+					$("#template").show();
+				});
+
+				$("#findOffice").on("click",function(){
+					window.location.href = "<{'home/index'|url}>";
+				});
+
+				$("#findBuilding").on("click",function(){
+					window.location.href = "<{'find_building'|url}>";
+				});
+				$("#findApply").on("click",function(){
+					window.location.href = "<{'apply'|url}>";
+				});
+				$("#login").on("click",function(){
+					window.location.href = "<{'register'|url}>";
+				});
+
 	    	//tag切换处理
 	   		$('.officeNav li').on('click',function(){
 	   			var class_name = $(this).attr('class');
@@ -360,6 +447,8 @@
 	    	//租凭切换处理
 	    	$('.floorRentoutNav li').on('click',function(){
 	    		var rage = $(this).data('rage');
+	    		$("")
+
 	    		$(this).addClass('floorRentoutNav_s').siblings().removeClass('floorRentoutNav_s');
 	    		$('.floorRentoutMain').each(function(){
 	    			var area = parseInt($(this).data('area'));
@@ -377,6 +466,7 @@
 	    	});
 	    	//地图切换
 	    	$('.floorFacilityTop li').on('click',function(){
+	   			$(this).addClass('floorFacilityTopLiSpanOn').siblings().removeClass('floorFacilityTopLiSpanOn');
 	    		var flag = parseInt($(this).data('flag'));
 	    		setMarks(flag);
 	    	});

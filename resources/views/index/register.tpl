@@ -19,8 +19,8 @@
 <{block "body-container"}>
 <div id="page">
 			<div class="logo">
-				<span>楼查查logo</span>
-				<!--<img src=""/>-->
+				<!-- <span>楼查查logo</span> -->
+				<img src="../../static/image/logo1.png"/>
 			</div>
 			<form action="<{'register/login'|url nofilter}>" class="" method="POST" autocomplete="off" id="form">
 			<input type="hidden" name="_token" value="<{csrf_token()}>">
@@ -69,21 +69,60 @@
 			
 			//发送验证码
 			$('#send_code_btn').on('click',function(){
-				curCount = count;
-				$("#send_code_btn").attr("disabled", "true");
-				$("#send_code_btn").val("请在" + curCount + "秒内输入");
-				InterValObj = window.setInterval(SetRemainTimes, 1000); //启动计时器，1秒执行一次
-				var phone = $('#phone').val();
-				$.POST("<{'sendCode'|url}>",{phone:phone},function(response){
-					if(response.result == 'success'){
-						toastr.success(response.message);
-					}else{
-						//发送短信失败
-						toastr.warning(response.message);
-					}
-				});
+				if (verifyIntervarl()) {
+					var phone = $('#phone').val();
+					$.POST("<{'sendCode'|url}>",{phone:phone},function(response){ 
+						if (response.result == 'success') {
+							toastr.success(response.message);
+						} else {
+							//发送短信失败
+							toastr.warning(response.message);
+						}
+   					});
+				}
 			});
+			$("#phone").on("focus", function() {
+				$("#_token").hide();
+			});
+			$("#validate_code").on("focus", function() {
+				$("#_token").hide();
+			})
 		});
+
+		function verifyIntervarl() {
+			curCount = count;
+			var phone = $("#phone").val();
+			if (invalidatePhone(phone)) {
+				return false;
+			}
+			if (phone != "") {
+				//设置button效果，开始计时
+				$("#send_code_btn").attr("disabled", "true");
+				$("#send_code_btn").val(curCount + "s");
+				InterValObj = window.setInterval(SetRemainTimes, 1000); //启动计时器，1秒执行一次
+				return true;
+			} else {
+				$("#_token").html("  手机号不能为空");
+				$("#_token").show();
+				return false;
+			}
+		};
+
+		//验证手机号
+		function invalidatePhone(phone) {
+			if(phone == '') {
+				$("#_token").html("  请先填写手机号");
+				$("#_token").show();
+				return true;
+			}
+			var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+			if(!myreg.test(phone)) {
+				$("#_token").html("  请输入有效的手机号");
+				$("#_token").show();
+				return true;
+			}
+			return false;
+		};
 
 		function SetRemainTimes() {
 			if(curCount == 0) {
@@ -92,7 +131,7 @@
 				$("#send_code_btn").val("重新发送验证码");
 			} else {
 				curCount--;
-				$("#send_code_btn").val("请在" + curCount + "秒内输入");
+				$("#send_code_btn").val(curCount + "s");
 			}
 		}
 	}(jQuery);

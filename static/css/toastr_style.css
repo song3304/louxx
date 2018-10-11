@@ -7,3 +7,8 @@
     background-image: url(/static/img/success.png) !important;
     background-size: 9%;
 }
+
+/*.toast-container {
+	justify-content: center;
+	align-items: center;
+}*/

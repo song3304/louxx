@@ -22,7 +22,9 @@
 <div id="page">
 			<div class="top">
 				<ul class="top_1">
-					<li>LOGO</li>
+					<li>				
+						<img src="<{'image/logo3.png'|static}>"/>
+					</li>
 					<li>搜索'<{$_keywords}>'公司结果</li>
 					<li>
 						<img src="<{'image/more.png'|static}>"/>

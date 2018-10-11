@@ -3,10 +3,14 @@
 	method.checkError = function(element)
 	{
 		var $pane = $(element).closest(".tab-pane");
+		console.log('pane=>' + $pane);
 		if (!$pane.length) return;
 		var errors = $('.has-error', $pane);
+		console.log('errors=>' + errors);
 		var $a = $('.nav a[href="#' + $pane.attr('id') + '"]');
+		console.log('a=>' + $a);
 		var $sup = $('sup.badge', $a);
+		console.log('sup=>' + $sup);
 		if (!$sup.length) $sup = $('<sup class="badge label-danger">0</sup>').appendTo($a);
 		if (errors.length > 0)
 			$sup.text(errors.length).show();
@@ -32,6 +36,7 @@
 		},
 		errorPlacement: function(error, element) {
 			var $parent = $(element).closest('div');
+			console.log('parent=>'+ $parent);
 			if ($parent.hasClass('input-group')) $parent = $parent.closest('div');
 			$('.help-block.validate', $parent).remove();
 			error.appendTo($parent);
@@ -55,6 +60,7 @@
 			var $this = $(this);
 			for(var i in errors) {
 				var $parent = $('[name="'+ i +'"]', $this).closest('div');
+				console.log('style parent=>'+$parent);
 				$('.help-block.validate', $parent).remove();
 				for(var n = 0;n < errors[i].length;n++)
 					$parent.addClass('has-error').append($('<span id="'+i+'-error" class="help-block validate">'+ errors[i][n] +'</span>'));

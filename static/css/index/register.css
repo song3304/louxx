@@ -31,11 +31,11 @@ input:-ms-input-placeholder {
 	padding-top: 8.2rem;
 }
 .logo{
-	width: 7.1rem;
-	height: 6.6rem;
+	width: 7rem;
+	height: 5rem;
 	/*border: 1px solid black;*/
 	margin: 0 auto;
-	text-align: center;
+	/*text-align: center;*/
 }
 .logo>img{
 	width: 100%;
@@ -48,7 +48,7 @@ input:-ms-input-placeholder {
 
 .form-group {
 	direction: flex;
-	margin-left: 5.9rem;
+	margin-left: 4.9rem;
 	justify-content: flex-start;
 	flex-direction: column;
 }
@@ -63,17 +63,16 @@ input:-ms-input-placeholder {
 .line{
 	width: 25.8rem;
 	border-bottom: 1px solid rgba(255,255,255,0.8);
-	margin-left: 5.9rem;
+	margin-left: 4.9rem;
 	margin-top: 1.3rem;
 }
 
 .middle{
 	width:25.8rem;
-	margin-left: 5.9rem;
+	margin-left: 4.9rem;
 	margin-top: 2.7rem;
 	display: flex;
 	justify-content: space-between;
-	flex-wrap: wrap;
 }
 .verify{
 	outline-style: none;
@@ -85,7 +84,7 @@ input:-ms-input-placeholder {
 	outline-style: none;
 	border: 0;
 	background-color: rgba(255,255,255,0);
-	color: rgba(255,255,255,1);
+    color: rgba(255,255,255,1);
 }
 .register{
 	width: 25.8rem;
@@ -94,7 +93,7 @@ input:-ms-input-placeholder {
 	border-radius: 1.9rem;
 	color: rgba(255,255,255,1);
 	margin-top: 7.2rem;
-	margin-left: 5.9rem;
+	margin-left: 4.9rem;
 	font-size: 1.4rem;
 	line-height: 3.8rem;
 	text-align: center;

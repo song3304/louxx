@@ -19,11 +19,35 @@
 
 <{block "body-container"}>
 <div id="page">
+	<div class="template" id="template">
+			<div>
+				<p>
+					<img src="<{'image/logo2.png'|static}>"/>		
+				</p>
+				<p class="Login" id="login">
+					<span>登录</span>
+					<span></span>
+					<span>注册</span>
+				</p>
+			</div>
+			<div class="findOffice" id="findOffice">
+				<span>找办公楼</span>
+			</div>
+			<div class="can_bat">
+				<p></p>
+				<p id="findBuilding"></p>
+				<p id="findApply"></p>
+				<li></li>
+			</div>
+			<p>我的收藏-xxx-xxx</p>
+		</div>
 			<div class="top">
 				<ul class="top_1">
-					<li>LOGO</li>
+					<li>			
+						<img src="<{'image/logo3.png'|static}>"/>
+					</li>
 					<li>公司信息</li>
-					<li>
+					<li class="moreItem" id="moreItem">
 						<img src="<{'image/more.png'|static}>"/>
 					</li>
 				</ul>
@@ -48,4 +72,79 @@
 				<p><{$_company.description}></p>
 			</div>
 		</div>
+<{/block}>
+
+<{block "body-scripts-plus"}>
+	<script>
+		!function($){
+			$("#template").hide();
+			var startX = 0;
+			var startY = 0;
+			var moveEndX = 0;
+			var moveEndY = 0;
+			$(function(){
+				$("#template").on("touchstart", function(e) {
+				    // // 判断默认行为是否可以被禁用
+				    // if (e.cancelable) {
+				    //     // 判断默认行为是否已经被禁用
+				    //     if (!e.defaultPrevented) {
+				    //         e.preventDefault();
+				    //     }
+				    // }   
+				    startX = e.originalEvent.changedTouches[0].pageX,
+				    startY = e.originalEvent.changedTouches[0].pageY;
+				});
+				$("#template").on("touchend", function(e) {         
+				    // // 判断默认行为是否可以被禁用
+				    // if (e.cancelable) {
+				    //     // 判断默认行为是否已经被禁用
+				    //     if (!e.defaultPrevented) {
+				    //         e.preventDefault();
+				    //     }
+				    // }               
+				    moveEndX = e.originalEvent.changedTouches[0].pageX,
+				    moveEndY = e.originalEvent.changedTouches[0].pageY,
+				    X = moveEndX - startX,
+				    Y = moveEndY - startY;
+				    //左滑
+				    if ( X > 0 ) {
+				        $("#template").hide();                
+				    }
+				    //右滑
+				    else if ( X < 0 ) {
+				        $("#template").hide();   
+				    }
+				    //下滑
+				    else if ( Y > 0) {
+				        $("#template").hide();   
+				    }
+				    //上滑
+				    else if ( Y < 0 ) {
+				        $("#template").hide();  
+				    }
+				    //单击
+				    else{ 
+				    }
+				});
+
+				$("#moreItem").on("click",function(){
+					$("#template").show();
+				});
+
+				$("#findOffice").on("click",function(){
+					window.location.href = "<{'home/index'|url}>";
+				});
+
+				$("#findBuilding").on("click",function(){
+					window.location.href = "<{'find_building'|url}>";
+				});
+				$("#findApply").on("click",function(){
+					window.location.href = "<{'apply'|url}>";
+				});
+				$("#login").on("click",function(){
+					window.location.href = "<{'register'|url}>";
+				});
+			});
+		}(jQuery)
+	</script>
 <{/block}>
