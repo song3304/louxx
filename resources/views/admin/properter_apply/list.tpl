@@ -18,7 +18,7 @@
 
 <{block "table-td-plus"}>
 <td data-from="name" data-orderable="false">{{data}}</td>
-<td data-from="user" data-orderable="false">{{data.username}}</td>
+<td data-from="username" data-orderable="false">{{data}}</td>
 <td data-from="full_address">{{data}}</td>
 <td data-from="phone">{{data}}</td>
 <td data-from="status_tag">{{data}}</td>
@@ -31,7 +31,7 @@
 					{{if full.status==1}}
 						已审核
 					{{else}}
-					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/<{block "name"}><{/block}>/{{full.id}}/edit" data-toggle="tooltip" title="审核" class="btn btn-xs btn-default">审核</a>
+					<a href="<{''|url}>/<{block "namespace"}>admin<{/block}>/properter-audit/{{full.id}}/edit" data-toggle="tooltip" title="审核" class="btn btn-xs btn-default">审核</a>
 					{{/if}}
 				<{/block}>
 			</div>

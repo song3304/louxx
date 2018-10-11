@@ -38,6 +38,7 @@ class ProperterAuditController extends Controller
 		$data = $this->_getData($request, $builder,function(&$datalist){
 		    foreach ($datalist as &$value){
 		      $value['status_tag'] =  $value->status_tag();
+		      $value['username'] =  !empty($value->user)?$value->user->username:'';
 		    }
 		});
 		$data['recordsTotal'] = $total; //不带 f q 条件的总数
