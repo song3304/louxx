@@ -19,6 +19,14 @@
 <{block "head-styles-plus"}>
 <link rel="stylesheet" href="<{'css/common.css'|static}>" />
 <link rel="stylesheet" href="<{'css/index/apply.css'|static}>" />
+<style>
+.tel-input {
+    display: flex;
+    margin-left: 2rem;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+</style>
 <{/block}>
 
 <{block "body-container"}>
@@ -47,7 +55,9 @@
 		<textarea name="note" id="note" rows="" cols="" ></textarea>
 	</div>
 	<div>
+		<div class='tel-input'>
 		<input type="text" name="phone" id="phone" class="tel" value="" placeholder="请输入手机号" />
+		</div>
 		<div class="line"></div>
 		<div class="middle">
 			<input type="text" name="validate_code" id="validate_code" value="" placeholder="请输入验证码" class="verify"/>
