@@ -60,7 +60,9 @@
 		</div>
 		<div class="line"></div>
 		<div class="middle">
-			<input type="text" name="validate_code" id="validate_code" value="" placeholder="请输入验证码" class="verify"/>
+			<div>
+				<input type="text" name="validate_code" id="validate_code" value="" placeholder="请输入验证码" class="verify"/>
+			</div>
 			<input type="button" name="send_code_btn" id="send_code_btn" value="发送验证码" class="send_validate_code"/>
 		</div>
 		<div class="line"></div>
