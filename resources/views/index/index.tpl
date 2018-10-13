@@ -51,7 +51,7 @@
 						<img src="<{'image/more.png'|static}>"/>
 					</li>
 			</div>
-			<input type="text" :value="keywords" placeholder="关键词" @change="seach_key"/>
+			<input type="search" :value="keywords" placeholder="关键词" @change="seach_key"/>
 			<ul class="selects">
 				<input type="text" class="foucs" ref='focus' @focus="focus" @blur="blur" />
 				<div @click="choose_regions">{{region_data.name}}
@@ -221,12 +221,15 @@
 					switch(this.index) {
 						case 1:
 							this.$refs.region.style.height = '1.76rem';
+							this.$refs.region.style.left = '0rem';
 							break;
 						case 2:
 							this.$refs.distance.style.height = '1.76rem';
+							this.$refs.distance.style.left = '0rem';
 							break;
 						case 3:
 							this.$refs.price.style.height = '1.76rem';
+							this.$refs.price.style.left = '0rem';
 							break;
 					}
 				},
@@ -259,18 +262,21 @@
 					_this = jQuery(event.currentTarget);
 					this.region_data.name = _this.html();
 					this.region_data.value = _this.data('value');
-					this.$refs['focus'].blur();
+					this.$refs['focus'].focus();
+					this.blur();
 				},
 				set_distance:function(event){
 					_this = jQuery(event.currentTarget);
 					this.distance_data.name = _this.html();
 					this.distance_data.value = _this.data('value');
+					this.$refs['focus'].focus();
 					this.blur();
 				},
 				set_price:function(event){
 					_this = jQuery(event.currentTarget);
 					this.price_data.name = _this.html();
 					this.price_data.value = _this.data('value');
+					this.$refs['focus'].focus();
 					this.blur();
 				},
 				seach_key:function(event){
