@@ -8,4 +8,7 @@ use Addons\Core\Validation\ValidatesRequests;
 abstract class WechatOAuth2Controller extends BaseWechatOAuth2Controller
 {
     use DispatchesJobs, ValidatesRequests;
+    
+    protected $wechat_oauth2_account = 1;
+    protected $wechat_oauth2_bindUserRole = 'user1';
 }

@@ -20,7 +20,7 @@ use App\OfficePeriphery;
 use App\HireInfo;
 use GuzzleHttp\json_encode;
 
-class HomeController extends Controller
+class HomeController extends WechatOAuth2Controller
 {
 	/**
 	 * Display a listing of the resource.

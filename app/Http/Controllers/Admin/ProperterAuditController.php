@@ -86,7 +86,7 @@ class ProperterAuditController extends Controller
 		ProperterApply::create($data);//
 		$properterApply = ProperterApply::find($data['id']);
 		if(!$properterApply->user->hasRole('properter')) $properterApply->user->attachRole(Role::findByName('properter'));
-		return $this->success('', url('admin/properterApply'));
+		return $this->success('', url('admin/properter-audit'));
 	}
 
 	public function edit($id)
@@ -109,10 +109,12 @@ class ProperterAuditController extends Controller
 
 		$keys = 'id,name,province,city,area,address,phone,audit_note,status,uid';
 		$data = $this->autoValidate($request, 'properter-apply.store', $keys, $properterApply);		
+		if($data['status']==1 && empty($data['uid']))
+		    return $this->failure('properter.must_bind_user');
 		$properterApply->update($data);
 		
 		//if(!$properterApply->user->hasRole('properter')) $properterApply->user->attachRole(Role::findByName('properter'));
-		return $this->success('', url('admin/properterApply'));
+		return $this->success('', url('admin/properter-audit'));
 	}
 
 	public function destroy(Request $request, $id)
