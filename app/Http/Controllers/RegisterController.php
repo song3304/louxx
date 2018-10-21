@@ -8,7 +8,7 @@ use Cache;
 use App\Tools\HxSmsApi;
 use Illuminate\Support\Facades\Auth;
 
-class RegisterController extends Controller
+class RegisterController extends WechatOAuth2Controller
 {
     // 注册首页
 	public function index()
@@ -28,11 +28,12 @@ class RegisterController extends Controller
 		if(!(new HxSmsApi)->checkPhoneCode($data['phone'],$data['validate_code'])){
 		    return $this->failure_user_login();
 		}
-		$user = User::where('phone',$data['phone'])->first();
+		/*$user = User::where('phone',$data['phone'])->first();
 		if(empty($user)){
 		    $user = (new User)->add(['username'=>$data['phone'],'phone'=>$data['phone']],'user');
-		}
-		Auth::guard()->loginUsingId($user->getKey());
+		}*/
+		$this->user->update(['phone'=>$data['phone']]);
+		Auth::guard()->loginUsingId($this->user->getKey());
 		//return redirect('home/index');
 		return $this->success_login(url('home/index'));
 	}

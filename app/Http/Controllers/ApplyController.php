@@ -9,7 +9,7 @@ use App\Tools\HxSmsApi;
 use App\ProperterApply;
 
 //物业申请入驻
-class ApplyController extends Controller
+class ApplyController extends WechatOAuth2Controller
 {
     // 物业申请入驻首页
 	public function index()
@@ -32,6 +32,12 @@ class ApplyController extends Controller
 		
 		// 验证手机验证码...
 		unset($data['validate_code']);
+		//自动添加登录用户
+		$user = Auth::guard()->user();
+		if(!empty($user)){
+		   $data['uid'] = $this->user->getKey();
+		}
+		
 		$apply_info = (new ProperterApply)->create($data);
 		return $this->success('apply.success', url('home/index'));
 	}

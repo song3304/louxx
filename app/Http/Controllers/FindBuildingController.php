@@ -15,7 +15,7 @@ use App\Tools\HxSmsApi;
 use Cache;
 use App\Area;
 
-class FindBuildingController extends Controller
+class FindBuildingController extends WechatOAuth2Controller
 {
 	public function index(Request $request)
 	{
@@ -35,6 +35,11 @@ class FindBuildingController extends Controller
 	   }
 	   
 	   unset($data['validate_code']);
+	   //自动添加登录用户
+	   $user = Auth::guard()->user();
+	   if(!empty($user)){
+	       $data['uid'] = $this->user->getKey();
+	   }
 	   $find_building = (new FindBuilding)->create($data);
 	   return $this->success('findbuilding.submit_success', url('home/index'));
 	}

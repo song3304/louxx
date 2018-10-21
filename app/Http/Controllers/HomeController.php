@@ -19,6 +19,7 @@ use App\Company;
 use App\OfficePeriphery;
 use App\HireInfo;
 use GuzzleHttp\json_encode;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends WechatOAuth2Controller
 {
@@ -29,6 +30,10 @@ class HomeController extends WechatOAuth2Controller
 	 */
 	public function index(Request $request)
 	{
+	    //没有登录,并且有手机号
+	    if(empty(Auth::guard()->user()) && !empty($this->user->phone)){
+	        Auth::guard()->loginUsingId($this->user->getKey());//自动登录
+	    }
 	    $this->_city_name = $request->input('city_name',session('city_name',''));
 	    $this->_city_id = session('city_id',null);;
 	    $this->_keywords = $request->input('keywords');

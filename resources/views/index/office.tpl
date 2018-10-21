@@ -37,11 +37,17 @@
 				<p>
 					<img src="<{'image/logo2.png'|static}>"/>		
 				</p>
+				<{if !empty($user->phone)}>
+				<p class="Login">
+					<span><{$user->nickname}>-<{$user.phone}> 已登录</span>
+				</p>
+				<{else}>
 				<p class="Login" id="login">
 					<span>登录</span>
 					<span></span>
 					<span>注册</span>
 				</p>
+				<{/if}>
 			</div>
 			<div class="findOffice" id="findOffice">
 				<span>找办公楼</span>
