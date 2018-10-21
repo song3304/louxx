@@ -87,7 +87,7 @@ class HxSmsApi {
             'Msg' => $msg,
             'Channel' => 0
         );
-return ['result'=>true,'msg'=>''];
+//return ['result'=>true,'msg'=>''];
         $result = $this->_post_url($url, $data);
         return $this->post_result_analyze($result);
     }
@@ -114,7 +114,7 @@ return ['result'=>true,'msg'=>''];
         {
         $str .= $chars[mt_rand(0, strlen($chars) - 1)];
         }
-        return '123456';
+        //return '123456';
         return $str;
     }
     

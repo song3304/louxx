@@ -114,6 +114,9 @@ class HomeController extends WechatOAuth2Controller
 	    if($request->ajax()) return $this->success(null,null,['buildings'=>$buildings]);
 	    //整理数据
 	    $this->_buildings = $buildings;
+	    //微信jssdk
+	    $this->_wechat = $this->getJsParameters();
+	    //dd($this->_wechat);
 		return $this->view('index.index');
 	}
     

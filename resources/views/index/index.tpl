@@ -3,6 +3,7 @@
 <{block "head-scripts-plus"}>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=879a6e897959d23c7638450d40cc75e0"></script>
 <script src="<{'js/vue.js'|static}>"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
 	var city_id = <{if !empty($_city_id)}><{$_city_id}><{else}>0<{/if}>;
 	var city_name = <{if !empty($_city_name)}>'<{$_city_name}>'<{else}>null<{/if}>;
@@ -133,7 +134,36 @@
 				
 				lat = jQuery.cookie('lat');
 				lon = jQuery.cookie('lon');
-				if(typeof lat=="undefined" || typeof lon=="undefined"){
+				alert(location.href.split('#')[0]);
+				
+				//if(typeof lat=="undefined" || typeof lon=="undefined"){
+					wx.config({
+						debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						appId: '<{$_wechat.appid|escape}>', // 必填，公众号的唯一标识
+						timestamp: '<{$_wechat.timestamp|escape}>', // 必填，生成签名的时间戳
+						nonceStr: '<{$_wechat.noncestr|escape}>', // 必填，生成签名的随机串
+						signature: '<{$_wechat.signature|escape}>',// 必填，签名，见附录1
+						jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','hideMenuItems','getLocation'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+					});
+				
+					wx.ready(function(){
+						wx.getLocation({
+							type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+							success: function (res) {
+								lat = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+								lon = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+								var speed = res.speed; // 速度，以米/每秒计
+								var accuracy = res.accuracy; // 位置精度
+								alert(res.latitude+':'+res.longitude+':'+res.speed+':'+res.accuracy);
+								var cookietime = new Date(); 
+								cookietime.setTime(cookietime.getTime() + (2*60 * 60 * 1000));//coockie保存两小时 
+								jQuery.cookie("lat", lat,{expires:cookietime}); 
+								jQuery.cookie("lon", lon,{expires:cookietime}); 
+							}
+						});
+					});
+					
+					/*				
 					map.plugin('AMap.Geolocation', function() {
 						geolocation = new AMap.Geolocation({
 							enableHighAccuracy: true,//是否使用高精度定位，默认:true
@@ -163,8 +193,8 @@
 						 jQuery('#distance').html(''); //定位失败距离不可用
 						 
 						 //alert('获取经纬度失败.');
-					}
-				}
+					}*/
+				//}
 
 				if(city_id == 0){
 					 map.plugin('AMap.CitySearch', function() {
