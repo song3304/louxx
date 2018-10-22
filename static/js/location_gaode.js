@@ -120,7 +120,7 @@
 		        map.on("click", function(e) {//  
 			    	map.remove(marker);
 					var point = new AMap.LngLat(e.lnglat.getLng(), e.lnglat.getLat());
-					_self.addMarker(point);
+					_this.addMarker(point);
 
 					$("#latitude").val(e.lnglat.getLat().toFixed(8));
 					$("#longitude").val(e.lnglat.getLng().toFixed(8));	
