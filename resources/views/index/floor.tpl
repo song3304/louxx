@@ -27,7 +27,7 @@
 				</p>
 				<{if !empty($user->phone)}>
 				<p class="Login">
-					<span><{$user->nickname}>-<{$user.phone}> 已登录</span>
+					<span><{if !empty($user->nickname)}><{$user->nickname}>-<{/if}><{$user.phone}> 已登录</span>
 				</p>
 				<{else}>
 				<p class="Login" id="login">
