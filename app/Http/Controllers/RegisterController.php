@@ -45,7 +45,7 @@ class RegisterController extends WechatOAuth2Controller
 		      ]);
 		  }
 		}else{
-		    $user->update([
+		    $this->user->update([
 		        'phone' => $data['phone']
 		    ]);
 		}
