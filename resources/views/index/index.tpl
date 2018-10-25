@@ -142,7 +142,7 @@
 				lon = jQuery.cookie('lon');
 				//alert(location.href.split('#')[0]);
 				
-				//if(typeof lat=="undefined" || typeof lon=="undefined"){
+				<{if $_is_weixin}>
 					wx.config({
 						debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 						appId: '<{$_wechat.appid|escape}>', // 必填，公众号的唯一标识
@@ -168,8 +168,8 @@
 							}
 						});
 					});
-					
-					/*				
+				<{else}>	
+				if(typeof lat=="undefined" || typeof lon=="undefined"){	
 					map.plugin('AMap.Geolocation', function() {
 						geolocation = new AMap.Geolocation({
 							enableHighAccuracy: true,//是否使用高精度定位，默认:true
@@ -188,7 +188,7 @@
 						var center_point = new AMap.LngLat(data.position.getLng(),data.position.getLat());
 						lat = data.position.getLat();
 						lon = data.position.getLng();
-						
+						//console.log(lat,lon);
 						var cookietime = new Date(); 
 						cookietime.setTime(cookietime.getTime() + (2*60 * 60 * 1000));//coockie保存两小时 
 						jQuery.cookie("lat", lat,{expires:cookietime}); 
@@ -199,9 +199,9 @@
 						 jQuery('#distance').html(''); //定位失败距离不可用
 						 
 						 //alert('获取经纬度失败.');
-					}*/
-				//}
-
+					}
+				}
+				<{/if}>
 				if(city_id == 0){
 					 map.plugin('AMap.CitySearch', function() {
 						var citysearch = new AMap.CitySearch();

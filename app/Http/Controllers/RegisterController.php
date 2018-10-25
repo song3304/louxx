@@ -28,12 +28,23 @@ class RegisterController extends WechatOAuth2Controller
 		if(!(new HxSmsApi)->checkPhoneCode($data['phone'],$data['validate_code'])){
 		    return $this->failure_user_login();
 		}
-		/*$user = User::where('phone',$data['phone'])->first();
-		if(empty($user)){
-		    $user = (new User)->add(['username'=>$data['phone'],'phone'=>$data['phone']],'user');
-		}*/
-		$this->user->update(['phone'=>$data['phone']]);
-		Auth::guard()->loginUsingId($this->user->getKey());
+		if(empty($this->user)){
+		  $user = User::where('phone',$data['phone'])->first();
+		  if(empty($user)){
+		     $user = (new User)->add(['username'=>$data['phone'],'phone'=>$data['phone']],'user');
+		  }
+		  Auth::guard()->loginUsingId($user->getKey());
+		  
+		  if(!empty($this->wechatUser)){
+		      //绑定用户id
+		      $wechatUser->update(['uid' => $user->getKey()]);
+		      $user->update([
+		           'nickname' => $wechatUser->nickname,
+		           'gender' => $wechatUser->gender->id,
+		           'avatar_aid' => $wechatUser->avatar_aid,
+		      ]);
+		  }
+		}
 		//return redirect('home/index');
 		return $this->success_login(url('home/index'));
 	}
