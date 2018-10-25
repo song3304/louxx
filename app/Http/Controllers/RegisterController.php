@@ -44,6 +44,10 @@ class RegisterController extends WechatOAuth2Controller
 		           'avatar_aid' => $wechatUser->avatar_aid,
 		      ]);
 		  }
+		}else{
+		    $user->update([
+		        'phone' => $data['phone']
+		    ]);
 		}
 		//return redirect('home/index');
 		return $this->success_login(url('home/index'));
