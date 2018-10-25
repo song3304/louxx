@@ -29,6 +29,11 @@
             font-family: "";
             background-color: #fff;
         }
+.flexslider .slides img {
+  width: 100%;
+  height: 25rem;
+  display: block;
+}        
 </style>
 <{/block}>
 
