@@ -1,14 +1,16 @@
 <{extends file="extends/main.block.tpl"}>
 
 <{block "head-scripts-plus"}>
-<script src="<{'js/public.js'|static}>"></script>
-<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=879a6e897959d23c7638450d40cc75e0"></script>
+	<script src="<{'js/public.js'|static}>"></script>
+	<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.9&key=879a6e897959d23c7638450d40cc75e0"></script>
+	<script src="<{'js/flexslider/jquery.flexslider-min.js'|static}>"></script>
 <{/block}>
 
 <{block "head-styles-bootstrap"}>
 <{/block}>
 
 <{block "head-styles-plus"}>
+<link href="<{'js/flexslider/flexslider.css'|static}>" rel="stylesheet">
 <link rel="stylesheet" href="<{'css/index/office.css'|static}>" />
 <style>
 *{
@@ -62,11 +64,15 @@
 		</div>
 	<div class="officeTop">
 		<div class="officeTop_img">
-			<{foreach $_office.pics as $pic}>
-				<img src="<{'attachment/preview'|url}>?id=<{$pic.pic_id}>"/>
-			<{foreachelse}>
-				<img src="<{'image/bg2.png'|static}>"/>
-			<{/foreach}>			
+			<div class="flexslider officeTop_img" id="homeSlider">
+				<ul class="slides">
+					<{foreach $_office.pics as $pic}>
+					<li><a><img src="<{'attachment/preview'|url}>?id=<{$pic.pic_id}>" class="img-responsive"></a></li>
+					<{foreachelse}>
+					<{/foreach}>
+				</ul>
+			</div>	
+					
 		</div>
 		<ul class="officeTop_1">
 			<li>
@@ -487,6 +493,12 @@
 	    		window.location.href = "<{'home/findCompany'|url}>?keywords="+keywords;
 	    	});
 	    	$(function(){
+			    $("#homeSlider").flexslider({
+					animation: 'slide',
+					directionNav: false,
+					controlNav: false,
+					touch: true,
+				});
 	    		//默认显示所有周边点
 	    		showAllMarks();
 	    	});

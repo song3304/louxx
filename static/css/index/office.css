@@ -68,7 +68,7 @@ input:-ms-input-placeholder {
 }
 .officebottom{
 	position: absolute;
-	top: 22.4rem;
+	top: 25rem;
 	left: 0.9rem;
 	display: flex;
 	justify-content: flex-start;
@@ -101,8 +101,8 @@ input:-ms-input-placeholder {
 	box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	padding-left: 1.6rem;
 	padding-right: 1.4rem;
-	padding-top: 1.6rem;
-	padding-bottom: 1.5rem;
+	padding-top: 3.0rem;
+	//padding-bottom: 1.5rem;
 }
 .officeInfor_1{
 	display: flex;
