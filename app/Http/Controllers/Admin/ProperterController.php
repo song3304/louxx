@@ -77,8 +77,9 @@ class ProperterController extends Controller
 		$keys = 'id,name,province,city,area,address,phone';
 		$data = $this->autoValidate($request, 'properter.store', $keys);
 
-		Properter::create($data);//
 		$properter = Properter::find($data['id']);
+		if(!empty($properter)) return $this->failure('properter.bind_user_exist');
+		$properter = Properter::create($data);
 		if(!$properter->user->hasRole('properter')) $properter->user->attachRole(Role::findByName('properter'));
 		return $this->success('', url('admin/properter'));
 	}
@@ -103,6 +104,8 @@ class ProperterController extends Controller
 
 		$keys = 'id,name,province,city,area,address,phone';
 		$data = $this->autoValidate($request, 'properter.store', $keys, $properter);
+		
+		if($id != $data['id'] && !empty(Properter::find($data['id']))) return $this->failure('properter.bind_user_exist');
 		$properter->update($data);
 		if(!$properter->user->hasRole('properter')) $properter->user->attachRole(Role::findByName('properter'));
 		return $this->success('', url('admin/properter/'.$id.'/edit'));
