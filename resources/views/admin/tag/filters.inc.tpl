@@ -17,6 +17,7 @@
 					<option value=""<{if $_filters.type.eq === ""}> selected="selected"<{/if}>>请选择标签类型</option>
 					<option value="0"<{if $_filters.type.eq === "0"}> selected="selected"<{/if}>>办公楼</option>
 					<option value="1"<{if $_filters.type.eq == 1}> selected="selected"<{/if}>>公司</option>
+					<option value="2"<{if $_filters.type.eq == 2}> selected="selected"<{/if}>>楼层</option>
 				</select>
 		</div>
 	</div>

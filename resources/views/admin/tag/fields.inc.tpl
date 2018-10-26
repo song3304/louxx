@@ -11,6 +11,7 @@
 		<select id="type" name="type" class="form-control" placeholder="请选择标签类型.">
 			<option value="0"<{if $_data.type == 0}> selected="selected"<{/if}>>办公楼</option>
 			<option value="1"<{if $_data.type == 1}> selected="selected"<{/if}>>公司</option>
+			<option value="2"<{if $_data.type == 2}> selected="selected"<{/if}>>楼层</option>
 		</select>
 	</div>
 </div>

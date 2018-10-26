@@ -12,11 +12,19 @@
 </div>
 
 <div class="form-group">
+	<label class="col-md-3 control-label" for="tag_ids">标签</label>
+	<div class="col-md-9">
+		<select type="text" id="tag_ids" name="tag_ids[]" class="form-control select-model" data-params='{"f[type]":"2"}' data-model="admin/tag" data-text="{{tag_name}}" data-term="{{tag_name}}" data-placeholder="请输入标签..." value="<{if !empty($_data->tags)}><{$_data->tags->pluck('id')->toArray()|implode:','}><{/if}>" multiple="multiple"></select>
+	</div>
+</div>
+
+<!--div class="form-group">
 	<label class="col-md-3 control-label" for="description">楼层描述</label>
 	<div class="col-md-9">
 		<textarea id="description" name="description" class="form-control" placeholder="请输入描述"><{$_data.description}></textarea>
 	</div>
-</div>
+</div-->
+
 <div class="form-group">
 	<label class="col-md-3 control-label" for="porder">排序</label>
 	<div class="col-md-9">

@@ -291,9 +291,13 @@ return [
                 'name' => '楼层名',
                 'rules' => 'required'
             ],
+            'tag_ids' => [
+                'name' => '标签',
+                'rules' => 'required|array',
+            ],
             'description'=>[
                 'name'=>'楼层描述',
-                'rules' => 'required'
+                'rules' => []
             ],
             'porder' => [
                 'name' => '排序',

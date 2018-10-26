@@ -268,7 +268,9 @@
 				<{foreach $_floor_list as $floor}>
 				<ul class="floor_bref" data-fid="<{$floor.id}>">
 					<li><span><{$floor.name}></span></li>
-					<li><{$floor.description}></li>
+					<li><{foreach $floor.tags as $tag}>
+					<span style="background-color:#c8c8c8;"><{$tag.tag_name}></span>
+					<{/foreach}></li>
 					<img src="<{'image/triangle.png'|static}>"/>
 				</ul>
 				<{/foreach}>

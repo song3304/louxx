@@ -12,7 +12,7 @@
 <th>楼层名</th>
 <th>所属楼</th>
 <th>公司数</th>
-<th>描述</th>
+<th>标签</th>
 <th>排序</th>
 <{/block}>
 
@@ -20,7 +20,11 @@
 <td data-from="name" data-orderable="false">{{data}}</td>
 <td data-from="building" data-orderable="false"><a href="<{'admin/building?f[id][eq]='|url}>{{data.id}}">{{data.building_name}}</a></td>
 <td data-from="" data-orderable="false"><a href="<{'admin/company?q[ofFloor]='|url}>{{full.id}}">{{full.company_cnt}}</a></td>
-<td data-from="description">{{data}}</td>
+<td data-from="tags" data-orderable="false">
+{{each data as v k}}
+<span class="label label-info">{{v.tag_name}}</span>
+{{/each}}
+</td>
 <td data-from="porder">{{data}}</td>
 <{/block}>
 

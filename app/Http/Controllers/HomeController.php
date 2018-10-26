@@ -220,7 +220,7 @@ class HomeController extends WechatOAuth2Controller
 	    if(empty($fid)){
 	        return $this->error_param(url('home/index'),['msg'=>'参数错误']);
 	    }
-	    $this->_floor = OfficeFloor::with(['companies'])->find($fid);
+	    $this->_floor = OfficeFloor::with(['companies','tags'])->find($fid);
 	    if(empty($this->_floor)){// 不存在
 	        return $this->failure_noexists();
 	    }

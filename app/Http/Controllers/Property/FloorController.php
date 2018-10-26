@@ -29,7 +29,7 @@ class FloorController extends BaseController
 	public function data(Request $request)
 	{
 		$office_floor = new Floor;
-		$builder = $office_floor->newQuery()->with(['building','companies'])->buildings($this->building_ids);
+		$builder = $office_floor->newQuery()->with(['building','companies','tags'])->buildings($this->building_ids);
 
 		$total = $this->_getCount($request, $builder, FALSE);
 		$data = $this->_getData($request, $builder->orderBy('porder','desc'),function(&$datalist){
@@ -45,7 +45,7 @@ class FloorController extends BaseController
 	public function export(Request $request)
 	{
 		$office_floor = new Floor;
-		$builder = $office_floor->newQuery()->with(['building','companies'])->buildings($this->building_ids);
+		$builder = $office_floor->newQuery()->with(['building','companies','tags'])->buildings($this->building_ids);
 		$size = $request->input('size') ?: config('size.export', 1000);
 
 		$data = $this->_getExport($request, $builder,function(&$datalist){
@@ -58,7 +58,7 @@ class FloorController extends BaseController
 
 	public function show(Request $request,$id)
 	{
-		$office_floor = Floor::with(['building','companies'])->buildings($this->building_ids)->find($id);
+		$office_floor = Floor::with(['building','companies','tags'])->buildings($this->building_ids)->find($id);
 		if (empty($office_floor))
 			return $this->failure_noexists();
 
@@ -68,7 +68,7 @@ class FloorController extends BaseController
 
 	public function create()
 	{
-		$keys = 'oid,name,description,porder';
+		$keys = 'oid,name,description,porder,tag_ids';
 		$this->_data = [];
 		$this->_validates = $this->getScriptValidate('floor.store', $keys);
 		return $this->view('property.floor.create');
@@ -76,20 +76,28 @@ class FloorController extends BaseController
 
 	public function store(Request $request)
 	{
-		$keys = 'oid,name,description,porder';
+		$keys = 'oid,name,description,porder,tag_ids';
 		$data = $this->autoValidate($request, 'floor.store', $keys);
 
-		$office_floor = Floor::create($data);
+		$tag_ids = array_pull($data, 'tag_ids');
+		DB::transaction(function() use ($data,$tag_ids){
+		    $office_floor = Floor::create($data);
+		    $attach_data = [];
+		    array_walk($tag_ids, function($value,$key) use(&$attach_data,$data){
+		        $attach_data[$value]=['created_at'=>date("Y-m-d H:i:s"),'updated_at'=>date("Y-m-d H:i:s"),'porder'=>$key];
+		    });
+		    $office_floor->tags()->attach($attach_data);
+		});
 		return $this->success('', url('property/floor'));
 	}
 
 	public function edit($id)
 	{
-		$office_floor = Floor::buildings($this->building_ids)->find($id);
+		$office_floor = Floor::with(['building','companies','tags'])->buildings($this->building_ids)->find($id);
 		if (empty($office_floor))
 			return $this->failure_noexists();
 
-		$keys = 'oid,name,description,porder';
+		$keys = 'oid,name,description,porder,tag_ids';
 		$this->_validates = $this->getScriptValidate('floor.store', $keys);
 		$this->_data = $office_floor;
 		return $this->view('property.floor.edit');
@@ -101,9 +109,18 @@ class FloorController extends BaseController
 		if (empty($office_floor))
 			return $this->failure_noexists();
 
-		$keys = 'oid,name,description,porder';
+		$keys = 'oid,name,description,porder,tag_ids';
 		$data = $this->autoValidate($request, 'floor.store', $keys, $office_floor);
-		$office_floor->update($data);
+		$tag_ids = array_pull($data, 'tag_ids');
+		
+		DB::transaction(function() use ($office_floor,$data,$tag_ids){
+		    $office_floor->update($data);
+		    $attach_data = [];
+		    array_walk($tag_ids, function($value,$key) use(&$attach_data,$data){
+		        $attach_data[$value]=['created_at'=>date("Y-m-d H:i:s"),'updated_at'=>date("Y-m-d H:i:s"),'porder'=>$key];
+		    });
+		    $office_floor->tags()->sync($attach_data);
+		});
 
 		return $this->success('', url('property/floor/'.$id.'/edit'));
 	}

@@ -1,7 +1,7 @@
 <!-- Form Content -->
 <form action="<{'admin'|url nofilter}>/<{block "name"}><{/block}>" method="GET" class="form-bordered form-horizontal">
 	<input type="hidden" name="base" value="<{$_base}>">
-	<div class="form-group col-sm-4">
+	<div class="form-group col-sm-3">
 		<label class="col-md-3 control-label" for="name">楼层名</label>
 		<div class="col-md-9">
 			<div class="input-group">
@@ -10,13 +10,19 @@
 			</div>
 		</div>
 	</div>
-	<div class="form-group col-sm-4">
+	<div class="form-group col-sm-3">
 		<label class="col-md-3 control-label" for="oid">办公楼</label>
 		<div class="col-md-9">
 			<select type="text" id="oid" name="f[oid][in][]" class="form-control select-model" data-model="admin/building" data-text="{{village_name}}-{{building_name}}" data-placeholder="请输入楼名..." value="<{if !empty($_filters.oid)}><{$_filters.oid.in|implode:','}><{/if}>"></select>
 		</div>
 	</div>
-	<div class="form-group col-sm-4">
+	<div class="form-group col-sm-3">
+		<label class="col-md-3 control-label" for="tag_id">标签</label>
+		<div class="col-md-9">
+			<select type="text" id="tag_id" name="q[ofTag]" class="form-control select-model" data-params='{"f[type]":"2"}' data-model="admin/tag" data-text="{{tag_name}}" data-placeholder="请输入标签..." value="<{$_queries.ofTag}>"></select>
+		</div>
+	</div>
+	<div class="form-group col-sm-3">
 		<label class="col-md-3 control-label" for="created_at-min">加入时间</label>
 		<div class="col-md-9">
 			<div class="input-group input-daterange">

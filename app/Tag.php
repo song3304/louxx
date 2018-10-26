@@ -20,7 +20,8 @@ class Tag extends Model{
 	public function type_name()
 	{
 	    if($this->type == 0) return '办公楼';
-	    else return '公司';
+	    elseif($this->type == 1) return '公司';
+	    else return '楼层';
 	}
 	
 	//办公楼
