@@ -36,13 +36,15 @@ class WechatOAuth2Controller extends BaseWechatOAuth2Controller
             
                     $this->wechatUser = $oauth2->authenticate(NULL, $this->wechat_oauth2_type, $this->wechat_oauth2_bindUserRole);
                 }
-                $userModel = config('auth.providers.users.model');
-                $this->wechat_oauth2_bindUserRole && $this->user = (new $userModel)->find($this->wechatUser->uid);
-                if(!empty($this->wechatUser->uid)){
-                    $this->user = (new $userModel)->find($this->wechatUser->uid);
-                }else{
-                    $this->user = Auth::guard()->user();
-                }
+                $this->user = Auth::guard()->user();
+                if(empty($this->user)){
+                    $userModel = config('auth.providers.users.model');
+                    //$this->wechat_oauth2_bindUserRole && $this->user = (new $userModel)->find($this->wechatUser->uid);
+                    if(!empty($this->wechatUser->uid)){
+                        $this->user = (new $userModel)->find($this->wechatUser->uid);
+                        Auth::guard()->loginUsingId($this->user->getKey());
+                    }
+                } 
             }
             $this->_is_weixin = true;
         }else{
