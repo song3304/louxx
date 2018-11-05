@@ -28,7 +28,7 @@
 	<img src="<{''|attachment}>?id={{data}}&width=80&height=80" alt="avatar" class="img-circle">
 </td>
 <td data-from="username">{{data}}</td>
-<td data-from="nickname"><span class="enable-emoji">{{if data}}{{data.emojione()}}{{/if}}</span></td>
+<td data-from="nickname"><span class="enable-emoji">{{if data}}{{data}}{{/if}}</span></td>
 <td data-from="realname">{{data}}</td>
 <td data-from="gender"><span class="label label-primary">{{data.title || '未知'}}</span></td>
 <td data-from="phone">{{data}}</td>
